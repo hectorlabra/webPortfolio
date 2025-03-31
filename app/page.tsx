@@ -69,7 +69,7 @@ export default function HomePage() {
 
         <main className="flex-1">
           {/* Hero Section */}
-          <section className="w-full min-h-[calc(100vh-4rem)] flex items-center pt-16 pb-16">
+          <section className="w-full min-h-[80vh] flex items-center pt-8 pb-6">
             <div className="container flex-1 flex flex-col justify-center px-4 md:px-6">
               {/* Social Proof Component */}
               <SocialProof />
@@ -107,7 +107,7 @@ export default function HomePage() {
                 </div>
                 {/* Newsletter Signup */}
                 <div className="flex items-center justify-center lg:justify-end">
-                  <div className="rounded border border-white/10 bg-white/5 p-8 backdrop-blur w-full">
+                    <div className="rounded border border-white/10 bg-white/5 p-8 backdrop-blur w-full shadow-[0_0_10px_rgba(100,227,101,0.3)]">
                     <div className="space-y-4">
                       <h2 className="font-mono text-2xl font-bold">¡Únete con un click!</h2>
                       
@@ -126,7 +126,7 @@ export default function HomePage() {
           <GeometricPattern />
 
           {/* Features Section */}
-          <section className="w-full min-h-screen flex items-center py-16">
+          <section className="w-full min-h-[80vh] flex items-center py-6">
             <div className="container flex-1 flex flex-col justify-center px-4 md:px-6">
               <div className="flex flex-col items-start space-y-5 max-w-3xl mx-auto w-full">
                 <div className="space-y-3">
@@ -155,7 +155,7 @@ export default function HomePage() {
           <GeometricPattern />
 
           {/* Blog Section */}
-          <section className="w-full min-h-screen flex items-center py-16">
+          <section className="w-full min-h-[80vh] flex items-center py-6">
             <div className="container flex-1 flex flex-col justify-center px-4 md:px-6">
               <div className="flex flex-col items-start space-y-5">
                 <div className="space-y-3">
@@ -218,7 +218,7 @@ export default function HomePage() {
           <GeometricPattern />
 
           {/* FAQ Section */}
-          <section className="w-full min-h-screen flex items-center py-16">
+          <section className="w-full min-h-[80vh] flex items-center py-6">
             <div className="container flex-1 flex flex-col justify-center px-4 md:px-6">
               <div className="flex flex-col items-start space-y-5">
                 <div className="space-y-3">
