@@ -94,7 +94,7 @@ export function NewsletterForm({ minimal = false }: NewsletterFormProps) {
             </Button>
           </div>
           {error && <p className="text-base text-red-500">{error}</p>}
-          <p className="text-sm text-white/70">Contenido exclusivo sobre arquitectura y desarrollo de software.</p>
+          <p className="text-sm text-white/70">Curso intensivo por email de 14 días exclusivo para suscriptores.</p>
         </form>
       )}
     </div>

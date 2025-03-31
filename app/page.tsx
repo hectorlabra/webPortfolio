@@ -78,50 +78,39 @@ export default function HomePage() {
                 <div className="flex flex-col justify-center space-y-6">
                   <div className="space-y-4">
                     <h1 className="font-mono text-4xl font-bold tracking-tighter sm:text-4xl">
-                      Construye soluciones digitales con enfoque en ingeniería.
+                    Aprende a codificar en semanas, no meses.
                     </h1>
                     <p className="text-lg text-white/70">
-                      Transformando ideas en productos digitales con un enfoque estructurado y modular.
+                    Todo lo que necesitas para monetizar tu carrera de software developer, incluso si eres un principiante absoluto.
                     </p>
                   </div>
                   {/* Highlight Banner */}
                   <div className="inline-flex w-fit rounded bg-[#64E365]/20 px-4 py-1.5 text-base text-[#64E365]">
-                    Gana 500-5000 USD al mes con solo 2 horas diarias
+                  Codifica tu idea rápidamente, construye tu libertad.
                   </div>
                   {/* Features List */}
                   <div className="space-y-4">
                     <div className="flex items-center gap-3">
                       <Check className="h-6 w-6 text-[#64E365]" />
-                      <span className="text-base">Desarrollo de aplicaciones web y móviles</span>
+                      <span className="text-base">Aprende solo los fundamentos</span>
                     </div>
                     <div className="flex items-center gap-3">
                       <Check className="h-6 w-6 text-[#64E365]" />
-                      <span className="text-base">Arquitectura de sistemas escalables</span>
+                      <span className="text-base">Usa IA para que codifique por ti</span>
                     </div>
                     <div className="flex items-center gap-3">
                       <Check className="h-6 w-6 text-[#64E365]" />
-                      <span className="text-base">Consultoría en tecnología y negocios digitales</span>
+                      <span className="text-base">Sigue aprendiendo sobre la marcha</span>
                     </div>
                   </div>
-                  {/* CTA Buttons */}
-                  <div className="flex flex-col gap-3 min-[400px]:flex-row">
-                    <Button className="bg-[#FFD24C] text-[#0a0612] hover:bg-[#FFD24C]/90 text-base h-12 px-6">
-                      Empieza Ahora
-                      <ArrowRight className="ml-2 h-5 w-5" />
-                    </Button>
-                    <Button className="bg-white/10 text-white hover:bg-white/20 text-base h-12 px-6 border-0">
-                      Ver Proyectos
-                    </Button>
-                  </div>
+                  
                 </div>
                 {/* Newsletter Signup */}
                 <div className="flex items-center justify-center lg:justify-end">
                   <div className="rounded border border-white/10 bg-white/5 p-8 backdrop-blur w-full">
                     <div className="space-y-4">
                       <h2 className="font-mono text-2xl font-bold">¡Únete con un click!</h2>
-                      <p className="text-base text-white/70">
-                        Recibe consejos prácticos sobre desarrollo y arquitectura de software.
-                      </p>
+                      
                     </div>
                     <div className="mt-6">
                       {/* Newsletter Form Component */}
