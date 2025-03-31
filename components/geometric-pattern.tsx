@@ -10,21 +10,17 @@ export function GeometricPattern() {
           preserveAspectRatio="xMidYMid slice"
         >
           <g stroke="rgba(255, 255, 255, 0.5)" strokeWidth="0.8" fill="none">
-            {/* Patrón de hexágonos repetidos para cubrir todo el ancho */}
-            {Array.from({ length: 24 }).map((_, i) => (
+            {/* Patrón de cubos con mejor espaciado */}
+            {Array.from({ length: 25 }).map((_, i) => (
               <g key={i}>
-                {/* Hexágono central */}
-                <path d={`M${i * 100},40 L${i * 100 + 25},25 L${i * 100 + 50},40 L${i * 100 + 25},55 L${i * 100},40`} />
+                {/* Cara frontal del cubo */}
+                <path d={`M${i * 95},40 L${i * 95 + 30},25 L${i * 95 + 60},40 L${i * 95 + 30},55 L${i * 95},40`} />
                 
-                {/* Hexágono inferior */}
-                <path d={`M${i * 100 - 50},70 L${i * 100 - 25},55 L${i * 100},70 L${i * 100 - 25},85 L${i * 100 - 50},70`} />
+                {/* Cara superior del cubo */}
+                <path d={`M${i * 95},40 L${i * 95 + 30},25 L${i * 95 + 15},10 L${i * 95 - 15},25 L${i * 95},40`} />
                 
-                {/* Hexágono superior */}
-                <path d={`M${i * 100 - 50},10 L${i * 100 - 25},-5 L${i * 100},10 L${i * 100 - 25},25 L${i * 100 - 50},10`} />
-                
-                {/* Líneas conectoras */}
-                <path d={`M${i * 100 - 25},25 L${i * 100 - 25},55`} />
-                <path d={`M${i * 100 + 25},55 L${i * 100 + 25},85`} />
+                {/* Cara lateral del cubo */}
+                <path d={`M${i * 95 + 60},40 L${i * 95 + 30},55 L${i * 95 + 30},70 L${i * 95 + 60},55 L${i * 95 + 60},40`} />
               </g>
             ))}
           </g>
