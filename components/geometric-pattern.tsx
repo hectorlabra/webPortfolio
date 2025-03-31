@@ -9,18 +9,18 @@ export function GeometricPattern() {
           xmlns="http://www.w3.org/2000/svg"
           preserveAspectRatio="xMidYMid slice"
         >
-          <g stroke="rgba(255, 255, 255, 0.5)" strokeWidth="0.8" fill="none">
-            {/* Patrón de cubos con mejor espaciado */}
-            {Array.from({ length: 25 }).map((_, i) => (
+          <g stroke="rgba(255, 255, 255, 0.5)" strokeWidth="0.9" fill="none">
+            {/* Patrón de cubos con mayor tamaño */}
+            {Array.from({ length: 18 }).map((_, i) => (
               <g key={i}>
                 {/* Cara frontal del cubo */}
-                <path d={`M${i * 95},40 L${i * 95 + 30},25 L${i * 95 + 60},40 L${i * 95 + 30},55 L${i * 95},40`} />
+                <path d={`M${i * 130},40 L${i * 130 + 45},18 L${i * 130 + 90},40 L${i * 130 + 45},62 L${i * 130},40`} />
                 
                 {/* Cara superior del cubo */}
-                <path d={`M${i * 95},40 L${i * 95 + 30},25 L${i * 95 + 15},10 L${i * 95 - 15},25 L${i * 95},40`} />
+                <path d={`M${i * 130},40 L${i * 130 + 45},18 L${i * 130 + 22},2 L${i * 130 - 23},24 L${i * 130},40`} />
                 
                 {/* Cara lateral del cubo */}
-                <path d={`M${i * 95 + 60},40 L${i * 95 + 30},55 L${i * 95 + 30},70 L${i * 95 + 60},55 L${i * 95 + 60},40`} />
+                <path d={`M${i * 130 + 90},40 L${i * 130 + 45},62 L${i * 130 + 45},78 L${i * 130 + 90},56 L${i * 130 + 90},40`} />
               </g>
             ))}
           </g>
