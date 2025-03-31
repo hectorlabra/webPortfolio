@@ -24,16 +24,13 @@ export default function HomePage() {
             {/* Navigation Component */}
             <nav className="hidden md:flex items-center gap-6">
               <Link href="/" className="text-sm font-medium transition-colors hover:text-white/70">
-                Home
+                Inicio
               </Link>
-              <Link href="/blog" className="text-sm font-medium transition-colors hover:text-white/70">
-                Blog
+              <Link href="/quien-soy" className="text-sm font-medium transition-colors hover:text-white/70">
+                Quien Soy
               </Link>
-              <Link href="/projects" className="text-sm font-medium transition-colors hover:text-white/70">
-                Projects
-              </Link>
-              <Link href="/about" className="text-sm font-medium transition-colors hover:text-white/70">
-                About
+              <Link href="/proyectos" className="text-sm font-medium transition-colors hover:text-white/70">
+                Proyectos
               </Link>
             </nav>
             {/* Contact Button */}
@@ -41,7 +38,7 @@ export default function HomePage() {
               size="sm"
               className="hidden md:flex bg-[#64E365] text-[#0a0612] hover:bg-[#64E365]/90 text-sm h-10 px-4"
             >
-              Contact
+              Trabaja Conmigo
             </Button>
             {/* Mobile Menu Button */}
             <Button
