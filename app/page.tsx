@@ -68,8 +68,8 @@ export default function HomePage() {
         </header>
 
         <main className="flex-1">
-          {/* Hero Section */}
-          <section className="w-full min-h-[80vh] flex items-center pt-8 pb-6">
+          {/* Hero Section - Mantener espacio superior, bloques visibles solo abajo */}
+          <section className="w-full min-h-[82vh] flex items-center pt-0 pb-0">
             <div className="container flex-1 flex flex-col justify-center px-4 md:px-6">
               {/* Social Proof Component */}
               <SocialProof />
@@ -125,8 +125,8 @@ export default function HomePage() {
           {/* Geometric Pattern Component */}
           <GeometricPattern />
 
-          {/* Features Section */}
-          <section className="w-full min-h-[80vh] flex items-center py-6">
+          {/* Features Section - Espaciado uniforme, bloques visibles solo abajo */}
+          <section className="w-full min-h-[80vh] flex items-center pt-10 pb-0">
             <div className="container flex-1 flex flex-col justify-center px-4 md:px-6">
               <div className="flex flex-col items-start space-y-5 max-w-3xl mx-auto w-full">
                 <div className="space-y-3">
@@ -154,8 +154,8 @@ export default function HomePage() {
           {/* Geometric Pattern Component */}
           <GeometricPattern />
 
-          {/* Blog Section */}
-          <section className="w-full min-h-[80vh] flex items-center py-6">
+          {/* Blog Section - Espaciado uniforme, bloques visibles solo abajo */}
+          <section className="w-full min-h-[80vh] flex items-center pt-10 pb-0">
             <div className="container flex-1 flex flex-col justify-center px-4 md:px-6">
               <div className="flex flex-col items-start space-y-5">
                 <div className="space-y-3">
@@ -217,8 +217,8 @@ export default function HomePage() {
           {/* Geometric Pattern Component */}
           <GeometricPattern />
 
-          {/* FAQ Section */}
-          <section className="w-full min-h-[80vh] flex items-center py-6">
+          {/* FAQ Section - Espaciado uniforme, bloques visibles solo abajo */}
+          <section className="w-full min-h-[80vh] flex items-center pt-10 pb-0">
             <div className="container flex-1 flex flex-col justify-center px-4 md:px-6">
               <div className="flex flex-col items-start space-y-5">
                 <div className="space-y-3">
