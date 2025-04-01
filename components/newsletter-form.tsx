@@ -56,7 +56,7 @@ export function NewsletterForm({ minimal = false }: NewsletterFormProps) {
               type="submit"
               disabled={isSubmitting}
               size="sm"
-              className="bg-[#FFD24C] text-[#0a0612] hover:bg-[#FFD24C]/90 h-12 w-12 p-0"
+              className="bg-[#FFD24C] text-[#0a0612] hover:bg-[#FFD24C]/90 h-12 w-12 p-0 shadow-[0_0_15px_rgba(255,220,100,0.8),0_0_25px_rgba(255,220,100,0.4)]"
             >
               {isSubmitting ? "..." : <ArrowRight className="h-5 w-5" />}
             </Button>

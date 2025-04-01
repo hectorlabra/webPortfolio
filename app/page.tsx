@@ -30,7 +30,7 @@ export default function HomePage() {
                 Quien Soy
               </Link>
               <Link href="/proyectos" className="text-sm font-medium transition-colors hover:text-white/70">
-                Proyectos
+                Blog
               </Link>
             </nav>
             {/* Contact Button */}
@@ -140,10 +140,10 @@ export default function HomePage() {
               </div>
               <div className="flex justify-start">
                 <div className="flex items-center justify-between w-full">
-                  <Button className="bg-[#FFD100] text-[#0a0612] hover:bg-[#FFD100]/90 text-sm h-10 px-4 font-bold">
-                    EMPIEZA AHORA
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
+                    <Button className="bg-[#FFD100] text-[#0a0612] hover:bg-[#FFD100]/90 text-sm h-10 px-4 font-bold shadow-[0_0_10px_rgba(255,210,0,0.5),0_0_15px_rgba(255,210,0,0.3)]">
+                      EMPIEZA AHORA
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
                   {/* Social Proof Component */}
                   <SocialProof />
                 </div>
@@ -206,10 +206,10 @@ export default function HomePage() {
               </div>
               <div className="flex justify-start">
                 <div className="flex items-center justify-between w-full">
-                  <Button className="bg-[#FFD100] text-[#0a0612] hover:bg-[#FFD100]/90 text-sm h-10 px-4 font-bold">
-                    EMPIEZA AHORA
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
+                <Button className="bg-[#FFD100] text-[#0a0612] hover:bg-[#FFD100]/90 text-sm h-10 px-4 font-bold shadow-[0_0_10px_rgba(255,210,0,0.5),0_0_15px_rgba(255,210,0,0.3)]">
+                      EMPIEZA AHORA
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
                   {/* Social Proof Component */}
                   <SocialProof />
                 </div>
@@ -237,10 +237,10 @@ export default function HomePage() {
               </div>
               <div className="flex justify-start">
                 <div className="flex items-center justify-between w-full">
-                  <Button className="bg-[#FFD100] text-[#0a0612] hover:bg-[#FFD100]/90 text-sm h-10 px-4 font-bold">
-                    EMPIEZA AHORA
-                    <ArrowRight className="ml-2 h-4 w-4" />
-                  </Button>
+                <Button className="bg-[#FFD100] text-[#0a0612] hover:bg-[#FFD100]/90 text-sm h-10 px-4 font-bold shadow-[0_0_10px_rgba(255,210,0,0.5),0_0_15px_rgba(255,210,0,0.3)]">
+                      EMPIEZA AHORA
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
                   {/* Social Proof Component */}
                   <SocialProof />
                 </div>
