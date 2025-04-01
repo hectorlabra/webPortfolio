@@ -53,3 +53,29 @@
   }
 }
 
+/* Estilos para el efecto typewriter */
+.typewriter-container {
+  position: relative;
+  display: inline;
+}
+
+.typewriter-cursor {
+  position: relative;
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  margin-left: 2px;
+  background-color: #64E365;
+  vertical-align: text-top;
+  animation: blink 0.7s infinite;
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+

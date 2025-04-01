@@ -11,6 +11,7 @@ import { LegoBlocks } from "@/components/lego-blocks"
 import { GeometricPattern } from "@/components/geometric-pattern"
 import { SocialProof } from "@/components/social-proof"
 import { Logo } from "@/components/logo"
+import { TypewriterText } from "@/components/typewriter-text" // Nueva importación
 
 export default function HomePage() {
   return (
@@ -78,7 +79,7 @@ export default function HomePage() {
                 <div className="flex flex-col justify-center space-y-6">
                   <div className="space-y-4">
                     <h1 className="font-mono text-4xl font-bold tracking-tighter sm:text-4xl">
-                    Aprende a codificar en semanas, no meses.
+                      Aprende a <TypewriterText text="codificar en semanas, no meses." />
                     </h1>
                     <p className="text-lg text-white/70">
                     Todo lo que necesitas para construir tu carrera de software developer, incluso si eres un principiante absoluto.
