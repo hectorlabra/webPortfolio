@@ -76,18 +76,18 @@ const config = {
           "50%": { boxShadow: "0 0 15px rgba(100,227,101,0.4)" },
         },
         "circular-glow": {
-          "0%": { boxShadow: "0 10px 15px rgba(100,227,101,0.12), -10px 0 10px rgba(100,227,101,0.04), 0 -10px 10px rgba(100,227,101,0.04), 10px 0 10px rgba(100,227,101,0.04)" },
-          "25%": { boxShadow: "10px 0 15px rgba(100,227,101,0.12), 0 10px 10px rgba(100,227,101,0.04), -10px 0 10px rgba(100,227,101,0.04), 0 -10px 10px rgba(100,227,101,0.04)" },
-          "50%": { boxShadow: "0 -10px 15px rgba(100,227,101,0.12), 10px 0 10px rgba(100,227,101,0.04), 0 10px 10px rgba(100,227,101,0.04), -10px 0 10px rgba(100,227,101,0.04)" },
-          "75%": { boxShadow: "-10px 0 15px rgba(100,227,101,0.12), 0 -10px 10px rgba(100,227,101,0.04), 10px 0 10px rgba(100,227,101,0.04), 0 10px 10px rgba(100,227,101,0.04)" },
-          "100%": { boxShadow: "0 10px 15px rgba(100,227,101,0.12), -10px 0 10px rgba(100,227,101,0.04), 0 -10px 10px rgba(100,227,101,0.04), 10px 0 10px rgba(100,227,101,0.04)" }
+          "0%": { boxShadow: "0 8px 14px rgba(100,227,101,0.12), -8px 0 9px rgba(100,227,101,0.03), 0 -8px 9px rgba(100,227,101,0.03), 8px 0 9px rgba(100,227,101,0.03)" },
+          "25%": { boxShadow: "8px 0 14px rgba(100,227,101,0.12), 0 8px 9px rgba(100,227,101,0.03), -8px 0 9px rgba(100,227,101,0.03), 0 -8px 9px rgba(100,227,101,0.03)" },
+          "50%": { boxShadow: "0 -8px 14px rgba(100,227,101,0.12), 8px 0 9px rgba(100,227,101,0.03), 0 8px 9px rgba(100,227,101,0.03), -8px 0 9px rgba(100,227,101,0.03)" },
+          "75%": { boxShadow: "-8px 0 14px rgba(100,227,101,0.12), 0 -8px 9px rgba(100,227,101,0.03), 8px 0 9px rgba(100,227,101,0.03), 0 8px 9px rgba(100,227,101,0.03)" },
+          "100%": { boxShadow: "0 8px 14px rgba(100,227,101,0.12), -8px 0 9px rgba(100,227,101,0.03), 0 -8px 9px rgba(100,227,101,0.03), 8px 0 9px rgba(100,227,101,0.03)" }
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "subtle-glow": "subtle-glow 4s ease-in-out infinite",
-        "circular-glow": "circular-glow 4s cubic-bezier(0.45, 0, 0.55, 1) infinite",
+        "circular-glow": "circular-glow 4s linear infinite",
       },
     },
   },
