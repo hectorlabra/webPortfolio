@@ -155,7 +155,7 @@ export default function HomePage() {
           <GeometricPattern />
 
           {/* Blog Section - Estructura igualada con Features */}
-          <section className="w-full py-24">
+          <section className="w-full py-48">
             <div className="container flex-1 flex flex-col px-4 md:px-6">
               <div className="flex flex-col items-start space-y-5">
                 <div className="space-y-3">
@@ -169,35 +169,35 @@ export default function HomePage() {
                 <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
                   {[1, 2, 3].map((i) => (
                     <Card key={i} className="overflow-hidden bg-white/5 border-white/10">
-                      <div className="aspect-video w-full overflow-hidden">
+                      <div className="aspect-[4/3] w-full overflow-hidden">
                         <Image
                           src={`/placeholder.svg?height=200&width=400&text=Article+${i}`}
                           alt={`Article ${i}`}
                           width={400}
-                          height={200}
+                          height={300}
                           className="object-cover transition-all hover:scale-105"
                         />
                       </div>
-                      <div className="p-6">
-                        <div className="inline-block rounded-full bg-white/10 px-3 py-1 text-sm">Categoría</div>
-                        <h3 className="mt-4 font-mono text-lg font-bold">Título del artículo</h3>
-                        <p className="mt-2 text-base text-white/70">
+                      <div className="p-4">
+                        <div className="flex justify-between items-center">
+                          <div className="inline-block rounded-full bg-white/10 px-3 py-1 text-xs">Categoría</div>
+                          <p className="text-xs text-white/70">28 Mar</p>
+                        </div>
+                        <h3 className="mt-2 font-mono text-lg font-bold line-clamp-1">Título del artículo</h3>
+                        <p className="mt-1 text-sm text-white/70 line-clamp-2">
                           Una breve descripción del artículo y lo que los lectores pueden esperar aprender.
                         </p>
-                        <div className="mt-5 flex items-center gap-3">
-                          <div className="h-10 w-10 rounded-full bg-white/10">
+                        <div className="mt-3 flex items-center gap-2">
+                          <div className="h-6 w-6 rounded-full bg-white/10">
                             <Image
-                              src="/placeholder.svg?height=40&width=40"
+                              src="/placeholder.svg?height=24&width=24"
                               alt="Avatar"
-                              width={40}
-                              height={40}
+                              width={24}
+                              height={24}
                               className="rounded-full"
                             />
                           </div>
-                          <div className="text-sm">
-                            <p className="font-medium">Hector Labra</p>
-                            <p className="text-sm text-white/70">28 Mar, 2025</p>
-                          </div>
+                          <p className="text-xs font-medium">Hector Labra</p>
                         </div>
                       </div>
                     </Card>
@@ -221,7 +221,7 @@ export default function HomePage() {
           <GeometricPattern />
 
           {/* FAQ Section - Estructura igualada con Features */}
-          <section className="w-full py-24">
+          <section className="w-full py-48">
             <div className="container flex-1 flex flex-col px-4 md:px-6">
               <div className="flex flex-col items-start space-y-5">
                 <div className="space-y-3">
