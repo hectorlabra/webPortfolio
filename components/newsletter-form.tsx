@@ -10,9 +10,10 @@ import { Input } from "@/components/ui/input"
 
 interface NewsletterFormProps {
   minimal?: boolean
+  compact?: boolean
 }
 
-export function NewsletterForm({ minimal = false }: NewsletterFormProps) {
+export function NewsletterForm({ minimal = false, compact = false }: NewsletterFormProps) {
   const [email, setEmail] = useState("")
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSuccess, setIsSuccess] = useState(false)
@@ -39,7 +40,7 @@ export function NewsletterForm({ minimal = false }: NewsletterFormProps) {
     return (
       <div className="w-full space-y-2">
         {isSuccess ? (
-          <div className="rounded bg-white/10 p-3 text-white text-base">
+          <div className={`rounded bg-white/10 ${compact ? 'p-2 text-xs' : 'p-3 text-base'} text-white`}>
             <p>¡Gracias por suscribirte!</p>
           </div>
         ) : (
@@ -50,15 +51,15 @@ export function NewsletterForm({ minimal = false }: NewsletterFormProps) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="flex-1 bg-white/5 border-white/10 focus:border-white h-12 text-base"
+              className={`flex-1 bg-white/5 border-white/10 focus:border-white ${compact ? 'h-9 text-xs' : 'h-12 text-base'}`}
             />
             <Button
               type="submit"
               disabled={isSubmitting}
               size="sm"
-              className="bg-[#FFD24C] text-[#0a0612] hover:bg-[#FFD24C]/90 h-12 w-12 p-0 shadow-[0_0_15px_rgba(255,220,100,0.8),0_0_25px_rgba(255,220,100,0.4)]"
+              className={`bg-[#FFD24C] text-[#0a0612] hover:bg-[#FFD24C]/90 ${compact ? 'h-9 w-9' : 'h-12 w-12'} p-0 shadow-[0_0_15px_rgba(255,220,100,0.8),0_0_25px_rgba(255,220,100,0.4)]`}
             >
-              {isSubmitting ? "..." : <ArrowRight className="h-5 w-5" />}
+              {isSubmitting ? "..." : <ArrowRight className={compact ? "h-4 w-4" : "h-5 w-5"} />}
             </Button>
           </form>
         )}
