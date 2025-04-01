@@ -136,7 +136,7 @@ export default function HomePage() {
               </div>
               <div className="py-12">
                 {/* LegoBlocks Component */}
-                <LegoBlocks />
+                <LegoBlocks fullWidth={true} />
               </div>
               <div className="flex justify-start">
                 <div className="flex items-center justify-between w-full">
