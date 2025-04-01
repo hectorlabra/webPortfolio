@@ -126,7 +126,7 @@ export default function HomePage() {
           <GeometricPattern />
 
           {/* Features Section - Igualada con Hero */}
-          <section className="w-full py-24">
+          <section className="w-full py-48">
             <div className="container flex-1 flex flex-col px-4 md:px-6">
               <div className="flex flex-col items-start space-y-5">
                 <div className="space-y-3">
