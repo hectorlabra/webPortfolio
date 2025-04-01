@@ -13,7 +13,7 @@ export const TypewriterText: React.FC<TypewriterTextProps> = ({
 }) => {
   const [displayText, setDisplayText] = useState('');
   const [isDeleting, setIsDeleting] = useState(false);
-  const [typingSpeed, setTypingSpeed] = useState(100);
+  const [typingSpeed, setTypingSpeed] = useState(70); // Velocidad inicial más rápida
   
   useEffect(() => {
     const handleTyping = () => {
@@ -21,18 +21,18 @@ export const TypewriterText: React.FC<TypewriterTextProps> = ({
       
       if (!isDeleting && current === text) {
         // Pausa antes de empezar a borrar
-        setTypingSpeed(3000); // Pausa de 3 segundos antes de borrar
+        setTypingSpeed(2000); // Reducida de 3000 a 2000ms
         setIsDeleting(true);
         return;
       } else if (isDeleting && current === '') {
         // Pausa antes de empezar a escribir de nuevo
-        setTypingSpeed(500);
+        setTypingSpeed(300); // Reducida de 500 a 300ms
         setIsDeleting(false);
         return;
       }
       
-      // Velocidad de escritura/borrado
-      setTypingSpeed(isDeleting ? 50 : 100);
+      // Velocidad de escritura/borrado más rápida
+      setTypingSpeed(isDeleting ? 30 : 70); // Velocidades más rápidas
       
       // Lógica para escribir o borrar
       const updatedText = isDeleting

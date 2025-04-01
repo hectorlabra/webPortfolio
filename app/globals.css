@@ -62,17 +62,19 @@
 .typewriter-cursor {
   position: relative;
   display: inline-block;
-  width: 2px;
-  height: 1em;
+  width: 4px; /* Aumentado de 2px a 4px para hacerlo más grueso */
+  height: 1.2em; /* Ligeramente más alto */
   margin-left: 2px;
   background-color: #64E365;
   vertical-align: text-top;
+  border-radius: 1px; /* Pequeño redondeo en las esquinas */
   animation: blink 0.7s infinite;
+  opacity: 0.9; /* Ligera transparencia para suavizar el efecto */
 }
 
 @keyframes blink {
   0%, 100% {
-    opacity: 1;
+    opacity: 0.9;
   }
   50% {
     opacity: 0;
