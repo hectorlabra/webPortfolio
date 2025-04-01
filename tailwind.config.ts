@@ -71,10 +71,23 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "subtle-glow": {
+          "0%, 100%": { boxShadow: "0 0 10px rgba(100,227,101,0.25)" },
+          "50%": { boxShadow: "0 0 15px rgba(100,227,101,0.4)" },
+        },
+        "circular-glow": {
+          "0%": { boxShadow: "0 10px 15px rgba(100,227,101,0.12), -10px 0 10px rgba(100,227,101,0.04), 0 -10px 10px rgba(100,227,101,0.04), 10px 0 10px rgba(100,227,101,0.04)" },
+          "25%": { boxShadow: "10px 0 15px rgba(100,227,101,0.12), 0 10px 10px rgba(100,227,101,0.04), -10px 0 10px rgba(100,227,101,0.04), 0 -10px 10px rgba(100,227,101,0.04)" },
+          "50%": { boxShadow: "0 -10px 15px rgba(100,227,101,0.12), 10px 0 10px rgba(100,227,101,0.04), 0 10px 10px rgba(100,227,101,0.04), -10px 0 10px rgba(100,227,101,0.04)" },
+          "75%": { boxShadow: "-10px 0 15px rgba(100,227,101,0.12), 0 -10px 10px rgba(100,227,101,0.04), 10px 0 10px rgba(100,227,101,0.04), 0 10px 10px rgba(100,227,101,0.04)" },
+          "100%": { boxShadow: "0 10px 15px rgba(100,227,101,0.12), -10px 0 10px rgba(100,227,101,0.04), 0 -10px 10px rgba(100,227,101,0.04), 10px 0 10px rgba(100,227,101,0.04)" }
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "subtle-glow": "subtle-glow 4s ease-in-out infinite",
+        "circular-glow": "circular-glow 4s cubic-bezier(0.45, 0, 0.55, 1) infinite",
       },
     },
   },

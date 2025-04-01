@@ -107,7 +107,7 @@ export default function HomePage() {
                 </div>
                 {/* Newsletter Signup */}
                 <div className="flex items-center justify-center lg:justify-end">
-                    <div className="rounded border border-white/10 bg-white/5 p-8 backdrop-blur w-full shadow-[0_0_10px_rgba(100,227,101,0.3)]">
+                    <div className="rounded border border-white/10 bg-white/5 p-8 backdrop-blur w-full animate-circular-glow">
                     <div className="space-y-4">
                       <h2 className="font-mono text-2xl font-bold">¡Únete con un click!</h2>
                       
