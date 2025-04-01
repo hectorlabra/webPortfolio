@@ -68,7 +68,7 @@ export default function HomePage() {
         </header>
 
         <main className="flex-1">
-          {/* Hero Section - Mantener espacio superior, bloques visibles solo abajo */}
+          {/* Hero Section - Mantener como referencia */}
           <section className="w-full min-h-[82vh] flex items-center pt-0 pb-0">
             <div className="container flex-1 flex flex-col justify-center px-4 md:px-6">
               {/* Social Proof Component */}
@@ -81,7 +81,7 @@ export default function HomePage() {
                     Aprende a codificar en semanas, no meses.
                     </h1>
                     <p className="text-lg text-white/70">
-                    Todo lo que necesitas para monetizar tu carrera de software developer, incluso si eres un principiante absoluto.
+                    Todo lo que necesitas para construir tu carrera de software developer, incluso si eres un principiante absoluto.
                     </p>
                   </div>
                   {/* Highlight Banner */}
@@ -125,20 +125,20 @@ export default function HomePage() {
           {/* Geometric Pattern Component */}
           <GeometricPattern />
 
-          {/* Features Section - Espaciado uniforme, bloques visibles solo abajo */}
-          <section className="w-full min-h-[80vh] flex items-center pt-10 pb-0">
-            <div className="container flex-1 flex flex-col justify-center px-4 md:px-6">
-              <div className="flex flex-col items-start space-y-5 max-w-3xl mx-auto w-full">
+          {/* Features Section - Igualada con Hero */}
+          <section className="w-full py-24">
+            <div className="container flex-1 flex flex-col px-4 md:px-6">
+              <div className="flex flex-col items-start space-y-5">
                 <div className="space-y-3">
                   <h2 className="font-mono text-3xl font-bold tracking-tighter">Enseñamos el enfoque completo.</h2>
                   <p className="text-lg text-white/70">Construye, automatiza y escala. Desde cero, paso a paso. ✨</p>
                 </div>
               </div>
-              <div className="py-12 max-w-3xl mx-auto w-full">
+              <div className="py-12">
                 {/* LegoBlocks Component */}
                 <LegoBlocks />
               </div>
-              <div className="flex justify-start max-w-3xl mx-auto w-full">
+              <div className="flex justify-start">
                 <div className="flex items-center justify-between w-full">
                   <Button className="bg-[#FFD100] text-[#0a0612] hover:bg-[#FFD100]/90 text-sm h-10 px-4 font-bold">
                     EMPIEZA AHORA
@@ -154,9 +154,9 @@ export default function HomePage() {
           {/* Geometric Pattern Component */}
           <GeometricPattern />
 
-          {/* Blog Section - Espaciado uniforme, bloques visibles solo abajo */}
-          <section className="w-full min-h-[80vh] flex items-center pt-10 pb-0">
-            <div className="container flex-1 flex flex-col justify-center px-4 md:px-6">
+          {/* Blog Section - Estructura igualada con Features */}
+          <section className="w-full py-24">
+            <div className="container flex-1 flex flex-col px-4 md:px-6">
               <div className="flex flex-col items-start space-y-5">
                 <div className="space-y-3">
                   <h2 className="font-mono text-3xl font-bold tracking-tighter">Últimos artículos</h2>
@@ -165,51 +165,54 @@ export default function HomePage() {
                   </p>
                 </div>
               </div>
-              {/* Blog Cards Grid */}
-              <div className="grid grid-cols-1 gap-8 py-12 md:grid-cols-2 lg:grid-cols-3">
-                {[1, 2, 3].map((i) => (
-                  <Card key={i} className="overflow-hidden bg-white/5 border-white/10">
-                    <div className="aspect-video w-full overflow-hidden">
-                      <Image
-                        src={`/placeholder.svg?height=200&width=400&text=Article+${i}`}
-                        alt={`Article ${i}`}
-                        width={400}
-                        height={200}
-                        className="object-cover transition-all hover:scale-105"
-                      />
-                    </div>
-                    <div className="p-6">
-                      <div className="inline-block rounded-full bg-white/10 px-3 py-1 text-sm">Categoría</div>
-                      <h3 className="mt-4 font-mono text-lg font-bold">Título del artículo</h3>
-                      <p className="mt-2 text-base text-white/70">
-                        Una breve descripción del artículo y lo que los lectores pueden esperar aprender.
-                      </p>
-                      <div className="mt-5 flex items-center gap-3">
-                        <div className="h-10 w-10 rounded-full bg-white/10">
-                          <Image
-                            src="/placeholder.svg?height=40&width=40"
-                            alt="Avatar"
-                            width={40}
-                            height={40}
-                            className="rounded-full"
-                          />
-                        </div>
-                        <div className="text-sm">
-                          <p className="font-medium">Hector Labra</p>
-                          <p className="text-sm text-white/70">28 Mar, 2025</p>
+              <div className="py-12"> {/* Contenedor con el mismo py-12 que Features */}
+                <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                  {[1, 2, 3].map((i) => (
+                    <Card key={i} className="overflow-hidden bg-white/5 border-white/10">
+                      <div className="aspect-video w-full overflow-hidden">
+                        <Image
+                          src={`/placeholder.svg?height=200&width=400&text=Article+${i}`}
+                          alt={`Article ${i}`}
+                          width={400}
+                          height={200}
+                          className="object-cover transition-all hover:scale-105"
+                        />
+                      </div>
+                      <div className="p-6">
+                        <div className="inline-block rounded-full bg-white/10 px-3 py-1 text-sm">Categoría</div>
+                        <h3 className="mt-4 font-mono text-lg font-bold">Título del artículo</h3>
+                        <p className="mt-2 text-base text-white/70">
+                          Una breve descripción del artículo y lo que los lectores pueden esperar aprender.
+                        </p>
+                        <div className="mt-5 flex items-center gap-3">
+                          <div className="h-10 w-10 rounded-full bg-white/10">
+                            <Image
+                              src="/placeholder.svg?height=40&width=40"
+                              alt="Avatar"
+                              width={40}
+                              height={40}
+                              className="rounded-full"
+                            />
+                          </div>
+                          <div className="text-sm">
+                            <p className="font-medium">Hector Labra</p>
+                            <p className="text-sm text-white/70">28 Mar, 2025</p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </Card>
-                ))}
+                    </Card>
+                  ))}
+                </div>
               </div>
-              <div className="flex items-center justify-between">
-                <Button className="bg-[#FFD100] text-[#0a0612] hover:bg-[#FFD100]/90 text-sm h-10 px-4 font-bold">
-                  EMPIEZA AHORA
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-                {/* Social Proof Component */}
-                <SocialProof />
+              <div className="flex justify-start">
+                <div className="flex items-center justify-between w-full">
+                  <Button className="bg-[#FFD100] text-[#0a0612] hover:bg-[#FFD100]/90 text-sm h-10 px-4 font-bold">
+                    EMPIEZA AHORA
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                  {/* Social Proof Component */}
+                  <SocialProof />
+                </div>
               </div>
             </div>
           </section>
@@ -217,9 +220,9 @@ export default function HomePage() {
           {/* Geometric Pattern Component */}
           <GeometricPattern />
 
-          {/* FAQ Section - Espaciado uniforme, bloques visibles solo abajo */}
-          <section className="w-full min-h-[80vh] flex items-center pt-10 pb-0">
-            <div className="container flex-1 flex flex-col justify-center px-4 md:px-6">
+          {/* FAQ Section - Estructura igualada con Features */}
+          <section className="w-full py-24">
+            <div className="container flex-1 flex flex-col px-4 md:px-6">
               <div className="flex flex-col items-start space-y-5">
                 <div className="space-y-3">
                   <h2 className="font-mono text-3xl font-bold tracking-tighter">Preguntas frecuentes.</h2>
@@ -229,17 +232,18 @@ export default function HomePage() {
                   </p>
                 </div>
               </div>
-              <div className="py-12">
-                {/* FAQ Accordion Component */}
+              <div className="py-12"> {/* Mismo espaciado que Features */}
                 <FaqAccordion />
               </div>
-              <div className="flex items-center justify-between">
-                <Button className="bg-[#FFD100] text-[#0a0612] hover:bg-[#FFD100]/90 text-sm h-10 px-4 font-bold">
-                  EMPIEZA AHORA
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-                {/* Social Proof Component */}
-                <SocialProof />
+              <div className="flex justify-start">
+                <div className="flex items-center justify-between w-full">
+                  <Button className="bg-[#FFD100] text-[#0a0612] hover:bg-[#FFD100]/90 text-sm h-10 px-4 font-bold">
+                    EMPIEZA AHORA
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Button>
+                  {/* Social Proof Component */}
+                  <SocialProof />
+                </div>
               </div>
             </div>
           </section>
@@ -331,4 +335,3 @@ export default function HomePage() {
     </div>
   )
 }
-
