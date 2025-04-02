@@ -1,10 +1,14 @@
+"use client"
+
 import Link from "next/link"
 import Image from "next/image"
 import { ArrowRight, Check, Github, Twitter, Linkedin } from "lucide-react"
+import { useState } from "react"
 
 // UI Components imports
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
+import { Sheet, SheetContent } from "@/components/ui/sheet"
 import { NewsletterForm } from "@/components/newsletter-form"
 import { FaqAccordion } from "@/components/faq-accordion"
 import { LegoBlocks } from "@/components/lego-blocks"
@@ -14,6 +18,8 @@ import { Logo } from "@/components/logo"
 import { TypewriterText } from "@/components/typewriter-text" // Nueva importación
 
 export default function HomePage() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  
   return (
     <div className="flex min-h-screen flex-col bg-[#0a0612] text-white">
       <div className="mx-auto w-full max-w-[1000px]">
@@ -46,6 +52,7 @@ export default function HomePage() {
               variant="outline"
               size="icon"
               className="md:hidden border-white text-white hover:bg-white/10 h-10 w-10"
+              onClick={() => setMenuOpen(true)}
             >
               <span className="sr-only">Toggle menu</span>
               <svg
@@ -67,21 +74,38 @@ export default function HomePage() {
             </Button>
           </div>
         </header>
+        
+        {/* Mobile Menu Sheet */}
+        <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
+          <SheetContent className="bg-[#0a0612] border-white/10">
+            <div className="flex flex-col gap-6 py-6">
+              <Link href="/" className="text-lg font-medium" onClick={() => setMenuOpen(false)}>Inicio</Link>
+              <Link href="/quien-soy" className="text-lg font-medium" onClick={() => setMenuOpen(false)}>Quien Soy</Link>
+              <Link href="/proyectos" className="text-lg font-medium" onClick={() => setMenuOpen(false)}>Blog</Link>
+              <Button 
+                className="bg-[#64E365] text-[#0a0612] hover:bg-[#64E365]/90 w-full mt-4"
+                onClick={() => setMenuOpen(false)}
+              >
+                Trabaja Conmigo
+              </Button>
+            </div>
+          </SheetContent>
+        </Sheet>
 
         <main className="flex-1">
           {/* Hero Section - Mantener como referencia */}
-          <section className="w-full min-h-[80vh] flex items-center pt-0 pb-0">
+          <section className="w-full min-h-[60vh] sm:min-h-[70vh] lg:min-h-[80vh] flex items-center pt-0 pb-0">
             <div className="container flex-1 flex flex-col justify-center px-4 md:px-6">
               {/* Social Proof Component */}
               <SocialProof />
-              <div className="grid gap-10 lg:grid-cols-[60fr_40fr] lg:gap-16 mt-6">
+              <div className="grid gap-6 sm:gap-10 lg:grid-cols-[60fr_40fr] lg:gap-16 mt-4 lg:mt-6">
                 {/* Hero Content */}
-                <div className="flex flex-col justify-center space-y-6">
-                  <div className="space-y-4">
-                    <h1 className="font-mono text-4xl font-bold tracking-tighter sm:text-4xl">
+                <div className="flex flex-col justify-center space-y-4 sm:space-y-6">
+                  <div className="space-y-3 sm:space-y-4">
+                    <h1 className="font-mono text-3xl sm:text-4xl font-bold tracking-tighter">
                       Aprende a <TypewriterText text="codificar en semanas, no meses." />
                     </h1>
-                    <p className="text-lg text-white/70">
+                    <p className="text-base sm:text-lg text-white/70">
                     Todo lo que necesitas para construir tu carrera de software developer, incluso si eres un principiante absoluto.
                     </p>
                   </div>
