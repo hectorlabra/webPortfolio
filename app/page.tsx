@@ -193,10 +193,10 @@ export default function HomePage() {
                 </div>
               </div>
               <div className="py-12"> {/* Contenedor con el mismo py-12 que Features */}
-                <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+                <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
                   {[1, 2, 3].map((i) => (
-                    <Card key={i} className="overflow-hidden bg-white/5 border-white/10">
-                      <div className="aspect-[4/3] w-full overflow-hidden">
+                    <Card key={i} className="overflow-hidden bg-white/5 border-white/10 transition-all hover:bg-white/10">
+                      <div className="aspect-[4/3] w-full overflow-hidden bg-white/5">
                         <Image
                           src={`/placeholder.svg?height=200&width=400&text=Article+${i}`}
                           alt={`Article ${i}`}
@@ -205,13 +205,13 @@ export default function HomePage() {
                           className="object-cover transition-all hover:scale-105"
                         />
                       </div>
-                      <div className="p-4">
+                      <div className="p-3 sm:p-4">
                         <div className="flex justify-between items-center">
                           <div className="inline-block rounded-full bg-white/10 px-3 py-1 text-xs">Categoría</div>
                           <p className="text-xs text-white/70">28 Mar</p>
                         </div>
-                        <h3 className="mt-2 font-mono text-lg font-bold line-clamp-1">Título del artículo</h3>
-                        <p className="mt-1 text-sm text-white/70 line-clamp-2">
+                        <h3 className="mt-2 font-mono text-lg font-bold line-clamp-1 text-balance-mobile">Título del artículo</h3>
+                        <p className="mt-1 text-xs sm:text-sm text-white/70 line-clamp-2">
                           Una breve descripción del artículo y lo que los lectores pueden esperar aprender.
                         </p>
                         <div className="mt-3 flex items-center gap-2">

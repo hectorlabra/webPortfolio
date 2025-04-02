@@ -81,3 +81,80 @@
   }
 }
 
+/* Utilidades responsive para mejorar la experiencia móvil */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  h1, h2, h3 {
+    word-break: break-word;
+  }
+  
+  h1 {
+    font-size: clamp(1.75rem, 6vw, 2.25rem);
+  }
+  
+  h2 {
+    font-size: clamp(1.5rem, 5vw, 1.875rem);
+  }
+  
+  h3 {
+    font-size: clamp(1.25rem, 4vw, 1.5rem);
+  }
+}
+
+/* Clases de utilidad responsive */
+.py-auto-responsive {
+  padding-top: clamp(1.5rem, 5vw, 3rem);
+  padding-bottom: clamp(1.5rem, 5vw, 3rem);
+}
+
+.text-balance-mobile {
+  overflow-wrap: break-word;
+  word-wrap: break-word;
+  hyphens: auto;
+  text-wrap: balance;
+}
+
+/* Animación de resplandor circular para elementos destacados */
+.animate-circular-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.animate-circular-glow::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(
+    circle at center,
+    rgba(100, 227, 101, 0.1) 0%,
+    rgba(100, 227, 101, 0.05) 30%,
+    rgba(100, 227, 101, 0) 70%
+  );
+  opacity: 0;
+  animation: pulse-glow 4s ease-in-out infinite;
+  z-index: -1;
+  pointer-events: none;
+}
+
+@keyframes pulse-glow {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
