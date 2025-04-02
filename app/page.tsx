@@ -121,7 +121,7 @@ export default function HomePage() {
 
         <main className="flex-1">
           {/* Hero Section - Mantener como referencia */}
-          <section className="w-full min-h-[55vh] sm:min-h-[70vh] lg:min-h-[80vh] flex items-center py-8 sm:py-6 md:py-4 lg:pt-0 lg:pb-0 relative">
+          <section className="w-full min-h-[55vh] sm:min-h-[70vh] lg:min-h-[80vh] flex items-center py-16 sm:py-6 md:py-4 lg:pt-0 lg:pb-0 relative">
             <div className="absolute inset-0 bg-gradient-to-b from-[#0a0612] via-[#0a0612] to-[#0a0612]/90 pointer-events-none"></div>
             <div className="container flex-1 flex flex-col justify-center px-4 md:px-6 relative z-10">
               {/* Social Proof Component */}
