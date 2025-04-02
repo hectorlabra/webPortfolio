@@ -8,10 +8,10 @@ export function LegoBlocks({ fullWidth = false }: LegoBlocksProps) {
       {/* Primera fila */}
       <div className="grid grid-cols-12 gap-2 mb-2">
         <div className="bg-[#FFD100] text-[#0a0612] font-mono text-sm font-medium py-5 px-3 text-center col-span-2">
-          NICHOS
+          IA
         </div>
         <div className="bg-[#4CD964] text-[#0a0612] font-mono text-sm font-medium py-5 px-3 text-center col-span-3">
-          MARCA
+          MARCA PERSONAL
         </div>
         <div className="bg-[#007AFF] text-white font-mono text-sm font-medium py-5 px-3 text-center col-span-4">
           AUDIENCIA & COMUNIDADES
