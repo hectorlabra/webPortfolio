@@ -94,7 +94,7 @@ export default function HomePage() {
 
         <main className="flex-1">
           {/* Hero Section - Mantener como referencia */}
-          <section className="w-full min-h-[55vh] sm:min-h-[70vh] lg:min-h-[80vh] flex items-center pt-0 pb-0 relative">
+          <section className="w-full min-h-[55vh] sm:min-h-[70vh] lg:min-h-[80vh] flex items-center py-8 sm:py-6 md:py-4 lg:pt-0 lg:pb-0 relative">
             <div className="absolute inset-0 bg-gradient-to-b from-[#0a0612] via-[#0a0612] to-[#0a0612]/90 pointer-events-none"></div>
             <div className="container flex-1 flex flex-col justify-center px-4 md:px-6 relative z-10">
               {/* Social Proof Component */}
@@ -135,7 +135,7 @@ export default function HomePage() {
                 <div className="flex items-center justify-center lg:justify-end mt-6 lg:mt-0">
                     <div className="rounded-lg border-2 border-white/20 bg-white/5 p-5 sm:p-6 md:p-8 backdrop-blur w-full animate-circular-glow shadow-sm shadow-white/5">
                     <div className="space-y-3 sm:space-y-4">
-                      <h2 className="font-mono text-xl sm:text-2xl font-bold">¡Únete con un click!</h2>
+                      <h2 className="font-mono text-xl sm:text-2xl lg:text-[1.4rem] font-bold text-center">¡Únete con un click!</h2>
                       
                     </div>
                     <div className="mt-4 sm:mt-6">
