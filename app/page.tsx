@@ -94,8 +94,9 @@ export default function HomePage() {
 
         <main className="flex-1">
           {/* Hero Section - Mantener como referencia */}
-          <section className="w-full min-h-[55vh] sm:min-h-[70vh] lg:min-h-[80vh] flex items-center pt-0 pb-0">
-            <div className="container flex-1 flex flex-col justify-center px-4 md:px-6">
+          <section className="w-full min-h-[55vh] sm:min-h-[70vh] lg:min-h-[80vh] flex items-center pt-0 pb-0 relative">
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0a0612] via-[#0a0612] to-[#0a0612]/90 pointer-events-none"></div>
+            <div className="container flex-1 flex flex-col justify-center px-4 md:px-6 relative z-10">
               {/* Social Proof Component */}
               <SocialProof />
               <div className="grid gap-6 sm:gap-8 lg:grid-cols-[60fr_40fr] lg:gap-16 mt-6 lg:mt-6">
@@ -105,26 +106,26 @@ export default function HomePage() {
                     <h1 className="font-mono text-2xl sm:text-3xl md:text-4xl font-bold tracking-tighter">
                       Aprende a <TypewriterText text="codificar en semanas, no meses." />
                     </h1>
-                    <p className="text-sm sm:text-base md:text-lg text-white/70">
+                    <p className="text-base sm:text-lg text-white/70">
                     Todo lo que necesitas para construir tu carrera de software developer, incluso si eres un principiante absoluto.
                     </p>
                   </div>
                   {/* Highlight Banner */}
-                  <div className="inline-flex w-fit rounded bg-[#64E365]/20 px-3 sm:px-4 py-1.5 text-sm sm:text-base text-[#64E365]">
+                  <div className="inline-flex w-fit rounded-md bg-[#64E365]/20 px-3.5 sm:px-4 py-2 text-sm sm:text-base text-[#64E365] font-medium border border-[#64E365]/30 shadow-[0_0_8px_rgba(100,227,101,0.2)]">
                   Codifica tu idea rápidamente, construye tu libertad.
                   </div>
                   {/* Features List */}
                   <div className="space-y-2 sm:space-y-3 sm:space-y-4">
-                    <div className="flex items-center gap-2 sm:gap-3">
-                      <Check className="h-5 w-5 sm:h-6 sm:w-6 text-[#64E365]" />
+                    <div className="flex items-center gap-3 sm:gap-3">
+                      <Check className="h-6 w-6 sm:h-6 sm:w-6 text-[#64E365]" />
                       <span className="text-sm sm:text-base">Aprende solo los fundamentos</span>
                     </div>
-                    <div className="flex items-center gap-2 sm:gap-3">
-                      <Check className="h-5 w-5 sm:h-6 sm:w-6 text-[#64E365]" />
+                    <div className="flex items-center gap-3 sm:gap-3">
+                      <Check className="h-6 w-6 sm:h-6 sm:w-6 text-[#64E365]" />
                       <span className="text-sm sm:text-base">Usa la IA para que codifique por ti</span>
                     </div>
-                    <div className="flex items-center gap-2 sm:gap-3">
-                      <Check className="h-5 w-5 sm:h-6 sm:w-6 text-[#64E365]" />
+                    <div className="flex items-center gap-3 sm:gap-3">
+                      <Check className="h-6 w-6 sm:h-6 sm:w-6 text-[#64E365]" />
                       <span className="text-sm sm:text-base">Sigue aprendiendo sobre la marcha</span>
                     </div>
                   </div>
