@@ -70,7 +70,7 @@ export default function HomePage() {
 
         <main className="flex-1">
           {/* Hero Section - Mantener como referencia */}
-          <section className="w-full min-h-[82vh] flex items-center pt-0 pb-0">
+          <section className="w-full min-h-[80vh] flex items-center pt-0 pb-0">
             <div className="container flex-1 flex flex-col justify-center px-4 md:px-6">
               {/* Social Proof Component */}
               <SocialProof />
