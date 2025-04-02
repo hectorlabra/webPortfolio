@@ -83,15 +83,15 @@ export function NewsletterForm({ minimal = false, compact = false }: NewsletterF
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="bg-white/5 border-white/10 focus:border-white h-10 sm:h-12 text-sm sm:text-base"
+              className="bg-white/5 border-white/10 focus:border-white h-11 sm:h-12 text-base rounded-md"
             />
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="bg-[#FFD24C] text-[#0a0612] hover:bg-[#FFD24C]/90 h-10 sm:h-12 text-sm sm:text-base w-full"
+              className="bg-[#FFD24C] text-[#0a0612] hover:bg-[#FFD24C]/90 h-11 sm:h-12 text-base w-full rounded-md font-medium transition-all shadow-[0_0_10px_rgba(255,210,76,0.3)]"
             >
               {isSubmitting ? "Enviando..." : "Empieza Ahora"}
-              <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
+              <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </div>
           {error && <p className="text-sm sm:text-base text-red-500">{error}</p>}
