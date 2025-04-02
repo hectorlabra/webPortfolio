@@ -111,8 +111,8 @@ export default function HomePage() {
                     </p>
                   </div>
                   {/* Highlight Banner */}
-                  <div className="inline-flex w-fit rounded-md bg-[#64E365]/20 px-3.5 sm:px-4 py-2 text-sm sm:text-base text-[#64E365] font-medium border border-[#64E365]/30 shadow-[0_0_8px_rgba(100,227,101,0.2)]">
-                  Codifica tu idea rápidamente, construye tu libertad.
+                  <div className="inline-flex w-fit rounded-md bg-[#64E365]/20 px-3.5 sm:px-4 py-2 text-[0.79rem] sm:text-sm md:text-base text-[#64E365] font-medium border border-[#64E365]/30 shadow-[0_0_8px_rgba(100,227,101,0.2)]">
+                    Codifica tu idea rápidamente, construye tu libertad.
                   </div>
                   {/* Features List */}
                   <div className="space-y-2 sm:space-y-4">
