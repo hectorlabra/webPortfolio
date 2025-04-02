@@ -13,7 +13,7 @@ export function LegoBlocks({ fullWidth = false }: LegoBlocksProps) {
         <div className="bg-[#4CD964] text-[#0a0612] font-mono text-sm font-medium py-5 px-3 text-center col-span-3">
           MARCA
         </div>
-        <div className="bg-[#9013FE] text-white font-mono text-sm font-medium py-5 px-3 text-center col-span-4">
+        <div className="bg-[#007AFF] text-white font-mono text-sm font-medium py-5 px-3 text-center col-span-4">
           AUDIENCIA & COMUNIDADES
         </div>
         <div className="bg-[#FFD100] text-[#0a0612] font-mono text-sm font-medium py-5 px-3 text-center col-span-3">

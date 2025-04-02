@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { ChevronDown } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion" // Importando framer-motion
 
 interface FaqItem {
   question: string
@@ -12,22 +13,22 @@ const faqs: FaqItem[] = [
   {
     question: "¿QUÉ ES HECTORLABRA.DEV?",
     answer:
-      "Hectorlabra.dev es una plataforma donde comparto mi experiencia en desarrollo web, arquitectura de sistemas y estrategia digital. Ofrezco recursos, tutoriales y servicios para ayudarte a construir soluciones digitales escalables y mantenibles.",
+      "Hectorlabra.dev es una plataforma donde comparto estrategias, recursos y conocimientos para desarrolladores que buscan evolucionar sus carreras en la era de la IA. Mi objetivo es ayudarte a convertir los desafíos de la automatización en oportunidades, enseñándote a colaborar eficientemente con herramientas de IA mientras desarrollas las habilidades técnicas y creativas que las máquinas no pueden reemplazar.",
   },
   {
     question: "¿POR QUÉ UN NEGOCIO WEB?",
     answer:
-      "Un negocio web te permite alcanzar audiencias globales, operar con bajos costos fijos y escalar rápidamente. Mi enfoque se centra en ayudarte a construir sistemas modulares que puedan crecer con tu negocio, utilizando las mejores prácticas de ingeniería y desarrollo.",
+      "A pesar del auge de la IA generativa, el desarrollo web sigue siendo un campo fundamental donde los humanos marcan la diferencia. La creatividad, el pensamiento sistémico y la capacidad de traducir necesidades de negocio en soluciones técnicas son habilidades irremplazables. Te enseño a combinar estas capacidades humanas con las herramientas de IA para multiplicar tu productividad y valor como desarrollador en el mercado actual.",
   },
   {
     question: "¿CÓMO ME PUEDEN AYUDAR?",
     answer:
-      "Puedo ayudarte a través de consultoría personalizada, desarrollo de soluciones a medida, o mediante los recursos gratuitos y cursos que ofrezco. Mi metodología se basa en dividir los problemas complejos en componentes más pequeños y manejables, como piezas de Lego, que luego se ensamblan para crear soluciones robustas.",
+      "Te ofrezco recursos para navegar tu carrera técnica en la era de la IA: desde tutoriales sobre cómo aprovechar herramientas de IA en tu flujo de trabajo, hasta estrategias para identificar y desarrollar las habilidades que te mantendrán relevante. Mi enfoque se basa en el aprendizaje continuo, la adaptabilidad y el desarrollo de un 'stack personal' que combine dominio técnico con competencias que trascienden la automatización.",
   },
   {
     question: "¿CÓMO PUEDO CONTACTARTE PARA UN PROYECTO?",
     answer:
-      "Puedes contactarme a través del formulario en esta web, por email a hector@hectorlabra.dev o programando una llamada inicial a través de mi calendario. Respondo a todas las consultas en un plazo de 24-48 horas.",
+      "Si buscas mentoría personalizada, colaboración en proyectos o tienes dudas sobre tu trayectoria profesional en tecnología, puedes contactarme a través del formulario en esta web, por email a hector@hectorlabra.dev o agendar una sesión de 30 minutos en mi calendario. Me especializo en ayudar a desarrolladores a potenciar sus carreras aprovechando (no temiendo) la revolución de la IA.",
   },
 ]
 
@@ -50,9 +51,28 @@ export function FaqAccordion() {
             onClick={() => toggleFaq(index)}
           >
             {faq.question}
-            <ChevronDown className={`h-5 w-5 transition-transform ${openIndex === index ? "rotate-180" : ""}`} />
+            <motion.div
+              initial={false}
+              animate={{ rotate: openIndex === index ? 180 : 0 }}
+              transition={{ duration: 0.3 }}
+            >
+              <ChevronDown className="h-5 w-5" />
+            </motion.div>
           </button>
-          {openIndex === index && <div className="p-5 pt-0 text-base text-white/70">{faq.answer}</div>}
+          <AnimatePresence initial={false}>
+            {openIndex === index && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: "auto", opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+              >
+                <div className="p-5 pt-0 text-base text-white/70">
+                  {faq.answer}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
       ))}
     </div>

@@ -97,7 +97,7 @@ export default function HomePage() {
                     </div>
                     <div className="flex items-center gap-3">
                       <Check className="h-6 w-6 text-[#64E365]" />
-                      <span className="text-base">Usa IA para que codifique por ti</span>
+                      <span className="text-base">Usa la IA para que codifique por ti</span>
                     </div>
                     <div className="flex items-center gap-3">
                       <Check className="h-6 w-6 text-[#64E365]" />
@@ -162,7 +162,7 @@ export default function HomePage() {
                 <div className="space-y-3">
                   <h2 className="font-mono text-3xl font-bold tracking-tighter">Últimos artículos</h2>
                   <p className="text-lg text-white/70">
-                    Ideas y reflexiones sobre desarrollo, ingeniería y negocios digitales.
+                    Ideas y reflexiones sobre desarrollo, ingeniería y negocios digitales. 💻
                   </p>
                 </div>
               </div>
@@ -227,10 +227,9 @@ export default function HomePage() {
               <div className="flex flex-col items-start space-y-5">
                 <div className="space-y-3">
                   <h2 className="font-mono text-3xl font-bold tracking-tighter">Preguntas frecuentes.</h2>
-                  <p className="text-lg text-white/70">
-                    Piensa en nosotros como constructores de negocios web. ¡Hacemos que el proceso de crear y vender
-                    webs sea divertido y colaborativo! 🌎
-                  </p>
+                    <p className="text-lg text-white/70">
+                      Despeja tus dudas sobre carreras tech en tiempos de IA. 🚀
+                    </p>
                 </div>
               </div>
               <div className="py-12"> {/* Mismo espaciado que Features */}
@@ -261,7 +260,7 @@ export default function HomePage() {
               <div className="pr-4">
                 <Logo size="default" />
                 <p className="mt-6 text-sm text-white/70">
-                  Aprende a construir un negocio web, profesional y escalable. Dividirás tu negocio en bloques de
+                  Aprende a construir tu carrera como software developer. Dividirás tu carrera en bloques de
                   construcción (como Lego) y sabrás cómo ensamblarlos para lograr el éxito.
                 </p>
               </div>

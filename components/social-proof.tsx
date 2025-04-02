@@ -17,7 +17,7 @@ export function SocialProof() {
         ))}
       </div>
       <span className="text-white/80 text-xs">
-        1145 <span className="underline">emprendedores</span> ya iniciaron...
+        1145 <span className="underline">developers</span> ya iniciaron...
       </span>
     </div>
   )
