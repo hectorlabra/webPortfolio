@@ -23,7 +23,7 @@ export function GeometricPattern() {
   };
 
   return (
-    <div className="relative w-full h-20 bg-[#0a0612]">
+    <div className="relative w-full h-12 md:h-16 lg:h-20 bg-[#0a0612]">
       <div className="absolute top-0 left-0 w-screen h-full overflow-hidden" style={{ left: "50%", transform: "translateX(-50%)" }}>
         <motion.div 
           className="absolute top-0 left-0"

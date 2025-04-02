@@ -40,24 +40,24 @@ export function NewsletterForm({ minimal = false, compact = false }: NewsletterF
     return (
       <div className="w-full space-y-2">
         {isSuccess ? (
-          <div className={`rounded bg-white/10 ${compact ? 'p-2 text-xs' : 'p-3 text-base'} text-white`}>
+          <div className={`rounded bg-white/10 ${compact ? 'p-2 text-xs' : 'p-2 sm:p-3 text-sm sm:text-base'} text-white`}>
             <p>¡Gracias por suscribirte!</p>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="flex gap-2">
+          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-2">
             <Input
               type="email"
               placeholder="tu@email.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className={`flex-1 bg-white/5 border-white/10 focus:border-white ${compact ? 'h-9 text-xs' : 'h-12 text-base'}`}
+              className={`flex-1 bg-white/5 border-white/10 focus:border-white ${compact ? 'h-9 text-xs' : 'h-10 sm:h-12 text-sm sm:text-base'}`}
             />
             <Button
               type="submit"
               disabled={isSubmitting}
               size="sm"
-              className={`bg-[#FFD24C] text-[#0a0612] hover:bg-[#FFD24C]/90 ${compact ? 'h-9 w-9' : 'h-12 w-12'} p-0 shadow-[0_0_15px_rgba(255,220,100,0.8),0_0_25px_rgba(255,220,100,0.4)]`}
+              className={`bg-[#FFD24C] text-[#0a0612] hover:bg-[#FFD24C]/90 ${compact ? 'h-9 w-full sm:w-9' : 'h-10 sm:h-12 w-full sm:w-12'} p-0 shadow-[0_0_15px_rgba(255,220,100,0.8),0_0_25px_rgba(255,220,100,0.4)] mt-2 sm:mt-0`}
             >
               {isSubmitting ? "..." : <ArrowRight className={compact ? "h-4 w-4" : "h-5 w-5"} />}
             </Button>
@@ -68,14 +68,14 @@ export function NewsletterForm({ minimal = false, compact = false }: NewsletterF
   }
 
   return (
-    <div className="w-full space-y-4">
+    <div className="w-full space-y-3 sm:space-y-4">
       {isSuccess ? (
-        <div className="rounded bg-white/10 p-5 text-white">
-          <p className="font-medium text-base">¡Gracias por suscribirte!</p>
-          <p className="text-base text-white/70">Revisa tu email para confirmar tu suscripción.</p>
+        <div className="rounded bg-white/10 p-3 sm:p-5 text-white">
+          <p className="font-medium text-sm sm:text-base">¡Gracias por suscribirte!</p>
+          <p className="text-sm sm:text-base text-white/70">Revisa tu email para confirmar tu suscripción.</p>
         </div>
       ) : (
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
           <div className="flex w-full flex-col gap-3">
             <Input
               type="email"
@@ -83,19 +83,19 @@ export function NewsletterForm({ minimal = false, compact = false }: NewsletterF
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="bg-white/5 border-white/10 focus:border-white h-12 text-base"
+              className="bg-white/5 border-white/10 focus:border-white h-10 sm:h-12 text-sm sm:text-base"
             />
             <Button
               type="submit"
               disabled={isSubmitting}
-              className="bg-[#FFD24C] text-[#0a0612] hover:bg-[#FFD24C]/90 h-12 text-base"
+              className="bg-[#FFD24C] text-[#0a0612] hover:bg-[#FFD24C]/90 h-10 sm:h-12 text-sm sm:text-base w-full"
             >
               {isSubmitting ? "Enviando..." : "Empieza Ahora"}
-              <ArrowRight className="ml-2 h-5 w-5" />
+              <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
             </Button>
           </div>
-          {error && <p className="text-base text-red-500">{error}</p>}
-            <p className="text-sm text-white/70 text-center">Curso intensivo por email de 14 días exclusivo para suscriptores.</p>
+          {error && <p className="text-sm sm:text-base text-red-500">{error}</p>}
+            <p className="text-xs sm:text-sm text-white/70 text-center">Curso intensivo por email de 14 días exclusivo para suscriptores.</p>
         </form>
       )}
     </div>
