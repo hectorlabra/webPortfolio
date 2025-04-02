@@ -104,7 +104,7 @@ export default function HomePage() {
                 <div className="flex flex-col justify-center space-y-4 sm:space-y-6">
                   <div className="space-y-3 sm:space-y-4">
                     <h1 className="font-mono text-2xl sm:text-3xl md:text-4xl font-bold tracking-tighter">
-                      Aprende a <TypewriterText text="codificar en semanas, no meses." />
+                      Aprende a codificar en <TypewriterText text="semanas, no meses." />
                     </h1>
                     <p className="text-base sm:text-lg text-white/70">
                     Todo lo que necesitas para construir tu carrera de software developer, incluso si eres un principiante absoluto.
@@ -115,7 +115,7 @@ export default function HomePage() {
                   Codifica tu idea rápidamente, construye tu libertad.
                   </div>
                   {/* Features List */}
-                  <div className="space-y-2 sm:space-y-3 sm:space-y-4">
+                  <div className="space-y-2 sm:space-y-4">
                     <div className="flex items-center gap-3 sm:gap-3">
                       <Check className="h-6 w-6 sm:h-6 sm:w-6 text-[#64E365]" />
                       <span className="text-sm sm:text-base">Aprende solo los fundamentos</span>
