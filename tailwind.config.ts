@@ -76,18 +76,22 @@ const config = {
           "50%": { boxShadow: "0 0 15px rgba(100,227,101,0.4)" },
         },
         "circular-glow": {
-          "0%": { boxShadow: "0 8px 18px rgba(140,255,140,0.25), -8px 0 10px rgba(100,227,101,0.06), 0 -8px 10px rgba(100,227,101,0.06), 8px 0 10px rgba(100,227,101,0.06)" },
-          "25%": { boxShadow: "8px 0 18px rgba(140,255,140,0.25), 0 8px 10px rgba(100,227,101,0.06), -8px 0 10px rgba(100,227,101,0.06), 0 -8px 10px rgba(100,227,101,0.06)" },
-          "50%": { boxShadow: "0 -8px 18px rgba(140,255,140,0.25), 8px 0 10px rgba(100,227,101,0.06), 0 8px 10px rgba(100,227,101,0.06), -8px 0 10px rgba(100,227,101,0.06)" },
-          "75%": { boxShadow: "-8px 0 18px rgba(140,255,140,0.25), 0 -8px 10px rgba(100,227,101,0.06), 8px 0 10px rgba(100,227,101,0.06), 0 8px 10px rgba(100,227,101,0.06)" },
-          "100%": { boxShadow: "0 8px 18px rgba(140,255,140,0.25), -8px 0 10px rgba(100,227,101,0.06), 0 -8px 10px rgba(100,227,101,0.06), 8px 0 10px rgba(100,227,101,0.06)" }
+          "0%": { boxShadow: "0 8px 18px rgba(140,255,140,0.20), -8px 0 10px rgba(100,227,101,0.04), 0 -8px 10px rgba(100,227,101,0.04), 8px 0 10px rgba(100,227,101,0.04)" },
+          "12.5%": { boxShadow: "5px 5px 18px rgba(140,255,140,0.20), -5px 5px 10px rgba(100,227,101,0.04), -5px -5px 10px rgba(100,227,101,0.04), 5px -5px 10px rgba(100,227,101,0.04)" },
+          "25%": { boxShadow: "8px 0 18px rgba(140,255,140,0.20), 0 8px 10px rgba(100,227,101,0.04), -8px 0 10px rgba(100,227,101,0.04), 0 -8px 10px rgba(100,227,101,0.04)" },
+          "37.5%": { boxShadow: "5px -5px 18px rgba(140,255,140,0.20), 5px 5px 10px rgba(100,227,101,0.04), -5px -5px 10px rgba(100,227,101,0.04), -5px 5px 10px rgba(100,227,101,0.04)" },
+          "50%": { boxShadow: "0 -8px 18px rgba(140,255,140,0.20), 8px 0 10px rgba(100,227,101,0.04), 0 8px 10px rgba(100,227,101,0.04), -8px 0 10px rgba(100,227,101,0.04)" },
+          "62.5%": { boxShadow: "-5px -5px 18px rgba(140,255,140,0.20), 5px -5px 10px rgba(100,227,101,0.04), 5px 5px 10px rgba(100,227,101,0.04), -5px 5px 10px rgba(100,227,101,0.04)" },
+          "75%": { boxShadow: "-8px 0 18px rgba(140,255,140,0.20), 0 -8px 10px rgba(100,227,101,0.04), 8px 0 10px rgba(100,227,101,0.04), 0 8px 10px rgba(100,227,101,0.04)" },
+          "87.5%": { boxShadow: "-5px 5px 18px rgba(140,255,140,0.20), -5px -5px 10px rgba(100,227,101,0.04), 5px 5px 10px rgba(100,227,101,0.04), 5px -5px 10px rgba(100,227,101,0.04)" },
+          "100%": { boxShadow: "0 8px 18px rgba(140,255,140,0.20), -8px 0 10px rgba(100,227,101,0.04), 0 -8px 10px rgba(100,227,101,0.04), 8px 0 10px rgba(100,227,101,0.04)" }
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         "subtle-glow": "subtle-glow 4s ease-in-out infinite",
-        "circular-glow": "circular-glow 3s ease-in-out infinite",
+        "circular-glow": "circular-glow 3s linear infinite",
       },
     },
   },
