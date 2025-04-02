@@ -94,11 +94,11 @@ export default function HomePage() {
 
         <main className="flex-1">
           {/* Hero Section - Mantener como referencia */}
-          <section className="w-full min-h-[60vh] sm:min-h-[70vh] lg:min-h-[80vh] flex items-center pt-0 pb-0">
+          <section className="w-full min-h-[55vh] sm:min-h-[70vh] lg:min-h-[80vh] flex items-center pt-0 pb-0">
             <div className="container flex-1 flex flex-col justify-center px-4 md:px-6">
               {/* Social Proof Component */}
               <SocialProof />
-              <div className="grid gap-6 sm:gap-8 lg:grid-cols-[60fr_40fr] lg:gap-16 mt-4 lg:mt-6">
+              <div className="grid gap-6 sm:gap-8 lg:grid-cols-[60fr_40fr] lg:gap-16 mt-6 lg:mt-6">
                 {/* Hero Content */}
                 <div className="flex flex-col justify-center space-y-4 sm:space-y-6">
                   <div className="space-y-3 sm:space-y-4">
@@ -114,7 +114,7 @@ export default function HomePage() {
                   Codifica tu idea rápidamente, construye tu libertad.
                   </div>
                   {/* Features List */}
-                  <div className="space-y-3 sm:space-y-4">
+                  <div className="space-y-2 sm:space-y-3 sm:space-y-4">
                     <div className="flex items-center gap-2 sm:gap-3">
                       <Check className="h-5 w-5 sm:h-6 sm:w-6 text-[#64E365]" />
                       <span className="text-sm sm:text-base">Aprende solo los fundamentos</span>
@@ -132,7 +132,7 @@ export default function HomePage() {
                 </div>
                 {/* Newsletter Signup */}
                 <div className="flex items-center justify-center lg:justify-end mt-6 lg:mt-0">
-                    <div className="rounded border border-white/10 bg-white/5 p-4 sm:p-6 md:p-8 backdrop-blur w-full animate-circular-glow">
+                    <div className="rounded-lg border-2 border-white/20 bg-white/5 p-5 sm:p-6 md:p-8 backdrop-blur w-full animate-circular-glow shadow-sm shadow-white/5">
                     <div className="space-y-3 sm:space-y-4">
                       <h2 className="font-mono text-xl sm:text-2xl font-bold">¡Únete con un click!</h2>
                       
