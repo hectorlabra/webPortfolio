@@ -36,7 +36,7 @@ export function LegoBlocks({ fullWidth = false }: LegoBlocksProps) {
 
       {/* Tercera fila */}
       <div className="grid grid-cols-2 sm:grid-cols-6 md:grid-cols-12 gap-2">
-        <div className="bg-[#007AFF] text-white font-mono text-sm font-medium py-5 px-3 text-center col-span-1 sm:col-span-2 md:col-span-4">
+        <div className="bg-[#007AFF] text-white font-mono text-sm font-medium py-5 px-3 flex items-center justify-center col-span-1 sm:col-span-2 md:col-span-4">
           FUNNELS
         </div>
         <div className="bg-[#4CD964] text-[#0a0612] font-mono text-sm font-medium py-5 px-3 text-center col-span-1 sm:col-span-2 md:col-span-5">
