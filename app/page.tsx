@@ -58,9 +58,9 @@ export default function HomePage() {
             </Button>
             {/* Mobile Menu Button */}
             <Button
-              variant="outline"
+              variant="default"
               size="icon"
-              className="md:hidden border-white text-white hover:bg-white/10 h-10 w-10"
+              className="md:hidden bg-[#FFD100] text-[#0a0612] hover:bg-[#FFD100]/90 h-10 w-10 shadow-[0_0_10px_rgba(255,210,0,0.5),0_0_15px_rgba(255,210,0,0.3)]"
               onClick={() => setMenuOpen(true)}
             >
               <span className="sr-only">Toggle menu</span>
