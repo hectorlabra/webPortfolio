@@ -1,22 +1,24 @@
-export function Logo({ size = "default" }: { size?: "default" | "small" } = {}) {
-  const scale = size === "small" ? 0.62 : 0.72;  // Ligeramente reducido
+export function Logo({
+  size = "default",
+}: { size?: "default" | "small" } = {}) {
+  const scale = size === "small" ? 0.62 : 0.72; // Ligeramente reducido
   const baseWidth = 34 * scale;
   const baseHeight = 34 * scale;
 
   return (
     <div className="flex items-center gap-2">
-      <div 
-        className="flex items-center justify-center" 
-        style={{ 
+      <div
+        className="flex items-center justify-center"
+        style={{
           height: size === "small" ? "20px" : "24px",
-          marginTop: size === "small" ? "-2px" : "-3px" // Ajuste fino para centrar verticalmente
+          marginTop: size === "small" ? "-6px" : "-7px", // Ajuste fino para centrar verticalmente
         }}
       >
-        <svg 
-          width={baseWidth} 
-          height={baseHeight} 
-          viewBox="0 0 40 40" 
-          fill="none" 
+        <svg
+          width={baseWidth}
+          height={baseHeight}
+          viewBox="0 0 40 40"
+          fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           {/* Pieza amarilla (base izquierda) - perspectiva isométrica */}
@@ -28,8 +30,22 @@ export function Logo({ size = "default" }: { size?: "default" | "small" } = {}) 
             {/* Cara izquierda */}
             <path d="M2 12l8 -4v8l-8 4v-8z" fill="#E6BC00" />
             {/* Conectores LEGO */}
-            <circle cx="6" cy="10" r="1.2" fill="#E6BC00" stroke="#FFD100" strokeWidth="0.3" />
-            <circle cx="10" cy="10" r="1.2" fill="#E6BC00" stroke="#FFD100" strokeWidth="0.3" />
+            <circle
+              cx="6"
+              cy="10"
+              r="1.2"
+              fill="#E6BC00"
+              stroke="#FFD100"
+              strokeWidth="0.3"
+            />
+            <circle
+              cx="10"
+              cy="10"
+              r="1.2"
+              fill="#E6BC00"
+              stroke="#FFD100"
+              strokeWidth="0.3"
+            />
           </g>
 
           {/* Pieza azul (base derecha) - perspectiva isométrica */}
@@ -41,8 +57,22 @@ export function Logo({ size = "default" }: { size?: "default" | "small" } = {}) 
             {/* Cara izquierda */}
             <path d="M2 12l8 -4v8l-8 4v-8z" fill="#0090E0" />
             {/* Conectores LEGO */}
-            <circle cx="6" cy="10" r="1.2" fill="#0090E0" stroke="#00A3FF" strokeWidth="0.3" />
-            <circle cx="10" cy="10" r="1.2" fill="#0090E0" stroke="#00A3FF" strokeWidth="0.3" />
+            <circle
+              cx="6"
+              cy="10"
+              r="1.2"
+              fill="#0090E0"
+              stroke="#00A3FF"
+              strokeWidth="0.3"
+            />
+            <circle
+              cx="10"
+              cy="10"
+              r="1.2"
+              fill="#0090E0"
+              stroke="#00A3FF"
+              strokeWidth="0.3"
+            />
           </g>
 
           {/* Pieza roja (encima) - perspectiva isométrica */}
@@ -54,13 +84,32 @@ export function Logo({ size = "default" }: { size?: "default" | "small" } = {}) 
             {/* Cara izquierda */}
             <path d="M2 12l8 -4v8l-8 4v-8z" fill="#E0352C" />
             {/* Conectores LEGO */}
-            <circle cx="6" cy="10" r="1.2" fill="#E0352C" stroke="#FF3B30" strokeWidth="0.3" />
-            <circle cx="10" cy="10" r="1.2" fill="#E0352C" stroke="#FF3B30" strokeWidth="0.3" />
+            <circle
+              cx="6"
+              cy="10"
+              r="1.2"
+              fill="#E0352C"
+              stroke="#FF3B30"
+              strokeWidth="0.3"
+            />
+            <circle
+              cx="10"
+              cy="10"
+              r="1.2"
+              fill="#E0352C"
+              stroke="#FF3B30"
+              strokeWidth="0.3"
+            />
           </g>
         </svg>
       </div>
-      <span className={`font-mono ${size === "small" ? "text-xs" : "text-sm"} font-bold`}>hectorlabra.dev</span>
+      <span
+        className={`font-mono ${
+          size === "small" ? "text-xs" : "text-sm"
+        } font-bold`}
+      >
+        hectorlabra.dev
+      </span>
     </div>
   );
 }
-
