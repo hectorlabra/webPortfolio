@@ -49,7 +49,7 @@ export function FaqAccordion() {
           }`}
         >
           <button
-            className="flex w-full items-center justify-between p-5 text-left font-mono font-medium text-base"
+            className="flex w-full items-center justify-between p-5 text-left font-mono font-medium text-sm sm:text-base"
             onClick={() => toggleFaq(index)}
           >
             {faq.question}
