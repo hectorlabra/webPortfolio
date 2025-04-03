@@ -231,8 +231,8 @@ export default function HomePage() {
                     Últimos artículos
                   </h2>
                   <p className="text-lg text-white/70">
-                    Ideas y reflexiones sobre desarrollo, ingeniería y negocios
-                    digitales. 💻
+                    Construyendo tu carrera tech paso a paso con guías prácticas
+                    y bloques de aprendizaje. 💻
                   </p>
                 </div>
               </div>
