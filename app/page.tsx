@@ -243,17 +243,17 @@ export default function HomePage() {
                   {[1, 2, 3].map((i) => (
                     <Card
                       key={i}
-                      className="overflow-hidden bg-white/8 border-white/15 transition-all hover:bg-white/12 hover:border-white/20 hover:translate-y-[-4px] shadow-lg shadow-purple-500/5"
+                      className="overflow-hidden bg-white/5 border-white/15 transition-all hover:bg-white/8 hover:border-white/20 hover:translate-y-[-4px] shadow-lg shadow-purple-500/5"
                     >
-                      <div className="aspect-[4/3] w-full overflow-hidden bg-white/10 relative">
+                      <div className="aspect-[4/3] w-full overflow-hidden bg-white/5 relative">
                         <Image
                           src={`/placeholder.svg?height=200&width=400&text=Article+${i}`}
                           alt={`Article ${i}`}
                           width={400}
                           height={300}
-                          className="object-cover transition-all hover:scale-105"
+                          className="object-cover w-full h-full transition-all hover:scale-105"
                         />
-                        <div className="absolute top-3 left-3 inline-block rounded-full bg-[#FFD100] px-3 py-1 text-xs font-medium text-[#0a0612]">
+                        <div className="absolute top-3 left-3 inline-block rounded-md bg-[#FFD100] px-3 py-1 text-xs font-medium text-[#0a0612]">
                           Categoría
                         </div>
                       </div>

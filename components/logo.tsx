@@ -11,7 +11,7 @@ export function Logo({
         className="flex items-center justify-center"
         style={{
           height: size === "small" ? "20px" : "24px",
-          marginTop: size === "small" ? "-6px" : "-7px", // Ajuste fino para centrar verticalmente
+          marginTop: size === "small" ? "-5px" : "-6px", // Ajuste fino para centrar verticalmente
         }}
       >
         <svg
