@@ -245,7 +245,7 @@ export default function HomePage() {
                       key={i}
                       className="overflow-hidden bg-white/5 border-white/15 transition-all hover:bg-white/8 hover:border-white/20 hover:translate-y-[-4px] shadow-lg shadow-purple-500/5"
                     >
-                      <div className="aspect-[4/3] w-full overflow-hidden bg-white/5 relative">
+                      <div className="aspect-[5/4] w-full overflow-hidden bg-white/5 relative">
                         <Image
                           src={`/placeholder.svg?height=200&width=400&text=Article+${i}`}
                           alt={`Article ${i}`}
