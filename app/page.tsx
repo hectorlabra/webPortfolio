@@ -153,13 +153,13 @@ export default function HomePage() {
                       </span>
                     </div>
                     <div className="flex items-center gap-3 sm:gap-3">
-                      <Check className="h-6 w-6 sm:h-6 sm:w-6 text-[#64E365]" />
+                      <Check className="h-8 w-6 sm:h-6 sm:w-6 text-[#64E365]" />
                       <span className="text-sm sm:text-base">
                         Usa la IA para que codifique por ti
                       </span>
                     </div>
                     <div className="flex items-center gap-3 sm:gap-3">
-                      <Check className="h-6 w-6 sm:h-6 sm:w-6 text-[#64E365]" />
+                      <Check className="h-8 w-6 sm:h-6 sm:w-6 text-[#64E365]" />
                       <span className="text-sm sm:text-base">
                         Sigue aprendiendo sobre la marcha
                       </span>
