@@ -243,9 +243,9 @@ export default function HomePage() {
                   {[1, 2, 3].map((i) => (
                     <Card
                       key={i}
-                      className="overflow-hidden bg-white/5 border-white/10 transition-all hover:bg-white/10"
+                      className="overflow-hidden bg-white/8 border-white/15 transition-all hover:bg-white/12 hover:border-white/20 hover:translate-y-[-4px] shadow-lg shadow-purple-500/5"
                     >
-                      <div className="aspect-[4/3] w-full overflow-hidden bg-white/5">
+                      <div className="aspect-[4/3] w-full overflow-hidden bg-white/10 relative">
                         <Image
                           src={`/placeholder.svg?height=200&width=400&text=Article+${i}`}
                           alt={`Article ${i}`}
@@ -253,32 +253,43 @@ export default function HomePage() {
                           height={300}
                           className="object-cover transition-all hover:scale-105"
                         />
-                      </div>
-                      <div className="p-3 sm:p-4">
-                        <div className="flex justify-between items-center">
-                          <div className="inline-block rounded-full bg-white/10 px-3 py-1 text-xs">
-                            Categoría
-                          </div>
-                          <p className="text-xs text-white/70">28 Mar</p>
+                        <div className="absolute top-3 left-3 inline-block rounded-full bg-[#FFD100] px-3 py-1 text-xs font-medium text-[#0a0612]">
+                          Categoría
                         </div>
-                        <h3 className="mt-2 font-mono text-lg font-bold line-clamp-1 text-balance-mobile">
+                      </div>
+                      <div className="p-4 sm:p-5">
+                        <div className="flex justify-end items-center">
+                          <p className="text-xs text-white/80">28 Mar</p>
+                        </div>
+                        <h3 className="mt-1 font-mono text-lg font-bold line-clamp-1 text-white">
                           Título del artículo
                         </h3>
-                        <p className="mt-1 text-xs sm:text-sm text-white/70 line-clamp-2">
+                        <p className="mt-2 text-xs sm:text-sm text-white/80 line-clamp-2">
                           Una breve descripción del artículo y lo que los
                           lectores pueden esperar aprender.
                         </p>
-                        <div className="mt-3 flex items-center gap-2">
-                          <div className="h-6 w-6 rounded-full bg-white/10">
+                        <div className="mt-4 flex items-center gap-2">
+                          <div className="h-7 w-7 rounded-full bg-white/15 ring-1 ring-white/20 overflow-hidden">
                             <Image
-                              src="/placeholder.svg?height=24&width=24"
+                              src="/placeholder.svg?height=28&width=28"
                               alt="Avatar"
-                              width={24}
-                              height={24}
+                              width={28}
+                              height={28}
                               className="rounded-full"
                             />
                           </div>
-                          <p className="text-xs font-medium">Hector Labra</p>
+                          <p className="text-xs font-medium text-white/90">
+                            Hector Labra
+                          </p>
+                        </div>
+                        <div className="mt-4 pt-3 border-t border-white/10">
+                          <Button
+                            variant="link"
+                            className="p-0 h-auto text-xs text-[#64E365] hover:text-[#64E365]/80 font-medium"
+                          >
+                            Leer artículo{" "}
+                            <ArrowRight className="ml-1 h-3 w-3" />
+                          </Button>
                         </div>
                       </div>
                     </Card>
