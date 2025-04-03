@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Footer } from "@/components/ui/footer";
+import { Navbar } from "@/components/ui/navbar";
 
 export const metadata: Metadata = {
   title: "hectorlabra.dev",
@@ -17,6 +18,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning={true}>
       <body>
         <div className="flex min-h-screen flex-col bg-[#0a0612] text-white">
+          <Navbar />
           {children}
           <Footer />
         </div>
