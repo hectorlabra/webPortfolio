@@ -29,12 +29,11 @@ export default function QuienSoyPage() {
                 />
               </div>
               <div className="space-y-3">
-                <h1 className="font-mono text-3xl sm:text-4xl font-bold tracking-tighter">
+                <h1 className="font-mono text-2xl sm:text-3xl font-bold tracking-tighter whitespace-nowrap overflow-hidden">
                   Hola, soy <TypewriterText text="Héctor Labra" />
                 </h1>
                 <p className="text-lg sm:text-xl text-white/70 max-w-[600px] mx-auto">
-                  Desarrollador web, emprendedor digital y apasionado por
-                  enseñar tecnología de forma simple y accesible.
+                  Software developer, emprendedor y polímata digital. Podemos conectar en las siguientes plataformas:
                 </p>
               </div>
               <div className="flex space-x-4">
