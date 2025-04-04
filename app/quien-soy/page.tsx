@@ -13,7 +13,7 @@ import { TypewriterText } from "@/components/typewriter-text";
 
 export default function QuienSoyPage() {
   return (
-    <div className="mx-auto w-full max-w-[1000px]">
+    <div className="mx-auto w-full max-w-[700px]">
       <main className="flex-1">
         {/* Encabezado impactante */}
         <section className="w-full min-h-[55vh] sm:min-h-[70vh] lg:min-h-[80vh] flex items-center py-12 sm:py-6 md:py-4 lg:pt-0 lg:pb-0 relative">
@@ -34,7 +34,8 @@ export default function QuienSoyPage() {
                   Hola, soy <TypewriterText text="Héctor Labra" />
                 </h1>
                 <p className="text-lg sm:text-xl text-white/70 max-w-[600px] mx-auto">
-                  Software developer, emprendedor y polímata digital. Podemos conectar en las siguientes plataformas:
+                  Software developer, emprendedor y polímata digital. Podemos
+                  conectar en las siguientes plataformas:
                 </p>
               </div>
               <div className="flex space-x-4">
@@ -75,16 +76,23 @@ export default function QuienSoyPage() {
                 Mi historia
               </h2>
 
-              <div className="prose prose-invert max-w-none">
-                <p className="text-base sm:text-lg text-white/80 leading-relaxed">
-                  Mi camino en el mundo del desarrollo comenzó hace más de 8
-                  años, cuando decidí dar un giro a mi carrera profesional.
-                  Desde entonces, me he especializado en tecnologías web
-                  modernas y he trabajado con startups y empresas para crear
-                  soluciones digitales efectivas.
+              <div className="prose prose-invert max-w-none space-y-6">
+                <p className="text-base sm:text-lg text-white/80 leading-relaxed mb-6">
+                  Soy un software developer y emprendedor digital de Santiago,
+                  Chile.
                 </p>
 
-                <div className="my-8">
+                <p className="text-base sm:text-lg text-white/80 leading-relaxed mb-6">
+                  Hace siete años, comencé vendiendo webs básicas en WordPress a
+                  negocios locales.
+                </p>
+
+                <p className="text-base sm:text-lg text-white/80 leading-relaxed mb-6">
+                  Cobraba menos de 300 USD y usaba plantillas porque no sabía
+                  programar aún.
+                </p>
+
+                <div className="my-10">
                   <Image
                     src="/placeholder.jpg"
                     alt="Trabajando en mi oficina"
@@ -97,19 +105,89 @@ export default function QuienSoyPage() {
                   </p>
                 </div>
 
-                <p className="text-base sm:text-lg text-white/80 leading-relaxed">
-                  A lo largo de mi trayectoria, he descubierto que mi verdadera
-                  pasión está en compartir conocimiento y ayudar a otros a
-                  navegar el complejo mundo de la programación. En la era de la
-                  IA y la automatización, creo firmemente que entender los
-                  fundamentos de la tecnología es más importante que nunca.
+                <p className="text-base sm:text-lg text-white/80 leading-relaxed mb-6">
+                  Luego, mis clientes empezaron a pedir más que diseño: querían
+                  resultados en marketing.
                 </p>
 
-                <blockquote className="border-l-4 border-[#FFD100] pl-4 my-6 italic text-white/90">
-                  "La tecnología debe ser una herramienta de libertad, no una
-                  barrera. Mi misión es desmitificar el código y hacerlo
-                  accesible para todos."
-                </blockquote>
+                <p className="text-base sm:text-lg text-white/80 leading-relaxed mb-6">
+                  Aprendí Google Ads, Meta Ads, SEO, Analítica web y Copywriting
+                  para ayudarlos a crecer, pero las herramientas pre-hechas me
+                  limitaban mucho.
+                </p>
+
+                <p className="text-base sm:text-lg text-white/80 leading-relaxed mb-6">
+                  Así que creé "hectorlabra.com" para compartir todo lo que
+                  había aprendido.
+                </p>
+
+                <p className="text-base sm:text-lg text-white/80 leading-relaxed mb-6">
+                  Monetizaba mi web con afiliación y coaching, y funcionó bien,
+                  aunque los plugins y licencias me agotaban.
+                </p>
+
+                <div className="my-10">
+                  <Image
+                    src="/placeholder.jpg"
+                    alt="Trabajando en mi oficina"
+                    width={700}
+                    height={400}
+                    className="rounded-lg object-cover w-full shadow-lg shadow-[#64E365]/10"
+                  />
+                  <p className="text-sm text-white/50 text-center mt-2">
+                    Trabajando en mi oficina en casa, donde nacen las ideas.
+                  </p>
+                </div>
+
+                <p className="text-base sm:text-lg text-white/80 leading-relaxed mb-6">
+                  Tenía que pagar por casi todo: themes, constructores, plugins;
+                  algunos mensuales, otros anuales.
+                </p>
+
+                <p className="text-base sm:text-lg text-white/80 leading-relaxed mb-6">
+                  Además, tenía que conectar mi web a apps de terceros solo para
+                  hacerla funcionar y llegar a mi audiencia era un lío.
+                </p>
+
+                <p className="text-base sm:text-lg text-white/80 leading-relaxed mb-6">
+                  Todo se volvió un "espagueti" enredado y bastante caro de
+                  mantener.
+                </p>
+
+                <p className="text-base sm:text-lg text-white/80 leading-relaxed mb-6">
+                  Ese fue mi punto de inflexión.
+                </p>
+
+                <p className="text-base sm:text-lg text-white/80 leading-relaxed mb-6">
+                  Asi que hace tres años, decidí aprender a programar de verdad.
+                </p>
+
+                <p className="text-base sm:text-lg text-white/80 leading-relaxed mb-6">
+                  Me sumergí en el desarrollo web moderno y empecé a construir
+                  aplicativos escalables.
+                </p>
+
+                <p className="text-base sm:text-lg text-white/80 leading-relaxed mb-6">
+                  Ese cambio marcó un antes y un después en mi carrera como
+                  developer.
+                </p>
+
+                <p className="text-base sm:text-lg text-white/80 leading-relaxed mb-6">
+                  Me permitió sentir la "magia" de crear en internet, libre de
+                  soluciones genéricas, más barato, más rápido y más escalable.
+                </p>
+
+                <p className="text-base sm:text-lg text-white/80 leading-relaxed mb-6">
+                  Hoy lidero <strong>Innovare Academia</strong> como Director
+                  Académico, enseñando a 300+ alumnos a programar y monetizar su
+                  carrera.
+                </p>
+
+                <p className="text-base sm:text-lg text-white/80 leading-relaxed mb-6">
+                  También trabajo en <strong>Innovare Software & Apps</strong>{" "}
+                  como líder técnico y mantengo <strong>HectorLabra.dev</strong>
+                  , mi marca personal.
+                </p>
               </div>
             </div>
           </div>
