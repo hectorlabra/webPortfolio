@@ -119,9 +119,11 @@ export function NewsletterForm({
           {error && (
             <p className="text-sm sm:text-base text-red-500">{error}</p>
           )}
-          <p className="text-[0.55rem] sm:text-sm text-white/70 text-center">
-            Curso intensivo por email de 14 días exclusivo para suscriptores.
-          </p>
+          <div className="pt-2 sm:pt-0">
+            <p className="text-[0.55rem] sm:text-sm text-white/70 text-center">
+              Curso intensivo por email de 14 días exclusivo para suscriptores.
+            </p>
+          </div>
         </form>
       )}
     </div>
