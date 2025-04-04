@@ -116,56 +116,56 @@ export default function QuienSoyPage() {
         </section>
 
         {/* Valores y filosofía */}
-        <section className="w-full py-16 sm:py-24 bg-white/5">
+        <section className="w-full py-16 sm:py-24 bg-gradient-to-b from-[#0a0612] to-[#0a0612]/90">
           <div className="container flex-1 flex flex-col px-4 md:px-6">
-            <div className="max-w-[700px] mx-auto space-y-8">
-              <h2 className="font-mono text-2xl sm:text-3xl font-bold tracking-tighter">
+            <div className="max-w-[800px] mx-auto space-y-8">
+              <h2 className="font-mono text-2xl sm:text-3xl font-bold tracking-tighter text-center">
                 Valores y filosofía
               </h2>
 
-              <div className="grid gap-8 sm:grid-cols-2">
-                <Card className="bg-white/5 border-white/10 p-6">
+              <div className="grid gap-3 sm:grid-cols-2">
+                <Card className="bg-[#FFD100] text-[#0a0612] border-none p-6 shadow-[0_0_15px_rgba(255,209,0,0.3)] transition-all hover:translate-y-[-4px]">
                   <h3 className="text-xl font-bold mb-3 font-mono">
                     Simplicidad
                   </h3>
-                  <p className="text-white/70">
+                  <p className="text-[#0a0612]/80">
                     Creo en reducir la complejidad y enfocarme en soluciones
                     elegantes que resuelvan problemas reales.
                   </p>
                 </Card>
 
-                <Card className="bg-white/5 border-white/10 p-6">
+                <Card className="bg-[#4CD964] text-[#0a0612] border-none p-6 shadow-[0_0_15px_rgba(76,217,100,0.3)] transition-all hover:translate-y-[-4px]">
                   <h3 className="text-xl font-bold mb-3 font-mono">
                     Aprendizaje continuo
                   </h3>
-                  <p className="text-white/70">
+                  <p className="text-[#0a0612]/80">
                     La tecnología evoluciona constantemente, y mantenerse al día
                     es tanto un desafío como una oportunidad.
                   </p>
                 </Card>
 
-                <Card className="bg-white/5 border-white/10 p-6">
+                <Card className="bg-[#007AFF] text-white border-none p-6 shadow-[0_0_15px_rgba(0,122,255,0.3)] transition-all hover:translate-y-[-4px]">
                   <h3 className="text-xl font-bold mb-3 font-mono">
                     Innovación pragmática
                   </h3>
-                  <p className="text-white/70">
+                  <p className="text-white/90">
                     Uso nuevas herramientas y metodologías cuando aportan valor
                     real, no por seguir tendencias.
                   </p>
                 </Card>
 
-                <Card className="bg-white/5 border-white/10 p-6">
+                <Card className="bg-[#FF3B30] text-white border-none p-6 shadow-[0_0_15px_rgba(255,59,48,0.3)] transition-all hover:translate-y-[-4px]">
                   <h3 className="text-xl font-bold mb-3 font-mono">
                     Comunidad
                   </h3>
-                  <p className="text-white/70">
+                  <p className="text-white/90">
                     Creo en construir y aportar a comunidades de desarrolladores
                     que crecen juntos.
                   </p>
                 </Card>
               </div>
 
-              <p className="text-base sm:text-lg text-white/80 leading-relaxed mt-6">
+              <p className="text-base sm:text-lg text-white/80 leading-relaxed mt-8 text-center bg-white/5 p-6 rounded-lg border border-white/10">
                 En la era de la IA, mi enfoque es combinar las nuevas
                 tecnologías con una sólida comprensión de los fundamentos. La IA
                 es una herramienta poderosa, pero el criterio y la experiencia
