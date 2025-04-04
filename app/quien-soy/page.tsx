@@ -16,8 +16,9 @@ export default function QuienSoyPage() {
     <div className="mx-auto w-full max-w-[1000px]">
       <main className="flex-1">
         {/* Encabezado impactante */}
-        <section className="w-full py-16 sm:py-24 relative">
-          <div className="container flex-1 flex flex-col px-4 md:px-6 relative z-10">
+        <section className="w-full min-h-[55vh] sm:min-h-[70vh] lg:min-h-[80vh] flex items-center py-12 sm:py-6 md:py-4 lg:pt-0 lg:pb-0 relative">
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0a0612] via-[#0a0612] to-[#0a0612]/90 pointer-events-none"></div>
+          <div className="container flex-1 flex flex-col justify-center px-4 md:px-6 pt-6 pb-8 sm:pt-0 sm:pb-0 relative z-10">
             <div className="flex flex-col items-center text-center space-y-6 max-w-[800px] mx-auto">
               <div className="rounded-full overflow-hidden border-4 border-[#64E365] shadow-[0_0_15px_rgba(100,227,101,0.5)] w-32 h-32 sm:w-40 sm:h-40">
                 <Image
@@ -114,9 +115,6 @@ export default function QuienSoyPage() {
           </div>
         </section>
 
-        {/* Divisor */}
-        <GeometricPattern />
-
         {/* Valores y filosofía */}
         <section className="w-full py-16 sm:py-24 bg-white/5">
           <div className="container flex-1 flex flex-col px-4 md:px-6">
@@ -176,9 +174,6 @@ export default function QuienSoyPage() {
             </div>
           </div>
         </section>
-
-        {/* Divisor */}
-        <GeometricPattern />
 
         {/* Experiencia y habilidades */}
         <section className="w-full py-16 sm:py-24">
@@ -294,9 +289,6 @@ export default function QuienSoyPage() {
           </div>
         </section>
 
-        {/* Divisor */}
-        <GeometricPattern />
-
         {/* Lado personal */}
         <section className="w-full py-16 sm:py-24">
           <div className="container flex-1 flex flex-col px-4 md:px-6">
@@ -368,9 +360,6 @@ export default function QuienSoyPage() {
             </div>
           </div>
         </section>
-
-        {/* Divisor */}
-        <GeometricPattern />
 
         {/* Llamada a la acción */}
         <section className="w-full py-16 sm:py-24">
