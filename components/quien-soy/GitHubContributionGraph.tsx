@@ -43,32 +43,43 @@ export const GitHubContributionGraph: React.FC<GitHubContributionGraphProps> = (
     x: 0,
     y: 0
   });
-  const [weekCount, setWeekCount] = useState(53); // ~1 año (52 semanas + 1 por posibles días parciales)
+  const [weekCount, setWeekCount] = useState(52); // Reducido a 52 semanas exactas para ajustar mejor
+  const [containerWidth, setContainerWidth] = useState(0);
   
   const graphRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   
-  // Determinar el tamaño de celdas según ancho de pantalla
+  // Determinar el tamaño de celdas según ancho disponible
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 500) {
-        setCellSize(6);
-        setCellMargin(1);
-      } else if (window.innerWidth < 640) {
-        setCellSize(8);
-        setCellMargin(1);
-      } else if (window.innerWidth < 768) {
-        setCellSize(10);
-        setCellMargin(2);
-      } else {
-        setCellSize(11);
-        setCellMargin(2);
-      }
+      if (!containerRef.current) return;
+      
+      const availableWidth = containerRef.current.clientWidth;
+      setContainerWidth(availableWidth);
+      
+      // Cálculo dinámico del tamaño de celda basado en el ancho disponible
+      // Considerando los días de semana a la izquierda y un pequeño margen
+      const labelsWidth = 30; // Ancho aproximado para las etiquetas de días
+      const sideMargins = 16; // Márgenes laterales
+      const totalWeeklyGap = 4; // Margen total entre celdas en una semana
+      
+      const availableWidthForCells = availableWidth - labelsWidth - sideMargins;
+      const weeklySpace = availableWidthForCells / weekCount;
+      const calculatedCellSize = Math.floor((weeklySpace - totalWeeklyGap) / 1.1);
+      
+      // Establecer tamaños mínimos y máximos
+      const finalCellSize = Math.min(Math.max(calculatedCellSize, 6), 12);
+      setCellSize(finalCellSize);
+      setCellMargin(finalCellSize > 8 ? 2 : 1);
     };
     
-    handleResize();
+    // Inicializar tamaños al cargar
+    setTimeout(handleResize, 0); // Usar timeout para asegurar que los refs estén disponibles
+    
+    // Actualizar tamaños al cambiar dimensiones de la ventana
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, []);
+  }, [weekCount, containerRef]);
   
   // Generar datos de contribuciones simulados
   useEffect(() => {
@@ -369,25 +380,24 @@ export const GitHubContributionGraph: React.FC<GitHubContributionGraphProps> = (
   const matrix = getContributionMatrix();
   
   return (
-    <div className="flex flex-col items-center justify-center my-8 w-full overflow-hidden">
+    <div 
+      className="flex flex-col items-center justify-center my-4 w-full" 
+      ref={containerRef}
+    >
       <div 
-        className="p-2 sm:p-4 rounded-lg bg-[#0d1116] border border-gray-800 relative"
+        className="p-2 sm:p-3 rounded-lg bg-[#0d1116] border border-gray-800 relative w-full"
         ref={graphRef}
       >
         {/* Etiquetas de meses (arriba) */}
         {renderMonthLabels()}
         
-        <div className="flex items-center">
+        <div className="flex items-center justify-center">
           {/* Etiquetas de días (izquierda) */}
           {renderDayLabels()}
           
           {/* Matriz de contribuciones */}
           <div 
-            className="flex flex-nowrap overflow-x-auto hide-scrollbar"
-            style={{ 
-              maxWidth: '100%',
-              scrollbarWidth: 'none' // Firefox
-            }}
+            className="flex flex-nowrap overflow-visible"
             role="grid"
             aria-label="GitHub Contribution Graph"
           >
