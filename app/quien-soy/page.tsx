@@ -10,6 +10,7 @@ import { Card } from "@/components/ui/card";
 import { GeometricPattern } from "@/components/geometric-pattern";
 import { SocialProof } from "@/components/social-proof";
 import { TypewriterText } from "@/components/typewriter-text";
+import { GitHubContributionGraph } from "@/components/quien-soy/GitHubContributionGraph";
 
 export default function QuienSoyPage() {
   return (
@@ -38,6 +39,16 @@ export default function QuienSoyPage() {
                   conectar en las siguientes plataformas:
                 </p>
               </div>
+              
+              {/* GitHub Contribution Graph */}
+              <div className="w-full max-w-[700px] overflow-x-auto">
+                <GitHubContributionGraph 
+                  text="hectorlabra.dev"
+                  columns={52}
+                  rows={7}
+                />
+              </div>
+              
               <div className="flex space-x-4">
                 <Button
                   size="icon"
