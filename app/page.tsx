@@ -7,12 +7,12 @@ import { ArrowRight, Check, Github, Twitter, Linkedin } from "lucide-react";
 // UI Components imports
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { NewsletterForm } from "@/components/newsletter-form";
-import { FaqAccordion } from "@/components/faq-accordion";
-import { LegoBlocks } from "@/components/lego-blocks";
-import { GeometricPattern } from "@/components/geometric-pattern";
-import { SocialProof } from "@/components/social-proof";
-import { TypewriterText } from "@/components/typewriter-text";
+import { NewsletterForm } from "@/components/sections/home/newsletter-form";
+import { FaqAccordion } from "@/components/sections/home/faq-accordion";
+import { LegoBlocks } from "@/components/sections/home/lego-blocks";
+import { GeometricPattern } from "@/components/shared/geometric-pattern";
+import { SocialProof } from "@/components/sections/home/social-proof";
+import { TypewriterText } from "@/components/shared/typewriter-text";
 
 export default function HomePage() {
   return (

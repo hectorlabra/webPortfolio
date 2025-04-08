@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { Github, Twitter, Linkedin } from "lucide-react";
-import { NewsletterForm } from "@/components/newsletter-form";
-import { Logo } from "@/components/logo";
+import { NewsletterForm } from "@/components/sections/home/newsletter-form";
+import { Logo } from "@/components/shared/logo";
 
 export function Footer() {
   return (

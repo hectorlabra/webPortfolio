@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
-import { Logo } from "@/components/logo";
+import { Logo } from "@/components/shared/logo";
 
 export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);

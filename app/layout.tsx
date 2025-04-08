@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Footer } from "@/components/ui/footer";
-import { Navbar } from "@/components/ui/navbar";
+import { Footer } from "@/components/layouts/footer";
+import { Navbar } from "@/components/layouts/navbar";
 
 export const metadata: Metadata = {
   title: "hectorlabra.dev",

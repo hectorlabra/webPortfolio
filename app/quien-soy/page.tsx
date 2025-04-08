@@ -7,9 +7,9 @@ import { useState } from "react";
 // UI Components imports
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { GeometricPattern } from "@/components/geometric-pattern";
-import { SocialProof } from "@/components/social-proof";
-import { TypewriterText } from "@/components/typewriter-text";
+import { GeometricPattern } from "@/components/shared/geometric-pattern";
+import { SocialProof } from "@/components/sections/home/social-proof";
+import { TypewriterText } from "@/components/shared/typewriter-text";
 import { GitHubContributionGraph } from "@/components/quien-soy/GitHubContributionGraph";
 
 export default function QuienSoyPage() {
@@ -39,12 +39,12 @@ export default function QuienSoyPage() {
                   conectar en las siguientes plataformas:
                 </p>
               </div>
-              
+
               {/* GitHub Contribution Graph */}
               <div className="w-full flex justify-center mt-3 mb-2">
                 <GitHubContributionGraph />
               </div>
-              
+
               <div className="flex space-x-4 mt-1">
                 <Button
                   size="icon"
