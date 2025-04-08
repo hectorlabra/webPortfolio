@@ -93,8 +93,8 @@ export default function HomePage() {
                   Enseñamos el enfoque completo.
                 </h2>
                 <p className="text-lg text-white/70">
-                  Todo lo que necesitas para construir tu carrera de software
-                  developer, incluso si eres un principiante absoluto. ✨
+                  Todo lo que necesitas para construir tu carrera de developer,
+                  incluso si eres un principiante absoluto. ✨
                 </p>
               </div>
             </div>
