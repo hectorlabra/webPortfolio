@@ -182,28 +182,27 @@ export const GitHubContributionGraph: React.FC<
       "Nov",
       "Dec",
     ];
-    const labels = [];
-    let currentDate = new Date(actualStartDate);
-    let currentMonth = currentDate.getMonth();
 
-    for (let week = 0; week < weekCount; week++) {
-      if (currentDate.getMonth() !== currentMonth || week === 0) {
-        currentMonth = currentDate.getMonth();
+    // En lugar de calcular posiciones basadas en cambios de fecha,
+    // distribuimos uniformemente los 12 meses a lo largo del año
+    const monthPositions = [];
 
-        labels.push({
-          text: months[currentMonth],
-          position: week,
-        });
-      }
-
-      // Avanzar 7 días
-      currentDate.setDate(currentDate.getDate() + 7);
-    }
-
-    // Calculamos el ancho total para alineación precisa
+    // Calculamos el ancho total disponible para las columnas
     const totalWidth = weekCount * (cellSize + cellMargin * 2);
     // Offset para las etiquetas de los días de la semana
-    const dayLabelOffset = 34; // Ancho del área de etiquetas de días + margen
+    const dayLabelOffset = 34;
+
+    // Distribuir los 12 meses uniformemente a lo largo del año
+    for (let i = 0; i < 12; i++) {
+      // Calculamos la posición de cada mes de manera uniforme
+      // Para 12 meses en 52 semanas, cada mes ocupa aproximadamente 4.33 semanas
+      const position = Math.floor(i * (weekCount / 12));
+
+      monthPositions.push({
+        text: months[i],
+        position: position,
+      });
+    }
 
     return (
       <div
@@ -211,14 +210,13 @@ export const GitHubContributionGraph: React.FC<
         style={{
           height: "18px",
           marginBottom: "5px",
-          width: "100%", // Asegura que ocupe todo el ancho disponible
+          width: "100%",
         }}
       >
-        {labels.map((label, index) => {
-          // Calculamos la posición exacta de cada mes basado en su posición
-          // Añadimos un offset significativo para mover todo mucho más a la derecha
+        {monthPositions.map((label, index) => {
+          // Calculamos la posición exacta para cada mes con distribución uniforme
           const leftOffset =
-            label.position * (cellSize + cellMargin * 2) + dayLabelOffset + 50; // Añadimos un offset grande para mover los meses mucho más a la derecha
+            label.position * (cellSize + cellMargin * 2) + dayLabelOffset + 50; // Offset adicional para alineación
 
           return (
             <div
