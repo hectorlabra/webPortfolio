@@ -20,7 +20,7 @@ export default function QuienSoyPage() {
         <section className="w-full min-h-[50vh] sm:min-h-[65vh] lg:min-h-[75vh] flex items-center py-10 sm:py-5 md:py-4 lg:pt-0 lg:pb-0 relative">
           <div className="absolute inset-0 bg-gradient-to-b from-[#0a0612] via-[#0a0612] to-[#0a0612]/90 pointer-events-none"></div>
           <div className="container flex-1 flex flex-col justify-center px-4 md:px-6 pt-5 pb-7 sm:pt-0 sm:pb-0 relative z-10">
-            <div className="flex flex-col items-center text-center space-y-1.5 max-w-[750px] mx-auto">
+            <div className="flex flex-col items-center text-center space-y-1.5 max-w-[700px] mx-auto">
               <div className="rounded-full overflow-hidden border-4 border-[#64E365] shadow-[0_0_14px_rgba(100,227,101,0.5)] w-28 h-28 sm:w-36 sm:h-36">
                 <Image
                   src="/placeholder-user.jpg"
@@ -40,9 +40,9 @@ export default function QuienSoyPage() {
                 </p>
               </div>
 
-              {/* GitHub Contribution Graph - espacio más reducido */}
-              <div className="w-full flex justify-center -mt-1 -mb-1 -ml-3 scale-95 origin-top">
-                <div className="max-w-full overflow-auto">
+              {/* GitHub Contribution Graph - solución de contención aislada */}
+              <div className="flex justify-center w-full overflow-hidden">
+                <div className="flex justify-center -ml-3 scale-95 origin-top">
                   <GitHubContributionGraph />
                 </div>
               </div>
