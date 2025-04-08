@@ -40,9 +40,9 @@ export default function QuienSoyPage() {
                 </p>
               </div>
 
-              {/* GitHub Contribution Graph - solución de contención aislada */}
-              <div className="flex justify-center w-full overflow-hidden">
-                <div className="flex justify-center -ml-3 scale-95 origin-top">
+              {/* GitHub Contribution Graph - contenedor con ancho fijo */}
+              <div className="flex justify-center w-full">
+                <div className="w-[650px] max-w-full mx-auto overflow-x-auto">
                   <GitHubContributionGraph />
                 </div>
               </div>
