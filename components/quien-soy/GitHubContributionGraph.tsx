@@ -36,9 +36,9 @@ export const GitHubContributionGraph: React.FC<
   const [contributionData, setContributionData] = useState<{
     [key: string]: number;
   }>({});
-  // Valores ajustados para que se vea como un gráfico original de GitHub
-  const cellSize = 8; // Tamaño estándar de GitHub
-  const cellMargin = 2; // Margen estándar entre celdas de GitHub
+  // Valores ligeramente reducidos para dar más "aire" al componente
+  const cellSize = 7; // Reducido de 8px a 7px
+  const cellMargin = 2.5; // Aumentado de 2px a 2.5px
   const [weekCount, setWeekCount] = useState(columns);
 
   // Referencias
@@ -203,7 +203,7 @@ export const GitHubContributionGraph: React.FC<
     return (
       <div
         className="flex text-xs text-gray-500 mb-1 position-relative pl-8"
-        style={{ height: "20px" }}
+        style={{ height: "20px", marginBottom: "6px" }} // Más espacio vertical
       >
         {labels.map((label, index) => (
           <div
@@ -212,10 +212,10 @@ export const GitHubContributionGraph: React.FC<
               position: "absolute",
               left: `${
                 label.position * (cellSize + cellMargin * 2) +
-                // Ajuste para centrar mejor los meses sobre sus columnas
-                30 + // Offset para compensar las etiquetas de días de la semana
-                (label.text.length > 2 ? -2 : 0) // Pequeño ajuste según longitud del nombre
+                40 + // Aumentado de 30 a 40 para más espacio horizontal
+                (label.text.length > 2 ? -4 : 0) // Ajuste mejorado según longitud
               }px`,
+              whiteSpace: "nowrap", // Evita que los meses se corten
             }}
           >
             {label.text}
@@ -242,8 +242,8 @@ export const GitHubContributionGraph: React.FC<
         style={{
           height: rows * cellTotalSize,
           position: "relative",
-          width: "25px", // Ancho fijo para las etiquetas
-          marginRight: "4px", // Espacio entre etiquetas y cuadros
+          width: "32px", // Aumentado de 25px a 32px para más espacio
+          marginRight: "8px", // Aumentado de 4px a 8px para más separación
         }}
       >
         {/* Lunes - posición exacta */}
@@ -252,6 +252,7 @@ export const GitHubContributionGraph: React.FC<
             position: "absolute",
             top: row1Position,
             right: 0,
+            paddingRight: "2px", // Añadido padding para aire adicional
           }}
         >
           {dayLabels[0]}
@@ -263,6 +264,7 @@ export const GitHubContributionGraph: React.FC<
             position: "absolute",
             top: row3Position,
             right: 0,
+            paddingRight: "2px", // Añadido padding para aire adicional
           }}
         >
           {dayLabels[1]}
@@ -274,6 +276,7 @@ export const GitHubContributionGraph: React.FC<
             position: "absolute",
             top: row5Position,
             right: 0,
+            paddingRight: "2px", // Añadido padding para aire adicional
           }}
         >
           {dayLabels[2]}
@@ -288,7 +291,7 @@ export const GitHubContributionGraph: React.FC<
       ref={containerRef}
     >
       <div
-        className="p-2 sm:p-3 rounded-lg bg-[#0d1116] border border-gray-800 relative w-full"
+        className="p-4 sm:p-6 rounded-lg bg-[#0d1116] border border-gray-800 relative w-full"
         ref={graphRef}
       >
         {/* Etiquetas de meses */}
@@ -332,12 +335,14 @@ export const GitHubContributionGraph: React.FC<
         </div>
 
         {/* Leyenda */}
-        <div className="flex justify-end items-center mt-2 text-xs text-gray-500">
-          <span className="mr-1">Less</span>
+        {/* Aumentado mt-2 a mt-4 */}
+        <div className="flex justify-end items-center mt-4 text-xs text-gray-500">
+          {/* Aumentado mr-1 a mr-2 */}
+          <span className="mr-2">Less</span>
           {[0, 1, 2, 3, 4].map((level) => (
             <div
               key={`legend-${level}`}
-              className="inline-block mx-[2px]"
+              className="inline-block mx-1" /* Aumentado mx-[2px] a mx-1 */
               style={{
                 backgroundColor:
                   level === 0
@@ -355,7 +360,8 @@ export const GitHubContributionGraph: React.FC<
               }}
             />
           ))}
-          <span className="ml-1">More</span>
+          {/* Aumentado ml-1 a ml-2 */}
+          <span className="ml-2">More</span>
         </div>
 
         {/* Tooltip eliminado para quitar animaciones */}
