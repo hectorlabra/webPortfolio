@@ -20,7 +20,7 @@ export default function QuienSoyPage() {
         <section className="w-full min-h-[55vh] sm:min-h-[70vh] lg:min-h-[80vh] flex items-center py-12 sm:py-6 md:py-4 lg:pt-0 lg:pb-0 relative">
           <div className="absolute inset-0 bg-gradient-to-b from-[#0a0612] via-[#0a0612] to-[#0a0612]/90 pointer-events-none"></div>
           <div className="container flex-1 flex flex-col justify-center px-4 md:px-6 pt-6 pb-8 sm:pt-0 sm:pb-0 relative z-10">
-            <div className="flex flex-col items-center text-center space-y-4 max-w-[800px] mx-auto">
+            <div className="flex flex-col items-center text-center space-y-2 max-w-[800px] mx-auto">
               <div className="rounded-full overflow-hidden border-4 border-[#64E365] shadow-[0_0_15px_rgba(100,227,101,0.5)] w-32 h-32 sm:w-40 sm:h-40">
                 <Image
                   src="/placeholder-user.jpg"
@@ -30,7 +30,7 @@ export default function QuienSoyPage() {
                   className="rounded-full object-cover"
                 />
               </div>
-              <div className="space-y-2">
+              <div className="space-y-1">
                 <h1 className="font-mono text-2xl sm:text-3xl font-bold tracking-tighter whitespace-nowrap overflow-hidden">
                   Hola, soy <TypewriterText text="Héctor Labra" />
                 </h1>
@@ -40,14 +40,15 @@ export default function QuienSoyPage() {
                 </p>
               </div>
 
-              {/* GitHub Contribution Graph */}
-              <div className="w-full flex justify-center mt-3 mb-2 -ml-3">
+              {/* GitHub Contribution Graph - espacio reducido */}
+              <div className="w-full flex justify-center -mt-1 -mb-1 -ml-3">
                 <div className="max-w-full overflow-auto">
                   <GitHubContributionGraph />
                 </div>
               </div>
 
-              <div className="flex space-x-4 mt-1">
+              {/* Social icons - espacio reducido */}
+              <div className="flex space-x-4 -mt-2">
                 <Button
                   size="icon"
                   variant="ghost"
