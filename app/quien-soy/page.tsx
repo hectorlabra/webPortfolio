@@ -17,11 +17,11 @@ export default function QuienSoyPage() {
     <div className="mx-auto w-full max-w-[700px]">
       <main className="flex-1">
         {/* Encabezado impactante */}
-        <section className="w-full min-h-[50vh] sm:min-h-[65vh] lg:min-h-[75vh] flex items-center py-10 sm:py-5 md:py-4 lg:pt-0 lg:pb-0 relative">
+        <section className="w-full min-h-[100vh] flex items-center py-8 sm:py-10 md:py-0 lg:py-0 relative">
           <div className="absolute inset-0 bg-gradient-to-b from-[#0a0612] via-[#0a0612] to-[#0a0612]/90 pointer-events-none"></div>
-          <div className="container flex-1 flex flex-col justify-center px-4 md:px-6 pt-5 pb-7 sm:pt-0 sm:pb-0 relative z-10">
-            <div className="flex flex-col items-center text-center space-y-1.5 max-w-[700px] mx-auto">
-              <div className="rounded-full overflow-hidden border-4 border-[#64E365] shadow-[0_0_14px_rgba(100,227,101,0.5)] w-28 h-28 sm:w-36 sm:h-36">
+          <div className="container flex-1 flex flex-col justify-center px-4 md:px-6 relative z-10 pb-16 sm:pb-20">
+            <div className="flex flex-col items-center text-center space-y-4 sm:space-y-6 max-w-[700px] mx-auto">
+              <div className="rounded-full overflow-hidden border-4 border-[#64E365] shadow-[0_0_14px_rgba(100,227,101,0.5)] w-24 h-24 sm:w-32 sm:h-32">
                 <Image
                   src="/placeholder-user.jpg"
                   alt="Héctor Labra"
@@ -30,25 +30,26 @@ export default function QuienSoyPage() {
                   className="rounded-full object-cover"
                 />
               </div>
-              <div className="space-y-1">
+              <div className="space-y-2 sm:space-y-3 mb-2">
                 <h1 className="font-mono text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tighter whitespace-nowrap overflow-hidden">
                   Hola, soy <TypewriterText text="Héctor Labra" />
                 </h1>
                 <p className="text-base sm:text-lg text-white/70 max-w-[550px] mx-auto">
-                  Software developer, emprendedor y polímata digital. Podemos
-                  conectar en las siguientes plataformas:
+                  Software developer y polímata digital.
+                  <br />
+                  Podemos conectar en las siguientes plataformas:
                 </p>
               </div>
 
               {/* GitHub Contribution Graph - contenedor con ancho fijo */}
-              <div className="flex justify-center w-full">
+              <div className="flex justify-center w-full my-2 sm:my-3">
                 <div className="w-[650px] max-w-full mx-auto overflow-x-auto">
                   <GitHubContributionGraph />
                 </div>
               </div>
 
               {/* Social icons - tamaño reducido */}
-              <div className="flex space-x-3.5 -mt-1.5">
+              <div className="flex space-x-4 mt-2">
                 <Button
                   size="icon"
                   variant="ghost"
@@ -73,10 +74,12 @@ export default function QuienSoyPage() {
               </div>
             </div>
           </div>
-        </section>
 
-        {/* Divisor */}
-        <GeometricPattern />
+          {/* Divisor - positioned at the bottom of viewport */}
+          <div className="absolute bottom-0 left-0 right-0 w-full">
+            <GeometricPattern />
+          </div>
+        </section>
 
         {/* Historia personal y profesional */}
         <section className="w-full py-16 sm:py-24">
