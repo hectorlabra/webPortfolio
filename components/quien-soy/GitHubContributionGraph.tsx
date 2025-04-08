@@ -36,9 +36,9 @@ export const GitHubContributionGraph: React.FC<
   const [contributionData, setContributionData] = useState<{
     [key: string]: number;
   }>({});
-  // Valores ligeramente reducidos para dar más "aire" al componente
-  const cellSize = 7; // Reducido de 8px a 7px
-  const cellMargin = 2.5; // Aumentado de 2px a 2.5px
+  // Valores moderadamente reducidos para el componente
+  const cellSize = 6; // Valor intermedio entre 7px y 5px
+  const cellMargin = 2; // Valor intermedio entre 2.5px y 1.5px
   const [weekCount, setWeekCount] = useState(columns);
 
   // Referencias
@@ -202,8 +202,8 @@ export const GitHubContributionGraph: React.FC<
 
     return (
       <div
-        className="flex text-xs text-gray-500 mb-1 position-relative pl-8"
-        style={{ height: "20px", marginBottom: "6px" }} // Más espacio vertical
+        className="flex text-xs text-gray-500 mb-1 position-relative pl-7"
+        style={{ height: "18px", marginBottom: "5px" }} // Valores intermedios entre original y la versión reducida
       >
         {labels.map((label, index) => (
           <div
@@ -212,10 +212,11 @@ export const GitHubContributionGraph: React.FC<
               position: "absolute",
               left: `${
                 label.position * (cellSize + cellMargin * 2) +
-                40 + // Aumentado de 30 a 40 para más espacio horizontal
-                (label.text.length > 2 ? -4 : 0) // Ajuste mejorado según longitud
+                35 + // Valor intermedio entre 40 y 30
+                (label.text.length > 2 ? -3 : 0)
               }px`,
-              whiteSpace: "nowrap", // Evita que los meses se corten
+              whiteSpace: "nowrap",
+              fontSize: "0.7rem", // Tamaño un poco más legible
             }}
           >
             {label.text}
@@ -242,8 +243,9 @@ export const GitHubContributionGraph: React.FC<
         style={{
           height: rows * cellTotalSize,
           position: "relative",
-          width: "32px", // Aumentado de 25px a 32px para más espacio
-          marginRight: "8px", // Aumentado de 4px a 8px para más separación
+          width: "28px", // Valor intermedio entre 32px y 25px
+          marginRight: "6px", // Valor intermedio entre 8px y 5px
+          fontSize: "0.7rem", // Tamaño un poco más legible
         }}
       >
         {/* Lunes - posición exacta */}
@@ -252,7 +254,7 @@ export const GitHubContributionGraph: React.FC<
             position: "absolute",
             top: row1Position,
             right: 0,
-            paddingRight: "2px", // Añadido padding para aire adicional
+            paddingRight: "2px", // Volvemos al valor original
           }}
         >
           {dayLabels[0]}
@@ -264,7 +266,7 @@ export const GitHubContributionGraph: React.FC<
             position: "absolute",
             top: row3Position,
             right: 0,
-            paddingRight: "2px", // Añadido padding para aire adicional
+            paddingRight: "2px", // Volvemos al valor original
           }}
         >
           {dayLabels[1]}
@@ -276,7 +278,7 @@ export const GitHubContributionGraph: React.FC<
             position: "absolute",
             top: row5Position,
             right: 0,
-            paddingRight: "2px", // Añadido padding para aire adicional
+            paddingRight: "2px", // Volvemos al valor original
           }}
         >
           {dayLabels[2]}
@@ -287,11 +289,11 @@ export const GitHubContributionGraph: React.FC<
 
   return (
     <div
-      className="flex flex-col items-center justify-center my-4 w-full"
+      className="flex flex-col items-center justify-center my-2 w-full"
       ref={containerRef}
     >
       <div
-        className="p-4 sm:p-6 rounded-lg bg-[#0d1116] border border-gray-800 relative w-full"
+        className="p-3 sm:p-4 rounded-lg bg-[#0d1116] border border-gray-800 relative w-full"
         ref={graphRef}
       >
         {/* Etiquetas de meses */}
@@ -335,14 +337,12 @@ export const GitHubContributionGraph: React.FC<
         </div>
 
         {/* Leyenda */}
-        {/* Aumentado mt-2 a mt-4 */}
-        <div className="flex justify-end items-center mt-4 text-xs text-gray-500">
-          {/* Aumentado mr-1 a mr-2 */}
-          <span className="mr-2">Less</span>
+        <div className="flex justify-end items-center mt-3 text-xs text-gray-500">
+          <span className="mr-1.5 text-[0.7rem]">Less</span>
           {[0, 1, 2, 3, 4].map((level) => (
             <div
               key={`legend-${level}`}
-              className="inline-block mx-1" /* Aumentado mx-[2px] a mx-1 */
+              className="inline-block mx-0.5"
               style={{
                 backgroundColor:
                   level === 0
@@ -354,14 +354,13 @@ export const GitHubContributionGraph: React.FC<
                     : level === 3
                     ? "#26a641"
                     : "#39d353",
-                width: "10px",
-                height: "10px",
-                borderRadius: "2px",
+                width: "9px",
+                height: "9px",
+                borderRadius: "1.5px",
               }}
             />
           ))}
-          {/* Aumentado ml-1 a ml-2 */}
-          <span className="ml-2">More</span>
+          <span className="ml-1.5 text-[0.7rem]">More</span>
         </div>
 
         {/* Tooltip eliminado para quitar animaciones */}
