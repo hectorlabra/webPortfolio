@@ -227,18 +227,57 @@ export const GitHubContributionGraph: React.FC<
 
   // Renderizar etiquetas de días de semana
   const renderDayLabels = () => {
-    const days = ["", "Mon", "", "Wed", "", "Fri", ""];
+    // Solo mostrar lunes, miércoles y viernes
+    const dayLabels = ["Mon", "Wed", "Fri"];
+
+    // Calcular posiciones basadas en la disposición real de los cuadros
+    const cellTotalSize = cellSize + cellMargin * 2;
+    const row1Position = cellTotalSize * 1; // Primera fila con etiqueta (lunes)
+    const row3Position = cellTotalSize * 3; // Segunda fila con etiqueta (miércoles)
+    const row5Position = cellTotalSize * 5; // Tercera fila con etiqueta (viernes)
 
     return (
-      <div className="flex flex-col mr-2 text-xs text-gray-500 justify-around h-full">
-        {days.map((day, index) => (
-          <div
-            key={index}
-            style={{ height: `${cellSize}px`, lineHeight: `${cellSize}px` }}
-          >
-            {day}
-          </div>
-        ))}
+      <div
+        className="flex flex-col mr-2 text-xs text-gray-500"
+        style={{
+          height: rows * cellTotalSize,
+          position: "relative",
+          width: "25px", // Ancho fijo para las etiquetas
+          marginRight: "4px", // Espacio entre etiquetas y cuadros
+        }}
+      >
+        {/* Lunes - posición exacta */}
+        <div
+          style={{
+            position: "absolute",
+            top: row1Position,
+            right: 0,
+          }}
+        >
+          {dayLabels[0]}
+        </div>
+
+        {/* Miércoles - posición exacta */}
+        <div
+          style={{
+            position: "absolute",
+            top: row3Position,
+            right: 0,
+          }}
+        >
+          {dayLabels[1]}
+        </div>
+
+        {/* Viernes - posición exacta */}
+        <div
+          style={{
+            position: "absolute",
+            top: row5Position,
+            right: 0,
+          }}
+        >
+          {dayLabels[2]}
+        </div>
       </div>
     );
   };
