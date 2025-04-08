@@ -21,7 +21,7 @@ const faqs: FaqItem[] = [
       "A pesar del auge de la IA generativa, el desarrollo web sigue siendo un campo fundamental donde los humanos marcan la diferencia. La creatividad, el pensamiento sistémico y la capacidad de traducir necesidades de usuario en soluciones técnicas son habilidades irremplazables. Te muestro cómo combinar estas capacidades humanas con las herramientas de IA para multiplicar tu productividad y valor como desarrollador, manteniendo tu relevancia en un ecosistema tecnológico en constante evolución.",
   },
   {
-    question: "¿CÓMO ME PUEDEN AYUDAR?",
+    question: "¿CÓMO ME PUEDES AYUDAR?",
     answer:
       "Te ofrezco recursos para navegar tu carrera técnica en la era de la IA: desde tutoriales sobre cómo aprovechar herramientas de IA en tu flujo de trabajo, hasta estrategias para identificar y desarrollar las habilidades que te mantendrán relevante. Mi enfoque se basa en el aprendizaje continuo, la adaptabilidad y el desarrollo de un 'stack personal' que combine dominio técnico con competencias que trascienden la automatización.",
   },

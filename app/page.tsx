@@ -33,8 +33,8 @@ export default function HomePage() {
                     <TypewriterText text=", no meses." />
                   </h1>
                   <p className="text-base sm:text-lg text-white/70">
-                    Todo lo que necesitas para construir tu carrera de software
-                    developer, incluso si eres un principiante absoluto.
+                    Desarrolla software más rápido con IA. Pasa de cero a crear
+                    aplicaciones full-stack modernas en solo semanas.
                   </p>
                 </div>
                 {/* Highlight Banner */}
@@ -93,7 +93,8 @@ export default function HomePage() {
                   Enseñamos el enfoque completo.
                 </h2>
                 <p className="text-lg text-white/70">
-                  Construye, automatiza y escala. Desde cero, paso a paso. ✨
+                  Todo lo que necesitas para construir tu carrera de software
+                  developer, incluso si eres un principiante absoluto. ✨
                 </p>
               </div>
             </div>
