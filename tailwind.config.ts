@@ -53,6 +53,35 @@ const config = {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+        // Colores personalizados centralizados
+        'dark': '#0a0612',
+        'dark-lighter': '#130c24',
+        'accent-green': '#64E365',
+        'accent-yellow': '#FFD100',
+        // Variantes con transparencias
+        'white': {
+          DEFAULT: '#ffffff',
+          5: 'rgba(255, 255, 255, 0.05)',
+          10: 'rgba(255, 255, 255, 0.10)', 
+          15: 'rgba(255, 255, 255, 0.15)',
+          20: 'rgba(255, 255, 255, 0.20)',
+          70: 'rgba(255, 255, 255, 0.70)',
+          80: 'rgba(255, 255, 255, 0.80)',
+          90: 'rgba(255, 255, 255, 0.90)',
+        },
+        'green': {
+          light: 'rgba(140, 255, 140, 0.20)',
+          DEFAULT: '#64E365',
+          20: 'rgba(100, 227, 101, 0.20)',
+          30: 'rgba(100, 227, 101, 0.30)',
+          40: 'rgba(100, 227, 101, 0.40)',
+        },
+        'yellow': {
+          light: 'rgba(255, 210, 0, 0.3)',
+          DEFAULT: '#FFD100',
+          30: 'rgba(255, 210, 0, 0.3)',
+          50: 'rgba(255, 210, 0, 0.5)',
+        },
       },
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
@@ -62,6 +91,22 @@ const config = {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
+      },
+      boxShadow: {
+        'green-glow': '0 0 10px rgba(100,227,101,0.25), 0 0 15px rgba(100,227,101,0.15)',
+        'green-glow-strong': '0 0 14px rgba(100,227,101,0.5)',
+        'yellow-glow': '0 0 10px rgba(255,210,0,0.5), 0 0 15px rgba(255,210,0,0.3)',
+        'white-subtle': '0 0 8px rgba(255,255,255,0.1)',
+        'card': 'rgba(140, 68, 255, 0.05) 0px 10px 20px',
+      },
+      spacing: {
+        'hero-height': '55vh',
+        'hero-height-sm': '70vh',
+        'hero-height-lg': '80vh',
+        'content-max': '700px',
+      },
+      maxWidth: {
+        'container': '1000px',
       },
       keyframes: {
         "accordion-down": {

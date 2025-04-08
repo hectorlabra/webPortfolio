@@ -11,7 +11,7 @@ export const jetbrainsMono = JetBrains_Mono({
 export const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
-  weight: ['400', '500', '600', '700'], // Varios pesos para flexibilidad
+  weight: ['100', '200', '300', '400', '500', '600', '700'], // Añadidos pesos ligeros
   variable: '--font-inter',
 });
 

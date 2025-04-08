@@ -21,7 +21,7 @@ export default function RootLayout({
       suppressHydrationWarning={true}
       className={`${jetbrainsMono.variable} ${inter.variable}`}
     >
-      <body className="font-sans font-light leading-relaxed">
+      <body className="font-sans font-normal leading-relaxed">
         <div className="flex min-h-screen flex-col bg-[#0a0612] text-white">
           <Navbar />
           {children}
