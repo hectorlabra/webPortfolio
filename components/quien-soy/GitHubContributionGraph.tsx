@@ -202,7 +202,7 @@ export const GitHubContributionGraph: React.FC<
 
     return (
       <div
-        className="flex text-xs text-gray-500 mb-1 position-relative"
+        className="flex text-xs text-gray-500 mb-1 position-relative pl-8"
         style={{ height: "20px" }}
       >
         {labels.map((label, index) => (
@@ -212,7 +212,9 @@ export const GitHubContributionGraph: React.FC<
               position: "absolute",
               left: `${
                 label.position * (cellSize + cellMargin * 2) +
-                (cellSize + cellMargin * 2) * 0.8
+                // Ajuste para centrar mejor los meses sobre sus columnas
+                30 + // Offset para compensar las etiquetas de días de la semana
+                (label.text.length > 2 ? -2 : 0) // Pequeño ajuste según longitud del nombre
               }px`,
             }}
           >
