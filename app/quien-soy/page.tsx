@@ -31,7 +31,7 @@ export default function QuienSoyPage() {
                 />
               </div>
               <div className="space-y-1">
-                <h1 className="font-mono text-xl sm:text-2xl font-bold tracking-tighter whitespace-nowrap overflow-hidden">
+                <h1 className="font-mono text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tighter whitespace-nowrap overflow-hidden">
                   Hola, soy <TypewriterText text="Héctor Labra" />
                 </h1>
                 <p className="text-base sm:text-lg text-white/70 max-w-[550px] mx-auto">
