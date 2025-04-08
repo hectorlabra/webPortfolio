@@ -200,28 +200,40 @@ export const GitHubContributionGraph: React.FC<
       currentDate.setDate(currentDate.getDate() + 7);
     }
 
+    // Calculamos el ancho total para alineación precisa
+    const totalWidth = weekCount * (cellSize + cellMargin * 2);
+    // Offset para las etiquetas de los días de la semana
+    const dayLabelOffset = 34; // Ancho del área de etiquetas de días + margen
+
     return (
       <div
-        className="flex text-xs text-gray-500 mb-1 position-relative pl-7"
-        style={{ height: "18px", marginBottom: "5px" }} // Valores intermedios entre original y la versión reducida
+        className="flex text-xs text-gray-500 mb-1 position-relative"
+        style={{
+          height: "18px",
+          marginBottom: "5px",
+          width: "100%", // Asegura que ocupe todo el ancho disponible
+        }}
       >
-        {labels.map((label, index) => (
-          <div
-            key={`month-${index}`}
-            style={{
-              position: "absolute",
-              left: `${
-                label.position * (cellSize + cellMargin * 2) +
-                35 + // Valor intermedio entre 40 y 30
-                (label.text.length > 2 ? -3 : 0)
-              }px`,
-              whiteSpace: "nowrap",
-              fontSize: "0.7rem", // Tamaño un poco más legible
-            }}
-          >
-            {label.text}
-          </div>
-        ))}
+        {labels.map((label, index) => {
+          // Calculamos la posición exacta de cada mes basado en su posición
+          // Añadimos un offset significativo para mover todo mucho más a la derecha
+          const leftOffset =
+            label.position * (cellSize + cellMargin * 2) + dayLabelOffset + 50; // Añadimos un offset grande para mover los meses mucho más a la derecha
+
+          return (
+            <div
+              key={`month-${index}`}
+              style={{
+                position: "absolute",
+                left: `${leftOffset}px`,
+                whiteSpace: "nowrap",
+                fontSize: "0.7rem",
+              }}
+            >
+              {label.text}
+            </div>
+          );
+        })}
       </div>
     );
   };
@@ -233,52 +245,59 @@ export const GitHubContributionGraph: React.FC<
 
     // Calcular posiciones basadas en la disposición real de los cuadros
     const cellTotalSize = cellSize + cellMargin * 2;
-    const row1Position = cellTotalSize * 1; // Primera fila con etiqueta (lunes)
-    const row3Position = cellTotalSize * 3; // Segunda fila con etiqueta (miércoles)
-    const row5Position = cellTotalSize * 5; // Tercera fila con etiqueta (viernes)
+
+    // Distribuir mejor los días a lo largo del eje vertical
+    // Calculamos las posiciones para una mejor distribución
+    const totalHeight = rows * cellTotalSize;
+    const row1Position = Math.floor(totalHeight * 0.15); // Primera posición ~15% del total
+    const row3Position = Math.floor(totalHeight * 0.5); // Segunda posición en medio (50%)
+    const row5Position = Math.floor(totalHeight * 0.85); // Tercera posición ~85% del total
 
     return (
       <div
         className="flex flex-col mr-2 text-xs text-gray-500"
         style={{
-          height: rows * cellTotalSize,
+          height: totalHeight,
           position: "relative",
-          width: "28px", // Valor intermedio entre 32px y 25px
-          marginRight: "6px", // Valor intermedio entre 8px y 5px
-          fontSize: "0.7rem", // Tamaño un poco más legible
+          width: "28px",
+          marginRight: "6px",
+          fontSize: "0.7rem",
         }}
       >
-        {/* Lunes - posición exacta */}
+        {/* Lunes - posición recalculada */}
         <div
           style={{
             position: "absolute",
             top: row1Position,
             right: 0,
-            paddingRight: "2px", // Volvemos al valor original
+            paddingRight: "2px",
+            transform: "translateY(-50%)", // Centrar verticalmente
           }}
         >
           {dayLabels[0]}
         </div>
 
-        {/* Miércoles - posición exacta */}
+        {/* Miércoles - posición recalculada */}
         <div
           style={{
             position: "absolute",
             top: row3Position,
             right: 0,
-            paddingRight: "2px", // Volvemos al valor original
+            paddingRight: "2px",
+            transform: "translateY(-50%)", // Centrar verticalmente
           }}
         >
           {dayLabels[1]}
         </div>
 
-        {/* Viernes - posición exacta */}
+        {/* Viernes - posición recalculada */}
         <div
           style={{
             position: "absolute",
             top: row5Position,
             right: 0,
-            paddingRight: "2px", // Volvemos al valor original
+            paddingRight: "2px",
+            transform: "translateY(-50%)", // Centrar verticalmente
           }}
         >
           {dayLabels[2]}
