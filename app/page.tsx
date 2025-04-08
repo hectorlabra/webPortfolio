@@ -212,7 +212,7 @@ export default function HomePage() {
         <GeometricPattern />
 
         {/* FAQ Section - Con espaciado responsive */}
-        <section className="w-full py-16 sm:py-24 md:py-36 lg:py-48">
+        <section className="w-full py-16 sm:py-24">
           <div className="container flex-1 flex flex-col px-4 md:px-6">
             <div className="flex flex-col items-start space-y-5">
               <div className="space-y-3">
