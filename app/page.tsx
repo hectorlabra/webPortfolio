@@ -243,9 +243,6 @@ export default function HomePage() {
             </div>
           </div>
         </section>
-
-        {/* Geometric Pattern Component */}
-        <GeometricPattern />
       </main>
     </div>
   );
