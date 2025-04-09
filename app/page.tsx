@@ -19,9 +19,9 @@ export default function HomePage() {
     <div className="mx-auto w-full max-w-[1000px]">
       <main className="flex-1">
         {/* Hero Section - Mantener como referencia */}
-        <section className="w-full min-h-[55vh] sm:min-h-[70vh] lg:min-h-[80vh] flex items-center py-12 sm:py-6 md:py-4 lg:pt-0 lg:pb-0 relative">
+        <section className="w-full min-h-[55vh] sm:min-h-[70vh] lg:min-h-[80vh] flex items-center py-4 sm:py-6 md:py-4 lg:pt-0 lg:pb-0 relative">
           <div className="absolute inset-0 bg-gradient-to-b from-[#0a0612] via-[#0a0612] to-[#0a0612]/90 pointer-events-none"></div>
-          <div className="container flex-1 flex flex-col justify-center px-4 md:px-6 pt-6 pb-8 sm:pt-0 sm:pb-0 relative z-10">
+          <div className="container flex-1 flex flex-col justify-center px-4 md:px-6 pt-3 pb-6 sm:pt-0 sm:pb-0 relative z-10">
             {/* Social Proof Component */}
             <SocialProof />
             <div className="grid gap-6 sm:gap-8 lg:grid-cols-[60fr_40fr] lg:gap-16 mt-6 lg:mt-6">
