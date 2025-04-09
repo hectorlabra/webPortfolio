@@ -51,6 +51,11 @@
   body {
     @apply bg-[#130c24] text-white;
   }
+  
+  /* Aplicando leading-relaxed globalmente a todos los párrafos */
+  p {
+    @apply leading-relaxed;
+  }
 }
 
 /* Estilos para el efecto typewriter */

@@ -31,10 +31,10 @@ export default function QuienSoyPage() {
                 />
               </div>
               <div className="space-y-2 sm:space-y-3 mb-2">
-                <h1 className="font-mono text-2xl sm:text-3xl lg:text-4xl font-bold tracking-tighter whitespace-nowrap overflow-hidden">
+                <h1 className="font-mono text-xl sm:text-3xl lg:text-4xl font-bold tracking-tighter whitespace-nowrap overflow-hidden">
                   Hola, soy <TypewriterText text="Héctor Labra" />
                 </h1>
-                <p className="text-base sm:text-lg text-white/70 max-w-[550px] mx-auto">
+                <p className="text-sm sm:text-lg text-white/70 max-w-[550px] mx-auto">
                   Software developer y polímata digital.
                   <br />
                   Podemos conectar en las siguientes plataformas:
@@ -88,17 +88,17 @@ export default function QuienSoyPage() {
               </h2>
 
               <div className="prose prose-invert max-w-none space-y-6">
-                <p className="text-base sm:text-lg text-white-80 font-light leading-relaxed mb-6">
+                <p className="text-base sm:text-lg text-white-80 mb-6">
                   Soy un software developer y emprendedor digital de Santiago,
                   Chile.
                 </p>
 
-                <p className="text-base sm:text-lg text-white-80 font-light leading-relaxed mb-6">
+                <p className="text-base sm:text-lg text-white-80 mb-6">
                   Hace siete años, comencé vendiendo webs básicas en WordPress a
                   negocios locales.
                 </p>
 
-                <p className="text-base sm:text-lg text-white-80 font-light leading-relaxed mb-6">
+                <p className="text-base sm:text-lg text-white-80 mb-6">
                   Cobraba menos de 300 USD y usaba plantillas porque no sabía
                   programar aún.
                 </p>
@@ -111,28 +111,28 @@ export default function QuienSoyPage() {
                     height={400}
                     className="rounded-lg object-cover w-full shadow-lg shadow-green-20"
                   />
-                  <p className="text-sm text-white-50 font-light text-center mt-2">
+                  <p className="text-sm text-white-50 text-center mt-2">
                     Trabajando en mi oficina en casa, donde nacen las ideas.
                   </p>
                 </div>
 
-                <p className="text-base sm:text-lg text-white-80 font-light leading-relaxed mb-6">
+                <p className="text-base sm:text-lg text-white-80 mb-6">
                   Luego, mis clientes empezaron a pedir más que diseño: querían
                   resultados en marketing.
                 </p>
 
-                <p className="text-base sm:text-lg text-white-80 font-light leading-relaxed mb-6">
+                <p className="text-base sm:text-lg text-white-80 mb-6">
                   Aprendí Google Ads, Meta Ads, SEO, Analítica web y Copywriting
                   para ayudarlos a crecer, pero las herramientas pre-hechas me
                   limitaban mucho.
                 </p>
 
-                <p className="text-base sm:text-lg text-white-80 font-light leading-relaxed mb-6">
+                <p className="text-base sm:text-lg text-white-80 mb-6">
                   Así que creé "hectorlabra.com" para compartir todo lo que
                   había aprendido.
                 </p>
 
-                <p className="text-base sm:text-lg text-white-80 font-light leading-relaxed mb-6">
+                <p className="text-base sm:text-lg text-white-80 mb-6">
                   Monetizaba mi web con afiliación y coaching, y funcionó bien,
                   aunque los plugins y licencias me agotaban.
                 </p>
@@ -145,56 +145,56 @@ export default function QuienSoyPage() {
                     height={400}
                     className="rounded-lg object-cover w-full shadow-lg shadow-green-20"
                   />
-                  <p className="text-sm text-white-50 font-light text-center mt-2">
+                  <p className="text-sm text-white-50 text-center mt-2">
                     Trabajando en mi oficina en casa, donde nacen las ideas.
                   </p>
                 </div>
 
-                <p className="text-base sm:text-lg text-white-80 font-light leading-relaxed mb-6">
+                <p className="text-base sm:text-lg text-white-80 mb-6">
                   Tenía que pagar por casi todo: themes, constructores, plugins;
                   algunos mensuales, otros anuales.
                 </p>
 
-                <p className="text-base sm:text-lg text-white-80 font-light leading-relaxed mb-6">
+                <p className="text-base sm:text-lg text-white-80 mb-6">
                   Además, tenía que conectar mi web a apps de terceros solo para
                   hacerla funcionar y llegar a mi audiencia era un lío.
                 </p>
 
-                <p className="text-base sm:text-lg text-white-80 font-light leading-relaxed mb-6">
+                <p className="text-base sm:text-lg text-white-80 mb-6">
                   Todo se volvió un "espagueti" enredado y bastante caro de
                   mantener.
                 </p>
 
-                <p className="text-base sm:text-lg text-white-80 font-light leading-relaxed mb-6">
+                <p className="text-base sm:text-lg text-white-80 mb-6">
                   Ese fue mi punto de inflexión.
                 </p>
 
-                <p className="text-base sm:text-lg text-white-80 font-light leading-relaxed mb-6">
+                <p className="text-base sm:text-lg text-white-80 mb-6">
                   Asi que hace tres años, decidí aprender a programar de verdad.
                 </p>
 
-                <p className="text-base sm:text-lg text-white-80 font-light leading-relaxed mb-6">
+                <p className="text-base sm:text-lg text-white-80 mb-6">
                   Me sumergí en el desarrollo web moderno y empecé a construir
                   aplicativos escalables.
                 </p>
 
-                <p className="text-base sm:text-lg text-white-80 font-light leading-relaxed mb-6">
+                <p className="text-base sm:text-lg text-white-80 mb-6">
                   Ese cambio marcó un antes y un después en mi carrera como
                   developer.
                 </p>
 
-                <p className="text-base sm:text-lg text-white-80 font-light leading-relaxed mb-6">
+                <p className="text-base sm:text-lg text-white-80 mb-6">
                   Me permitió sentir la "magia" de crear en internet, libre de
                   soluciones genéricas, más barato, más rápido y más escalable.
                 </p>
 
-                <p className="text-base sm:text-lg text-white-80 font-light leading-relaxed mb-6">
+                <p className="text-base sm:text-lg text-white-80 mb-6">
                   Hoy lidero <strong>Innovare Academia</strong> como Director
                   Académico, enseñando a 300+ alumnos a programar y monetizar su
                   carrera.
                 </p>
 
-                <p className="text-base sm:text-lg text-white-80 font-light leading-relaxed mb-6">
+                <p className="text-base sm:text-lg text-white-80 mb-6">
                   También trabajo en <strong>Innovare Software & Apps</strong>{" "}
                   como líder técnico y mantengo <strong>HectorLabra.dev</strong>
                   , mi marca personal.
@@ -254,7 +254,7 @@ export default function QuienSoyPage() {
                 </Card>
               </div>
 
-              <p className="text-base sm:text-lg text-white/80 leading-relaxed mt-8 text-center bg-white/5 p-6 rounded-lg border border-white/10">
+              <p className="text-base sm:text-lg text-white/80 mt-8 text-center bg-white/5 p-6 rounded-lg border border-white/10">
                 En la era de la IA, mi enfoque es combinar las nuevas
                 tecnologías con una sólida comprensión de los fundamentos. La IA
                 es una herramienta poderosa, pero el criterio y la experiencia
@@ -386,7 +386,7 @@ export default function QuienSoyPage() {
                 Más allá del código
               </h2>
 
-              <p className="text-base sm:text-lg text-white/80 font-light leading-relaxed">
+              <p className="text-base sm:text-lg text-white/80">
                 No todo en la vida es programación. Cuando no estoy frente a la
                 computadora, me gusta explorar otras pasiones que mantienen el
                 equilibrio en mi vida.
@@ -422,7 +422,7 @@ export default function QuienSoyPage() {
               <div className="space-y-4">
                 <div>
                   <h3 className="text-xl font-bold">📚 Aprendizaje continuo</h3>
-                  <p className="text-white/70 font-light mt-1">
+                  <p className="text-white/70 mt-1">
                     Siempre estoy leyendo algo nuevo, desde filosofía hasta
                     ciencia ficción especulativa.
                   </p>
@@ -430,7 +430,7 @@ export default function QuienSoyPage() {
 
                 <div>
                   <h3 className="text-xl font-bold">🏃‍♂️ Deporte y bienestar</h3>
-                  <p className="text-white/70 font-light mt-1">
+                  <p className="text-white/70 mt-1">
                     El ejercicio físico es fundamental para mantener la mente
                     clara. Disfruto especialmente del running y el entrenamiento
                     funcional.
@@ -439,7 +439,7 @@ export default function QuienSoyPage() {
 
                 <div>
                   <h3 className="text-xl font-bold">✈️ Viajar y explorar</h3>
-                  <p className="text-white/70 font-light mt-1">
+                  <p className="text-white/70 mt-1">
                     Conocer nuevas culturas y lugares me inspira y amplia mi
                     perspectiva sobre el mundo y los problemas que podemos
                     resolver con tecnología.
