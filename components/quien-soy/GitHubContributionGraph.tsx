@@ -227,9 +227,15 @@ export const GitHubContributionGraph: React.FC<
       "Dec",
     ];
 
+    // Definir tipo para las posiciones de los meses
+    interface MonthPosition {
+      text: string;
+      position: number;
+    }
+
     // En lugar de calcular posiciones basadas en cambios de fecha,
     // distribuimos uniformemente los meses a lo largo del año
-    const monthPositions = [];
+    const monthPositions: MonthPosition[] = [];
 
     // Determinar cuántos meses mostrar según el ancho de pantalla
     const visibleMonths = [];
@@ -291,7 +297,7 @@ export const GitHubContributionGraph: React.FC<
               ? 20
               : windowWidth < 480
               ? 30
-              : 50);
+              : 25); // Valor más moderado para alinear mejor con los recuadros en escritorio
 
           return (
             <div
