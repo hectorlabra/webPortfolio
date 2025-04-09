@@ -197,58 +197,52 @@ export const GitHubContributionGraph: React.FC<
     // Generar datos estáticos
     for (let i = 0; i < dayCount; i++) {
       const dateKey = currentDate.toISOString().split("T")[0];
-      // Usar nuestra función determinística
       staticContributions[dateKey] = getContributionValue(
         new Date(currentDate)
       );
       currentDate.setDate(currentDate.getDate() + 1);
     }
 
-    // Establecer valor fijo para weekCount para evitar recálculos
-    setWeekCount(52); // Valor fijo exacto
+    setWeekCount(52);
     setContributionData(staticContributions);
-  }, []); // Array vacío para ejecutar solo una vez
+  }, []);
+
+  // Manejar el renderizado inicial y los cambios de tamaño
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   // Nuevo useEffect para ajustar dinámicamente el tamaño de las celdas según el ancho de pantalla
   useEffect(() => {
-    if (!windowWidth) return;
+    if (!windowWidth || !isClient) return;
 
     // Calculamos el tamaño óptimo de las celdas según el ancho disponible
-    // Consideramos que necesitamos espacio para 52 columnas (semanas) + etiquetas de días (espacio variable)
-    const containerWidth = windowWidth > 650 ? 650 : windowWidth - 30; // máx 650px o ancho disponible con padding
-    // Ajustar espacio para etiquetas de días según tamaño de pantalla
-    const dayLabelSpace = windowWidth < 375 ? 22 : windowWidth < 480 ? 28 : 34; // Reducción para pantallas pequeñas
+    const containerWidth = windowWidth > 650 ? 650 : windowWidth - 30;
+    const dayLabelSpace = windowWidth < 375 ? 22 : windowWidth < 480 ? 28 : 34;
     const availableWidth = containerWidth - dayLabelSpace;
 
-    // Calcular tamaño de celda basado en el espacio disponible
-    let newCellSize = 6; // valor por defecto
+    let newCellSize = 6;
     let newCellMargin = 2;
 
     if (windowWidth < 350) {
-      // Ultra pequeño - móviles extremadamente pequeños
       newCellSize = 1.4;
       newCellMargin = 0.3;
     } else if (windowWidth < 375) {
-      // Extra pequeño - móviles muy pequeños
       newCellSize = 1.8;
       newCellMargin = 0.4;
     } else if (windowWidth < 480) {
-      // Pequeño - móviles
       newCellSize = 3;
       newCellMargin = 1;
     } else if (windowWidth < 640) {
-      // Mediano - tablets pequeñas
       newCellSize = 5;
-      newCellMargin = 2;
-    } else {
-      // Grande - tablets y desktop
-      newCellSize = 6;
       newCellMargin = 2;
     }
 
     setCellSize(newCellSize);
     setCellMargin(newCellMargin);
-  }, [windowWidth]); // Se ejecuta cada vez que cambia el ancho de ventana
+  }, [windowWidth, isClient]);
 
   // Función auxiliar fija
   const getDayOfWeek = (date: Date): number => date.getDay();
@@ -341,6 +335,8 @@ export const GitHubContributionGraph: React.FC<
 
   // Renderizar etiquetas de meses
   const renderMonthLabels = () => {
+    if (!isClient) return null;
+
     const months = [
       "Jan",
       "Feb",
@@ -407,35 +403,33 @@ export const GitHubContributionGraph: React.FC<
 
     return (
       <div
-        className="flex text-xs text-gray-500 mb-1 position-relative"
+        className="flex text-xs text-gray-500 mb-1 relative"
         style={{
           height: "18px",
           marginBottom: "5px",
           width: "100%",
+          opacity: isClient ? 1 : 0,
         }}
       >
         {monthPositions.map((label, index) => {
           // Calculamos la posición exacta para cada mes con distribución uniforme
           const leftOffset =
             label.position * (cellSize + cellMargin * 2) +
-            dayLabelOffset +
-            // Ajuste adicional según el tamaño de pantalla
+            34 + // dayLabelOffset fijo
             (windowWidth < 350
               ? 15
               : windowWidth < 375
               ? 20
               : windowWidth < 480
               ? 30
-              : 25); // Valor más moderado para alinear mejor con los recuadros en escritorio
+              : 25);
 
           return (
             <div
               key={`month-${index}`}
+              className="absolute whitespace-nowrap text-[0.7rem]"
               style={{
-                position: "absolute",
                 left: `${leftOffset}px`,
-                whiteSpace: "nowrap",
-                fontSize: "0.7rem",
               }}
             >
               {label.text}
@@ -446,8 +440,10 @@ export const GitHubContributionGraph: React.FC<
     );
   };
 
-  // Renderizar etiquetas de días de semana
+  // Renderizar etiquetas de días
   const renderDayLabels = () => {
+    if (!isClient) return null;
+
     // Determinar qué etiquetas de días mostrar según el tamaño de pantalla
     let dayLabels = [];
 
@@ -502,17 +498,15 @@ export const GitHubContributionGraph: React.FC<
           width: labelWidth,
           marginRight: windowWidth < 480 ? "4px" : "6px",
           fontSize: windowWidth < 480 ? "0.65rem" : "0.7rem",
+          opacity: isClient ? 1 : 0,
         }}
       >
         {dayLabels.map((label, index) => (
           <div
             key={`day-${index}`}
+            className="absolute right-0 pr-2 transform -translate-y-1/2"
             style={{
-              position: "absolute",
               top: positions[index],
-              right: 0,
-              paddingRight: "2px",
-              transform: "translateY(-50%)", // Centrar verticalmente
             }}
           >
             {label}
