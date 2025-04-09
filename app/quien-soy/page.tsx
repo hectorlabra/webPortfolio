@@ -41,9 +41,9 @@ export default function QuienSoyPage() {
                 </p>
               </div>
 
-              {/* GitHub Contribution Graph - contenedor con ancho fijo */}
+              {/* GitHub Contribution Graph - contenedor responsivo */}
               <div className="flex justify-center w-full my-2 sm:my-3">
-                <div className="w-[650px] max-w-full mx-auto overflow-x-auto">
+                <div className="w-full max-w-[650px] mx-auto overflow-hidden">
                   <GitHubContributionGraph />
                 </div>
               </div>
