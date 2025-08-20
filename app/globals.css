@@ -163,3 +163,226 @@
   }
 }
 
+
+/* Estilos para Prism.js - Tema personalizado oscuro */
+:root {
+  --prism-background: #0a0612;
+  --prism-foreground: #ffffff;
+  --prism-comment: #6b7280;
+  --prism-string: #64E365;
+  --prism-number: #FFD100;
+  --prism-keyword: #64E365;
+  --prism-function: #FFD100;
+  --prism-operator: #64E365;
+  --prism-punctuation: #ffffff;
+  --prism-property: #FFD100;
+  --prism-selector: #64E365;
+  --prism-variable: #ffffff;
+}
+
+/* Contenedor de código */
+.prose pre {
+  @apply bg-[#0a0612] border border-white/10 rounded-lg p-4 overflow-x-auto;
+  background: var(--prism-background) !important;
+  margin: 1.5rem 0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.prose pre code {
+  @apply bg-transparent p-0 text-sm font-mono;
+  color: var(--prism-foreground) !important;
+  background: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  text-shadow: none !important;
+}
+
+/* Inline code */
+.prose code:not(pre code) {
+  @apply bg-white/10 text-accent-yellow px-2 py-1 rounded text-sm font-mono;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Tokens de Prism */
+.token.comment,
+.token.prolog,
+.token.doctype,
+.token.cdata {
+  color: var(--prism-comment);
+  font-style: italic;
+}
+
+.token.punctuation {
+  color: var(--prism-punctuation);
+}
+
+.token.property,
+.token.tag,
+.token.boolean,
+.token.number,
+.token.constant,
+.token.symbol,
+.token.deleted {
+  color: var(--prism-number);
+}
+
+.token.selector,
+.token.attr-name,
+.token.string,
+.token.char,
+.token.builtin,
+.token.inserted {
+  color: var(--prism-string);
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
+  color: var(--prism-operator);
+}
+
+.token.atrule,
+.token.attr-value,
+.token.keyword {
+  color: var(--prism-keyword);
+  font-weight: 600;
+}
+
+.token.function,
+.token.class-name {
+  color: var(--prism-function);
+  font-weight: 600;
+}
+
+.token.regex,
+.token.important,
+.token.variable {
+  color: var(--prism-variable);
+}
+
+.token.important,
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+/* Líneas de código numeradas */
+.code-line {
+  display: block;
+  padding-left: 16px;
+  padding-right: 16px;
+  margin-left: -16px;
+  margin-right: -16px;
+  border-left: 4px solid transparent;
+}
+
+.code-line.inserted {
+  background-color: rgba(100, 227, 101, 0.1);
+  border-left-color: var(--prism-string);
+}
+
+.code-line.deleted {
+  background-color: rgba(239, 68, 68, 0.1);
+  border-left-color: #ef4444;
+}
+
+.highlight-line {
+  background-color: rgba(255, 255, 255, 0.05);
+  border-left: 4px solid var(--prism-keyword);
+}
+
+/* Títulos de lenguajes */
+.code-title {
+  @apply bg-white/5 text-white/70 px-4 py-2 text-sm font-mono border-b border-white/10;
+  margin-bottom: 0;
+}
+
+/* Botón de copia */
+.copy-button {
+  @apply absolute top-2 right-2 bg-white/10 hover:bg-white/20 text-white/70 hover:text-white px-2 py-1 rounded text-xs transition-colors;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Estilos específicos para diferentes lenguajes */
+.language-javascript .token.keyword,
+.language-typescript .token.keyword {
+  color: var(--prism-keyword);
+}
+
+.language-css .token.property {
+  color: var(--prism-property);
+}
+
+.language-html .token.tag {
+  color: var(--prism-keyword);
+}
+
+.language-html .token.attr-name {
+  color: var(--prism-function);
+}
+
+/* Mejoras para la prose */
+.prose {
+  @apply text-white/90;
+}
+
+.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+  @apply text-accent-green;
+}
+
+.prose a {
+  @apply text-accent-green hover:text-accent-yellow transition-colors;
+}
+
+.prose strong {
+  @apply text-accent-yellow font-semibold;
+}
+
+.prose blockquote {
+  @apply border-l-4 border-accent-green bg-white/5 rounded-r-lg;
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.prose blockquote p {
+  @apply text-white/80 italic;
+}
+
+.prose table {
+  @apply border border-white/10 rounded-lg overflow-hidden;
+}
+
+.prose table th {
+  @apply bg-white/5 text-accent-green font-semibold;
+}
+
+.prose table td {
+  @apply border-t border-white/10;
+}
+
+.prose ul li::marker {
+  color: var(--prism-keyword);
+}
+
+.prose ol li::marker {
+  color: var(--prism-keyword);
+}
+
+/* Enlaces de anchor para headings */
+.anchor-link {
+  @apply text-white/40 hover:text-accent-green transition-colors;
+  text-decoration: none !important;
+}
+
+.anchor-link:hover {
+  text-decoration: none !important;
+}

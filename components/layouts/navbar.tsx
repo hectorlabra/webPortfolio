@@ -32,7 +32,7 @@ export function Navbar() {
                 Quien Soy
               </Link>
               <Link
-                href="/proyectos"
+                href="/blog"
                 className="text-sm font-medium transition-colors hover:text-white/70"
               >
                 Blog
@@ -93,7 +93,7 @@ export function Navbar() {
               Quien Soy
             </Link>
             <Link
-              href="/proyectos"
+              href="/blog"
               className="text-lg font-medium"
               onClick={() => setMenuOpen(false)}
             >
