@@ -6,7 +6,7 @@ import { jetbrainsMono, inter } from "@/lib/fonts";
 
 export const metadata: Metadata = {
   title: "hectorlabra.dev",
-  description: "Created by Héctor Laba",
+  description: "Created by Héctor Labra",
   generator: "hectorlabra.dev",
 };
 
