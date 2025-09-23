@@ -62,14 +62,14 @@ function CustomTooltip({
           <div className="space-y-2">
             <p className="font-medium">{label}</p>
             <div className="space-y-1">
-              <p className="text-blue-600">
+              <p className="text-white/80">
                 Único:{" "}
                 {formatCurrency(
                   payload.find((p) => p.dataKey === "oneTimeRevenue")?.value ||
                     0
                 )}
               </p>
-              <p className="text-green-600">
+              <p className="text-[#64E365]">
                 Suscripción:{" "}
                 {formatCurrency(
                   payload.find((p) => p.dataKey === "subscriptionRevenue")
@@ -85,13 +85,13 @@ function CustomTooltip({
           <div className="space-y-2">
             <p className="font-medium">{label}</p>
             <div className="space-y-1">
-              <p className="text-blue-600">
+              <p className="text-white/80">
                 Único:{" "}
                 {formatCurrency(
                   payload.find((p) => p.dataKey === "oneTimeProfit")?.value || 0
                 )}
               </p>
-              <p className="text-green-600">
+              <p className="text-[#64E365]">
                 Suscripción:{" "}
                 {formatCurrency(
                   payload.find((p) => p.dataKey === "subscriptionProfit")
@@ -224,13 +224,13 @@ export function ComparisonChart({
         <Legend />
         <Bar
           dataKey="oneTimeProfit"
-          fill="#3B82F6"
+          fill="rgba(255, 255, 255, 0.7)"
           name="Beneficio Único"
           radius={[2, 2, 0, 0]}
         />
         <Bar
           dataKey="subscriptionProfit"
-          fill="#10B981"
+          fill="#64E365"
           name="Beneficio Mensual"
           radius={[2, 2, 0, 0]}
         />
@@ -268,8 +268,8 @@ export function ComparisonChart({
           type="monotone"
           dataKey="cumulativeOneTime"
           stackId="1"
-          stroke="#3B82F6"
-          fill="#3B82F6"
+          stroke="rgba(255, 255, 255, 0.8)"
+          fill="rgba(255, 255, 255, 0.6)"
           fillOpacity={0.6}
           name="Acumulado Único"
         />
@@ -277,8 +277,8 @@ export function ComparisonChart({
           type="monotone"
           dataKey="cumulativeSubscription"
           stackId="2"
-          stroke="#10B981"
-          fill="#10B981"
+          stroke="#64E365"
+          fill="#64E365"
           fillOpacity={0.6}
           name="Acumulado Suscripción"
         />
@@ -315,17 +315,17 @@ export function ComparisonChart({
         <Line
           type="monotone"
           dataKey="cumulativeOneTime"
-          stroke="#3B82F6"
+          stroke="rgba(255, 255, 255, 0.8)"
           strokeWidth={3}
-          dot={{ r: 4 }}
+          dot={{ r: 4, fill: "rgba(255, 255, 255, 0.8)" }}
           name="Único (Acumulado)"
         />
         <Line
           type="monotone"
           dataKey="cumulativeSubscription"
-          stroke="#10B981"
+          stroke="#64E365"
           strokeWidth={3}
-          dot={{ r: 4 }}
+          dot={{ r: 4, fill: "#64E365" }}
           name="Suscripción (Acumulado)"
         />
         {breakEvenData && (
@@ -369,15 +369,15 @@ export function ComparisonChart({
 
   return (
     <div className={`space-y-4 ${className}`}>
-      <Card>
+      <Card className="bg-white/5 border-white/20">
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle className="flex items-center space-x-2">
-                <BarChart3 className="h-5 w-5" />
+              <CardTitle className="flex items-center space-x-2 font-mono text-white">
+                <BarChart3 className="h-5 w-5 text-[#64E365]" />
                 <span>Comparación Visual</span>
               </CardTitle>
-              <CardDescription>
+              <CardDescription className="text-white/70">
                 Análisis gráfico de ingresos y beneficios para {timeHorizon}{" "}
                 meses
               </CardDescription>
@@ -386,7 +386,7 @@ export function ComparisonChart({
             {breakEvenPoint > 0 && breakEvenPoint <= timeHorizon && (
               <Badge
                 variant="outline"
-                className="bg-red-50 text-red-700 border-red-300"
+                className="bg-[#FFD100]/20 text-[#FFD100] border-[#FFD100]/30"
               >
                 Equilibrio: Mes {breakEvenPoint}
               </Badge>
@@ -419,12 +419,12 @@ export function ComparisonChart({
                 value={option.key}
                 className="space-y-4"
               >
-                <div className="bg-muted/30 p-4 rounded-lg">
+                <div className="bg-white/5 p-4 rounded-lg border border-white/10">
                   <option.component />
                 </div>
 
                 {/* Chart Description */}
-                <div className="text-sm text-muted-foreground space-y-2">
+                <div className="text-sm text-white/70 space-y-2">
                   {option.key === "cumulative" && (
                     <p>
                       Muestra la evolución acumulada de ingresos para ambos
@@ -462,15 +462,15 @@ export function ComparisonChart({
       </Card>
 
       {/* Chart Legend and Key Insights */}
-      <Card>
+      <Card className="bg-white/5 border-white/20">
         <CardContent className="pt-4">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
             <div className="space-y-2">
-              <h4 className="font-medium flex items-center space-x-2">
-                <div className="w-3 h-3 bg-blue-500 rounded"></div>
+              <h4 className="font-medium flex items-center space-x-2 text-white">
+                <div className="w-3 h-3 bg-white/70 rounded"></div>
                 <span>Modelo Único</span>
               </h4>
-              <ul className="space-y-1 text-muted-foreground pl-5">
+              <ul className="space-y-1 text-white/70 pl-5">
                 <li>• Ingresos inmediatos</li>
                 <li>• Sin ingresos recurrentes</li>
                 <li>• Beneficio constante</li>
@@ -478,11 +478,11 @@ export function ComparisonChart({
             </div>
 
             <div className="space-y-2">
-              <h4 className="font-medium flex items-center space-x-2">
-                <div className="w-3 h-3 bg-green-500 rounded"></div>
+              <h4 className="font-medium flex items-center space-x-2 text-white">
+                <div className="w-3 h-3 bg-[#64E365] rounded"></div>
                 <span>Suscripción</span>
               </h4>
-              <ul className="space-y-1 text-muted-foreground pl-5">
+              <ul className="space-y-1 text-white/70 pl-5">
                 <li>• Ingresos mensuales</li>
                 <li>• Afectado por churn</li>
                 <li>• Crecimiento acumulativo</li>
@@ -490,11 +490,11 @@ export function ComparisonChart({
             </div>
 
             <div className="space-y-2">
-              <h4 className="font-medium flex items-center space-x-2">
-                <div className="w-3 h-3 bg-red-500 rounded border-dashed border-2 border-red-500"></div>
+              <h4 className="font-medium flex items-center space-x-2 text-white">
+                <div className="w-3 h-3 bg-red-400 rounded border-dashed border-2 border-red-400"></div>
                 <span>Punto de Equilibrio</span>
               </h4>
-              <ul className="space-y-1 text-muted-foreground pl-5">
+              <ul className="space-y-1 text-white/70 pl-5">
                 <li>• Cruce de rentabilidad</li>
                 <li>• Momento decisivo</li>
                 <li>• Validación del modelo</li>

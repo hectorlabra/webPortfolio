@@ -135,17 +135,20 @@ function InputField({
     <div className="space-y-2">
       <div className="flex items-center space-x-2">
         {icon && <div className="text-muted-foreground">{icon}</div>}
-        <Label htmlFor={id} className="text-sm font-medium">
+        <Label htmlFor={id} className="text-sm font-medium text-white/80">
           {label}
         </Label>
         {tooltip && (
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
-                <Info className="h-4 w-4 text-muted-foreground" />
+                <Info className="h-4 w-4 text-[#64E365]" />
               </TooltipTrigger>
-              <TooltipContent side="right" className="max-w-xs">
-                <p className="text-sm">{tooltip}</p>
+              <TooltipContent
+                side="right"
+                className="max-w-xs bg-white/10 border-white/20"
+              >
+                <p className="text-sm text-white">{tooltip}</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
@@ -154,7 +157,7 @@ function InputField({
 
       <div className="relative">
         {getPrefix() && (
-          <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">
+          <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/60">
             {getPrefix()}
           </div>
         )}
@@ -169,19 +172,19 @@ function InputField({
           max={max}
           step={step}
           placeholder={placeholder}
-          className={`${getPrefix() ? "pl-8" : ""} ${
-            getSuffix() ? "pr-8" : ""
-          } ${error ? "border-red-500" : ""}`}
+          className={`bg-white/10 border-white/20 text-white placeholder:text-white/40 ${
+            getPrefix() ? "pl-8" : ""
+          } ${getSuffix() ? "pr-8" : ""} ${error ? "border-red-400" : ""}`}
         />
 
         {getSuffix() && (
-          <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground">
+          <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/60">
             {getSuffix()}
           </div>
         )}
       </div>
 
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="text-sm text-red-400">{error}</p>}
     </div>
   );
 }
@@ -200,13 +203,13 @@ export function CalculatorInputs({
   return (
     <div className="space-y-6">
       {/* Modelo de Producto Único */}
-      <Card>
+      <Card className="bg-white/5 border-white/20">
         <CardHeader>
-          <CardTitle className="flex items-center space-x-2">
-            <DollarSign className="h-5 w-5 text-blue-600" />
+          <CardTitle className="flex items-center space-x-2 font-mono text-white">
+            <DollarSign className="h-5 w-5 text-[#64E365]" />
             <span>Modelo de Producto Único</span>
           </CardTitle>
-          <CardDescription>
+          <CardDescription className="text-white/70">
             Configura los parámetros de tu producto de venta única
           </CardDescription>
         </CardHeader>
@@ -271,13 +274,13 @@ export function CalculatorInputs({
       </Card>
 
       {/* Modelo de Suscripción */}
-      <Card>
+      <Card className="bg-white/5 border-white/20">
         <CardHeader>
-          <CardTitle className="flex items-center space-x-2">
-            <Repeat className="h-5 w-5 text-green-600" />
+          <CardTitle className="flex items-center space-x-2 font-mono text-white">
+            <Repeat className="h-5 w-5 text-[#64E365]" />
             <span>Modelo de Suscripción</span>
           </CardTitle>
-          <CardDescription>
+          <CardDescription className="text-white/70">
             Configura los parámetros de tu modelo de suscripción mensual
           </CardDescription>
         </CardHeader>
@@ -344,16 +347,19 @@ export function CalculatorInputs({
       </Card>
 
       {/* Configuración Avanzada */}
-      <Card>
+      <Card className="bg-white/5 border-white/20">
         <CardHeader>
-          <CardTitle className="flex items-center space-x-2">
-            <TrendingUp className="h-5 w-5 text-purple-600" />
+          <CardTitle className="flex items-center space-x-2 font-mono text-white">
+            <TrendingUp className="h-5 w-5 text-[#64E365]" />
             <span>Configuración Avanzada</span>
-            <Badge variant="secondary" className="ml-2">
+            <Badge
+              variant="secondary"
+              className="ml-2 bg-white/10 text-white/80 border-white/20"
+            >
               Opcional
             </Badge>
           </CardTitle>
-          <CardDescription>
+          <CardDescription className="text-white/70">
             Ajusta parámetros avanzados para cálculos más precisos
           </CardDescription>
         </CardHeader>
@@ -378,15 +384,15 @@ export function CalculatorInputs({
 
       {/* Errores de Validación */}
       {hasErrors && (
-        <Card className="border-red-200 bg-red-50">
+        <Card className="border-red-400 bg-red-400/10">
           <CardContent className="pt-4">
             <div className="space-y-2">
-              <h4 className="text-sm font-medium text-red-800">
+              <h4 className="text-sm font-medium text-red-400">
                 Corrige los siguientes errores:
               </h4>
               <ul className="list-disc list-inside space-y-1">
                 {validationErrors.map((error, index) => (
-                  <li key={index} className="text-sm text-red-700">
+                  <li key={index} className="text-sm text-red-400">
                     {error}
                   </li>
                 ))}
@@ -398,14 +404,13 @@ export function CalculatorInputs({
 
       {/* Botón de Cálculo Manual */}
       {!autoCalculate && (
-        <>
-          <Separator />
+        <div className="pt-4 border-t border-white/20">
           <div className="flex justify-center">
             <Button
               onClick={onCalculate}
               disabled={!canCalculate || isCalculating}
               size="lg"
-              className="w-full md:w-auto"
+              className="w-full md:w-auto bg-[#FFD100] text-[#0a0612] hover:bg-[#FFD100]/90 font-bold shadow-[0_0_10px_rgba(255,210,0,0.5)]"
             >
               {isCalculating ? (
                 <>
@@ -420,7 +425,7 @@ export function CalculatorInputs({
               )}
             </Button>
           </div>
-        </>
+        </div>
       )}
     </div>
   );

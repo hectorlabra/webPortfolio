@@ -61,22 +61,22 @@ function MetricCard({
   const getVariantStyles = () => {
     switch (variant) {
       case "success":
-        return "border-green-200 bg-green-50";
+        return "border-[#64E365]/30 bg-[#64E365]/10";
       case "warning":
-        return "border-yellow-200 bg-yellow-50";
+        return "border-[#FFD100]/30 bg-[#FFD100]/10";
       case "destructive":
-        return "border-red-200 bg-red-50";
+        return "border-red-400/30 bg-red-400/10";
       default:
-        return "";
+        return "border-white/20 bg-white/5";
     }
   };
 
   const getTrendIcon = () => {
     switch (trend) {
       case "up":
-        return <TrendingUp className="h-4 w-4 text-green-600" />;
+        return <TrendingUp className="h-4 w-4 text-[#64E365]" />;
       case "down":
-        return <TrendingDown className="h-4 w-4 text-red-600" />;
+        return <TrendingDown className="h-4 w-4 text-red-400" />;
       default:
         return null;
     }
@@ -88,20 +88,14 @@ function MetricCard({
         <div className="flex items-start justify-between">
           <div className="space-y-1 flex-1">
             <div className="flex items-center space-x-2">
-              {icon && <div className="text-muted-foreground">{icon}</div>}
-              <p className="text-sm font-medium text-muted-foreground">
-                {title}
-              </p>
+              {icon && <div className="text-white/60">{icon}</div>}
+              <p className="text-sm font-medium text-white/80">{title}</p>
               {getTrendIcon()}
             </div>
-            <p className="text-2xl font-bold">{value}</p>
-            {subtitle && (
-              <p className="text-sm text-muted-foreground">{subtitle}</p>
-            )}
+            <p className="text-2xl font-bold text-white">{value}</p>
+            {subtitle && <p className="text-sm text-white/70">{subtitle}</p>}
             {description && (
-              <p className="text-xs text-muted-foreground mt-2">
-                {description}
-              </p>
+              <p className="text-xs text-white/60 mt-2">{description}</p>
             )}
           </div>
         </div>
@@ -109,7 +103,7 @@ function MetricCard({
         {progress !== undefined && (
           <div className="mt-3 space-y-1">
             <Progress value={progress} className="h-2" />
-            <p className="text-xs text-muted-foreground text-right">
+            <p className="text-xs text-white/60 text-right">
               {Math.round(progress)}%
             </p>
           </div>
@@ -151,24 +145,24 @@ function ComparisonCard({
   const isSubscriptionBetter = difference > 0;
 
   return (
-    <Card>
+    <Card className="bg-white/5 border-white/20">
       <CardHeader className="pb-3">
-        <CardTitle className="text-lg">{title}</CardTitle>
+        <CardTitle className="text-lg font-mono text-white">{title}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
         <div className="grid grid-cols-2 gap-4">
-          <div className="text-center p-3 rounded-lg bg-blue-50 border border-blue-200">
-            <p className="text-sm font-medium text-blue-700">{oneTimeLabel}</p>
-            <p className="text-xl font-bold text-blue-900">
+          <div className="text-center p-3 rounded-lg bg-white/10 border border-white/20">
+            <p className="text-sm font-medium text-white/80">{oneTimeLabel}</p>
+            <p className="text-xl font-bold text-white">
               {formatValue(oneTimeValue)}
             </p>
           </div>
 
-          <div className="text-center p-3 rounded-lg bg-green-50 border border-green-200">
-            <p className="text-sm font-medium text-green-700">
+          <div className="text-center p-3 rounded-lg bg-[#64E365]/20 border border-[#64E365]/30">
+            <p className="text-sm font-medium text-[#64E365]">
               {subscriptionLabel}
             </p>
-            <p className="text-xl font-bold text-green-900">
+            <p className="text-xl font-bold text-white">
               {formatValue(subscriptionValue)}
             </p>
           </div>
@@ -178,8 +172,8 @@ function ComparisonCard({
           <div
             className={`inline-flex items-center space-x-2 px-3 py-1 rounded-full text-sm font-medium ${
               isSubscriptionBetter
-                ? "bg-green-100 text-green-800"
-                : "bg-red-100 text-red-800"
+                ? "bg-[#64E365]/20 text-[#64E365] border border-[#64E365]/30"
+                : "bg-red-400/20 text-red-400 border border-red-400/30"
             }`}
           >
             <span>{getTrendIndicator(difference)}</span>
@@ -223,8 +217,10 @@ export function ResultsDisplay({
     <div className={`space-y-6 ${className}`}>
       {/* Resumen General */}
       <div className="text-center space-y-2">
-        <h2 className="text-2xl font-bold">Resultados de la Comparación</h2>
-        <p className="text-muted-foreground">
+        <h2 className="text-2xl font-bold font-mono text-white">
+          Resultados de la Comparación
+        </h2>
+        <p className="text-white/70">
           Análisis para {timeHorizon} meses de operación
         </p>
       </div>
@@ -233,20 +229,20 @@ export function ResultsDisplay({
       <Card
         className={`border-2 ${
           isSubscriptionBetter
-            ? "border-green-200 bg-green-50"
-            : "border-red-200 bg-red-50"
+            ? "border-[#64E365]/50 bg-[#64E365]/10"
+            : "border-red-400/50 bg-red-400/10"
         }`}
       >
         <CardContent className="text-center py-6">
           <div className="space-y-2">
             {isSubscriptionBetter ? (
-              <CheckCircle2 className="mx-auto h-12 w-12 text-green-600" />
+              <CheckCircle2 className="mx-auto h-12 w-12 text-[#64E365]" />
             ) : (
-              <AlertCircle className="mx-auto h-12 w-12 text-red-600" />
+              <AlertCircle className="mx-auto h-12 w-12 text-red-400" />
             )}
             <h3
-              className={`text-xl font-bold ${
-                isSubscriptionBetter ? "text-green-800" : "text-red-800"
+              className={`text-xl font-bold font-mono ${
+                isSubscriptionBetter ? "text-[#64E365]" : "text-red-400"
               }`}
             >
               {isSubscriptionBetter
@@ -255,7 +251,7 @@ export function ResultsDisplay({
             </h3>
             <p
               className={`text-sm ${
-                isSubscriptionBetter ? "text-green-700" : "text-red-700"
+                isSubscriptionBetter ? "text-[#64E365]/80" : "text-red-400/80"
               }`}
             >
               Diferencia: {formatCurrency(Math.abs(results.profitDifference))}

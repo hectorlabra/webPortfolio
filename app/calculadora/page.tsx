@@ -10,15 +10,15 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import {
   Calculator,
   TrendingUp,
   BarChart3,
   Lightbulb,
-  Rocket,
-  Info,
+  ArrowRight,
+  Check,
+  RefreshCw,
 } from "lucide-react";
 import { useCalculator } from "@/app/calculadora/hooks/use-calculator";
 import { useLocalStorage } from "@/app/calculadora/hooks/use-local-storage";
@@ -149,199 +149,240 @@ export default function CalculadoraPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
-      <div className="container mx-auto px-4 py-8 max-w-7xl">
-        {/* Header */}
-        <div className="text-center space-y-4 mb-12">
-          <div className="flex items-center justify-center space-x-3">
-            <Calculator className="h-10 w-10 text-blue-600" />
-            <h1 className="text-4xl font-bold text-gray-900">
-              Calculadora de Ingresos
-            </h1>
+    <div className="mx-auto w-full max-w-[1000px]">
+      <main className="flex-1">
+        {/* Hero Section */}
+        <section className="w-full min-h-[50vh] flex items-center py-16 sm:py-20">
+          <div className="container flex-1 flex flex-col justify-center px-4 md:px-6 relative">
+            <div className="text-center space-y-6">
+              {/* Header */}
+              <div className="space-y-4">
+                <div className="flex items-center justify-center space-x-3">
+                  <Calculator className="h-8 w-8 text-[#64E365]" />
+                  <h1 className="font-mono text-3xl sm:text-4xl font-bold text-white">
+                    Calculadora de Ingresos
+                  </h1>
+                </div>
+
+                <p className="text-lg sm:text-xl text-white/70 max-w-3xl mx-auto">
+                  Compara modelo único vs suscripción para transformar tu
+                  infoproducto en un micro-SaaS rentable
+                </p>
+
+                {/* Features badges */}
+                <div className="flex flex-wrap items-center justify-center gap-3 mt-6">
+                  <Badge
+                    variant="outline"
+                    className="border-white/20 text-white/80 bg-white/5"
+                  >
+                    <TrendingUp className="h-4 w-4 mr-1 text-[#64E365]" />
+                    Análisis Financiero
+                  </Badge>
+                  <Badge
+                    variant="outline"
+                    className="border-white/20 text-white/80 bg-white/5"
+                  >
+                    <BarChart3 className="h-4 w-4 mr-1 text-[#64E365]" />
+                    Visualización Interactiva
+                  </Badge>
+                  <Badge
+                    variant="outline"
+                    className="border-white/20 text-white/80 bg-white/5"
+                  >
+                    <Lightbulb className="h-4 w-4 mr-1 text-[#64E365]" />
+                    Insights Inteligentes
+                  </Badge>
+                </div>
+              </div>
+
+              {/* Storage Status */}
+              {hasStorageSupport && lastSaved && (
+                <Alert className="max-w-md mx-auto bg-white/5 border-white/20">
+                  <Calculator className="h-4 w-4 text-[#64E365]" />
+                  <AlertDescription className="text-white/80">
+                    Datos guardados automáticamente:{" "}
+                    {lastSaved.toLocaleTimeString()}
+                  </AlertDescription>
+                </Alert>
+              )}
+            </div>
           </div>
+        </section>
 
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Compara modelo único vs suscripción para transformar tu infoproducto
-            en un micro-SaaS rentable
-          </p>
-
-          <div className="flex flex-wrap items-center justify-center gap-3 mt-6">
-            <Badge variant="outline" className="px-3 py-1">
-              <TrendingUp className="h-4 w-4 mr-1" />
-              Análisis Financiero
-            </Badge>
-            <Badge variant="outline" className="px-3 py-1">
-              <BarChart3 className="h-4 w-4 mr-1" />
-              Visualización Interactiva
-            </Badge>
-            <Badge variant="outline" className="px-3 py-1">
-              <Lightbulb className="h-4 w-4 mr-1" />
-              Insights Automáticos
-            </Badge>
-            <Badge variant="outline" className="px-3 py-1">
-              <Rocket className="h-4 w-4 mr-1" />
-              Plan de Acción
-            </Badge>
-          </div>
-        </div>
-
-        {/* Storage Status */}
-        {hasStorageSupport && lastSaved && (
-          <Alert className="mb-6 max-w-2xl mx-auto">
-            <Info className="h-4 w-4" />
-            <AlertDescription>
-              Tus datos se guardan automáticamente. Última actualización:{" "}
-              {lastSaved.toLocaleTimeString()}
-            </AlertDescription>
-          </Alert>
-        )}
-
-        {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Left Sidebar - Inputs */}
-          <div className="lg:col-span-4 space-y-6">
-            <Card className="sticky top-4">
-              <CardHeader>
-                <CardTitle className="flex items-center justify-between">
-                  <span>Configuración</span>
+        {/* Main Calculator Section */}
+        <section className="w-full py-8 sm:py-12">
+          <div className="container px-4 md:px-6">
+            {/* Calculator Card */}
+            <Card className="bg-white/5 border-white/20 shadow-lg backdrop-blur animate-circular-glow">
+              <CardHeader className="text-center pb-6">
+                <div className="flex items-center justify-between">
+                  <CardTitle className="font-mono text-xl text-white">
+                    Configuración del Análisis
+                  </CardTitle>
                   <Button
                     onClick={handleReset}
                     variant="outline"
                     size="sm"
-                    className="text-xs"
+                    className="border-white/20 text-white/70 hover:text-white hover:border-white/40 bg-transparent"
                   >
+                    <RefreshCw className="h-4 w-4 mr-1" />
                     Reiniciar
                   </Button>
-                </CardTitle>
-                <CardDescription>
-                  Ajusta los parámetros de tu negocio para ver la comparación
+                </div>
+                <CardDescription className="text-white/70">
+                  Ajusta los parámetros de tu producto para ver la comparación
                 </CardDescription>
               </CardHeader>
-              <CardContent>
-                <CalculatorInputs
-                  inputs={inputs}
-                  onInputChangeAction={handleInputChangeWithSave}
-                  onCalculate={handleManualCalculation}
-                  validationErrors={validationErrors}
-                  isCalculating={isCalculating}
-                  canCalculate={isValid}
-                  autoCalculate={true}
-                />
+
+              <CardContent className="space-y-8">
+                {/* Calculator Inputs */}
+                <div>
+                  <CalculatorInputs
+                    inputs={inputs}
+                    onInputChangeAction={handleInputChangeWithSave}
+                    onCalculate={handleManualCalculation}
+                    validationErrors={validationErrors}
+                    isCalculating={isCalculating}
+                    canCalculate={isValid}
+                    autoCalculate={true}
+                  />
+                </div>
+
+                {/* Results Section */}
+                {shouldShowResults && results ? (
+                  <div className="space-y-8 pt-6 border-t border-white/20">
+                    {/* Results Display */}
+                    <div>
+                      <h3 className="font-mono text-lg font-semibold text-white mb-4">
+                        📊 Resultados del Análisis
+                      </h3>
+                      <ResultsDisplay
+                        results={results}
+                        timeHorizon={inputs.timeHorizon}
+                      />
+                    </div>
+
+                    {/* Comparison Chart */}
+                    <div>
+                      <h3 className="font-mono text-lg font-semibold text-white mb-4">
+                        📈 Comparación Visual
+                      </h3>
+                      <ComparisonChart
+                        results={results}
+                        timeHorizon={inputs.timeHorizon}
+                      />
+                    </div>
+
+                    {/* Insights */}
+                    <div>
+                      <h3 className="font-mono text-lg font-semibold text-white mb-4">
+                        💡 Recomendaciones Inteligentes
+                      </h3>
+                      <InsightsPanel
+                        results={results}
+                        timeHorizon={inputs.timeHorizon}
+                        churnRate={inputs.churnRate}
+                      />
+                    </div>
+
+                    {/* Call to Action */}
+                    <div>
+                      <h3 className="font-mono text-lg font-semibold text-white mb-4">
+                        🚀 Próximos Pasos
+                      </h3>
+                      <CTASection
+                        results={results}
+                        timeHorizon={inputs.timeHorizon}
+                        onDownloadReport={handleDownloadReport}
+                        onShareResults={handleShareResults}
+                        onScheduleConsultation={handleScheduleConsultation}
+                      />
+                    </div>
+                  </div>
+                ) : (
+                  /* Empty State */
+                  <div className="text-center py-12 border-2 border-dashed border-white/20 rounded-lg bg-white/5">
+                    <Calculator className="h-16 w-16 text-white/40 mx-auto mb-4" />
+                    <h3 className="font-mono text-lg font-semibold text-white/70 mb-2">
+                      Configura tu producto arriba
+                    </h3>
+                    <p className="text-white/60 max-w-md mx-auto">
+                      Los resultados aparecerán automáticamente mientras ajustas
+                      los parámetros
+                    </p>
+                  </div>
+                )}
               </CardContent>
             </Card>
           </div>
+        </section>
 
-          {/* Main Content Area */}
-          <div className="lg:col-span-8 space-y-8">
-            {!shouldShowResults && (
-              <Card className="border-dashed border-2">
-                <CardContent className="pt-8 pb-8">
-                  <div className="text-center space-y-4">
-                    <Calculator className="h-16 w-16 text-muted-foreground mx-auto" />
-                    <h3 className="text-lg font-semibold text-muted-foreground">
-                      Ajusta los parámetros para ver los resultados
-                    </h3>
-                    <p className="text-muted-foreground max-w-md mx-auto">
-                      Configura el precio, costos y métricas de tu producto en
-                      el panel izquierdo para generar automáticamente el
-                      análisis de comparación.
-                    </p>
+        {/* Information Section */}
+        <section className="w-full py-16 sm:py-20">
+          <div className="container px-4 md:px-6">
+            <div className="text-center space-y-8">
+              <div className="space-y-4">
+                <h2 className="font-mono text-2xl sm:text-3xl font-bold text-white">
+                  ¿Cómo funciona esta calculadora?
+                </h2>
+                <p className="text-lg text-white/70 max-w-2xl mx-auto">
+                  Desarrollado para emprendedores que quieren transformar sus
+                  productos digitales en negocios recurrentes
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                <div className="text-center space-y-4">
+                  <div className="w-16 h-16 bg-white/5 border border-white/20 rounded-full flex items-center justify-center mx-auto">
+                    <Calculator className="h-8 w-8 text-[#64E365]" />
                   </div>
-                </CardContent>
-              </Card>
-            )}
-
-            {shouldShowResults && results && (
-              <>
-                {/* Results Overview */}
-                <ResultsDisplay
-                  results={results}
-                  timeHorizon={inputs.timeHorizon}
-                />
-
-                <Separator />
-
-                {/* Visual Comparison */}
-                <ComparisonChart
-                  results={results}
-                  timeHorizon={inputs.timeHorizon}
-                />
-
-                <Separator />
-
-                {/* Intelligent Insights */}
-                <InsightsPanel
-                  results={results}
-                  timeHorizon={inputs.timeHorizon}
-                  churnRate={inputs.churnRate}
-                />
-
-                <Separator />
-
-                {/* Call to Actions */}
-                <CTASection
-                  results={results}
-                  timeHorizon={inputs.timeHorizon}
-                  onDownloadReport={handleDownloadReport}
-                  onShareResults={handleShareResults}
-                  onScheduleConsultation={handleScheduleConsultation}
-                />
-              </>
-            )}
-          </div>
-        </div>
-
-        {/* Bottom Information */}
-        <div className="mt-16 pt-8 border-t border-gray-200">
-          <div className="text-center space-y-4">
-            <h3 className="text-lg font-semibold text-gray-900">
-              ¿Cómo funciona esta calculadora?
-            </h3>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              <div className="text-center space-y-2">
-                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto">
-                  <Calculator className="h-6 w-6 text-blue-600" />
+                  <h3 className="font-mono text-lg font-semibold text-white">
+                    Cálculos Precisos
+                  </h3>
+                  <p className="text-white/70">
+                    Utiliza fórmulas estándar de SaaS: LTV, CAC, churn rate, y
+                    período de recuperación
+                  </p>
                 </div>
-                <h4 className="font-medium">Cálculos Precisos</h4>
-                <p className="text-sm text-muted-foreground">
-                  Utiliza fórmulas estándar de SaaS: LTV, CAC, churn rate, y
-                  período de recuperación
-                </p>
+
+                <div className="text-center space-y-4">
+                  <div className="w-16 h-16 bg-white/5 border border-white/20 rounded-full flex items-center justify-center mx-auto">
+                    <BarChart3 className="h-8 w-8 text-[#64E365]" />
+                  </div>
+                  <h3 className="font-mono text-lg font-semibold text-white">
+                    Visualización Clara
+                  </h3>
+                  <p className="text-white/70">
+                    Gráficos interactivos que muestran la evolución de ingresos
+                    y punto de equilibrio
+                  </p>
+                </div>
+
+                <div className="text-center space-y-4">
+                  <div className="w-16 h-16 bg-white/5 border border-white/20 rounded-full flex items-center justify-center mx-auto">
+                    <Lightbulb className="h-8 w-8 text-[#64E365]" />
+                  </div>
+                  <h3 className="font-mono text-lg font-semibold text-white">
+                    Insights Inteligentes
+                  </h3>
+                  <p className="text-white/70">
+                    Recomendaciones personalizadas basadas en tus números
+                    específicos
+                  </p>
+                </div>
               </div>
 
-              <div className="text-center space-y-2">
-                <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto">
-                  <BarChart3 className="h-6 w-6 text-green-600" />
-                </div>
-                <h4 className="font-medium">Visualización Clara</h4>
-                <p className="text-sm text-muted-foreground">
-                  Gráficos interactivos que muestran la evolución de ingresos y
-                  punto de equilibrio
-                </p>
-              </div>
-
-              <div className="text-center space-y-2">
-                <div className="w-12 h-12 bg-purple-100 rounded-full flex items-center justify-center mx-auto">
-                  <Lightbulb className="h-6 w-6 text-purple-600" />
-                </div>
-                <h4 className="font-medium">Insights Inteligentes</h4>
-                <p className="text-sm text-muted-foreground">
-                  Recomendaciones personalizadas basadas en tus números
-                  específicos
-                </p>
+              {/* CTA Final */}
+              <div className="pt-8">
+                <Button className="bg-[#FFD100] text-[#0a0612] hover:bg-[#FFD100]/90 font-bold shadow-[0_0_10px_rgba(255,210,0,0.5)]">
+                  EMPIEZA TU ANÁLISIS
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
               </div>
             </div>
-
-            <div className="pt-4">
-              <p className="text-sm text-muted-foreground">
-                Desarrollado para emprendedores que quieren transformar sus
-                productos digitales en negocios recurrentes
-              </p>
-            </div>
           </div>
-        </div>
-      </div>
+        </section>
+      </main>
     </div>
   );
 }
