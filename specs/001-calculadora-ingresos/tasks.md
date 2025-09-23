@@ -63,10 +63,10 @@
 
 ## Phase 3.4: Page Integration
 
-- [ ] T014 Create main calculator page in app/calculadora/page.tsx
-- [ ] T015 Add calculator route to navigation (navbar component)
-- [ ] T016 Add calculator route to footer navigation
-- [ ] T017 Update sitemap.ts to include calculator page
+- [x] T014 Create main calculator page in app/calculadora/page.tsx
+- [x] T015 Add calculator route to navigation (navbar component)
+- [x] T016 Add calculator route to footer navigation
+- [x] T017 Update sitemap.ts to include calculator page
 - [ ] T018 Update robots.ts for calculator SEO
 
 ## Phase 3.5: Testing & Validation

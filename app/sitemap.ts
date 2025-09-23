@@ -1,27 +1,33 @@
-import { getAllPosts } from '@/lib/blog-utils';
-import { MetadataRoute } from 'next';
+import { getAllPosts } from "@/lib/blog-utils";
+import { MetadataRoute } from "next";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const posts = await getAllPosts();
-  
+
   // URLs estáticas del sitio
   const staticUrls: MetadataRoute.Sitemap = [
     {
-      url: 'https://hectorlabra.dev',
+      url: "https://hectorlabra.dev",
       lastModified: new Date(),
-      changeFrequency: 'weekly',
+      changeFrequency: "weekly",
       priority: 1,
     },
     {
-      url: 'https://hectorlabra.dev/blog',
+      url: "https://hectorlabra.dev/blog",
       lastModified: new Date(),
-      changeFrequency: 'weekly',
+      changeFrequency: "weekly",
       priority: 0.8,
     },
     {
-      url: 'https://hectorlabra.dev/quien-soy',
+      url: "https://hectorlabra.dev/calculadora",
       lastModified: new Date(),
-      changeFrequency: 'monthly',
+      changeFrequency: "monthly",
+      priority: 0.9,
+    },
+    {
+      url: "https://hectorlabra.dev/quien-soy",
+      lastModified: new Date(),
+      changeFrequency: "monthly",
       priority: 0.7,
     },
   ];
@@ -30,22 +36,24 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const postUrls: MetadataRoute.Sitemap = posts.map((post) => ({
     url: `https://hectorlabra.dev/blog/${post.slug}`,
     lastModified: new Date(post.date),
-    changeFrequency: 'monthly' as const,
+    changeFrequency: "monthly" as const,
     priority: post.featured ? 0.9 : 0.6,
   }));
 
   // URLs de categorías (si hay posts en esas categorías)
-  const categories = [...new Set(posts.map(post => post.category))];
+  const categories = [...new Set(posts.map((post) => post.category))];
   const categoryUrls: MetadataRoute.Sitemap = categories.map((category) => ({
-    url: `https://hectorlabra.dev/blog/category/${encodeURIComponent(category.toLowerCase())}`,
+    url: `https://hectorlabra.dev/blog/category/${encodeURIComponent(
+      category.toLowerCase()
+    )}`,
     lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
+    changeFrequency: "weekly" as const,
     priority: 0.5,
   }));
 
   // URLs de tags (solo los más populares)
   const tagCounts = posts.reduce((acc, post) => {
-    post.tags.forEach(tag => {
+    post.tags.forEach((tag) => {
       acc[tag] = (acc[tag] || 0) + 1;
     });
     return acc;
@@ -58,7 +66,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const tagUrls: MetadataRoute.Sitemap = popularTags.map((tag) => ({
     url: `https://hectorlabra.dev/blog/tag/${encodeURIComponent(tag)}`,
     lastModified: new Date(),
-    changeFrequency: 'weekly' as const,
+    changeFrequency: "weekly" as const,
     priority: 0.4,
   }));
 
