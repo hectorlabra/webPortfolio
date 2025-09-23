@@ -33,6 +33,7 @@ import {
 interface InsightsPanelProps {
   results: CalculationResults;
   timeHorizon: number;
+  churnRate?: number; // se pasa desde los inputs originales
   className?: string;
 }
 
@@ -134,6 +135,7 @@ function InsightCard({
 export function InsightsPanel({
   results,
   timeHorizon,
+  churnRate = 5,
   className,
 }: InsightsPanelProps) {
   // Calculate key metrics for insights
@@ -364,9 +366,8 @@ export function InsightsPanel({
                 <div>
                   <h4 className="font-medium">Optimiza la retención</h4>
                   <p className="text-sm text-muted-foreground">
-                    Reduce el churn del{" "}
-                    {formatPercentage(results.churnRate || 5)} implementando
-                    onboarding efectivo y soporte proactivo.
+                    Reduce el churn del {formatPercentage(churnRate)}{" "}
+                    implementando onboarding efectivo y soporte proactivo.
                   </p>
                 </div>
               </div>

@@ -287,7 +287,7 @@ export function ComparisonChart({
             x={breakEvenData.monthLabel}
             stroke="#EF4444"
             strokeDasharray="5 5"
-            label={{ value: "Equilibrio", position: "topRight" }}
+            label={{ value: "Equilibrio", position: "top" }}
           />
         )}
       </AreaChart>
@@ -333,7 +333,7 @@ export function ComparisonChart({
             x={breakEvenData.monthLabel}
             stroke="#EF4444"
             strokeDasharray="5 5"
-            label={{ value: "Equilibrio", position: "topRight" }}
+            label={{ value: "Equilibrio", position: "top" }}
           />
         )}
       </LineChart>
