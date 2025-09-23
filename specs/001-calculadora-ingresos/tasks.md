@@ -55,11 +55,11 @@
 
 ## Phase 3.3: UI Components (Core)
 
-- [ ] T009 Create CalculatorInputs component in app/calculadora/components/calculator-inputs.tsx
-- [ ] T010 Create ResultsDisplay component in app/calculadora/components/results-display.tsx
-- [ ] T011 Create ComparisonChart component in app/calculadora/components/comparison-chart.tsx
-- [ ] T012 Create InsightsPanel component in app/calculadora/components/insights-panel.tsx
-- [ ] T013 Create CTASection component in app/calculadora/components/cta-section.tsx
+- [x] T009 Create CalculatorInputs component in app/calculadora/components/calculator-inputs.tsx
+- [x] T010 Create ResultsDisplay component in app/calculadora/components/results-display.tsx
+- [x] T011 Create ComparisonChart component in app/calculadora/components/comparison-chart.tsx
+- [x] T012 Create InsightsPanel component in app/calculadora/components/insights-panel.tsx
+- [x] T013 Create CTASection component in app/calculadora/components/cta-section.tsx
 
 ## Phase 3.4: Page Integration
 
