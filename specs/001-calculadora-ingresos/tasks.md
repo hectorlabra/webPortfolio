@@ -47,11 +47,11 @@
 
 ## Phase 3.2: Core Logic (Foundation)
 
-- [ ] T004 Create calculation utility functions in lib/calculations.ts
-- [ ] T005 Create data formatting utilities in lib/utils.ts
-- [ ] T006 [P] Create TypeScript interfaces in types/calculator.ts
-- [ ] T007 Create useCalculator custom hook in hooks/use-calculator.ts
-- [ ] T008 Create useLocalStorage hook in hooks/use-local-storage.ts
+- [x] T004 Create calculation utility functions in lib/calculations.ts
+- [x] T005 Create data formatting utilities in lib/utils.ts
+- [x] T006 [P] Create TypeScript interfaces in types/calculator.ts
+- [x] T007 Create useCalculator custom hook in hooks/use-calculator.ts
+- [x] T008 Create useLocalStorage hook in hooks/use-local-storage.ts
 
 ## Phase 3.3: UI Components (Core)
 
