@@ -329,13 +329,13 @@ export function ResultsDisplay({
       </div>
 
       {/* Desglose Mensual (Últimos 6 meses) */}
-      <Card>
+      <Card className="bg-white/5 border-white/20">
         <CardHeader>
-          <CardTitle className="flex items-center space-x-2">
-            <Calendar className="h-5 w-5" />
+          <CardTitle className="flex items-center space-x-2 font-mono text-white">
+            <Calendar className="h-5 w-5 text-[#64E365]" />
             <span>Evolución Mensual (Últimos 6 meses)</span>
           </CardTitle>
-          <CardDescription>
+          <CardDescription className="text-white/70">
             Ingresos y beneficios mensuales del modelo de suscripción
           </CardDescription>
         </CardHeader>
@@ -349,23 +349,29 @@ export function ResultsDisplay({
               return (
                 <div
                   key={month}
-                  className="flex items-center justify-between p-3 rounded-lg bg-muted/50"
+                  className="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/10"
                 >
                   <div className="flex items-center space-x-3">
-                    <Badge variant="outline" className="min-w-[60px]">
+                    <span className="min-w-[60px] text-[11px] px-2 py-1 rounded-md bg-white/10 border border-white/15 text-white/70 text-center font-mono">
                       Mes {month}
-                    </Badge>
+                    </span>
                     <div>
-                      <p className="font-medium">{formatCurrency(revenue)}</p>
-                      <p className="text-sm text-muted-foreground">Ingresos</p>
+                      <p className="font-medium text-white/90">
+                        {formatCurrency(revenue)}
+                      </p>
+                      <p className="text-xs text-white/60">Ingresos</p>
                     </div>
                   </div>
 
                   <div className="text-right">
-                    <p className={`font-medium ${getValueColor(profit)}`}>
+                    <p
+                      className={`font-medium ${getValueColor(profit)
+                        .replace("text-green-600", "text-[#64E365]")
+                        .replace("text-red-600", "text-red-400")}`}
+                    >
                       {formatCurrency(profit)}
                     </p>
-                    <p className="text-sm text-muted-foreground">Beneficio</p>
+                    <p className="text-xs text-white/60">Beneficio</p>
                   </div>
                 </div>
               );
@@ -375,21 +381,23 @@ export function ResultsDisplay({
       </Card>
 
       {/* Resumen Final */}
-      <Card className="bg-muted/30">
+      <Card className="bg-white/5 border-white/20">
         <CardContent className="pt-6">
           <div className="text-center space-y-4">
-            <h3 className="text-lg font-semibold">Resumen Ejecutivo</h3>
+            <h3 className="text-lg font-mono font-semibold text-white">
+              Resumen Ejecutivo
+            </h3>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-              <div className="space-y-1">
-                <p className="font-medium text-blue-700">Modelo Único</p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs sm:text-sm">
+              <div className="space-y-1 text-white/70">
+                <p className="font-medium text-white/90">Modelo Único</p>
                 <p>{formatCurrency(results.oneTimeRevenue)} ingresos</p>
                 <p>{formatCurrency(results.oneTimeProfit)} beneficio</p>
                 <p>{formatPercentage(results.oneTimeMargin)} margen</p>
               </div>
 
-              <div className="space-y-1">
-                <p className="font-medium text-green-700">
+              <div className="space-y-1 text-white/70">
+                <p className="font-medium text-[#64E365]">
                   Suscripción ({timeHorizon}m)
                 </p>
                 <p>{formatCurrency(finalSubscriptionRevenue)} ingresos</p>
@@ -397,17 +405,25 @@ export function ResultsDisplay({
                 <p>{formatCurrency(results.ltv)} LTV</p>
               </div>
 
-              <div className="space-y-1">
-                <p className="font-medium text-purple-700">Diferencia</p>
-                <p className={getValueColor(results.revenueDifference)}>
+              <div className="space-y-1 text-white/70">
+                <p className="font-medium text-white/90">Diferencia</p>
+                <p
+                  className={getValueColor(results.revenueDifference)
+                    .replace("text-green-600", "text-[#64E365]")
+                    .replace("text-red-600", "text-red-400")}
+                >
                   {getTrendIndicator(results.revenueDifference)}{" "}
                   {formatCurrency(Math.abs(results.revenueDifference))}
                 </p>
-                <p className={getValueColor(results.profitDifference)}>
+                <p
+                  className={getValueColor(results.profitDifference)
+                    .replace("text-green-600", "text-[#64E365]")
+                    .replace("text-red-600", "text-red-400")}
+                >
                   {getTrendIndicator(results.profitDifference)}{" "}
                   {formatCurrency(Math.abs(results.profitDifference))}
                 </p>
-                <p className="text-muted-foreground">
+                <p className="text-white/50">
                   {breakEvenReached
                     ? `Equilibrio: ${results.breakEvenPoint}m`
                     : "Sin equilibrio"}

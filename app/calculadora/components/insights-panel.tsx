@@ -60,31 +60,39 @@ function InsightCard({
     switch (type) {
       case "success":
         return {
-          cardClass: "border-green-200 bg-green-50",
-          iconColor: "text-green-600",
-          titleColor: "text-green-800",
-          badgeVariant: "default" as const,
+          border: "border-[#64E365]/40",
+          bg: "bg-[#64E365]/10",
+          icon: "text-[#64E365]",
+          title: "text-[#64E365]",
+          badge: "bg-[#64E365]/20 text-[#64E365] border border-[#64E365]/30",
+          progress: "bg-[#64E365]/30",
         };
       case "warning":
         return {
-          cardClass: "border-yellow-200 bg-yellow-50",
-          iconColor: "text-yellow-600",
-          titleColor: "text-yellow-800",
-          badgeVariant: "secondary" as const,
+          border: "border-[#FFD100]/40",
+          bg: "bg-[#FFD100]/10",
+          icon: "text-[#FFD100]",
+          title: "text-[#FFD100]",
+          badge: "bg-[#FFD100]/20 text-[#FFD100] border border-[#FFD100]/30",
+          progress: "bg-[#FFD100]/30",
         };
       case "danger":
         return {
-          cardClass: "border-red-200 bg-red-50",
-          iconColor: "text-red-600",
-          titleColor: "text-red-800",
-          badgeVariant: "destructive" as const,
+          border: "border-red-400/40",
+          bg: "bg-red-400/10",
+          icon: "text-red-400",
+          title: "text-red-400",
+          badge: "bg-red-400/20 text-red-300 border border-red-400/30",
+          progress: "bg-red-400/30",
         };
       default:
         return {
-          cardClass: "border-blue-200 bg-blue-50",
-          iconColor: "text-blue-600",
-          titleColor: "text-blue-800",
-          badgeVariant: "outline" as const,
+          border: "border-white/20",
+          bg: "bg-white/5",
+          icon: "text-white/70",
+          title: "text-white",
+          badge: "bg-white/10 text-white/70 border border-white/20",
+          progress: "bg-white/20",
         };
     }
   };
@@ -92,39 +100,46 @@ function InsightCard({
   const styles = getTypeStyles();
 
   return (
-    <Card className={styles.cardClass}>
+    <Card className={`${styles.border} ${styles.bg} backdrop-blur-sm`}>
       <CardContent className="pt-4">
         <div className="space-y-3">
           <div className="flex items-start justify-between">
             <div className="flex items-center space-x-2">
-              {icon && <div className={styles.iconColor}>{icon}</div>}
-              <h3 className={`font-semibold ${styles.titleColor}`}>{title}</h3>
+              {icon && <div className={styles.icon}>{icon}</div>}
+              <h3 className={`font-mono text-sm font-semibold ${styles.title}`}>
+                {title}
+              </h3>
             </div>
             {metric && (
-              <Badge variant={styles.badgeVariant} className="text-xs">
+              <span
+                className={`text-[10px] px-2 py-1 rounded-full font-medium ${styles.badge}`}
+              >
                 {metric}
-              </Badge>
+              </span>
             )}
           </div>
 
-          <p className="text-sm text-muted-foreground">{description}</p>
+          <p className="text-sm text-white/70 leading-relaxed">{description}</p>
 
           {progress !== undefined && (
             <div className="space-y-1">
               <Progress value={progress} className="h-2" />
-              <p className="text-xs text-right text-muted-foreground">
+              <p className="text-[10px] tracking-wide text-right text-white/50">
                 {Math.round(progress)}%
               </p>
             </div>
           )}
 
           {recommendation && (
-            <Alert className="mt-3">
-              <Lightbulb className="h-4 w-4" />
-              <AlertDescription className="text-xs">
-                <strong>Recomendación:</strong> {recommendation}
-              </AlertDescription>
-            </Alert>
+            <div className="mt-2 text-xs bg-white/5 border border-white/10 rounded p-3 flex items-start space-x-2">
+              <Lightbulb className="h-4 w-4 text-[#64E365] shrink-0" />
+              <p className="text-white/70">
+                <span className="font-semibold text-white/80">
+                  Recomendación:{" "}
+                </span>
+                {recommendation}
+              </p>
+            </div>
           )}
         </div>
       </CardContent>
@@ -306,15 +321,15 @@ export function InsightsPanel({
   ];
 
   return (
-    <div className={`space-y-6 ${className}`}>
+    <div className={`space-y-8 ${className}`}>
       {/* Header */}
-      <div className="text-center space-y-2">
-        <h2 className="text-2xl font-bold flex items-center justify-center space-x-2">
-          <Lightbulb className="h-6 w-6 text-yellow-500" />
+      <div className="text-center space-y-3">
+        <h2 className="text-2xl font-bold font-mono flex items-center justify-center space-x-2 text-white">
+          <Lightbulb className="h-6 w-6 text-[#64E365]" />
           <span>Insights Inteligentes</span>
         </h2>
-        <p className="text-muted-foreground">
-          Análisis automático y recomendaciones para tu decisión
+        <p className="text-white/70 text-sm max-w-xl mx-auto">
+          Análisis automático y recomendaciones personalizadas para tu decisión
         </p>
       </div>
 
@@ -335,13 +350,13 @@ export function InsightsPanel({
       </div>
 
       {/* Strategic Recommendations */}
-      <Card>
+      <Card className="bg-white/5 border-white/20">
         <CardHeader>
-          <CardTitle className="flex items-center space-x-2">
-            <Zap className="h-5 w-5 text-purple-600" />
+          <CardTitle className="flex items-center space-x-2 font-mono text-white">
+            <Zap className="h-5 w-5 text-[#64E365]" />
             <span>Recomendaciones Estratégicas</span>
           </CardTitle>
-          <CardDescription>
+          <CardDescription className="text-white/70">
             Próximos pasos basados en tu análisis
           </CardDescription>
         </CardHeader>
@@ -349,12 +364,12 @@ export function InsightsPanel({
           {isSubscriptionBetter ? (
             <div className="space-y-3">
               <div className="flex items-start space-x-3">
-                <ArrowRight className="h-5 w-5 text-green-600 mt-0.5" />
+                <ArrowRight className="h-5 w-5 text-[#64E365] mt-0.5" />
                 <div>
-                  <h4 className="font-medium">
+                  <h4 className="font-medium text-white/90 font-mono">
                     Implementa el modelo de suscripción
                   </h4>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-white/70">
                     Los números favorecen la suscripción. Desarrolla un MVP con
                     las funcionalidades core.
                   </p>
@@ -362,10 +377,12 @@ export function InsightsPanel({
               </div>
 
               <div className="flex items-start space-x-3">
-                <ArrowRight className="h-5 w-5 text-blue-600 mt-0.5" />
+                <ArrowRight className="h-5 w-5 text-[#FFD100] mt-0.5" />
                 <div>
-                  <h4 className="font-medium">Optimiza la retención</h4>
-                  <p className="text-sm text-muted-foreground">
+                  <h4 className="font-medium text-white/90 font-mono">
+                    Optimiza la retención
+                  </h4>
+                  <p className="text-sm text-white/70">
                     Reduce el churn del {formatPercentage(churnRate)}{" "}
                     implementando onboarding efectivo y soporte proactivo.
                   </p>
@@ -373,10 +390,12 @@ export function InsightsPanel({
               </div>
 
               <div className="flex items-start space-x-3">
-                <ArrowRight className="h-5 w-5 text-purple-600 mt-0.5" />
+                <ArrowRight className="h-5 w-5 text-white/60 mt-0.5" />
                 <div>
-                  <h4 className="font-medium">Considera precios escalonados</h4>
-                  <p className="text-sm text-muted-foreground">
+                  <h4 className="font-medium text-white/90 font-mono">
+                    Considera precios escalonados
+                  </h4>
+                  <p className="text-sm text-white/70">
                     Con un LTV de {formatCurrency(ltv)}, tienes margen para
                     crear planes premium.
                   </p>
@@ -386,12 +405,12 @@ export function InsightsPanel({
           ) : (
             <div className="space-y-3">
               <div className="flex items-start space-x-3">
-                <ArrowRight className="h-5 w-5 text-orange-600 mt-0.5" />
+                <ArrowRight className="h-5 w-5 text-[#FFD100] mt-0.5" />
                 <div>
-                  <h4 className="font-medium">
+                  <h4 className="font-medium text-white/90 font-mono">
                     Mantén el modelo único a corto plazo
                   </h4>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-white/70">
                     Es más rentable en {timeHorizon} meses. Úsalo para generar
                     capital inicial.
                   </p>
@@ -399,12 +418,12 @@ export function InsightsPanel({
               </div>
 
               <div className="flex items-start space-x-3">
-                <ArrowRight className="h-5 w-5 text-blue-600 mt-0.5" />
+                <ArrowRight className="h-5 w-5 text-white/60 mt-0.5" />
                 <div>
-                  <h4 className="font-medium">
+                  <h4 className="font-medium text-white/90 font-mono">
                     Prepara la transición a suscripción
                   </h4>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-white/70">
                     Desarrolla funcionalidades recurrentes y mejora la propuesta
                     de valor.
                   </p>
@@ -412,10 +431,12 @@ export function InsightsPanel({
               </div>
 
               <div className="flex items-start space-x-3">
-                <ArrowRight className="h-5 w-5 text-green-600 mt-0.5" />
+                <ArrowRight className="h-5 w-5 text-[#64E365] mt-0.5" />
                 <div>
-                  <h4 className="font-medium">Extiende el análisis</h4>
-                  <p className="text-sm text-muted-foreground">
+                  <h4 className="font-medium text-white/90 font-mono">
+                    Extiende el análisis
+                  </h4>
+                  <p className="text-sm text-white/70">
                     Evalúa el modelo a 36-48 meses para ver el potencial real de
                     la suscripción.
                   </p>
@@ -427,18 +448,20 @@ export function InsightsPanel({
       </Card>
 
       {/* Risk Assessment */}
-      <Card className="border-amber-200 bg-amber-50">
+      <Card className="bg-white/5 border-white/20">
         <CardHeader>
-          <CardTitle className="flex items-center space-x-2 text-amber-800">
-            <AlertTriangle className="h-5 w-5" />
+          <CardTitle className="flex items-center space-x-2 font-mono text-white">
+            <AlertTriangle className="h-5 w-5 text-[#FFD100]" />
             <span>Consideraciones de Riesgo</span>
           </CardTitle>
         </CardHeader>
         <CardContent className="space-y-3">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
             <div>
-              <h4 className="font-medium text-amber-800">Modelo Único</h4>
-              <ul className="space-y-1 text-amber-700 mt-2">
+              <h4 className="font-medium text-white/90 font-mono">
+                Modelo Único
+              </h4>
+              <ul className="space-y-1 text-white/60 mt-2">
                 <li>• Ingresos no recurrentes</li>
                 <li>• Necesidad constante de nuevos clientes</li>
                 <li>• Menor valor a largo plazo</li>
@@ -447,8 +470,10 @@ export function InsightsPanel({
             </div>
 
             <div>
-              <h4 className="font-medium text-amber-800">Suscripción</h4>
-              <ul className="space-y-1 text-amber-700 mt-2">
+              <h4 className="font-medium text-white/90 font-mono">
+                Suscripción
+              </h4>
+              <ul className="space-y-1 text-white/60 mt-2">
                 <li>• Riesgo de churn elevado</li>
                 <li>• Necesidad de soporte continuo</li>
                 <li>• Inversión inicial mayor</li>
@@ -457,13 +482,16 @@ export function InsightsPanel({
             </div>
           </div>
 
-          <Alert>
-            <AlertDescription className="text-amber-800">
-              <strong>Recomendación:</strong> Considera un modelo híbrido:
-              producto inicial único para generar capital, seguido de
-              características premium por suscripción.
-            </AlertDescription>
-          </Alert>
+          <div className="text-xs bg-[#FFD100]/10 border border-[#FFD100]/30 rounded p-3 flex items-start space-x-2">
+            <AlertTriangle className="h-4 w-4 text-[#FFD100] shrink-0" />
+            <p className="text-white/70">
+              <span className="font-semibold text-white/80">
+                Recomendación:{" "}
+              </span>
+              Considera un modelo híbrido: producto inicial único para generar
+              capital, seguido de características premium por suscripción.
+            </p>
+          </div>
         </CardContent>
       </Card>
     </div>

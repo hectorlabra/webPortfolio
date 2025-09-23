@@ -66,38 +66,50 @@ function ActionCard({
 }: ActionCardProps) {
   return (
     <Card
-      className={`relative ${
-        isRecommended ? "border-green-300 bg-green-50" : ""
+      className={`relative bg-white/5 border-white/15 backdrop-blur-sm transition-colors ${
+        isRecommended ? "ring-1 ring-[#64E365]/40 shadow-green-glow" : ""
       }`}
     >
       {isRecommended && (
-        <Badge className="absolute -top-2 -right-2 bg-green-600">
-          <Star className="h-3 w-3 mr-1" />
-          Recomendado
-        </Badge>
+        <span className="absolute -top-2 -right-2 bg-[#64E365]/20 text-[#64E365] border border-[#64E365]/30 text-[10px] font-semibold px-2 py-1 rounded-full flex items-center">
+          <Star className="h-3 w-3 mr-1" /> Recomendado
+        </span>
       )}
 
       <CardHeader>
-        <CardTitle className="flex items-center space-x-2">
+        <CardTitle className="flex items-center space-x-2 font-mono text-white text-base">
           {icon && (
-            <div className={isRecommended ? "text-green-600" : "text-blue-600"}>
+            <div
+              className={`${
+                isRecommended ? "text-[#64E365]" : "text-white/60"
+              } shrink-0`}
+            >
               {icon}
             </div>
           )}
           <span>{title}</span>
-          {badge && <Badge variant="outline">{badge}</Badge>}
+          {badge && (
+            <span className="ml-2 text-[10px] px-2 py-1 rounded-full bg-white/10 border border-white/15 text-white/60">
+              {badge}
+            </span>
+          )}
         </CardTitle>
-        <CardDescription>{description}</CardDescription>
+        <CardDescription className="text-white/70 text-sm leading-relaxed">
+          {description}
+        </CardDescription>
       </CardHeader>
 
       <CardContent className="space-y-4">
         {features && features.length > 0 && (
           <ul className="space-y-2">
             {features.map((feature, index) => (
-              <li key={index} className="flex items-start space-x-2 text-sm">
+              <li
+                key={index}
+                className="flex items-start space-x-2 text-sm text-white/70"
+              >
                 <CheckCircle2
                   className={`h-4 w-4 mt-0.5 ${
-                    isRecommended ? "text-green-600" : "text-blue-600"
+                    isRecommended ? "text-[#64E365]" : "text-white/50"
                   }`}
                 />
                 <span>{feature}</span>
@@ -109,8 +121,14 @@ function ActionCard({
         <div className="space-y-2">
           <Button
             onClick={primaryAction.onClick}
-            variant={primaryAction.variant || "default"}
-            className="w-full"
+            className={`w-full font-bold ${
+              primaryAction.variant === "outline"
+                ? "border-white/30 text-white hover:bg-white/10"
+                : "bg-[#FFD100] text-[#0a0612] hover:bg-[#FFD100]/90 shadow-yellow-glow"
+            }`}
+            variant={
+              primaryAction.variant === "outline" ? "outline" : "default"
+            }
           >
             {primaryAction.text}
             <ArrowRight className="ml-2 h-4 w-4" />
@@ -121,7 +139,7 @@ function ActionCard({
               onClick={secondaryAction.onClick}
               variant="outline"
               size="sm"
-              className="w-full"
+              className="w-full border-white/20 text-white/80 hover:bg-white/10"
             >
               {secondaryAction.text}
             </Button>
@@ -279,24 +297,29 @@ export function CTASection({
   ];
 
   return (
-    <div className={`space-y-8 ${className}`}>
+    <div className={`space-y-10 ${className}`}>
       {/* Header */}
-      <div className="text-center space-y-4">
-        <h2 className="text-3xl font-bold">¿Qué sigue ahora?</h2>
-        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+      <div className="text-center space-y-3">
+        <h2 className="text-2xl font-bold font-mono text-white flex items-center justify-center space-x-2">
+          <Rocket className="h-6 w-6 text-[#64E365]" />
+          <span>¿Qué sigue ahora?</span>
+        </h2>
+        <p className="text-white/70 text-sm max-w-2xl mx-auto leading-relaxed">
           Tienes los datos, ahora necesitas la ejecución. Te ayudo a convertir
           estos números en un negocio recurrente exitoso.
         </p>
       </div>
 
       {/* Quick Actions */}
-      <Card>
+      <Card className="bg-white/5 border-white/20">
         <CardHeader>
-          <CardTitle className="flex items-center space-x-2">
-            <Share2 className="h-5 w-5" />
+          <CardTitle className="flex items-center space-x-2 font-mono text-white">
+            <Share2 className="h-5 w-5 text-[#64E365]" />
             <span>Acciones Rápidas</span>
           </CardTitle>
-          <CardDescription>Guarda y comparte tus resultados</CardDescription>
+          <CardDescription className="text-white/70">
+            Guarda y comparte tus resultados
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="flex flex-wrap gap-3">
@@ -304,7 +327,7 @@ export function CTASection({
               onClick={handleDownload}
               variant="outline"
               disabled={isDownloading}
-              className="flex-1 min-w-[200px]"
+              className="flex-1 min-w-[200px] border-white/30 text-white hover:bg-white/10"
             >
               <Download className="mr-2 h-4 w-4" />
               {isDownloading ? "Generando..." : "Descargar Reporte PDF"}
@@ -314,7 +337,7 @@ export function CTASection({
               onClick={handleShare}
               variant="outline"
               disabled={isSharing}
-              className="flex-1 min-w-[200px]"
+              className="flex-1 min-w-[200px] border-white/30 text-white hover:bg-white/10"
             >
               <Share2 className="mr-2 h-4 w-4" />
               {isSharing ? "Compartiendo..." : "Compartir Resultados"}
@@ -323,7 +346,7 @@ export function CTASection({
             <Button
               onClick={() => window.location.reload()}
               variant="outline"
-              className="flex-1 min-w-[200px]"
+              className="flex-1 min-w-[200px] border-white/30 text-white hover:bg-white/10"
             >
               <ArrowRight className="mr-2 h-4 w-4" />
               Nueva Simulación
@@ -334,7 +357,7 @@ export function CTASection({
 
       {/* Main Actions */}
       <div className="space-y-4">
-        <h3 className="text-xl font-semibold text-center">
+        <h3 className="text-lg font-mono font-semibold text-center text-white">
           Próximos Pasos Recomendados
         </h3>
 
@@ -356,33 +379,38 @@ export function CTASection({
       </div>
 
       {/* Results Summary for CTA context */}
-      <Card className="bg-muted/50">
+      <Card className="bg-white/5 border-white/20">
         <CardContent className="pt-6">
           <div className="text-center space-y-4">
-            <h3 className="text-lg font-semibold">Resumen de tu Análisis</h3>
+            <h3 className="text-lg font-mono font-semibold text-white">
+              Resumen de tu Análisis
+            </h3>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
               <div className="space-y-1">
-                <p className="font-medium">Modelo Recomendado</p>
-                <Badge
-                  variant={isSubscriptionBetter ? "default" : "secondary"}
-                  className="text-xs"
+                <p className="font-medium text-white/80">Modelo Recomendado</p>
+                <span
+                  className={`inline-flex text-[10px] px-2 py-1 rounded-full font-medium border ${
+                    isSubscriptionBetter
+                      ? "bg-[#64E365]/15 text-[#64E365] border-[#64E365]/30"
+                      : "bg-white/10 text-white/60 border-white/20"
+                  }`}
                 >
                   {isSubscriptionBetter ? "Suscripción" : "Producto Único"}
-                </Badge>
+                </span>
               </div>
 
               <div className="space-y-1">
-                <p className="font-medium">Ventaja Financiera</p>
-                <p className="text-muted-foreground">
+                <p className="font-medium text-white/80">Ventaja Financiera</p>
+                <p className="text-white/60">
                   {formatCurrency(Math.abs(results.profitDifference))} en{" "}
                   {timeHorizon} meses
                 </p>
               </div>
 
               <div className="space-y-1">
-                <p className="font-medium">Punto de Equilibrio</p>
-                <p className="text-muted-foreground">
+                <p className="font-medium text-white/80">Punto de Equilibrio</p>
+                <p className="text-white/60">
                   {breakEvenReached
                     ? `Mes ${results.breakEvenPoint}`
                     : "Fuera del período"}
@@ -394,23 +422,24 @@ export function CTASection({
       </Card>
 
       {/* Social Proof */}
-      <Card className="border-dashed">
+      <Card className="border border-white/15 bg-white/5">
         <CardContent className="pt-6">
           <div className="text-center space-y-4">
             <div className="flex items-center justify-center space-x-2">
-              <Users className="h-5 w-5 text-muted-foreground" />
-              <p className="text-sm text-muted-foreground">
-                Más de <strong>500 emprendedores</strong> han usado esta
-                calculadora para tomar decisiones informadas
+              <Users className="h-5 w-5 text-white/50" />
+              <p className="text-sm text-white/60">
+                Más de{" "}
+                <strong className="text-white/80">500 emprendedores</strong> han
+                usado esta calculadora para tomar decisiones informadas
               </p>
             </div>
 
-            <div className="flex items-center justify-center space-x-4 text-xs text-muted-foreground">
+            <div className="flex items-center justify-center space-x-4 text-xs text-white/50">
               <div className="flex items-center space-x-1">
-                <Star className="h-3 w-3 fill-yellow-400 text-yellow-400" />
+                <Star className="h-3 w-3 fill-[#FFD100] text-[#FFD100]" />
                 <span>200+ transformaciones exitosas</span>
               </div>
-              <Separator orientation="vertical" className="h-4" />
+              <Separator orientation="vertical" className="h-4 bg-white/20" />
               <div className="flex items-center space-x-1">
                 <Mail className="h-3 w-3" />
                 <span>Newsletter con 2,500+ suscriptores</span>
@@ -421,6 +450,7 @@ export function CTASection({
               <Button
                 variant="link"
                 size="sm"
+                className="text-[#64E365] hover:text-[#64E365]/80"
                 onClick={() => window.open("/quien-soy", "_blank")}
               >
                 Conocer mi experiencia
