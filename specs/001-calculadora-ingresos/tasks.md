@@ -80,12 +80,13 @@
 
 ## Phase 3.6: Polish & Optimization
 
-- [ ] T025 Implement responsive design for mobile devices
-- [ ] T026 Add accessibility features (ARIA labels, keyboard navigation)
-- [ ] T027 Optimize chart performance for large datasets
-- [ ] T028 Add loading states and error boundaries
-- [ ] T029 Add analytics tracking for calculator usage
-- [ ] T030 Performance testing and optimization
+- [x] T025 Implement responsive design for mobile devices
+- [x] T026 Add accessibility features (ARIA labels, keyboard navigation)
+- [x] T027 Optimize chart performance for large datasets
+- [x] T028 Add loading states and error boundaries
+- [x] T030 Performance testing and optimization
+
+> Nota: T029 (Analítica avanzada) se eliminó del alcance de la fase 3.6 según indicaciones previas.
 
 ## Dependencies
 
@@ -124,7 +125,7 @@ _GATE: Checked before marking tasks complete_
 
 ## Task Status Summary
 
-- **Total Tasks**: 30
+- **Total Tasks**: 29
 - **Parallel Tasks**: 8 (marked with [P])
 - **Sequential Dependencies**: Core Logic → UI → Integration → Tests → Polish
 - **Estimated Timeline**: 2-3 weeks (5-10 tasks per week)
