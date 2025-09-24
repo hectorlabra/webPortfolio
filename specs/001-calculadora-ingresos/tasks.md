@@ -67,12 +67,12 @@
 - [x] T015 Add calculator route to navigation (navbar component)
 - [x] T016 Add calculator route to footer navigation
 - [x] T017 Update sitemap.ts to include calculator page
-- [ ] T018 Update robots.ts for calculator SEO
+- [x] T018 Update robots.ts for calculator SEO
 
 ## Phase 3.5: Testing & Validation
 
-- [ ] T019 [P] Unit tests for calculation functions in **tests**/lib/test-calculations.ts
-- [ ] T020 [P] Unit tests for formatting utilities in **tests**/lib/test-utils.ts
+- [x] T019 [P] Unit tests for calculation functions in **tests**/lib/test-calculations.ts
+- [x] T020 [P] Unit tests for formatting utilities in **tests**/lib/test-utils.ts
 - [ ] T021 [P] Component tests for CalculatorInputs in **tests**/components/test-calculator-inputs.tsx
 - [ ] T022 [P] Component tests for ResultsDisplay in **tests**/components/test-results-display.tsx
 - [ ] T023 Integration test for complete calculation flow in **tests**/integration/test-calculator-flow.tsx
