@@ -18,3 +18,17 @@ if (typeof window !== "undefined" && !window.matchMedia) {
     dispatchEvent: () => false,
   });
 }
+// ResizeObserver polyfill para Recharts ResponsiveContainer
+if (typeof window !== "undefined" && !(window as any).ResizeObserver) {
+  class ResizeObserverMock {
+    callback: ResizeObserverCallback;
+    constructor(cb: ResizeObserverCallback) {
+      this.callback = cb;
+    }
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  }
+  // @ts-ignore
+  window.ResizeObserver = ResizeObserverMock;
+}
