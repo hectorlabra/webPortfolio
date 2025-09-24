@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   Card,
   CardContent,
@@ -153,14 +153,17 @@ export function ComparisonChart({
 }: ComparisonChartProps) {
   const [selectedView, setSelectedView] = useState<string>("cumulative");
 
-  const chartData = transformToChartData(results, timeHorizon);
+  const chartData = useMemo(
+    () => transformToChartData(results, timeHorizon),
+    [results, timeHorizon]
+  );
 
   // Find break-even point for reference line
   const breakEvenPoint = results.breakEvenPoint;
-  const breakEvenData =
-    breakEvenPoint > 0 && breakEvenPoint <= timeHorizon
-      ? chartData[breakEvenPoint - 1]
-      : null;
+  const breakEvenData = useMemo(() => {
+    if (breakEvenPoint <= 0 || breakEvenPoint > timeHorizon) return null;
+    return chartData[breakEvenPoint - 1];
+  }, [breakEvenPoint, timeHorizon, chartData]);
 
   const RevenueComparisonChart = () => (
     <ResponsiveContainer width="100%" height={400}>
@@ -371,8 +374,8 @@ export function ComparisonChart({
     <div className={`space-y-4 ${className}`}>
       <Card className="bg-white/5 border-white/20">
         <CardHeader>
-          <div className="flex items-center justify-between">
-            <div>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between text-center sm:text-left">
+            <div className="space-y-1 sm:space-y-0">
               <CardTitle className="flex items-center space-x-2 font-mono text-white">
                 <BarChart3 className="h-5 w-5 text-[#64E365]" />
                 <span>Comparación Visual</span>
@@ -386,7 +389,7 @@ export function ComparisonChart({
             {breakEvenPoint > 0 && breakEvenPoint <= timeHorizon && (
               <Badge
                 variant="outline"
-                className="bg-[#FFD100]/20 text-[#FFD100] border-[#FFD100]/30"
+                className="self-center sm:self-auto bg-[#FFD100]/20 text-[#FFD100] border-[#FFD100]/30"
               >
                 Equilibrio: Mes {breakEvenPoint}
               </Badge>
@@ -400,15 +403,22 @@ export function ComparisonChart({
             onValueChange={setSelectedView}
             className="space-y-4"
           >
-            <TabsList className="grid w-full grid-cols-4">
+            <TabsList
+              className="grid w-full grid-cols-2 sm:grid-cols-4 gap-2"
+              aria-label="Cambiar visualización del análisis"
+            >
               {chartOptions.map((option) => (
                 <TabsTrigger
                   key={option.key}
                   value={option.key}
-                  className="flex items-center space-x-2"
+                  className="flex flex-col items-center gap-1 text-[11px] sm:flex-row sm:justify-center sm:gap-2 sm:text-sm"
                 >
-                  {option.icon}
-                  <span className="hidden sm:inline">{option.label}</span>
+                  <span className="flex items-center justify-center">
+                    {option.icon}
+                  </span>
+                  <span className="leading-tight sm:leading-normal text-center sm:text-left">
+                    {option.label}
+                  </span>
                 </TabsTrigger>
               ))}
             </TabsList>
