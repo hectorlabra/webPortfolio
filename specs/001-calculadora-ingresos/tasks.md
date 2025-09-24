@@ -76,7 +76,7 @@
 - [x] T021 [P] Component tests for CalculatorInputs in **tests**/components/test-calculator-inputs.tsx
 - [x] T022 [P] Component tests for ResultsDisplay in **tests**/components/test-results-display.tsx
 - [x] T023 Integration test for complete calculation flow in **tests**/integration/test-calculator-flow.tsx
-- [ ] T024 E2E test for calculator user journey
+- [x] T024 E2E test for calculator user journey
 
 ## Phase 3.6: Polish & Optimization
 
