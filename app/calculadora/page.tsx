@@ -1,6 +1,12 @@
 "use client";
 
-import { useState, useCallback, useDeferredValue } from "react";
+import {
+  useState,
+  useCallback,
+  useDeferredValue,
+  type ComponentType,
+} from "react";
+import dynamic from "next/dynamic";
 import {
   Card,
   CardContent,
@@ -24,12 +30,27 @@ import { useCalculator } from "@/app/calculadora/hooks/use-calculator";
 import { useLocalStorage } from "@/app/calculadora/hooks/use-local-storage";
 import { CalculatorInputs } from "@/app/calculadora/components/calculator-inputs";
 import { ResultsDisplay } from "@/app/calculadora/components/results-display";
-import { ComparisonChart } from "@/app/calculadora/components/comparison-chart";
 import { InsightsPanel } from "@/app/calculadora/components/insights-panel";
 import { CTASection } from "@/app/calculadora/components/cta-section";
 import { ResultsSkeleton } from "@/app/calculadora/components/results-skeleton";
 import { CalculatorErrorBoundary } from "@/app/calculadora/components/calculator-error-boundary";
 import { DEFAULT_INPUTS } from "@/lib/types/calculator";
+import type { ComparisonChartProps } from "@/app/calculadora/components/comparison-chart";
+
+const ComparisonChart = dynamic(
+  () =>
+    import("@/app/calculadora/components/comparison-chart").then(
+      (mod) => mod.ComparisonChart
+    ),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex h-[360px] items-center justify-center rounded-lg border border-white/10 bg-white/5 text-sm text-white/60">
+        Cargando visualización...
+      </div>
+    ),
+  }
+) as ComponentType<ComparisonChartProps>;
 
 export default function CalculadoraPage() {
   // Calculator state and logic

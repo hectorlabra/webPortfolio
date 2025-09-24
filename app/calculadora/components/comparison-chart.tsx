@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import {
   Card,
   CardContent,
@@ -34,7 +34,11 @@ import {
   formatCompactNumber,
 } from "@/app/calculadora/lib/utils";
 
-interface ComparisonChartProps {
+const CHART_HEIGHT = 360;
+
+type ChartRenderer = () => JSX.Element;
+
+export interface ComparisonChartProps {
   results: CalculationResults;
   timeHorizon: number;
   className?: string;
@@ -152,11 +156,18 @@ export function ComparisonChart({
   className,
 }: ComparisonChartProps) {
   const [selectedView, setSelectedView] = useState<string>("cumulative");
+  const containerRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const containerObservers = useRef<Record<string, ResizeObserver | null>>({});
+  const [containerWidth, setContainerWidth] = useState<Record<string, number>>(
+    {}
+  );
 
   const chartData = useMemo(
     () => transformToChartData(results, timeHorizon),
     [results, timeHorizon]
   );
+
+  const hasData = chartData.length > 0;
 
   // Find break-even point for reference line
   const breakEvenPoint = results.breakEvenPoint;
@@ -165,8 +176,36 @@ export function ComparisonChart({
     return chartData[breakEvenPoint - 1];
   }, [breakEvenPoint, timeHorizon, chartData]);
 
-  const RevenueComparisonChart = () => (
-    <ResponsiveContainer width="100%" height={400}>
+  const registerContainer = useCallback((key: string) => {
+    return (node: HTMLDivElement | null) => {
+      containerRefs.current[key] = node;
+
+      const updateSize = () => {
+        const width = node?.offsetWidth ?? 0;
+        setContainerWidth((prev) =>
+          prev[key] === width ? prev : { ...prev, [key]: width }
+        );
+      };
+
+      if (containerObservers.current[key]) {
+        containerObservers.current[key]?.disconnect();
+        containerObservers.current[key] = null;
+      }
+
+      if (node) {
+        updateSize();
+
+        if (typeof ResizeObserver !== "undefined") {
+          const observer = new ResizeObserver(() => updateSize());
+          observer.observe(node);
+          containerObservers.current[key] = observer;
+        }
+      }
+    };
+  }, []);
+
+  const renderRevenueChart = useCallback<ChartRenderer>(
+    () => (
       <BarChart
         data={chartData}
         margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
@@ -188,12 +227,16 @@ export function ComparisonChart({
           fill="#3B82F6"
           name="Producto Único"
           radius={[2, 2, 0, 0]}
+          isAnimationActive={false}
+          animationDuration={0}
         />
         <Bar
           dataKey="subscriptionRevenue"
           fill="#10B981"
           name="Suscripción Mensual"
           radius={[2, 2, 0, 0]}
+          isAnimationActive={false}
+          animationDuration={0}
         />
         {breakEvenData && (
           <ReferenceLine
@@ -204,11 +247,12 @@ export function ComparisonChart({
           />
         )}
       </BarChart>
-    </ResponsiveContainer>
+    ),
+    [chartData, breakEvenData]
   );
 
-  const ProfitComparisonChart = () => (
-    <ResponsiveContainer width="100%" height={400}>
+  const renderProfitChart = useCallback<ChartRenderer>(
+    () => (
       <BarChart
         data={chartData}
         margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
@@ -230,12 +274,16 @@ export function ComparisonChart({
           fill="rgba(255, 255, 255, 0.7)"
           name="Beneficio Único"
           radius={[2, 2, 0, 0]}
+          isAnimationActive={false}
+          animationDuration={0}
         />
         <Bar
           dataKey="subscriptionProfit"
           fill="#64E365"
           name="Beneficio Mensual"
           radius={[2, 2, 0, 0]}
+          isAnimationActive={false}
+          animationDuration={0}
         />
         {breakEvenData && (
           <ReferenceLine
@@ -246,11 +294,12 @@ export function ComparisonChart({
           />
         )}
       </BarChart>
-    </ResponsiveContainer>
+    ),
+    [chartData, breakEvenData]
   );
 
-  const CumulativeChart = () => (
-    <ResponsiveContainer width="100%" height={400}>
+  const renderCumulativeChart = useCallback<ChartRenderer>(
+    () => (
       <AreaChart
         data={chartData}
         margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
@@ -275,6 +324,8 @@ export function ComparisonChart({
           fill="rgba(255, 255, 255, 0.6)"
           fillOpacity={0.6}
           name="Acumulado Único"
+          isAnimationActive={false}
+          animationDuration={0}
         />
         <Area
           type="monotone"
@@ -284,6 +335,8 @@ export function ComparisonChart({
           fill="#64E365"
           fillOpacity={0.6}
           name="Acumulado Suscripción"
+          isAnimationActive={false}
+          animationDuration={0}
         />
         {breakEvenData && (
           <ReferenceLine
@@ -294,11 +347,12 @@ export function ComparisonChart({
           />
         )}
       </AreaChart>
-    </ResponsiveContainer>
+    ),
+    [chartData, breakEvenData]
   );
 
-  const TrendChart = () => (
-    <ResponsiveContainer width="100%" height={400}>
+  const renderTrendChart = useCallback<ChartRenderer>(
+    () => (
       <LineChart
         data={chartData}
         margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
@@ -322,6 +376,8 @@ export function ComparisonChart({
           strokeWidth={3}
           dot={{ r: 4, fill: "rgba(255, 255, 255, 0.8)" }}
           name="Único (Acumulado)"
+          isAnimationActive={false}
+          animationDuration={0}
         />
         <Line
           type="monotone"
@@ -330,6 +386,8 @@ export function ComparisonChart({
           strokeWidth={3}
           dot={{ r: 4, fill: "#64E365" }}
           name="Suscripción (Acumulado)"
+          isAnimationActive={false}
+          animationDuration={0}
         />
         {breakEvenData && (
           <ReferenceLine
@@ -340,35 +398,44 @@ export function ComparisonChart({
           />
         )}
       </LineChart>
-    </ResponsiveContainer>
+    ),
+    [chartData, breakEvenData]
   );
 
-  const chartOptions = [
-    {
-      key: "cumulative",
-      label: "Acumulado",
-      icon: <Activity className="h-4 w-4" />,
-      component: CumulativeChart,
-    },
-    {
-      key: "revenue",
-      label: "Ingresos",
-      icon: <BarChart3 className="h-4 w-4" />,
-      component: RevenueComparisonChart,
-    },
-    {
-      key: "profit",
-      label: "Beneficios",
-      icon: <TrendingUp className="h-4 w-4" />,
-      component: ProfitComparisonChart,
-    },
-    {
-      key: "trend",
-      label: "Tendencias",
-      icon: <Zap className="h-4 w-4" />,
-      component: TrendChart,
-    },
-  ];
+  const chartOptions = useMemo(
+    () => [
+      {
+        key: "cumulative",
+        label: "Acumulado",
+        icon: <Activity className="h-4 w-4" />,
+        render: renderCumulativeChart,
+      },
+      {
+        key: "revenue",
+        label: "Ingresos",
+        icon: <BarChart3 className="h-4 w-4" />,
+        render: renderRevenueChart,
+      },
+      {
+        key: "profit",
+        label: "Beneficios",
+        icon: <TrendingUp className="h-4 w-4" />,
+        render: renderProfitChart,
+      },
+      {
+        key: "trend",
+        label: "Tendencias",
+        icon: <Zap className="h-4 w-4" />,
+        render: renderTrendChart,
+      },
+    ],
+    [
+      renderCumulativeChart,
+      renderRevenueChart,
+      renderProfitChart,
+      renderTrendChart,
+    ]
+  );
 
   return (
     <div className={`space-y-4 ${className}`}>
@@ -430,7 +497,21 @@ export function ComparisonChart({
                 className="space-y-4"
               >
                 <div className="bg-white/5 p-4 rounded-lg border border-white/10">
-                  <option.component />
+                  <div
+                    ref={registerContainer(option.key)}
+                    className="w-full"
+                    style={{ minHeight: CHART_HEIGHT }}
+                  >
+                    {hasData && (containerWidth[option.key] ?? 0) > 0 ? (
+                      <ResponsiveContainer width="100%" height={CHART_HEIGHT}>
+                        {option.render()}
+                      </ResponsiveContainer>
+                    ) : (
+                      <div className="flex h-[360px] items-center justify-center text-sm text-white/60">
+                        Preparando visualización...
+                      </div>
+                    )}
+                  </div>
                 </div>
 
                 {/* Chart Description */}
