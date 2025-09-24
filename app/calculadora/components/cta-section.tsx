@@ -322,12 +322,12 @@ export function CTASection({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <Button
               onClick={handleDownload}
               variant="outline"
               disabled={isDownloading}
-              className="flex-1 min-w-[200px] border-white/30 text-white hover:bg-white/10"
+              className="w-full sm:flex-1 sm:min-w-[200px] border-white/30 text-white hover:bg-white/10"
             >
               <Download className="mr-2 h-4 w-4" />
               {isDownloading ? "Generando..." : "Descargar Reporte PDF"}
@@ -337,7 +337,7 @@ export function CTASection({
               onClick={handleShare}
               variant="outline"
               disabled={isSharing}
-              className="flex-1 min-w-[200px] border-white/30 text-white hover:bg-white/10"
+              className="w-full sm:flex-1 sm:min-w-[200px] border-white/30 text-white hover:bg-white/10"
             >
               <Share2 className="mr-2 h-4 w-4" />
               {isSharing ? "Compartiendo..." : "Compartir Resultados"}
@@ -346,7 +346,7 @@ export function CTASection({
             <Button
               onClick={() => window.location.reload()}
               variant="outline"
-              className="flex-1 min-w-[200px] border-white/30 text-white hover:bg-white/10"
+              className="w-full sm:flex-1 sm:min-w-[200px] border-white/30 text-white hover:bg-white/10"
             >
               <ArrowRight className="mr-2 h-4 w-4" />
               Nueva Simulación
@@ -434,12 +434,15 @@ export function CTASection({
               </p>
             </div>
 
-            <div className="flex items-center justify-center space-x-4 text-xs text-white/50">
+            <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center sm:space-x-4 text-xs text-white/50">
               <div className="flex items-center space-x-1">
                 <Star className="h-3 w-3 fill-[#FFD100] text-[#FFD100]" />
                 <span>200+ transformaciones exitosas</span>
               </div>
-              <Separator orientation="vertical" className="h-4 bg-white/20" />
+              <Separator
+                orientation="vertical"
+                className="hidden sm:block h-4 bg-white/20"
+              />
               <div className="flex items-center space-x-1">
                 <Mail className="h-3 w-3" />
                 <span>Newsletter con 2,500+ suscriptores</span>
