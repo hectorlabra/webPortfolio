@@ -79,6 +79,7 @@ function InputField({
   error,
 }: InputFieldProps) {
   const [displayValue, setDisplayValue] = useState(value.toString());
+  const tooltipDescriptionId = `${id}-tooltip-description`;
 
   const formatValue = (val: number): string => {
     switch (type) {
@@ -139,19 +140,32 @@ function InputField({
           {label}
         </Label>
         {tooltip && (
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger>
-                <Info className="h-4 w-4 text-[#64E365]" />
-              </TooltipTrigger>
-              <TooltipContent
-                side="right"
-                className="max-w-xs bg-white/10 border-white/20"
-              >
-                <p className="text-sm text-white">{tooltip}</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <>
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <button
+                    type="button"
+                    aria-label="Más información"
+                    aria-describedby={tooltipDescriptionId}
+                    className="inline-flex h-6 w-6 items-center justify-center rounded-full text-[#64E365] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#64E365] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0612] transition-colors hover:text-[#64E365]/80"
+                  >
+                    <Info className="h-4 w-4" />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent
+                  side="right"
+                  sideOffset={8}
+                  className="max-w-xs bg-white/10 border-white/20"
+                >
+                  <p className="text-sm text-white">{tooltip}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+            <span id={tooltipDescriptionId} className="sr-only">
+              {`Más información sobre ${label}`}
+            </span>
+          </>
         )}
       </div>
 

@@ -150,7 +150,7 @@ function ComparisonCard({
         <CardTitle className="text-lg font-mono text-white">{title}</CardTitle>
       </CardHeader>
       <CardContent className="space-y-4">
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="text-center p-3 rounded-lg bg-white/10 border border-white/20">
             <p className="text-sm font-medium text-white/80">{oneTimeLabel}</p>
             <p className="text-xl font-bold text-white">
@@ -214,7 +214,12 @@ export function ResultsDisplay({
     : Math.min((timeHorizon / results.breakEvenPoint) * 100, 100);
 
   return (
-    <div className={`space-y-6 ${className}`}>
+    <div
+      className={`space-y-6 ${className}`}
+      role="region"
+      aria-live="polite"
+      aria-label="Resultados de la comparación entre modelos"
+    >
       {/* Resumen General */}
       <div className="text-center space-y-2">
         <h2 className="text-2xl font-bold font-mono text-white">
@@ -349,7 +354,7 @@ export function ResultsDisplay({
               return (
                 <div
                   key={month}
-                  className="flex items-center justify-between p-3 rounded-lg bg-white/5 border border-white/10"
+                  className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between p-3 rounded-lg bg-white/5 border border-white/10"
                 >
                   <div className="flex items-center space-x-3">
                     <span className="min-w-[60px] text-[11px] px-2 py-1 rounded-md bg-white/10 border border-white/15 text-white/70 text-center font-mono">
@@ -363,7 +368,7 @@ export function ResultsDisplay({
                     </div>
                   </div>
 
-                  <div className="text-right">
+                  <div className="text-left sm:text-right">
                     <p
                       className={`font-medium ${getValueColor(profit)
                         .replace("text-green-600", "text-[#64E365]")
