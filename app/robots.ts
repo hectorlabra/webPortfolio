@@ -1,41 +1,42 @@
-import { MetadataRoute } from 'next';
+import { MetadataRoute } from "next";
 
+// Nota: /calculadora está permitida para indexación (contenido evergreen / herramienta interactiva)
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
-        userAgent: '*',
-        allow: '/',
+        userAgent: "*",
+        allow: "/",
         disallow: [
-          '/private/',
-          '/admin/',
-          '/api/',
-          '/_next/',
-          '*.json',
+          "/private/",
+          "/admin/",
+          "/api/", // bloquear endpoints internos
+          "/_next/",
+          "*.json",
         ],
       },
       {
-        userAgent: 'GPTBot',
-        disallow: '/',
+        userAgent: "GPTBot",
+        disallow: "/",
       },
       {
-        userAgent: 'ChatGPT-User',
-        disallow: '/',
+        userAgent: "ChatGPT-User",
+        disallow: "/",
       },
       {
-        userAgent: 'CCBot',
-        disallow: '/',
+        userAgent: "CCBot",
+        disallow: "/",
       },
       {
-        userAgent: 'anthropic-ai',
-        disallow: '/',
+        userAgent: "anthropic-ai",
+        disallow: "/",
       },
       {
-        userAgent: 'Claude-Web',
-        disallow: '/',
+        userAgent: "Claude-Web",
+        disallow: "/",
       },
     ],
-    sitemap: 'https://hectorlabra.dev/sitemap.xml',
-    host: 'https://hectorlabra.dev',
+    sitemap: "https://hectorlabra.dev/sitemap.xml",
+    host: "https://hectorlabra.dev",
   };
 }
