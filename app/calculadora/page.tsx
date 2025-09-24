@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useDeferredValue } from "react";
 import {
   Card,
   CardContent,
@@ -27,6 +27,8 @@ import { ResultsDisplay } from "@/app/calculadora/components/results-display";
 import { ComparisonChart } from "@/app/calculadora/components/comparison-chart";
 import { InsightsPanel } from "@/app/calculadora/components/insights-panel";
 import { CTASection } from "@/app/calculadora/components/cta-section";
+import { ResultsSkeleton } from "@/app/calculadora/components/results-skeleton";
+import { CalculatorErrorBoundary } from "@/app/calculadora/components/calculator-error-boundary";
 import { DEFAULT_INPUTS } from "@/lib/types/calculator";
 
 export default function CalculadoraPage() {
@@ -86,6 +88,14 @@ export default function CalculadoraPage() {
     },
     [handleInputChange, inputs, debouncedSave, hasStorageSupport]
   );
+
+  // Defer heavy renders to keep interactions snappy
+  const deferredResults = useDeferredValue(results);
+  const deferredTimeHorizon = useDeferredValue(inputs.timeHorizon);
+  const deferredChurnRate = useDeferredValue(inputs.churnRate);
+  const renderableResults = deferredResults ?? results;
+  const renderableTimeHorizon = deferredTimeHorizon ?? inputs.timeHorizon;
+  const renderableChurnRate = deferredChurnRate ?? inputs.churnRate;
 
   // Handle manual calculations (if auto-calculate is disabled)
   const handleManualCalculation = useCallback(() => {
@@ -214,16 +224,16 @@ export default function CalculadoraPage() {
           <div className="container px-4 md:px-6">
             {/* Calculator Card */}
             <Card className="bg-white/5 border-white/20 shadow-lg backdrop-blur animate-circular-glow">
-              <CardHeader className="text-center pb-6">
-                <div className="flex items-center justify-between">
-                  <CardTitle className="font-mono text-xl text-white">
+              <CardHeader className="space-y-4 text-center sm:text-left pb-6">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+                  <CardTitle className="font-mono text-lg sm:text-xl text-white">
                     Configuración del Análisis
                   </CardTitle>
                   <Button
                     onClick={handleReset}
                     variant="outline"
                     size="sm"
-                    className="border-white/20 text-white/70 hover:text-white hover:border-white/40 bg-transparent"
+                    className="border-white/20 text-white/70 hover:text-white hover:border-white/40 bg-transparent w-full sm:w-auto"
                   >
                     <RefreshCw className="h-4 w-4 mr-1" />
                     Reiniciar
@@ -234,7 +244,7 @@ export default function CalculadoraPage() {
                 </CardDescription>
               </CardHeader>
 
-              <CardContent className="space-y-8">
+              <CardContent className="space-y-8" aria-busy={isCalculating}>
                 {/* Calculator Inputs */}
                 <div>
                   <CalculatorInputs
@@ -249,69 +259,75 @@ export default function CalculadoraPage() {
                 </div>
 
                 {/* Results Section */}
-                {shouldShowResults && results ? (
-                  <div className="space-y-8 pt-6 border-t border-white/20">
-                    {/* Results Display */}
-                    <div>
-                      <h3 className="font-mono text-lg font-semibold text-white mb-4">
-                        📊 Resultados del Análisis
-                      </h3>
-                      <ResultsDisplay
-                        results={results}
-                        timeHorizon={inputs.timeHorizon}
-                      />
+                <CalculatorErrorBoundary onRetry={handleReset}>
+                  {isCalculating && !shouldShowResults ? (
+                    <div className="pt-6 border-t border-white/20">
+                      <ResultsSkeleton />
                     </div>
+                  ) : shouldShowResults && renderableResults ? (
+                    <div className="space-y-8 pt-6 border-t border-white/20">
+                      {/* Results Display */}
+                      <div>
+                        <h3 className="font-mono text-lg font-semibold text-white mb-4">
+                          📊 Resultados del Análisis
+                        </h3>
+                        <ResultsDisplay
+                          results={renderableResults}
+                          timeHorizon={renderableTimeHorizon}
+                        />
+                      </div>
 
-                    {/* Comparison Chart */}
-                    <div>
-                      <h3 className="font-mono text-lg font-semibold text-white mb-4">
-                        📈 Comparación Visual
-                      </h3>
-                      <ComparisonChart
-                        results={results}
-                        timeHorizon={inputs.timeHorizon}
-                      />
-                    </div>
+                      {/* Comparison Chart */}
+                      <div>
+                        <h3 className="font-mono text-lg font-semibold text-white mb-4">
+                          📈 Comparación Visual
+                        </h3>
+                        <ComparisonChart
+                          results={renderableResults}
+                          timeHorizon={renderableTimeHorizon}
+                        />
+                      </div>
 
-                    {/* Insights */}
-                    <div>
-                      <h3 className="font-mono text-lg font-semibold text-white mb-4">
-                        💡 Recomendaciones Inteligentes
-                      </h3>
-                      <InsightsPanel
-                        results={results}
-                        timeHorizon={inputs.timeHorizon}
-                        churnRate={inputs.churnRate}
-                      />
-                    </div>
+                      {/* Insights */}
+                      <div>
+                        <h3 className="font-mono text-lg font-semibold text-white mb-4">
+                          💡 Recomendaciones Inteligentes
+                        </h3>
+                        <InsightsPanel
+                          results={renderableResults}
+                          timeHorizon={renderableTimeHorizon}
+                          churnRate={renderableChurnRate}
+                        />
+                      </div>
 
-                    {/* Call to Action */}
-                    <div>
-                      <h3 className="font-mono text-lg font-semibold text-white mb-4">
-                        🚀 Próximos Pasos
-                      </h3>
-                      <CTASection
-                        results={results}
-                        timeHorizon={inputs.timeHorizon}
-                        onDownloadReport={handleDownloadReport}
-                        onShareResults={handleShareResults}
-                        onScheduleConsultation={handleScheduleConsultation}
-                      />
+                      {/* Call to Action */}
+                      <div>
+                        <h3 className="font-mono text-lg font-semibold text-white mb-4">
+                          🚀 Próximos Pasos
+                        </h3>
+                        <CTASection
+                          results={renderableResults}
+                          timeHorizon={renderableTimeHorizon}
+                          onDownloadReport={handleDownloadReport}
+                          onShareResults={handleShareResults}
+                          onScheduleConsultation={handleScheduleConsultation}
+                        />
+                      </div>
                     </div>
-                  </div>
-                ) : (
-                  /* Empty State */
-                  <div className="text-center py-12 border-2 border-dashed border-white/20 rounded-lg bg-white/5">
-                    <Calculator className="h-16 w-16 text-white/40 mx-auto mb-4" />
-                    <h3 className="font-mono text-lg font-semibold text-white/70 mb-2">
-                      Configura tu producto arriba
-                    </h3>
-                    <p className="text-white/60 max-w-md mx-auto">
-                      Los resultados aparecerán automáticamente mientras ajustas
-                      los parámetros
-                    </p>
-                  </div>
-                )}
+                  ) : (
+                    /* Empty State */
+                    <div className="text-center py-12 border-2 border-dashed border-white/20 rounded-lg bg-white/5">
+                      <Calculator className="h-16 w-16 text-white/40 mx-auto mb-4" />
+                      <h3 className="font-mono text-lg font-semibold text-white/70 mb-2">
+                        Configura tu producto arriba
+                      </h3>
+                      <p className="text-white/60 max-w-md mx-auto">
+                        Los resultados aparecerán automáticamente mientras
+                        ajustas los parámetros
+                      </p>
+                    </div>
+                  )}
+                </CalculatorErrorBoundary>
               </CardContent>
             </Card>
           </div>
