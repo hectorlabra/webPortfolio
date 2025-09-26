@@ -4,6 +4,7 @@ import {
   useState,
   useCallback,
   useDeferredValue,
+  useMemo,
   type ComponentType,
 } from "react";
 import dynamic from "next/dynamic";
@@ -24,6 +25,7 @@ import {
   BarChart3,
   Lightbulb,
   ArrowRight,
+  LineChart,
   RefreshCw,
   Check,
   ChevronRight,
@@ -31,6 +33,9 @@ import {
   DollarSign,
   Repeat,
   Sparkles,
+  Loader2,
+  Share2,
+  Calendar,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useCalculator } from "@/app/calculadora/hooks/use-calculator";
@@ -45,8 +50,14 @@ import {
   DEFAULT_INPUTS,
   CALCULATOR_CONFIG,
   type CalculatorInputs,
+  type CalculationResults,
+  type ValidationError,
 } from "@/lib/types/calculator";
-import { formatCurrency } from "@/app/calculadora/lib/utils";
+import {
+  formatCurrency,
+  formatPercentage,
+  formatTimePeriod,
+} from "@/app/calculadora/lib/utils";
 
 const ComparisonChart = dynamic(
   () =>
@@ -307,42 +318,98 @@ export default function CalculadoraPage() {
     window.open("/quien-soy#contacto", "_blank");
   }, []);
 
-  const renderStepContent = () => {
-    switch (currentStep) {
-      case 1:
-        return (
-          <StepOneForm
-            inputs={inputs}
-            onInputChange={handleInputChangeWithSave}
-            onNext={handleNext}
-          />
-        );
-      case 2:
-        return (
-          <StepTwoForm
-            inputs={inputs}
-            onInputChange={handleInputChangeWithSave}
-            onNext={handleNext}
-          />
-        );
-      case 3:
-        return (
-          <StepThreeForm
-            inputs={inputs}
-            onInputChange={handleInputChangeWithSave}
-            totalOneTimeProfit={totalOneTimeProfit}
-            totalSubscriptionProfit={totalSubscriptionProfit}
-            breakEvenPoint={breakEvenPoint}
-            onBack={handleBack}
-          />
-        );
-      default:
-        return null;
-    }
-  };
-
   const showResultsError =
     hasRequestedResults && !isCalculating && validationErrors.length > 0;
+
+  const stepContent = useMemo(() => {
+    switch (currentStep) {
+      case 1:
+        return {
+          form: (
+            <StepOneForm
+              inputs={inputs}
+              onInputChange={handleInputChangeWithSave}
+              onNext={handleNext}
+            />
+          ),
+          context: <StepOneContext inputs={inputs} />,
+        };
+      case 2:
+        return {
+          form: (
+            <StepTwoForm
+              inputs={inputs}
+              onInputChange={handleInputChangeWithSave}
+              onNext={handleNext}
+            />
+          ),
+          context: (
+            <StepTwoContext
+              inputs={inputs}
+              timeHorizon={timeHorizon}
+              totalOneTimeProfit={totalOneTimeProfit}
+              totalSubscriptionProfit={totalSubscriptionProfit}
+              breakEvenPoint={breakEvenPoint}
+            />
+          ),
+        };
+      case 3:
+        return {
+          form: (
+            <StepThreeForm
+              inputs={inputs}
+              onInputChange={handleInputChangeWithSave}
+              totalOneTimeProfit={totalOneTimeProfit}
+              totalSubscriptionProfit={totalSubscriptionProfit}
+              breakEvenPoint={breakEvenPoint}
+              onBack={handleBack}
+            />
+          ),
+          context: (
+            <StepThreeContext
+              isCalculating={isCalculating}
+              hasRequestedResults={hasRequestedResults}
+              shouldShowResults={shouldShowResults}
+              renderableResults={renderableResults}
+              renderableTimeHorizon={renderableTimeHorizon}
+              renderableChurnRate={renderableChurnRate}
+              showResultsError={showResultsError}
+              validationErrors={validationErrors}
+              onDownloadReport={handleDownloadReport}
+              onShareResults={handleShareResults}
+              onScheduleConsultation={handleScheduleConsultation}
+              onReset={handleReset}
+            />
+          ),
+        };
+      default:
+        return { form: null, context: null };
+    }
+  }, [
+    currentStep,
+    inputs,
+    timeHorizon,
+    handleInputChangeWithSave,
+    handleNext,
+    totalOneTimeProfit,
+    totalSubscriptionProfit,
+    breakEvenPoint,
+    handleBack,
+    isCalculating,
+    hasRequestedResults,
+    shouldShowResults,
+    renderableResults,
+    renderableTimeHorizon,
+    renderableChurnRate,
+    showResultsError,
+    validationErrors,
+    handleDownloadReport,
+    handleShareResults,
+    handleScheduleConsultation,
+    handleReset,
+  ]);
+
+  const { form: activeForm, context: activeContext } = stepContent;
 
   const canGoBack = currentStep > 1;
   const isLastStep = currentStep === STEP_COUNT;
@@ -449,7 +516,13 @@ export default function CalculadoraPage() {
                     </div>
                   </div>
 
-                  <div className="space-y-6">{renderStepContent()}</div>
+                  <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(320px,380px)_minmax(0,1fr)]">
+                    <div className="lg:sticky lg:top-6">
+                      <div className="space-y-6">{activeForm}</div>
+                    </div>
+
+                    <div className="space-y-6">{activeContext}</div>
+                  </div>
 
                   {stepErrors.length > 0 && (
                     <Alert className="mt-6 border-red-400 bg-red-400/10 text-red-100">
@@ -466,96 +539,6 @@ export default function CalculadoraPage() {
                     </Alert>
                   )}
                 </div>
-
-                {currentStep === 3 && (
-                  <CalculatorErrorBoundary onRetry={handleReset}>
-                    {isCalculating &&
-                    hasRequestedResults &&
-                    !shouldShowResults ? (
-                      <div className="pt-6 border-t border-white/20">
-                        <ResultsSkeleton />
-                      </div>
-                    ) : shouldShowResults && renderableResults ? (
-                      <div className="space-y-8 pt-6 border-t border-white/20">
-                        <div>
-                          <h3 className="font-mono text-lg font-semibold text-white mb-4">
-                            📊 Resultados del Análisis
-                          </h3>
-                          <ResultsDisplay
-                            results={renderableResults}
-                            timeHorizon={renderableTimeHorizon}
-                          />
-                        </div>
-
-                        <div>
-                          <h3 className="font-mono text-lg font-semibold text-white mb-4">
-                            📈 Comparación Visual
-                          </h3>
-                          <ComparisonChart
-                            results={renderableResults}
-                            timeHorizon={renderableTimeHorizon}
-                          />
-                        </div>
-
-                        <div>
-                          <h3 className="font-mono text-lg font-semibold text-white mb-4">
-                            💡 Recomendaciones Inteligentes
-                          </h3>
-                          <InsightsPanel
-                            results={renderableResults}
-                            timeHorizon={renderableTimeHorizon}
-                            churnRate={renderableChurnRate}
-                          />
-                        </div>
-
-                        <div>
-                          <h3 className="font-mono text-lg font-semibold text-white mb-4">
-                            🚀 Próximos Pasos
-                          </h3>
-                          <CTASection
-                            results={renderableResults}
-                            timeHorizon={renderableTimeHorizon}
-                            onDownloadReport={handleDownloadReport}
-                            onShareResults={handleShareResults}
-                            onScheduleConsultation={handleScheduleConsultation}
-                          />
-                        </div>
-                      </div>
-                    ) : showResultsError ? (
-                      <Alert className="mt-6 border-red-400 bg-red-400/10 text-red-100">
-                        <AlertTitle>
-                          Necesitas ajustar algunos valores
-                        </AlertTitle>
-                        <AlertDescription>
-                          <ul className="list-disc list-inside space-y-1 text-sm">
-                            {validationErrors.map((error, index) => (
-                              <li key={index}>{error}</li>
-                            ))}
-                          </ul>
-                        </AlertDescription>
-                      </Alert>
-                    ) : hasRequestedResults ? (
-                      <Alert className="mt-6 border-yellow-400 bg-yellow-400/10 text-yellow-100">
-                        <AlertTitle>Estamos listos para calcular</AlertTitle>
-                        <AlertDescription>
-                          Asegúrate de que todos los campos tengan valores
-                          válidos antes de generar el análisis.
-                        </AlertDescription>
-                      </Alert>
-                    ) : (
-                      <div className="text-center py-12 border-2 border-dashed border-white/20 rounded-lg bg-white/5">
-                        <Calculator className="h-16 w-16 text-white/40 mx-auto mb-4" />
-                        <h3 className="font-mono text-lg font-semibold text-white/70 mb-2">
-                          Confirma los pasos anteriores para ver el resultado
-                        </h3>
-                        <p className="text-white/60 max-w-md mx-auto">
-                          Ajusta tus datos y presiona &quot;Generar
-                          análisis&quot; para obtener la comparación completa.
-                        </p>
-                      </div>
-                    )}
-                  </CalculatorErrorBoundary>
-                )}
               </CardContent>
 
               <CardFooter className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between border-t border-white/10 bg-white/5/50">
@@ -910,6 +893,101 @@ function StepOneForm({
   );
 }
 
+function StepOneContext({ inputs }: { inputs: typeof DEFAULT_INPUTS }) {
+  const potentialRevenue = inputs.oneTimePrice * inputs.oneTimeCustomers;
+  const unitMargin = inputs.oneTimePrice - inputs.oneTimeCost;
+  const marginPercentage =
+    inputs.oneTimePrice > 0
+      ? Math.max(0, (unitMargin / inputs.oneTimePrice) * 100)
+      : 0;
+
+  return (
+    <div className="space-y-6">
+      <Card className="bg-white/5 border-white/20">
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2 font-mono text-white text-base">
+            <TrendingUp className="h-5 w-5 text-[#64E365]" />
+            <span>Resumen rápido del modelo único</span>
+          </CardTitle>
+          <CardDescription className="text-white/70">
+            Ajusta tus supuestos antes de avanzar al modelo recurrente
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+            <div className="rounded-lg border border-white/10 bg-white/5 p-4">
+              <p className="text-xs uppercase tracking-wide text-white/60">
+                Ingresos potenciales
+              </p>
+              <p className="mt-2 text-lg font-semibold text-white">
+                {formatCurrency(potentialRevenue)}
+              </p>
+              <p className="text-xs text-white/50 mt-2">
+                {inputs.oneTimeCustomers} clientes a{" "}
+                {formatCurrency(inputs.oneTimePrice)} cada uno
+              </p>
+            </div>
+
+            <div className="rounded-lg border border-white/10 bg-white/5 p-4">
+              <p className="text-xs uppercase tracking-wide text-white/60">
+                Margen unitario
+              </p>
+              <p className="mt-2 text-lg font-semibold text-white">
+                {formatCurrency(unitMargin, {
+                  showSymbol: true,
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+              </p>
+              <p className="text-xs text-white/50 mt-2">
+                {formatPercentage(Math.max(0, marginPercentage), 1)} de margen
+              </p>
+            </div>
+
+            <div className="rounded-lg border border-white/10 bg-white/5 p-4">
+              <p className="text-xs uppercase tracking-wide text-white/60">
+                Conversión objetivo
+              </p>
+              <p className="mt-2 text-lg font-semibold text-white">
+                {formatPercentage(inputs.conversionRate, 1)}
+              </p>
+              <p className="text-xs text-white/50 mt-2">
+                Recomendado: 1% – 5% según el plan UX
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="bg-white/5 border-white/20">
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2 font-mono text-white text-base">
+            <Lightbulb className="h-5 w-5 text-[#FFD100]" />
+            <span>Consejos para este paso</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ul className="list-disc list-inside space-y-2 text-sm text-white/70">
+            <li>
+              Valida que tu precio esté dentro del rango definido en tu
+              estrategia comercial (por ejemplo 47–197 USD para infoproductos
+              premium).
+            </li>
+            <li>
+              Mantén la tasa de conversión conservadora. Ajusta hacia abajo si
+              aún no tienes datos históricos.
+            </li>
+            <li>
+              Usa el campo de clientes objetivo como un escenario base para
+              comparar contra la suscripción.
+            </li>
+          </ul>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+
 function StepTwoForm({
   inputs,
   onInputChange,
@@ -1033,6 +1111,124 @@ function StepTwoForm({
           <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
       </div>
+    </div>
+  );
+}
+
+function StepTwoContext({
+  inputs,
+  timeHorizon,
+  totalOneTimeProfit,
+  totalSubscriptionProfit,
+  breakEvenPoint,
+}: {
+  inputs: typeof DEFAULT_INPUTS;
+  timeHorizon: number;
+  totalOneTimeProfit: number;
+  totalSubscriptionProfit: number;
+  breakEvenPoint: number | null;
+}) {
+  const netRevenuePerCustomer =
+    inputs.subscriptionPrice - inputs.subscriptionCost;
+  const retentionRate = Math.max(0, 100 - inputs.churnRate);
+  const monthsToMatchOneTime =
+    netRevenuePerCustomer > 0
+      ? Math.ceil(inputs.oneTimePrice / netRevenuePerCustomer)
+      : Infinity;
+  const profitDelta = totalSubscriptionProfit - totalOneTimeProfit;
+
+  return (
+    <div className="space-y-6">
+      <Card className="bg-white/5 border-white/20">
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2 font-mono text-white text-base">
+            <BarChart3 className="h-5 w-5 text-[#64E365]" />
+            <span>Insights del modelo recurrente</span>
+          </CardTitle>
+          <CardDescription className="text-white/70">
+            Comprueba que tu oferta mensual genera margen y se acerca al punto
+            de equilibrio esperado
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+            <div className="rounded-lg border border-white/10 bg-white/5 p-4">
+              <p className="text-xs uppercase tracking-wide text-white/60">
+                Margen mensual por cliente
+              </p>
+              <p className="mt-2 text-lg font-semibold text-white">
+                {formatCurrency(netRevenuePerCustomer, {
+                  showSymbol: true,
+                  minimumFractionDigits: 2,
+                  maximumFractionDigits: 2,
+                })}
+              </p>
+              <p className="text-xs text-white/50 mt-2">
+                Incluye precio ({formatCurrency(inputs.subscriptionPrice)}) y
+                costo ({formatCurrency(inputs.subscriptionCost)}).
+              </p>
+            </div>
+
+            <div className="rounded-lg border border-white/10 bg-white/5 p-4">
+              <p className="text-xs uppercase tracking-wide text-white/60">
+                Retención estimada
+              </p>
+              <p className="mt-2 text-lg font-semibold text-white">
+                {formatPercentage(retentionRate, 1)}
+              </p>
+              <p className="text-xs text-white/50 mt-2">
+                Objetivo: mantener churn &lt; 5% mensual para un crecimiento
+                sano.
+              </p>
+            </div>
+
+            <div className="rounded-lg border border-white/10 bg-white/5 p-4">
+              <p className="text-xs uppercase tracking-wide text-white/60">
+                Equilibrio vs. modelo único
+              </p>
+              <p className="mt-2 text-lg font-semibold text-white">
+                {formatTimePeriod(monthsToMatchOneTime)}
+              </p>
+              <p className="text-xs text-white/50 mt-2">
+                Tiempo estimado para igualar el ingreso único por cliente.
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Card className="bg-white/5 border-white/20">
+        <CardHeader>
+          <CardTitle className="flex items-center space-x-2 font-mono text-white text-base">
+            <Repeat className="h-5 w-5 text-[#FFD100]" />
+            <span>Qué vigilar antes de avanzar</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4 text-sm text-white/70">
+          <p>
+            Con un horizonte de {timeHorizon} meses, tu suscripción proyecta un
+            {profitDelta >= 0 ? " incremento" : " déficit"} de{" "}
+            {formatCurrency(Math.abs(profitDelta))} frente al modelo único.
+          </p>
+          <ul className="list-disc list-inside space-y-2">
+            <li>
+              Ajusta churn y retención antes de avanzar; cada punto porcentual
+              cambia drásticamente el LTV.
+            </li>
+            <li>
+              Si tu punto de equilibrio (
+              {breakEvenPoint && breakEvenPoint > 0
+                ? formatTimePeriod(breakEvenPoint)
+                : "sin cruce aún"}
+              ) supera el horizonte, considera mejorar la oferta o pricing.
+            </li>
+            <li>
+              Usa estos supuestos para preparar mensajes de onboarding y
+              retención desde el día 0.
+            </li>
+          </ul>
+        </CardContent>
+      </Card>
     </div>
   );
 }
@@ -1173,5 +1369,202 @@ function StepThreeForm({
         </div>
       </div>
     </div>
+  );
+}
+
+interface StepThreeContextProps {
+  isCalculating: boolean;
+  hasRequestedResults: boolean;
+  shouldShowResults: boolean;
+  renderableResults: CalculationResults | null;
+  renderableTimeHorizon: number;
+  renderableChurnRate: number;
+  showResultsError: boolean;
+  validationErrors: ValidationError[];
+  onDownloadReport: () => void;
+  onShareResults: () => Promise<void> | void;
+  onScheduleConsultation: () => void;
+  onReset: () => void;
+}
+
+function StepThreeContext({
+  isCalculating,
+  hasRequestedResults,
+  shouldShowResults,
+  renderableResults,
+  renderableTimeHorizon,
+  renderableChurnRate,
+  showResultsError,
+  validationErrors,
+  onDownloadReport,
+  onShareResults,
+  onScheduleConsultation,
+  onReset,
+}: StepThreeContextProps) {
+  return (
+    <CalculatorErrorBoundary onRetry={onReset}>
+      {showResultsError ? (
+        <Alert
+          variant="destructive"
+          className="bg-red-500/10 border-red-500/40 text-red-100"
+        >
+          <AlertTitle className="font-semibold">
+            Revisemos algunos campos antes de calcular
+          </AlertTitle>
+          <AlertDescription className="space-y-3 text-sm">
+            <p>Ajusta los siguientes valores para que el cálculo sea válido:</p>
+            <ul className="space-y-1 pl-4 list-disc">
+              {validationErrors.map((error, index) => (
+                <li key={index}>{error.message}</li>
+              ))}
+            </ul>
+            <Button
+              onClick={onReset}
+              variant="outline"
+              size="sm"
+              className="border-white/30 text-white hover:text-white"
+            >
+              Restablecer valores por defecto
+            </Button>
+          </AlertDescription>
+        </Alert>
+      ) : isCalculating && hasRequestedResults && !shouldShowResults ? (
+        <Card className="bg-white/5 border-white/20">
+          <CardHeader>
+            <CardTitle className="flex items-center space-x-2 font-mono text-white text-base">
+              <Loader2 className="h-5 w-5 animate-spin text-[#64E365]" />
+              <span>Generando análisis personalizado</span>
+            </CardTitle>
+            <CardDescription className="text-white/70">
+              Estamos procesando tus métricas para construir la comparativa
+              completa
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <ResultsSkeleton />
+          </CardContent>
+        </Card>
+      ) : shouldShowResults && renderableResults ? (
+        <div className="space-y-6">
+          <Card className="bg-white/5 border-white/20">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2 font-mono text-white text-base">
+                <Sparkles className="h-5 w-5 text-[#64E365]" />
+                <span>Resultados principales</span>
+              </CardTitle>
+              <CardDescription className="text-white/70">
+                Comparativa directa entre tus modelos único y de suscripción
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ResultsDisplay results={renderableResults} />
+            </CardContent>
+            <CardFooter className="flex flex-wrap gap-3">
+              <Button
+                onClick={onDownloadReport}
+                className="bg-[#64E365] text-white hover:bg-[#64E365]/90"
+              >
+                Descargar reporte
+              </Button>
+              <Button
+                onClick={onShareResults}
+                variant="outline"
+                className="border-white/30 text-white hover:bg-white/10"
+              >
+                <Share2 className="h-4 w-4 mr-2" /> Compartir resultados
+              </Button>
+              <Button
+                onClick={onScheduleConsultation}
+                variant="outline"
+                className="border-[#FFD100]/40 text-[#FFD100] hover:bg-[#FFD100]/10"
+              >
+                <Calendar className="h-4 w-4 mr-2" /> Agendar sesión
+              </Button>
+            </CardFooter>
+          </Card>
+
+          <Card className="bg-white/5 border-white/20">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2 font-mono text-white text-base">
+                <LineChart className="h-5 w-5 text-[#64E365]" />
+                <span>Visualización de crecimiento</span>
+              </CardTitle>
+              <CardDescription className="text-white/70">
+                Evolución mensual de ingresos y beneficios en el horizonte
+                seleccionado
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <ComparisonChart
+                results={renderableResults}
+                timeHorizon={renderableTimeHorizon}
+              />
+            </CardContent>
+          </Card>
+
+          <Card className="bg-white/5 border-white/20">
+            <CardHeader>
+              <CardTitle className="flex items-center space-x-2 font-mono text-white text-base">
+                <Lightbulb className="h-5 w-5 text-[#FFD100]" />
+                <span>Insights accionables</span>
+              </CardTitle>
+              <CardDescription className="text-white/70">
+                Recomendaciones basadas en tus métricas de retención y LTV
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <InsightsPanel
+                results={renderableResults}
+                timeHorizon={renderableTimeHorizon}
+                churnRate={renderableChurnRate}
+              />
+            </CardContent>
+          </Card>
+
+          <CTASection
+            results={renderableResults}
+            timeHorizon={renderableTimeHorizon}
+            onDownloadReport={onDownloadReport}
+            onShareResults={() => {
+              void onShareResults();
+            }}
+            onScheduleConsultation={onScheduleConsultation}
+          />
+        </div>
+      ) : hasRequestedResults ? (
+        <Alert className="bg-white/5 border-white/20 text-white/80">
+          <AlertTitle className="font-semibold text-white">
+            Casi estamos
+          </AlertTitle>
+          <AlertDescription>
+            Ajusta los valores anteriores y vuelve a calcular para ver el
+            análisis completo.
+          </AlertDescription>
+        </Alert>
+      ) : (
+        <Card className="bg-white/5 border-dashed border-white/20">
+          <CardHeader className="space-y-4 text-center">
+            <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#64E365]/10 text-[#64E365]">
+              <Calculator className="h-6 w-6" />
+            </div>
+            <div className="space-y-2">
+              <CardTitle className="font-mono text-white text-lg">
+                ¿Listo para comparar modelos?
+              </CardTitle>
+              <CardDescription className="text-white/70">
+                Completa los campos de los pasos anteriores y calcula para ver
+                la proyección completa.
+              </CardDescription>
+            </div>
+          </CardHeader>
+          <CardContent className="text-center">
+            <p className="text-sm text-white/60">
+              Tip: Usa un horizonte de 12 a 24 meses para evaluar la estabilidad
+              de tu suscripción.
+            </p>
+          </CardContent>
+        </Card>
+      )}
+    </CalculatorErrorBoundary>
   );
 }

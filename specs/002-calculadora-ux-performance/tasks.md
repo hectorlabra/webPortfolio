@@ -3,7 +3,7 @@
 ## Fase 4.1 – Foundation (Wizard 3 pasos)
 
 - [ ] T101 Crear Wizard 3 pasos (1 Producto/objetivo, 2 Mercado/retención, 3 Horizonte/resultados)
-- [ ] T102 Layout 2 columnas dentro del wizard (A formulario sticky, B contexto)
+- [x] T102 Layout 2 columnas dentro del wizard (A formulario sticky, B contexto)
 - [ ] T103 Validación por paso + guardado en localStorage
 - [ ] T104 Code-splitting: `ComparisonChart` e `InsightsPanel` con `next/dynamic`
 
