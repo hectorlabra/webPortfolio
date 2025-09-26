@@ -5,7 +5,7 @@
 - [x] T101 Crear Wizard 3 pasos (1 Producto/objetivo, 2 Mercado/retención, 3 Horizonte/resultados)
 - [x] T102 Layout 2 columnas dentro del wizard (A formulario sticky, B contexto)
 - [x] T103 Validación por paso + guardado en localStorage
-- [ ] T104 Code-splitting: `ComparisonChart` e `InsightsPanel` con `next/dynamic`
+- [x] T104 Code-splitting: `ComparisonChart` e `InsightsPanel` con `next/dynamic`
 
 ## Fase 4.2 – Charts
 

@@ -87,6 +87,10 @@ export function useLocalStorage(options: UseLocalStorageOptions = {}) {
         ...parsed.inputs,
       };
 
+      if (parsed.savedAt) {
+        setLastSaved(new Date(parsed.savedAt));
+      }
+
       // Basic validation
       if (mergedInputs.timeHorizon < 1 || mergedInputs.timeHorizon > 60) {
         mergedInputs.timeHorizon = DEFAULT_INPUTS.timeHorizon;

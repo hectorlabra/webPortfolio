@@ -101,6 +101,12 @@ describe("Validation", () => {
       discountRate: 60,
     } as any);
     expect(errors.length).toBeGreaterThan(0);
+    expect(errors).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ field: "oneTimePrice" }),
+        expect.objectContaining({ field: "subscriptionPrice" }),
+      ])
+    );
   });
 
   it("returns empty array for valid inputs", () => {

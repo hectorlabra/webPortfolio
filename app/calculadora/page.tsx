@@ -41,23 +41,51 @@ import type { LucideIcon } from "lucide-react";
 import { useCalculator } from "@/app/calculadora/hooks/use-calculator";
 import { useLocalStorage } from "@/app/calculadora/hooks/use-local-storage";
 import { ResultsDisplay } from "@/app/calculadora/components/results-display";
-import { InsightsPanel } from "@/app/calculadora/components/insights-panel";
 import { CTASection } from "@/app/calculadora/components/cta-section";
 import { ResultsSkeleton } from "@/app/calculadora/components/results-skeleton";
 import { CalculatorErrorBoundary } from "@/app/calculadora/components/calculator-error-boundary";
 import type { ComparisonChartProps } from "@/app/calculadora/components/comparison-chart";
 import {
   DEFAULT_INPUTS,
-  CALCULATOR_CONFIG,
   type CalculatorInputs,
   type CalculationResults,
   type ValidationError,
 } from "@/lib/types/calculator";
+import { validateCalculatorInputs } from "@/app/calculadora/lib/calculations";
 import {
   formatCurrency,
   formatPercentage,
   formatTimePeriod,
 } from "@/app/calculadora/lib/utils";
+
+type InsightsPanelProps = {
+  results: CalculationResults;
+  timeHorizon: number;
+  churnRate?: number;
+  className?: string;
+};
+
+const InsightsPanelPlaceholder = () => (
+  <div className="space-y-4 rounded-lg border border-white/10 bg-white/5 p-6">
+    <div className="h-6 w-40 animate-pulse rounded bg-white/10" />
+    <div className="h-4 w-3/4 animate-pulse rounded bg-white/10" />
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div className="h-32 animate-pulse rounded-lg bg-white/5" />
+      <div className="h-32 animate-pulse rounded-lg bg-white/5" />
+    </div>
+  </div>
+);
+
+const InsightsPanel = dynamic<InsightsPanelProps>(
+  () =>
+    import("@/app/calculadora/components/insights-panel").then(
+      (mod) => mod.InsightsPanel
+    ),
+  {
+    ssr: false,
+    loading: () => <InsightsPanelPlaceholder />,
+  }
+);
 
 const ComparisonChart = dynamic(
   () =>
@@ -106,10 +134,19 @@ const wizardSteps: WizardStep[] = [
 
 const STEP_COUNT = wizardSteps.length;
 
+const STEP_FIELD_GROUPS: Record<
+  number,
+  ReadonlyArray<keyof CalculatorInputs>
+> = {
+  1: ["oneTimePrice", "oneTimeCost", "oneTimeCustomers", "conversionRate"],
+  2: ["subscriptionPrice", "subscriptionCost", "churnRate", "timeHorizon"],
+  3: ["churnRate", "timeHorizon", "discountRate"],
+};
+
 export default function CalculadoraPage() {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
-  const [stepErrors, setStepErrors] = useState<string[]>([]);
+  const [stepErrors, setStepErrors] = useState<ValidationError[]>([]);
   const [hasRequestedResults, setHasRequestedResults] = useState(false);
 
   const {
@@ -163,46 +200,13 @@ export default function CalculadoraPage() {
 
   const validateStep = useCallback(
     (step: number, values: CalculatorInputs = inputs) => {
-      const errors: string[] = [];
-
-      if (step === 1) {
-        if (values.oneTimePrice <= 0)
-          errors.push("El precio del producto único debe ser mayor a 0.");
-        if (values.oneTimeCost < 0)
-          errors.push("El costo por cliente no puede ser negativo.");
-        if (values.oneTimeCustomers <= 0)
-          errors.push("El número de clientes debe ser mayor a 0.");
-        if (values.conversionRate <= 0 || values.conversionRate > 100)
-          errors.push("La tasa de conversión debe estar entre 0% y 100%.");
+      const fields = STEP_FIELD_GROUPS[step] ?? [];
+      if (fields.length === 0) {
+        return [];
       }
 
-      if (step === 2) {
-        if (values.subscriptionPrice <= 0)
-          errors.push("El precio mensual debe ser mayor a 0.");
-        if (values.subscriptionCost < 0)
-          errors.push("El costo mensual por cliente no puede ser negativo.");
-        if (
-          values.churnRate < CALCULATOR_CONFIG.MIN_CHURN_RATE ||
-          values.churnRate > CALCULATOR_CONFIG.MAX_CHURN_RATE
-        )
-          errors.push(
-            `La tasa de abandono debe estar entre ${CALCULATOR_CONFIG.MIN_CHURN_RATE}% y ${CALCULATOR_CONFIG.MAX_CHURN_RATE}%.`
-          );
-        if (
-          values.timeHorizon < CALCULATOR_CONFIG.MIN_TIME_HORIZON ||
-          values.timeHorizon > CALCULATOR_CONFIG.MAX_TIME_HORIZON
-        )
-          errors.push(
-            `El horizonte temporal debe estar entre ${CALCULATOR_CONFIG.MIN_TIME_HORIZON} y ${CALCULATOR_CONFIG.MAX_TIME_HORIZON} meses.`
-          );
-      }
-
-      if (step === 3) {
-        if (values.discountRate < 0 || values.discountRate > 50)
-          errors.push("La tasa de descuento debe estar entre 0% y 50%.");
-      }
-
-      return errors;
+      const validationErrors = validateCalculatorInputs(values);
+      return validationErrors.filter((error) => fields.includes(error.field));
     },
     [inputs]
   );
@@ -330,6 +334,7 @@ export default function CalculadoraPage() {
               inputs={inputs}
               onInputChange={handleInputChangeWithSave}
               onNext={handleNext}
+              errors={stepErrors}
             />
           ),
           context: <StepOneContext inputs={inputs} />,
@@ -341,6 +346,7 @@ export default function CalculadoraPage() {
               inputs={inputs}
               onInputChange={handleInputChangeWithSave}
               onNext={handleNext}
+              errors={stepErrors}
             />
           ),
           context: (
@@ -363,6 +369,7 @@ export default function CalculadoraPage() {
               totalSubscriptionProfit={totalSubscriptionProfit}
               breakEvenPoint={breakEvenPoint}
               onBack={handleBack}
+              errors={stepErrors}
             />
           ),
           context: (
@@ -407,6 +414,7 @@ export default function CalculadoraPage() {
     handleShareResults,
     handleScheduleConsultation,
     handleReset,
+    stepErrors,
   ]);
 
   const { form: activeForm, context: activeContext } = stepContent;
@@ -532,7 +540,7 @@ export default function CalculadoraPage() {
                       <AlertDescription>
                         <ul className="list-disc list-inside space-y-1 text-sm">
                           {stepErrors.map((error, index) => (
-                            <li key={index}>{error}</li>
+                            <li key={index}>{error.message}</li>
                           ))}
                         </ul>
                       </AlertDescription>
@@ -735,11 +743,16 @@ function StepOneForm({
   inputs,
   onInputChange,
   onNext,
+  errors = [],
 }: {
   inputs: typeof DEFAULT_INPUTS;
   onInputChange: (field: keyof typeof DEFAULT_INPUTS, value: number) => void;
   onNext: () => void;
+  errors?: ValidationError[];
 }) {
+  const getErrorMessage = (field: keyof typeof DEFAULT_INPUTS) =>
+    errors.find((error) => error.field === field)?.message;
+
   return (
     <div className="space-y-6">
       {/* Pricing Section */}
@@ -751,7 +764,10 @@ function StepOneForm({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* One-Time Price */}
           <div>
-            <label className="block text-sm font-medium text-white/90">
+            <label
+              htmlFor="oneTimePrice"
+              className="block text-sm font-medium text-white/90"
+            >
               Precio del Producto Único
             </label>
             <div className="mt-1 relative rounded-md shadow-sm">
@@ -759,6 +775,7 @@ function StepOneForm({
                 <DollarSign className="h-5 w-5 text-white/50" />
               </span>
               <input
+                id="oneTimePrice"
                 type="number"
                 value={inputs.oneTimePrice}
                 onChange={(e) =>
@@ -770,11 +787,19 @@ function StepOneForm({
                 step="0.01"
               />
             </div>
+            {getErrorMessage("oneTimePrice") && (
+              <p className="mt-2 text-sm text-red-400">
+                {getErrorMessage("oneTimePrice")}
+              </p>
+            )}
           </div>
 
           {/* Subscription Price */}
           <div>
-            <label className="block text-sm font-medium text-white/90">
+            <label
+              htmlFor="subscriptionPrice"
+              className="block text-sm font-medium text-white/90"
+            >
               Precio Mensual de Suscripción
             </label>
             <div className="mt-1 relative rounded-md shadow-sm">
@@ -782,6 +807,7 @@ function StepOneForm({
                 <DollarSign className="h-5 w-5 text-white/50" />
               </span>
               <input
+                id="subscriptionPrice"
                 type="number"
                 value={inputs.subscriptionPrice}
                 onChange={(e) =>
@@ -793,11 +819,19 @@ function StepOneForm({
                 step="0.01"
               />
             </div>
+            {getErrorMessage("subscriptionPrice") && (
+              <p className="mt-2 text-sm text-red-400">
+                {getErrorMessage("subscriptionPrice")}
+              </p>
+            )}
           </div>
 
           {/* One-Time Cost */}
           <div>
-            <label className="block text-sm font-medium text-white/90">
+            <label
+              htmlFor="oneTimeCost"
+              className="block text-sm font-medium text-white/90"
+            >
               Costo por Cliente (Único)
             </label>
             <div className="mt-1 relative rounded-md shadow-sm">
@@ -805,6 +839,7 @@ function StepOneForm({
                 <DollarSign className="h-5 w-5 text-white/50" />
               </span>
               <input
+                id="oneTimeCost"
                 type="number"
                 value={inputs.oneTimeCost}
                 onChange={(e) =>
@@ -816,11 +851,19 @@ function StepOneForm({
                 step="0.01"
               />
             </div>
+            {getErrorMessage("oneTimeCost") && (
+              <p className="mt-2 text-sm text-red-400">
+                {getErrorMessage("oneTimeCost")}
+              </p>
+            )}
           </div>
 
           {/* Subscription Cost */}
           <div>
-            <label className="block text-sm font-medium text-white/90">
+            <label
+              htmlFor="subscriptionCost"
+              className="block text-sm font-medium text-white/90"
+            >
               Costo Mensual por Cliente (Suscripción)
             </label>
             <div className="mt-1 relative rounded-md shadow-sm">
@@ -828,6 +871,7 @@ function StepOneForm({
                 <DollarSign className="h-5 w-5 text-white/50" />
               </span>
               <input
+                id="subscriptionCost"
                 type="number"
                 value={inputs.subscriptionCost}
                 onChange={(e) =>
@@ -839,16 +883,25 @@ function StepOneForm({
                 step="0.01"
               />
             </div>
+            {getErrorMessage("subscriptionCost") && (
+              <p className="mt-2 text-sm text-red-400">
+                {getErrorMessage("subscriptionCost")}
+              </p>
+            )}
           </div>
         </div>
       </div>
 
       {/* Conversion Rate */}
       <div>
-        <label className="block text-sm font-medium text-white/90">
+        <label
+          htmlFor="conversionRate"
+          className="block text-sm font-medium text-white/90"
+        >
           Tasa de Conversión (%)
         </label>
         <input
+          id="conversionRate"
           type="number"
           value={inputs.conversionRate}
           onChange={(e) =>
@@ -860,14 +913,23 @@ function StepOneForm({
           max="100"
           step="0.01"
         />
+        {getErrorMessage("conversionRate") && (
+          <p className="mt-2 text-sm text-red-400">
+            {getErrorMessage("conversionRate")}
+          </p>
+        )}
       </div>
 
       {/* Customers Acquired */}
       <div>
-        <label className="block text-sm font-medium text-white/90">
+        <label
+          htmlFor="oneTimeCustomers"
+          className="block text-sm font-medium text-white/90"
+        >
           Clientes Adquiridos (Estimación)
         </label>
         <input
+          id="oneTimeCustomers"
           type="number"
           value={inputs.oneTimeCustomers}
           onChange={(e) =>
@@ -877,6 +939,11 @@ function StepOneForm({
           placeholder="Ej. 100"
           min="0"
         />
+        {getErrorMessage("oneTimeCustomers") && (
+          <p className="mt-2 text-sm text-red-400">
+            {getErrorMessage("oneTimeCustomers")}
+          </p>
+        )}
       </div>
 
       {/* Manual Calculation Trigger */}
@@ -992,33 +1059,42 @@ function StepTwoForm({
   inputs,
   onInputChange,
   onNext,
+  errors = [],
 }: {
   inputs: typeof DEFAULT_INPUTS;
   onInputChange: (field: keyof typeof DEFAULT_INPUTS, value: number) => void;
   onNext: () => void;
+  errors?: ValidationError[];
 }) {
+  const getErrorMessage = (field: keyof typeof DEFAULT_INPUTS) =>
+    errors.find((error) => error.field === field)?.message;
+
   return (
     <div className="space-y-6">
       {/* Subscription Model Description */}
       <div className="rounded-lg bg-white/5 p-4 sm:p-6 border border-white/20">
         <h3 className="font-mono text-lg sm:text-xl text-white mb-4">
-          Configuración del Modelo de Suscripción
+          Modelo de Suscripción Recurrente
         </h3>
-        <p className="text-white/70 text-sm">
-          Establece los parámetros para calcular los ingresos recurrentes
+        <p className="text-sm text-white/70">
+          Configura tu oferta recurrente para estimar ingresos mensuales y
+          churn.
         </p>
       </div>
 
       {/* Pricing Section */}
       <div className="rounded-lg bg-white/5 p-4 sm:p-6 border border-white/20">
-        <h3 className="font-mono text-lg sm:text-xl text-white mb-4">
-          Precios y Costos
-        </h3>
+        <h4 className="font-mono text-base text-white mb-4">
+          Ingresos recurrentes esperados
+        </h4>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* Subscription Price */}
           <div>
-            <label className="block text-sm font-medium text-white/90">
+            <label
+              htmlFor="subscriptionPriceStep2"
+              className="block text-sm font-medium text-white/90"
+            >
               Precio Mensual de Suscripción
             </label>
             <div className="mt-1 relative rounded-md shadow-sm">
@@ -1026,69 +1102,97 @@ function StepTwoForm({
                 <DollarSign className="h-5 w-5 text-white/50" />
               </span>
               <input
+                id="subscriptionPriceStep2"
                 type="number"
                 value={inputs.subscriptionPrice}
                 onChange={(e) =>
                   onInputChange("subscriptionPrice", parseFloat(e.target.value))
                 }
                 className="block w-full rounded-md border border-white/20 bg-white/5 px-3 py-2 text-white placeholder:text-white/60 focus:border-[#64E365] focus:ring-1 focus:ring-[#64E365]/50 pl-10"
-                placeholder="0"
+                placeholder="Ej. 49"
                 min="0"
                 step="0.01"
               />
             </div>
+            {getErrorMessage("subscriptionPrice") && (
+              <p className="mt-2 text-sm text-red-400">
+                {getErrorMessage("subscriptionPrice")}
+              </p>
+            )}
           </div>
 
           {/* Subscription Cost */}
           <div>
-            <label className="block text-sm font-medium text-white/90">
-              Costo Mensual por Cliente (Suscripción)
+            <label
+              htmlFor="subscriptionCostStep2"
+              className="block text-sm font-medium text-white/90"
+            >
+              Costo Mensual por Cliente
             </label>
             <div className="mt-1 relative rounded-md shadow-sm">
               <span className="absolute inset-y-0 left-0 flex items-center pl-3">
                 <DollarSign className="h-5 w-5 text-white/50" />
               </span>
               <input
+                id="subscriptionCostStep2"
                 type="number"
                 value={inputs.subscriptionCost}
                 onChange={(e) =>
                   onInputChange("subscriptionCost", parseFloat(e.target.value))
                 }
                 className="block w-full rounded-md border border-white/20 bg-white/5 px-3 py-2 text-white placeholder:text-white/60 focus:border-[#64E365] focus:ring-1 focus:ring-[#64E365]/50 pl-10"
-                placeholder="0"
+                placeholder="Ej. 5"
                 min="0"
                 step="0.01"
               />
             </div>
+            {getErrorMessage("subscriptionCost") && (
+              <p className="mt-2 text-sm text-red-400">
+                {getErrorMessage("subscriptionCost")}
+              </p>
+            )}
           </div>
         </div>
       </div>
 
       {/* Churn Rate */}
       <div>
-        <label className="block text-sm font-medium text-white/90">
-          Tasa de Abandono (%)
+        <label
+          htmlFor="churnRateStep2"
+          className="block text-sm font-medium text-white/90"
+        >
+          Tasa de Abandono Mensual (%)
         </label>
         <input
+          id="churnRateStep2"
           type="number"
           value={inputs.churnRate}
           onChange={(e) =>
             onInputChange("churnRate", parseFloat(e.target.value))
           }
           className="mt-1 block w-full rounded-md border border-white/20 bg-white/5 px-3 py-2 text-white placeholder:text-white/60 focus:border-[#64E365] focus:ring-1 focus:ring-[#64E365]/50"
-          placeholder="Ej. 5"
+          placeholder="Ej. 4"
           min="0"
           max="100"
           step="0.01"
         />
+        {getErrorMessage("churnRate") && (
+          <p className="mt-2 text-sm text-red-400">
+            {getErrorMessage("churnRate")}
+          </p>
+        )}
       </div>
 
       {/* Time Horizon */}
       <div>
-        <label className="block text-sm font-medium text-white/90">
+        <label
+          htmlFor="timeHorizonStep2"
+          className="block text-sm font-medium text-white/90"
+        >
           Horizonte Temporal (meses)
         </label>
         <input
+          id="timeHorizonStep2"
           type="number"
           value={inputs.timeHorizon}
           onChange={(e) =>
@@ -1099,6 +1203,11 @@ function StepTwoForm({
           min="1"
           max="24"
         />
+        {getErrorMessage("timeHorizon") && (
+          <p className="mt-2 text-sm text-red-400">
+            {getErrorMessage("timeHorizon")}
+          </p>
+        )}
       </div>
 
       {/* Manual Calculation Trigger */}
@@ -1240,6 +1349,7 @@ function StepThreeForm({
   totalSubscriptionProfit,
   breakEvenPoint,
   onBack,
+  errors = [],
 }: {
   inputs: typeof DEFAULT_INPUTS;
   onInputChange: (field: keyof typeof DEFAULT_INPUTS, value: number) => void;
@@ -1247,7 +1357,11 @@ function StepThreeForm({
   totalSubscriptionProfit: number;
   breakEvenPoint: number;
   onBack: () => void;
+  errors?: ValidationError[];
 }) {
+  const getErrorMessage = (field: keyof typeof DEFAULT_INPUTS) =>
+    errors.find((error) => error.field === field)?.message;
+
   return (
     <div className="space-y-6">
       {/* Summary Section */}
@@ -1298,10 +1412,14 @@ function StepThreeForm({
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {/* Churn Rate */}
           <div>
-            <label className="block text-sm font-medium text-white/90">
+            <label
+              htmlFor="churnRateStep3"
+              className="block text-sm font-medium text-white/90"
+            >
               Tasa de Abandono (%)
             </label>
             <input
+              id="churnRateStep3"
               type="number"
               value={inputs.churnRate}
               onChange={(e) =>
@@ -1313,14 +1431,23 @@ function StepThreeForm({
               max="100"
               step="0.01"
             />
+            {getErrorMessage("churnRate") && (
+              <p className="mt-2 text-sm text-red-400">
+                {getErrorMessage("churnRate")}
+              </p>
+            )}
           </div>
 
           {/* Time Horizon */}
           <div>
-            <label className="block text-sm font-medium text-white/90">
+            <label
+              htmlFor="timeHorizonStep3"
+              className="block text-sm font-medium text-white/90"
+            >
               Horizonte Temporal (meses)
             </label>
             <input
+              id="timeHorizonStep3"
               type="number"
               value={inputs.timeHorizon}
               onChange={(e) =>
@@ -1331,14 +1458,23 @@ function StepThreeForm({
               min="1"
               max="24"
             />
+            {getErrorMessage("timeHorizon") && (
+              <p className="mt-2 text-sm text-red-400">
+                {getErrorMessage("timeHorizon")}
+              </p>
+            )}
           </div>
 
           {/* Discount Rate */}
           <div>
-            <label className="block text-sm font-medium text-white/90">
+            <label
+              htmlFor="discountRateStep3"
+              className="block text-sm font-medium text-white/90"
+            >
               Tasa de Descuento (%)
             </label>
             <input
+              id="discountRateStep3"
               type="number"
               value={inputs.discountRate}
               onChange={(e) =>
@@ -1350,6 +1486,11 @@ function StepThreeForm({
               max="50"
               step="0.01"
             />
+            {getErrorMessage("discountRate") && (
+              <p className="mt-2 text-sm text-red-400">
+                {getErrorMessage("discountRate")}
+              </p>
+            )}
           </div>
         </div>
       </div>
@@ -1457,7 +1598,10 @@ function StepThreeContext({
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <ResultsDisplay results={renderableResults} />
+              <ResultsDisplay
+                results={renderableResults}
+                timeHorizon={renderableTimeHorizon}
+              />
             </CardContent>
             <CardFooter className="flex flex-wrap gap-3">
               <Button

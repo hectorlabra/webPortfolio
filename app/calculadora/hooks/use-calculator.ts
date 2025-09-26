@@ -9,6 +9,7 @@ import {
   CalculationResults,
   CalculatorState,
   DEFAULT_INPUTS,
+  ValidationError,
 } from "@/lib/types/calculator";
 import {
   calculateResults,
@@ -20,7 +21,7 @@ interface UseCalculatorOptions {
   autoCalculate?: boolean;
   debounceMs?: number;
   onCalculationComplete?: (results: CalculationResults) => void;
-  onValidationError?: (errors: string[]) => void;
+  onValidationError?: (errors: ValidationError[]) => void;
 }
 
 export function useCalculator(options: UseCalculatorOptions = {}) {
@@ -41,7 +42,9 @@ export function useCalculator(options: UseCalculatorOptions = {}) {
   });
 
   // Validation errors state
-  const [validationErrors, setValidationErrors] = useState<string[]>([]);
+  const [validationErrors, setValidationErrors] = useState<ValidationError[]>(
+    []
+  );
 
   // Update individual input field
   const updateInput = useCallback(
@@ -115,7 +118,12 @@ export function useCalculator(options: UseCalculatorOptions = {}) {
     } catch (error) {
       console.error("Calculation error:", error);
       setValidationErrors([
-        "Error en el cálculo. Por favor, verifica los datos ingresados.",
+        {
+          field: "oneTimePrice",
+          message:
+            "Error en el cálculo. Por favor, verifica los datos ingresados.",
+          severity: "error",
+        },
       ]);
       setState((prevState) => ({ ...prevState, isCalculating: false }));
     }
@@ -169,11 +177,16 @@ export function useCalculator(options: UseCalculatorOptions = {}) {
   );
 
   // Get field-specific validation errors
-  const getFieldError = useCallback((): string | null => {
-    // This could be enhanced to return field-specific errors
-    // For now, return the first general error if any
-    return validationErrors.length > 0 ? validationErrors[0] : null;
-  }, [validationErrors]);
+  const getFieldError = useCallback(
+    (field: keyof CalculatorInputs): ValidationError | null => {
+      return (
+        validationErrors.find((error) => error.field === field) ??
+        validationErrors[0] ??
+        null
+      );
+    },
+    [validationErrors]
+  );
 
   return {
     // State

@@ -3,7 +3,11 @@
  * Implements standard SaaS financial metrics and comparisons
  */
 
-import { CalculatorInputs, CalculationResults } from "@/lib/types/calculator";
+import {
+  CalculatorInputs,
+  CalculationResults,
+  ValidationError,
+} from "@/lib/types/calculator";
 
 /**
  * Calculate Lifetime Value (LTV) for subscription model
@@ -198,29 +202,54 @@ export function calculateResults(inputs: CalculatorInputs): CalculationResults {
  * Validate inputs for calculation
  * Returns array of validation errors
  */
-export function validateCalculatorInputs(inputs: CalculatorInputs): string[] {
-  const errors: string[] = [];
+export function validateCalculatorInputs(
+  inputs: CalculatorInputs
+): ValidationError[] {
+  const errors: ValidationError[] = [];
+
+  const addError = (
+    field: keyof CalculatorInputs,
+    message: string,
+    severity: ValidationError["severity"] = "error"
+  ) => {
+    errors.push({ field, message, severity });
+  };
 
   if (inputs.oneTimePrice <= 0)
-    errors.push("El precio del producto único debe ser mayor a 0");
+    addError(
+      "oneTimePrice",
+      "El precio del producto único debe ser mayor a 0."
+    );
   if (inputs.oneTimeCost < 0)
-    errors.push("El costo por cliente no puede ser negativo");
+    addError("oneTimeCost", "El costo por cliente no puede ser negativo.");
   if (inputs.oneTimeCustomers <= 0)
-    errors.push("El número de clientes debe ser mayor a 0");
+    addError("oneTimeCustomers", "El número de clientes debe ser mayor a 0.");
 
   if (inputs.subscriptionPrice <= 0)
-    errors.push("El precio de suscripción debe ser mayor a 0");
+    addError(
+      "subscriptionPrice",
+      "El precio de suscripción debe ser mayor a 0."
+    );
   if (inputs.subscriptionCost < 0)
-    errors.push("El costo de suscripción no puede ser negativo");
+    addError(
+      "subscriptionCost",
+      "El costo de suscripción no puede ser negativo."
+    );
   if (inputs.churnRate < 0 || inputs.churnRate > 50)
-    errors.push("La tasa de abandono debe estar entre 0% y 50%");
+    addError("churnRate", "La tasa de abandono debe estar entre 0% y 50%.");
   if (inputs.timeHorizon < 1 || inputs.timeHorizon > 60)
-    errors.push("El horizonte temporal debe estar entre 1 y 60 meses");
+    addError(
+      "timeHorizon",
+      "El horizonte temporal debe estar entre 1 y 60 meses."
+    );
 
   if (inputs.conversionRate <= 0 || inputs.conversionRate > 100)
-    errors.push("La tasa de conversión debe estar entre 0% y 100%");
+    addError(
+      "conversionRate",
+      "La tasa de conversión debe estar entre 0% y 100%."
+    );
   if (inputs.discountRate < 0 || inputs.discountRate > 50)
-    errors.push("La tasa de descuento debe estar entre 0% y 50%");
+    addError("discountRate", "La tasa de descuento debe estar entre 0% y 50%.");
 
   return errors;
 }
