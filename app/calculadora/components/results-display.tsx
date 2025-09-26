@@ -7,14 +7,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Separator } from "@/components/ui/separator";
 import { Progress } from "@/components/ui/progress";
 import {
   TrendingUp,
   TrendingDown,
-  DollarSign,
-  Users,
   Calendar,
   Target,
   Zap,
@@ -26,7 +22,6 @@ import {
   formatCurrency,
   formatPercentage,
   formatTimePeriod,
-  formatCompactNumber,
   getValueColor,
   getTrendIndicator,
 } from "@/app/calculadora/lib/utils";

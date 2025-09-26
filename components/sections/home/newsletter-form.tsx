@@ -32,7 +32,8 @@ export function NewsletterForm({
       await new Promise((resolve) => setTimeout(resolve, 1000));
       setIsSuccess(true);
       setEmail("");
-    } catch (err) {
+    } catch (error) {
+      console.error("Newsletter subscription failed:", error);
       setError("Algo salió mal. Por favor intenta de nuevo.");
     } finally {
       setIsSubmitting(false);

@@ -7,8 +7,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Badge } from "@/components/ui/badge";
 import { Progress } from "@/components/ui/progress";
 import {
   Lightbulb,
@@ -18,7 +16,6 @@ import {
   Target,
   Clock,
   DollarSign,
-  Users,
   Zap,
   ArrowRight,
 } from "lucide-react";
@@ -27,7 +24,6 @@ import {
   formatCurrency,
   formatPercentage,
   formatTimePeriod,
-  generateInsightsText,
 } from "@/app/calculadora/lib/utils";
 
 interface InsightsPanelProps {
@@ -161,12 +157,7 @@ export function InsightsPanel({
   const ltv = results.ltv;
   const margin = results.oneTimeMargin;
 
-  // Generate dynamic insights
-  const dynamicInsights = generateInsightsText(results, timeHorizon);
-
   // Calculate metrics for insight cards
-  const revenueGrowthRate =
-    (results.revenueDifference / results.oneTimeRevenue) * 100;
   const profitGrowthRate =
     results.oneTimeProfit === 0
       ? 0

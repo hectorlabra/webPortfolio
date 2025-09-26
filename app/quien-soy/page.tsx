@@ -1,8 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { ArrowRight, Check, Github, Twitter, Linkedin } from "lucide-react";
-import { useState } from "react";
+import { ArrowRight, Github, Twitter, Linkedin } from "lucide-react";
 
 // UI Components imports
 import { Button } from "@/components/ui/button";
@@ -128,8 +127,8 @@ export default function QuienSoyPage() {
                 </p>
 
                 <p className="text-base sm:text-lg text-white-80 mb-6">
-                  Así que creé "hectorlabra.com" para compartir todo lo que
-                  había aprendido.
+                  Así que creé &quot;hectorlabra.com&quot; para compartir todo
+                  lo que había aprendido.
                 </p>
 
                 <p className="text-base sm:text-lg text-white-80 mb-6">
@@ -161,8 +160,8 @@ export default function QuienSoyPage() {
                 </p>
 
                 <p className="text-base sm:text-lg text-white-80 mb-6">
-                  Todo se volvió un "espagueti" enredado y bastante caro de
-                  mantener.
+                  Todo se volvió un &quot;espagueti&quot; enredado y bastante
+                  caro de mantener.
                 </p>
 
                 <p className="text-base sm:text-lg text-white-80 mb-6">
@@ -184,8 +183,9 @@ export default function QuienSoyPage() {
                 </p>
 
                 <p className="text-base sm:text-lg text-white-80 mb-6">
-                  Me permitió sentir la "magia" de crear en internet, libre de
-                  soluciones genéricas, más barato, más rápido y más escalable.
+                  Me permitió sentir la &quot;magia&quot; de crear en internet,
+                  libre de soluciones genéricas, más barato, más rápido y más
+                  escalable.
                 </p>
 
                 <p className="text-base sm:text-lg text-white-80 mb-6">

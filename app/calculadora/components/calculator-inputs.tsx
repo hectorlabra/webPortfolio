@@ -11,7 +11,6 @@ import {
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
 import {
   Info,
@@ -32,12 +31,7 @@ import {
   CalculatorInputs as ICalculatorInputs,
   CALCULATOR_CONFIG,
 } from "@/lib/types/calculator";
-import {
-  formatCurrency,
-  formatPercentage,
-  parseNumber,
-  clamp,
-} from "@/app/calculadora/lib/utils";
+import { parseNumber, clamp } from "@/app/calculadora/lib/utils";
 
 interface CalculatorInputsProps {
   inputs: ICalculatorInputs;
@@ -49,11 +43,11 @@ interface CalculatorInputsProps {
   autoCalculate?: boolean;
 }
 
-interface InputFieldProps {
+export interface InputFieldProps {
   id: string;
   label: string;
   value: number;
-  onChange: (value: number) => void;
+  onChangeAction: (value: number) => void;
   type?: "currency" | "percentage" | "number" | "customers";
   min?: number;
   max?: number;
@@ -64,11 +58,11 @@ interface InputFieldProps {
   error?: string;
 }
 
-function InputField({
+export function InputField({
   id,
   label,
   value,
-  onChange,
+  onChangeAction,
   type = "number",
   min = 0,
   max,
@@ -106,7 +100,7 @@ function InputField({
 
     // Parse and validate
     const numValue = parseValue(newValue);
-    onChange(numValue);
+    onChangeAction(numValue);
   };
 
   const handleBlur = () => {
@@ -233,7 +227,9 @@ export function CalculatorInputs({
               id="oneTimePrice"
               label="Precio del Producto"
               value={inputs.oneTimePrice}
-              onChange={(value) => onInputChangeAction("oneTimePrice", value)}
+              onChangeAction={(value) =>
+                onInputChangeAction("oneTimePrice", value)
+              }
               type="currency"
               min={1}
               max={10000}
@@ -246,7 +242,9 @@ export function CalculatorInputs({
               id="oneTimeCost"
               label="Costo por Cliente"
               value={inputs.oneTimeCost}
-              onChange={(value) => onInputChangeAction("oneTimeCost", value)}
+              onChangeAction={(value) =>
+                onInputChangeAction("oneTimeCost", value)
+              }
               type="currency"
               min={0}
               max={1000}
@@ -259,7 +257,7 @@ export function CalculatorInputs({
               id="oneTimeCustomers"
               label="Clientes Objetivo"
               value={inputs.oneTimeCustomers}
-              onChange={(value) =>
+              onChangeAction={(value) =>
                 onInputChangeAction("oneTimeCustomers", value)
               }
               type="customers"
@@ -274,7 +272,9 @@ export function CalculatorInputs({
               id="conversionRate"
               label="Tasa de Conversión"
               value={inputs.conversionRate}
-              onChange={(value) => onInputChangeAction("conversionRate", value)}
+              onChangeAction={(value) =>
+                onInputChangeAction("conversionRate", value)
+              }
               type="percentage"
               min={0.1}
               max={50}
@@ -304,7 +304,7 @@ export function CalculatorInputs({
               id="subscriptionPrice"
               label="Precio Mensual"
               value={inputs.subscriptionPrice}
-              onChange={(value) =>
+              onChangeAction={(value) =>
                 onInputChangeAction("subscriptionPrice", value)
               }
               type="currency"
@@ -319,7 +319,7 @@ export function CalculatorInputs({
               id="subscriptionCost"
               label="Costo Mensual por Cliente"
               value={inputs.subscriptionCost}
-              onChange={(value) =>
+              onChangeAction={(value) =>
                 onInputChangeAction("subscriptionCost", value)
               }
               type="currency"
@@ -334,7 +334,9 @@ export function CalculatorInputs({
               id="churnRate"
               label="Tasa de Abandono"
               value={inputs.churnRate}
-              onChange={(value) => onInputChangeAction("churnRate", value)}
+              onChangeAction={(value) =>
+                onInputChangeAction("churnRate", value)
+              }
               type="percentage"
               min={0}
               max={50}
@@ -348,7 +350,9 @@ export function CalculatorInputs({
               id="timeHorizon"
               label="Horizonte Temporal (meses)"
               value={inputs.timeHorizon}
-              onChange={(value) => onInputChangeAction("timeHorizon", value)}
+              onChangeAction={(value) =>
+                onInputChangeAction("timeHorizon", value)
+              }
               type="number"
               min={CALCULATOR_CONFIG.MIN_TIME_HORIZON}
               max={CALCULATOR_CONFIG.MAX_TIME_HORIZON}
@@ -383,7 +387,9 @@ export function CalculatorInputs({
               id="discountRate"
               label="Tasa de Descuento"
               value={inputs.discountRate}
-              onChange={(value) => onInputChangeAction("discountRate", value)}
+              onChangeAction={(value) =>
+                onInputChangeAction("discountRate", value)
+              }
               type="percentage"
               min={0}
               max={50}

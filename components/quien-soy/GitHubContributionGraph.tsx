@@ -1,37 +1,36 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { useWindowSize } from "@/hooks/useWindowSize";
-
-interface ContributionCellProps {
-  intensity: number;
-  date: Date;
-}
 
 interface GitHubContributionGraphProps {
   startDate?: Date;
   endDate?: Date;
   rows?: number;
-  text?: string;
   columns?: number;
-}
-
-interface TooltipProps {
-  content: string;
-  visible: boolean;
-  x: number;
-  y: number;
 }
 
 export const GitHubContributionGraph: React.FC<
   GitHubContributionGraphProps
-> = ({ startDate, endDate = new Date(), rows = 7, text, columns = 52 }) => {
+> = ({ startDate, endDate: endDateProp, rows = 7, columns = 52 }) => {
+  const effectiveEndDate = useMemo(
+    () => endDateProp ?? new Date(),
+    [endDateProp]
+  );
+
   // Si no se proporciona fecha de inicio, usar hace 1 año desde la fecha final
-  const actualStartDate = startDate || new Date(endDate);
-  if (!startDate) {
-    actualStartDate.setFullYear(endDate.getFullYear() - 1);
-    actualStartDate.setDate(actualStartDate.getDate() + 1); // +1 día para exactamente 52 semanas
-  }
+  const actualStartDate = useMemo(() => {
+    const baseDate = startDate
+      ? new Date(startDate)
+      : new Date(effectiveEndDate);
+
+    if (!startDate) {
+      baseDate.setFullYear(effectiveEndDate.getFullYear() - 1);
+      baseDate.setDate(baseDate.getDate() + 1); // +1 día para exactamente 52 semanas
+    }
+
+    return baseDate;
+  }, [startDate, effectiveEndDate]);
 
   // Estados del componente - valores fijos para evitar animaciones
   const [contributionData, setContributionData] = useState<{
@@ -44,7 +43,7 @@ export const GitHubContributionGraph: React.FC<
   // Estado para tamaños dinámicos basados en el ancho de pantalla
   const [cellSize, setCellSize] = useState(6); // Valor inicial, se ajustará dinámicamente
   const [cellMargin, setCellMargin] = useState(2); // Valor inicial, se ajustará dinámicamente
-  const [weekCount, setWeekCount] = useState(columns);
+  const weekCount = columns;
 
   // Referencias
   const graphRef = useRef<HTMLDivElement>(null);
@@ -57,8 +56,14 @@ export const GitHubContributionGraph: React.FC<
     const staticContributions: { [key: string]: number } = {};
 
     // Crear un conjunto fijo de datos para el gráfico
-    const dayCount = 365; // Un año completo
-    let currentDate = new Date(actualStartDate);
+    const msPerDay = 1000 * 60 * 60 * 24;
+    const totalDays = Math.max(
+      1,
+      Math.ceil(
+        (effectiveEndDate.getTime() - actualStartDate.getTime()) / msPerDay
+      ) + 1
+    );
+    const currentDate = new Date(actualStartDate);
 
     // Función determinística para generar un valor basado en la fecha
     const getContributionValue = (date: Date): number => {
@@ -195,7 +200,7 @@ export const GitHubContributionGraph: React.FC<
     };
 
     // Generar datos estáticos
-    for (let i = 0; i < dayCount; i++) {
+    for (let i = 0; i < totalDays; i++) {
       const dateKey = currentDate.toISOString().split("T")[0];
       staticContributions[dateKey] = getContributionValue(
         new Date(currentDate)
@@ -203,9 +208,8 @@ export const GitHubContributionGraph: React.FC<
       currentDate.setDate(currentDate.getDate() + 1);
     }
 
-    setWeekCount(52);
     setContributionData(staticContributions);
-  }, []);
+  }, [actualStartDate, effectiveEndDate]);
 
   // Manejar el renderizado inicial y los cambios de tamaño
   const [isClient, setIsClient] = useState(false);
@@ -219,10 +223,6 @@ export const GitHubContributionGraph: React.FC<
     if (!windowWidth || !isClient) return;
 
     // Calculamos el tamaño óptimo de las celdas según el ancho disponible
-    const containerWidth = windowWidth > 650 ? 650 : windowWidth - 30;
-    const dayLabelSpace = windowWidth < 375 ? 22 : windowWidth < 480 ? 28 : 34;
-    const availableWidth = containerWidth - dayLabelSpace;
-
     let newCellSize = 6;
     let newCellMargin = 2;
 
@@ -248,50 +248,47 @@ export const GitHubContributionGraph: React.FC<
   const getDayOfWeek = (date: Date): number => date.getDay();
 
   // Estado para almacenar la matriz estática y evitar recálculos
-  const [staticMatrix, setStaticMatrix] = useState<number[][]>([]);
-
-  // Generar matriz una sola vez y guardarla
-  useEffect(() => {
-    if (Object.keys(contributionData).length > 0 && staticMatrix.length === 0) {
-      const matrix: number[][] = Array(rows)
-        .fill(0)
-        .map(() => Array(weekCount).fill(-1));
-
-      let currentDate = new Date(actualStartDate);
-      const startDayOfWeek = getDayOfWeek(currentDate);
-
-      // Llenar la matriz con los datos estáticos
-      for (let col = 0; col < weekCount; col++) {
-        for (let row = 0; row < rows; row++) {
-          if (col === 0 && row < startDayOfWeek) {
-            matrix[row][col] = -1; // Celda fuera del rango
-            continue;
-          }
-
-          const currentDateKey = currentDate.toISOString().split("T")[0];
-
-          if (currentDate <= endDate && currentDateKey in contributionData) {
-            matrix[row][col] = contributionData[currentDateKey];
-          } else {
-            matrix[row][col] = -1; // Fuera del rango
-          }
-
-          // Avanzar al siguiente día
-          currentDate.setDate(currentDate.getDate() + 1);
-        }
-      }
-
-      setStaticMatrix(matrix);
+  const staticMatrix = useMemo(() => {
+    if (Object.keys(contributionData).length === 0) {
+      return [] as number[][];
     }
-  }, [contributionData]);
+
+    const matrix: number[][] = Array.from({ length: rows }, () =>
+      Array.from({ length: weekCount }, () => -1)
+    );
+
+    const currentDate = new Date(actualStartDate);
+    const startDayOfWeek = getDayOfWeek(currentDate);
+
+    for (let col = 0; col < weekCount; col++) {
+      for (let row = 0; row < rows; row++) {
+        if (col === 0 && row < startDayOfWeek) {
+          matrix[row][col] = -1;
+          continue;
+        }
+
+        const currentDateKey = currentDate.toISOString().split("T")[0];
+
+        if (
+          currentDate <= effectiveEndDate &&
+          currentDateKey in contributionData
+        ) {
+          matrix[row][col] = contributionData[currentDateKey];
+        } else {
+          matrix[row][col] = -1;
+        }
+
+        currentDate.setDate(currentDate.getDate() + 1);
+      }
+    }
+
+    return matrix;
+  }, [actualStartDate, contributionData, effectiveEndDate, rows, weekCount]);
 
   // Función de tooltip eliminada
 
   // Componente de celda individual
-  const ContributionCell: React.FC<ContributionCellProps> = ({
-    intensity,
-    date,
-  }) => {
+  const ContributionCell: React.FC<{ intensity: number }> = ({ intensity }) => {
     // Paleta de colores de GitHub en modo oscuro
     const colors = [
       "#161b22", // Sin contribuciones
@@ -385,10 +382,6 @@ export const GitHubContributionGraph: React.FC<
     }
 
     // Calculamos el ancho total disponible para las columnas
-    const totalWidth = weekCount * (cellSize + cellMargin * 2);
-    // Offset para las etiquetas de los días de la semana
-    const dayLabelOffset = 34;
-
     // Distribuir los meses seleccionados uniformemente a lo largo del año
     visibleMonths.forEach((i) => {
       // Calculamos la posición de cada mes de manera uniforme
@@ -542,18 +535,12 @@ export const GitHubContributionGraph: React.FC<
               <div className="flex">
                 {Array.from({ length: weekCount }).map((_, col) => (
                   <div key={`col-${col}`} className="flex flex-col">
-                    {Array.from({ length: rows }).map((_, row) => {
-                      // Usar fecha fija para evitar recálculos
-                      const cellDate = new Date(actualStartDate);
-
-                      return (
-                        <ContributionCell
-                          key={`cell-${row}-${col}`}
-                          intensity={staticMatrix[row]?.[col] || 0}
-                          date={cellDate}
-                        />
-                      );
-                    })}
+                    {Array.from({ length: rows }).map((_, row) => (
+                      <ContributionCell
+                        key={`cell-${row}-${col}`}
+                        intensity={staticMatrix[row]?.[col] || 0}
+                      />
+                    ))}
                   </div>
                 ))}
               </div>

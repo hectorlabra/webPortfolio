@@ -9,7 +9,6 @@ import {
   CalculationResults,
   CalculatorState,
   DEFAULT_INPUTS,
-  ValidationError,
 } from "@/lib/types/calculator";
 import {
   calculateResults,
@@ -170,14 +169,11 @@ export function useCalculator(options: UseCalculatorOptions = {}) {
   );
 
   // Get field-specific validation errors
-  const getFieldError = useCallback(
-    (field: keyof CalculatorInputs): string | null => {
-      // This could be enhanced to return field-specific errors
-      // For now, return the first general error if any
-      return validationErrors.length > 0 ? validationErrors[0] : null;
-    },
-    [validationErrors]
-  );
+  const getFieldError = useCallback((): string | null => {
+    // This could be enhanced to return field-specific errors
+    // For now, return the first general error if any
+    return validationErrors.length > 0 ? validationErrors[0] : null;
+  }, [validationErrors]);
 
   return {
     // State

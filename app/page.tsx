@@ -1,8 +1,7 @@
 "use client";
 
-import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight, Check, Github, Twitter, Linkedin } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 
 // UI Components imports
 import { Button } from "@/components/ui/button";

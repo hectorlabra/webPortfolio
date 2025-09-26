@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useRef, useState } from "react";
+import { JSX, useCallback, useMemo, useRef, useState } from "react";
 import {
   Card,
   CardContent,
@@ -9,7 +9,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   LineChart,
@@ -26,6 +25,7 @@ import {
   Legend,
   ReferenceLine,
 } from "recharts";
+import type { TooltipProps } from "recharts";
 import { TrendingUp, BarChart3, Activity, Zap } from "lucide-react";
 import { CalculationResults } from "@/lib/types/calculator";
 import {
@@ -44,9 +44,13 @@ export interface ComparisonChartProps {
   className?: string;
 }
 
+type ChartTooltipPayloadItem = NonNullable<
+  TooltipProps<number, string>["payload"]
+>[number];
+
 interface CustomTooltipProps {
   active?: boolean;
-  payload?: any[];
+  payload?: ChartTooltipPayloadItem[];
   label?: string;
   chartType: string;
 }
@@ -59,6 +63,24 @@ function CustomTooltip({
 }: CustomTooltipProps) {
   if (!active || !payload || !payload.length) return null;
 
+  const getNumberValue = (entry?: ChartTooltipPayloadItem) => {
+    if (!entry) return 0;
+
+    const { value } = entry;
+
+    if (typeof value === "number") {
+      return value;
+    }
+
+    if (Array.isArray(value)) {
+      const numeric = Number(value[0]);
+      return Number.isFinite(numeric) ? numeric : 0;
+    }
+
+    const numeric = Number(value);
+    return Number.isFinite(numeric) ? numeric : 0;
+  };
+
   const getTooltipContent = () => {
     switch (chartType) {
       case "revenue-comparison":
@@ -69,15 +91,17 @@ function CustomTooltip({
               <p className="text-white/80">
                 Único:{" "}
                 {formatCurrency(
-                  payload.find((p) => p.dataKey === "oneTimeRevenue")?.value ||
-                    0
+                  getNumberValue(
+                    payload.find((p) => p.dataKey === "oneTimeRevenue")
+                  )
                 )}
               </p>
               <p className="text-[#64E365]">
                 Suscripción:{" "}
                 {formatCurrency(
-                  payload.find((p) => p.dataKey === "subscriptionRevenue")
-                    ?.value || 0
+                  getNumberValue(
+                    payload.find((p) => p.dataKey === "subscriptionRevenue")
+                  )
                 )}
               </p>
             </div>
@@ -92,14 +116,17 @@ function CustomTooltip({
               <p className="text-white/80">
                 Único:{" "}
                 {formatCurrency(
-                  payload.find((p) => p.dataKey === "oneTimeProfit")?.value || 0
+                  getNumberValue(
+                    payload.find((p) => p.dataKey === "oneTimeProfit")
+                  )
                 )}
               </p>
               <p className="text-[#64E365]">
                 Suscripción:{" "}
                 {formatCurrency(
-                  payload.find((p) => p.dataKey === "subscriptionProfit")
-                    ?.value || 0
+                  getNumberValue(
+                    payload.find((p) => p.dataKey === "subscriptionProfit")
+                  )
                 )}
               </p>
             </div>
@@ -114,15 +141,17 @@ function CustomTooltip({
               <p className="text-blue-600">
                 Único (Acum.):{" "}
                 {formatCurrency(
-                  payload.find((p) => p.dataKey === "cumulativeOneTime")
-                    ?.value || 0
+                  getNumberValue(
+                    payload.find((p) => p.dataKey === "cumulativeOneTime")
+                  )
                 )}
               </p>
               <p className="text-green-600">
                 Suscripción (Acum.):{" "}
                 {formatCurrency(
-                  payload.find((p) => p.dataKey === "cumulativeSubscription")
-                    ?.value || 0
+                  getNumberValue(
+                    payload.find((p) => p.dataKey === "cumulativeSubscription")
+                  )
                 )}
               </p>
             </div>
@@ -134,8 +163,8 @@ function CustomTooltip({
           <div className="space-y-2">
             <p className="font-medium">{label}</p>
             {payload.map((entry, index) => (
-              <p key={index} style={{ color: entry.color }}>
-                {entry.name}: {formatCurrency(entry.value)}
+              <p key={index} style={{ color: entry.color ?? "#ffffff" }}>
+                {entry.name}: {formatCurrency(getNumberValue(entry))}
               </p>
             ))}
           </div>

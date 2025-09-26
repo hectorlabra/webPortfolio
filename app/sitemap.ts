@@ -60,7 +60,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   }, {} as Record<string, number>);
 
   const popularTags = Object.entries(tagCounts)
-    .filter(([_, count]) => count >= 2) // Solo tags con 2+ posts
+    .filter(([, count]) => count >= 2) // Solo tags con 2+ posts
     .map(([tag]) => tag);
 
   const tagUrls: MetadataRoute.Sitemap = popularTags.map((tag) => ({

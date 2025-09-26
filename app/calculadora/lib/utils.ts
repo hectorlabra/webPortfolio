@@ -146,7 +146,7 @@ export function getTrendIndicator(value: number): string {
 /**
  * Debounce function for input handling
  */
-export function debounce<T extends (...args: any[]) => any>(
+export function debounce<T extends (...args: unknown[]) => void>(
   func: T,
   wait: number
 ): (...args: Parameters<T>) => void {
@@ -154,7 +154,9 @@ export function debounce<T extends (...args: any[]) => any>(
 
   return (...args: Parameters<T>) => {
     clearTimeout(timeout);
-    timeout = setTimeout(() => func.apply(null, args), wait);
+    timeout = setTimeout(() => {
+      func(...args);
+    }, wait);
   };
 }
 
@@ -168,7 +170,7 @@ export function clamp(value: number, min: number, max: number): number {
 /**
  * Check if value is a valid positive number
  */
-export function isValidPositiveNumber(value: any): boolean {
+export function isValidPositiveNumber(value: unknown): boolean {
   const num = Number(value);
   return !isNaN(num) && isFinite(num) && num >= 0;
 }
@@ -197,7 +199,11 @@ export function generateInsightsText(
   description: string;
   isPositive: boolean;
 }[] {
-  const insights = [];
+  const insights: Array<{
+    title: string;
+    description: string;
+    isPositive: boolean;
+  }> = [];
 
   // Revenue comparison
   if (results.revenueDifference > 0) {
