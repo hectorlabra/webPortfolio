@@ -1,6 +1,6 @@
 "use client";
 
-import { JSX, useCallback, useMemo, useRef, useState } from "react";
+import { JSX, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   Card,
   CardContent,
@@ -189,9 +189,9 @@ export function ComparisonChart({
   const [selectedView, setSelectedView] = useState<string>("cumulative");
   const containerRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const containerObservers = useRef<Record<string, ResizeObserver | null>>({});
-  const [containerWidth, setContainerWidth] = useState<Record<string, number>>(
-    {}
-  );
+  const [containerSize, setContainerSize] = useState<
+    Record<string, { width: number; height: number }>
+  >({});
 
   const chartData = useMemo(
     () => transformToChartData(results, timeHorizon),
@@ -225,11 +225,24 @@ export function ComparisonChart({
     return (node: HTMLDivElement | null) => {
       containerRefs.current[key] = node;
 
-      const updateSize = () => {
-        const width = node?.offsetWidth ?? 0;
-        setContainerWidth((prev) =>
-          prev[key] === width ? prev : { ...prev, [key]: width }
-        );
+      const updateSize = (target: HTMLDivElement | null) => {
+        const width = target?.offsetWidth ?? 0;
+        const height = target?.offsetHeight ?? 0;
+
+        setContainerSize((prev) => {
+          const previous = prev[key];
+          if (
+            previous &&
+            previous.width === width &&
+            previous.height === height
+          )
+            return prev;
+
+          return {
+            ...prev,
+            [key]: { width, height },
+          };
+        });
       };
 
       if (containerObservers.current[key]) {
@@ -238,13 +251,15 @@ export function ComparisonChart({
       }
 
       if (node) {
-        updateSize();
+        updateSize(node);
 
         if (typeof ResizeObserver !== "undefined") {
-          const observer = new ResizeObserver(() => updateSize());
+          const observer = new ResizeObserver(() => updateSize(node));
           observer.observe(node);
           containerObservers.current[key] = observer;
         }
+      } else {
+        updateSize(null);
       }
     };
   }, []);
@@ -482,6 +497,14 @@ export function ComparisonChart({
     ]
   );
 
+  useEffect(() => {
+    const observers = containerObservers.current;
+
+    return () => {
+      Object.values(observers).forEach((observer) => observer?.disconnect());
+    };
+  }, []);
+
   return (
     <div className={`space-y-4 ${className}`}>
       <Card className="bg-white/5 border-white/20">
@@ -535,64 +558,72 @@ export function ComparisonChart({
               ))}
             </TabsList>
 
-            {chartOptions.map((option) => (
-              <TabsContent
-                key={option.key}
-                value={option.key}
-                className="space-y-4"
-              >
-                <div className="bg-white/5 p-4 rounded-lg border border-white/10">
-                  <div
-                    ref={registerContainer(option.key)}
-                    className="w-full"
-                    style={{ minHeight: CHART_HEIGHT }}
-                  >
-                    {hasData && (containerWidth[option.key] ?? 0) > 0 ? (
-                      <ResponsiveContainer width="100%" height={CHART_HEIGHT}>
-                        {option.render()}
-                      </ResponsiveContainer>
-                    ) : (
-                      <div className="flex h-[360px] items-center justify-center text-sm text-white/60">
-                        Preparando visualización...
-                      </div>
+            {chartOptions.map((option) => {
+              const size = containerSize[option.key];
+              const width = size?.width ?? 0;
+              const height = size?.height ?? 0;
+              const canRenderChart = hasData && width > 0 && height > 0;
+
+              return (
+                <TabsContent
+                  key={option.key}
+                  value={option.key}
+                  className="space-y-4"
+                >
+                  <div className="bg-white/5 p-4 rounded-lg border border-white/10">
+                    <div
+                      ref={registerContainer(option.key)}
+                      className="w-full"
+                      style={{ minHeight: CHART_HEIGHT }}
+                    >
+                      {canRenderChart ? (
+                        <ResponsiveContainer width="100%" height={CHART_HEIGHT}>
+                          {option.render()}
+                        </ResponsiveContainer>
+                      ) : (
+                        <div className="flex h-[360px] items-center justify-center text-sm text-white/60">
+                          Preparando visualización...
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Chart Description */}
+                  <div className="text-sm text-white/70 space-y-2">
+                    {option.key === "cumulative" && (
+                      <p>
+                        Muestra la evolución acumulada de ingresos para ambos
+                        modelos. El punto donde se cruzan las líneas indica
+                        cuándo la suscripción supera al modelo único.
+                      </p>
+                    )}
+
+                    {option.key === "revenue" && (
+                      <p>
+                        Comparación mensual de ingresos. El modelo único genera
+                        ingresos constantes, mientras que la suscripción declina
+                        debido al churn.
+                      </p>
+                    )}
+
+                    {option.key === "profit" && (
+                      <p>
+                        Comparación mensual de beneficios después de costos.
+                        Considera tanto costos de adquisición como operativos.
+                      </p>
+                    )}
+
+                    {option.key === "trend" && (
+                      <p>
+                        Visualización de tendencias de crecimiento acumulado.
+                        Útil para identificar patrones y proyecciones a largo
+                        plazo.
+                      </p>
                     )}
                   </div>
-                </div>
-
-                {/* Chart Description */}
-                <div className="text-sm text-white/70 space-y-2">
-                  {option.key === "cumulative" && (
-                    <p>
-                      Muestra la evolución acumulada de ingresos para ambos
-                      modelos. El punto donde se cruzan las líneas indica cuándo
-                      la suscripción supera al modelo único.
-                    </p>
-                  )}
-
-                  {option.key === "revenue" && (
-                    <p>
-                      Comparación mensual de ingresos. El modelo único genera
-                      ingresos constantes, mientras que la suscripción declina
-                      debido al churn.
-                    </p>
-                  )}
-
-                  {option.key === "profit" && (
-                    <p>
-                      Comparación mensual de beneficios después de costos.
-                      Considera tanto costos de adquisición como operativos.
-                    </p>
-                  )}
-
-                  {option.key === "trend" && (
-                    <p>
-                      Visualización de tendencias de crecimiento acumulado. Útil
-                      para identificar patrones y proyecciones a largo plazo.
-                    </p>
-                  )}
-                </div>
-              </TabsContent>
-            ))}
+                </TabsContent>
+              );
+            })}
           </Tabs>
         </CardContent>
       </Card>
