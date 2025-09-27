@@ -10,7 +10,7 @@
 ## Fase 4.2 – Charts
 
 - [x] T110 Spike: Prototipo `uPlot` en `playground/charts/uplot-demo.tsx`
-- [ ] T111 Instrumentar medición de render (perf.now) para 24/120 puntos
+- [x] T111 Instrumentar medición de render (perf.now) para 24/120 puntos
 - [ ] T112 Decide: mantener Recharts optimizado vs migrar a uPlot
 - [ ] T113 Implementar downsampling y desactivar animaciones en interacciones rápidas
 - [ ] T114 Gating: montar charts solo en Paso 3 con inputs válidos

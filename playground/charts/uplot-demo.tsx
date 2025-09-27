@@ -7,6 +7,26 @@ import "uplot/dist/uPlot.min.css";
 const SHORT_SERIES_LENGTH = 24;
 const LONG_SERIES_LENGTH = 120;
 
+type Mode = "short" | "long";
+
+type ModeMetrics = {
+  generation: number;
+  firstRender: number | null;
+  lastRender: number | null;
+  samples: number;
+  lastUpdatedAt: number | null;
+};
+
+type MeasurementEntry = {
+  id: string;
+  mode: Mode;
+  type: "initial" | "update";
+  duration: number;
+  samples: number;
+  timestamp: number;
+  points: number;
+};
+
 function generateSeries(length: number) {
   const start = Date.now();
   const x: number[] = [];
@@ -66,9 +86,25 @@ function createChartOptions(title: string): Options {
 export function UPlotDemo() {
   const containerRef = useRef<HTMLDivElement | null>(null);
   const chartRef = useRef<uPlot | null>(null);
-  const [mode, setMode] = useState<"short" | "long">("short");
+  const [mode, setMode] = useState<Mode>("short");
   const [renderTime, setRenderTime] = useState<number | null>(null);
-  const [generationTime, setGenerationTime] = useState<number>(0);
+  const [metrics, setMetrics] = useState<Record<Mode, ModeMetrics>>({
+    short: {
+      generation: 0,
+      firstRender: null,
+      lastRender: null,
+      samples: 0,
+      lastUpdatedAt: null,
+    },
+    long: {
+      generation: 0,
+      firstRender: null,
+      lastRender: null,
+      samples: 0,
+      lastUpdatedAt: null,
+    },
+  });
+  const [history, setHistory] = useState<MeasurementEntry[]>([]);
 
   const { data, description, buildTime } = useMemo(() => {
     const length = mode === "short" ? SHORT_SERIES_LENGTH : LONG_SERIES_LENGTH;
@@ -84,26 +120,87 @@ export function UPlotDemo() {
     };
   }, [mode]);
 
+  const recordMeasurement = (
+    entryType: MeasurementEntry["type"],
+    duration: number,
+    points: number
+  ) => {
+    const timestamp = Date.now();
+    let nextSamples = 0;
+    let firstRenderDuration = duration;
+
+    setRenderTime(duration);
+    setMetrics((prev) => {
+      const previous = prev[mode];
+      nextSamples = previous.samples + 1;
+      firstRenderDuration =
+        previous.firstRender !== null ? previous.firstRender : duration;
+
+      return {
+        ...prev,
+        [mode]: {
+          ...previous,
+          firstRender: firstRenderDuration,
+          lastRender: duration,
+          samples: nextSamples,
+          lastUpdatedAt: timestamp,
+        },
+      };
+    });
+
+    setHistory((prevHistory) =>
+      [
+        {
+          id: `${timestamp}-${mode}-${nextSamples}`,
+          mode,
+          type: entryType,
+          duration,
+          samples: nextSamples,
+          timestamp,
+          points,
+        },
+        ...prevHistory,
+      ].slice(0, 8)
+    );
+
+    const label = entryType === "initial" ? "Initial render" : "Data update";
+    console.info(
+      `[uPlot][${mode}] ${label} (${points} pts, muestra #${nextSamples}): ${duration.toFixed(
+        2
+      )} ms`
+    );
+  };
+
+  useEffect(() => {
+    setMetrics((prev) => ({
+      ...prev,
+      [mode]: {
+        ...prev[mode],
+        generation: buildTime,
+      },
+    }));
+  }, [buildTime, mode]);
+
   useEffect(() => {
     const target = containerRef.current;
     if (!target) {
       return;
     }
 
-    if (chartRef.current) {
-      chartRef.current.destroy();
-      chartRef.current = null;
-    }
+    const datasetLength = data[0]?.length ?? 0;
+    const options = createChartOptions("Comparativa Ingresos vs Utilidad");
 
-    const start = performance.now();
-    const chart = new uPlot(
-      createChartOptions("Comparativa Ingresos vs Utilidad"),
-      data,
-      target
-    );
-    chartRef.current = chart;
-    setRenderTime(performance.now() - start);
-    setGenerationTime(buildTime);
+    if (!chartRef.current) {
+      const start = performance.now();
+      chartRef.current = new uPlot(options, data, target);
+      const duration = performance.now() - start;
+      recordMeasurement("initial", duration, datasetLength);
+    } else {
+      const start = performance.now();
+      chartRef.current.setData(data);
+      const duration = performance.now() - start;
+      recordMeasurement("update", duration, datasetLength);
+    }
 
     const handleResize = () => {
       if (!chartRef.current) return;
@@ -117,14 +214,30 @@ export function UPlotDemo() {
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      chart.destroy();
     };
-  }, [data, buildTime]);
+  }, [data, mode]);
 
-  const handleModeChange = (nextMode: "short" | "long") => {
+  useEffect(() => {
+    return () => {
+      if (chartRef.current) {
+        chartRef.current.destroy();
+        chartRef.current = null;
+      }
+    };
+  }, []);
+
+  const handleModeChange = (nextMode: Mode) => {
     setRenderTime(null);
     setMode(nextMode);
   };
+
+  const shortMetrics = metrics.short;
+  const longMetrics = metrics.long;
+
+  const formatMs = (value: number | null | undefined) =>
+    typeof value === "number" && Number.isFinite(value)
+      ? `${value.toFixed(2)} ms`
+      : "Pendiente";
 
   return (
     <section className="space-y-6 rounded-xl border border-white/10 bg-white/5 p-6 text-white">
@@ -162,16 +275,78 @@ export function UPlotDemo() {
         </button>
       </div>
 
-      <div className="grid gap-2 text-sm text-white/70">
-        <span>{description}</span>
-        {typeof generationTime === "number" && (
-          <span>Generación de datos: {generationTime.toFixed(2)} ms</span>
-        )}
-        {typeof renderTime === "number" && (
-          <span>Render uPlot: {renderTime.toFixed(2)} ms</span>
-        )}
-        {renderTime === null && <span>Render uPlot: midiendo…</span>}
+      <div className="grid gap-4 rounded-lg border border-white/15 bg-black/20 p-4 text-sm text-white/70 md:grid-cols-2">
+        <div className="space-y-2">
+          <h3 className="text-sm font-semibold text-white">
+            Dataset corto (24 puntos)
+          </h3>
+          <ul className="space-y-1">
+            <li>Generación: {formatMs(shortMetrics.generation)}</li>
+            <li>Primera renderización: {formatMs(shortMetrics.firstRender)}</li>
+            <li>Última medición: {formatMs(shortMetrics.lastRender)}</li>
+            <li>Muestras registradas: {shortMetrics.samples}</li>
+            {shortMetrics.lastUpdatedAt && (
+              <li>
+                Medido por última vez:{" "}
+                {new Date(shortMetrics.lastUpdatedAt).toLocaleTimeString()}
+              </li>
+            )}
+          </ul>
+        </div>
+        <div className="space-y-2">
+          <h3 className="text-sm font-semibold text-white">
+            Dataset largo (120 puntos)
+          </h3>
+          <ul className="space-y-1">
+            <li>Generación: {formatMs(longMetrics.generation)}</li>
+            <li>Primera renderización: {formatMs(longMetrics.firstRender)}</li>
+            <li>Última medición: {formatMs(longMetrics.lastRender)}</li>
+            <li>Muestras registradas: {longMetrics.samples}</li>
+            {longMetrics.lastUpdatedAt && (
+              <li>
+                Medido por última vez:{" "}
+                {new Date(longMetrics.lastUpdatedAt).toLocaleTimeString()}
+              </li>
+            )}
+          </ul>
+        </div>
       </div>
+
+      <div className="rounded-lg border border-white/10 bg-black/30 p-3 text-sm text-white/70">
+        <p>{description}</p>
+        {typeof renderTime === "number" ? (
+          <p>Último render medido: {renderTime.toFixed(2)} ms</p>
+        ) : (
+          <p>Último render medido: midiendo…</p>
+        )}
+      </div>
+
+      {history.length > 0 && (
+        <div className="space-y-3 rounded-lg border border-white/10 bg-black/40 p-4 text-xs text-white/70">
+          <h3 className="text-sm font-semibold text-white">
+            Historial de mediciones
+          </h3>
+          <ul className="space-y-2">
+            {history.map((entry) => (
+              <li
+                key={entry.id}
+                className="flex flex-wrap items-center justify-between gap-x-4 gap-y-1"
+              >
+                <span>
+                  {new Date(entry.timestamp).toLocaleTimeString()} ·{" "}
+                  {entry.mode === "short" ? "Corto" : "Largo"} ({entry.points}{" "}
+                  pts) ·{" "}
+                  {entry.type === "initial" ? "Inicial" : "Actualización"} #
+                  {entry.samples}
+                </span>
+                <span className="font-mono text-white">
+                  {entry.duration.toFixed(2)} ms
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       <div
         ref={containerRef}
