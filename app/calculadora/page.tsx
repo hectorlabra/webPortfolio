@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  useState,
-  useCallback,
-  useDeferredValue,
-  useMemo,
-  type ComponentType,
-} from "react";
+import { useState, useCallback, useDeferredValue, useMemo } from "react";
 import dynamic from "next/dynamic";
 import {
   Card,
@@ -87,7 +81,7 @@ const InsightsPanel = dynamic<InsightsPanelProps>(
   }
 );
 
-const ComparisonChart = dynamic(
+const ComparisonChart = dynamic<ComparisonChartProps>(
   () =>
     import("@/app/calculadora/components/comparison-chart").then(
       (mod) => mod.ComparisonChart
@@ -100,7 +94,7 @@ const ComparisonChart = dynamic(
       </div>
     ),
   }
-) as ComponentType<ComparisonChartProps>;
+);
 
 type WizardStep = {
   id: number;

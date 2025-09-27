@@ -14,7 +14,7 @@
 - [x] T112 Decide: mantener Recharts optimizado vs migrar a uPlot
 - [x] T113 Implementar downsampling y desactivar animaciones en interacciones rápidas
 - [x] T114 Gating: montar charts solo en Paso 3 con inputs válidos
-- [ ] T115 Dynamic import del chart con `ssr: false`
+- [x] T115 Dynamic import del chart con `ssr: false`
 - [ ] T116 Guardas de tamaño: no render si `containerWidth/height === 0`
 - [ ] T117 Desactivar animaciones y simplificar tooltip/legend
 - [ ] T118 Memo de datasets y throttle en interacciones
