@@ -1542,6 +1542,18 @@ function StepThreeContext({
   onScheduleConsultation,
   onReset,
 }: StepThreeContextProps) {
+  const canRenderResults =
+    hasRequestedResults &&
+    shouldShowResults &&
+    !!renderableResults &&
+    !isCalculating;
+
+  const shouldRenderLoadingState =
+    isCalculating &&
+    hasRequestedResults &&
+    !showResultsError &&
+    !canRenderResults;
+
   return (
     <CalculatorErrorBoundary onRetry={onReset}>
       {showResultsError ? (
@@ -1569,7 +1581,7 @@ function StepThreeContext({
             </Button>
           </AlertDescription>
         </Alert>
-      ) : isCalculating && hasRequestedResults && !shouldShowResults ? (
+      ) : shouldRenderLoadingState ? (
         <Card className="bg-white/5 border-white/20">
           <CardHeader>
             <CardTitle className="flex items-center space-x-2 font-mono text-white text-base">
@@ -1585,7 +1597,7 @@ function StepThreeContext({
             <ResultsSkeleton />
           </CardContent>
         </Card>
-      ) : shouldShowResults && renderableResults ? (
+      ) : canRenderResults && renderableResults ? (
         <div className="space-y-6">
           <Card className="bg-white/5 border-white/20">
             <CardHeader>

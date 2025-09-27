@@ -13,7 +13,7 @@
 - [x] T111 Instrumentar medición de render (perf.now) para 24/120 puntos
 - [x] T112 Decide: mantener Recharts optimizado vs migrar a uPlot
 - [x] T113 Implementar downsampling y desactivar animaciones en interacciones rápidas
-- [ ] T114 Gating: montar charts solo en Paso 3 con inputs válidos
+- [x] T114 Gating: montar charts solo en Paso 3 con inputs válidos
 - [ ] T115 Dynamic import del chart con `ssr: false`
 - [ ] T116 Guardas de tamaño: no render si `containerWidth/height === 0`
 - [ ] T117 Desactivar animaciones y simplificar tooltip/legend
