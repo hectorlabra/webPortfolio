@@ -25,6 +25,7 @@ Tomar una decisión informada sobre mantener Recharts optimizado o migrar a uPlo
 3. **Interacciones**: Recharts ofrece tooltips y animaciones out-of-the-box; migrar exige implementar manualmente overlays y estados activos.
 4. **Accesibilidad**: Será necesario generar descripciones textuales complementarias y asegurar foco/teclas de navegación para users con lector de pantalla.
 5. **Mantenibilidad**: La API imperativa de uPlot es más verbosa, pero encapsularla en componentes/hook dedicados mantiene el consumo dentro del wizard tan simple como `<ComparisonChart />`.
+6. **Downsampling en producción**: El `ComparisonChart` actual ahora limita la cantidad de puntos a ~48 preservando el mes de equilibrio, reduciendo renders innecesarios al cambiar inputs rápidos.
 
 ## Recomendación
 

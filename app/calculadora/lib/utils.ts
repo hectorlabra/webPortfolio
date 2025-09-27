@@ -125,6 +125,58 @@ export function transformToChartData(
   return chartData;
 }
 
+interface DownsampleOptions {
+  maxPoints: number;
+  preserveIndices?: number[];
+}
+
+/**
+ * Downsample chart data to limit render cost while preserving key indices
+ */
+export function downsampleChartData<T>(
+  data: readonly T[],
+  options: DownsampleOptions
+): T[] {
+  const { maxPoints, preserveIndices = [] } = options;
+
+  if (!Array.isArray(data) || data.length <= maxPoints) {
+    return Array.isArray(data) ? [...data] : [];
+  }
+
+  const length = data.length;
+  const safePreserve = new Set(
+    preserveIndices.filter((index) => index >= 0 && index < length)
+  );
+
+  const step = Math.max(1, Math.ceil(length / maxPoints));
+  const sampled: Array<{ index: number; value: T }> = [];
+
+  for (let index = 0; index < length; index += step) {
+    sampled.push({ index, value: data[index] });
+    safePreserve.delete(index);
+  }
+
+  // Ensure first and last points are always included
+  if (sampled[0]?.index !== 0) {
+    sampled.unshift({ index: 0, value: data[0] });
+    safePreserve.delete(0);
+  }
+
+  if (sampled[sampled.length - 1]?.index !== length - 1) {
+    sampled.push({ index: length - 1, value: data[length - 1] });
+    safePreserve.delete(length - 1);
+  }
+
+  // Add preserved indices explicitly
+  safePreserve.forEach((index) => {
+    sampled.push({ index, value: data[index] });
+  });
+
+  sampled.sort((a, b) => a.index - b.index);
+
+  return sampled.map((item) => item.value);
+}
+
 /**
  * Calculate color based on positive/negative value
  */

@@ -32,9 +32,11 @@ import {
   transformToChartData,
   formatCurrency,
   formatCompactNumber,
+  downsampleChartData,
 } from "@/app/calculadora/lib/utils";
 
 const CHART_HEIGHT = 360;
+const MAX_CHART_POINTS = 48;
 
 type ChartRenderer = () => JSX.Element;
 
@@ -196,14 +198,28 @@ export function ComparisonChart({
     [results, timeHorizon]
   );
 
-  const hasData = chartData.length > 0;
-
-  // Find break-even point for reference line
   const breakEvenPoint = results.breakEvenPoint;
+  const breakEvenIndex =
+    breakEvenPoint > 0 && breakEvenPoint <= chartData.length
+      ? breakEvenPoint - 1
+      : null;
+
+  const displayData = useMemo(
+    () =>
+      downsampleChartData(chartData, {
+        maxPoints: MAX_CHART_POINTS,
+        preserveIndices: breakEvenIndex !== null ? [breakEvenIndex] : undefined,
+      }),
+    [chartData, breakEvenIndex]
+  );
+
+  const hasData = displayData.length > 0;
+
   const breakEvenData = useMemo(() => {
     if (breakEvenPoint <= 0 || breakEvenPoint > timeHorizon) return null;
-    return chartData[breakEvenPoint - 1];
-  }, [breakEvenPoint, timeHorizon, chartData]);
+
+    return displayData.find((point) => point.month === breakEvenPoint) ?? null;
+  }, [breakEvenPoint, timeHorizon, displayData]);
 
   const registerContainer = useCallback((key: string) => {
     return (node: HTMLDivElement | null) => {
@@ -236,7 +252,7 @@ export function ComparisonChart({
   const renderRevenueChart = useCallback<ChartRenderer>(
     () => (
       <BarChart
-        data={chartData}
+        data={displayData}
         margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
       >
         <CartesianGrid strokeDasharray="3 3" />
@@ -277,13 +293,13 @@ export function ComparisonChart({
         )}
       </BarChart>
     ),
-    [chartData, breakEvenData]
+    [displayData, breakEvenData]
   );
 
   const renderProfitChart = useCallback<ChartRenderer>(
     () => (
       <BarChart
-        data={chartData}
+        data={displayData}
         margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
       >
         <CartesianGrid strokeDasharray="3 3" />
@@ -324,13 +340,13 @@ export function ComparisonChart({
         )}
       </BarChart>
     ),
-    [chartData, breakEvenData]
+    [displayData, breakEvenData]
   );
 
   const renderCumulativeChart = useCallback<ChartRenderer>(
     () => (
       <AreaChart
-        data={chartData}
+        data={displayData}
         margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
       >
         <CartesianGrid strokeDasharray="3 3" />
@@ -377,13 +393,13 @@ export function ComparisonChart({
         )}
       </AreaChart>
     ),
-    [chartData, breakEvenData]
+    [displayData, breakEvenData]
   );
 
   const renderTrendChart = useCallback<ChartRenderer>(
     () => (
       <LineChart
-        data={chartData}
+        data={displayData}
         margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
       >
         <CartesianGrid strokeDasharray="3 3" />
@@ -428,7 +444,7 @@ export function ComparisonChart({
         )}
       </LineChart>
     ),
-    [chartData, breakEvenData]
+    [displayData, breakEvenData]
   );
 
   const chartOptions = useMemo(

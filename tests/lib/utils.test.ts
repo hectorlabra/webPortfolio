@@ -12,6 +12,7 @@ import {
   clamp,
   isValidPositiveNumber,
   parseNumber,
+  downsampleChartData,
 } from "@/app/calculadora/lib/utils";
 
 // Minimal fake results shape for transformToChartData
@@ -152,4 +153,37 @@ describe("parseNumber", () => {
   it("returns fallback for NaN", () => expect(parseNumber("abc", 7)).toBe(7));
   it("parses currency-like string", () =>
     expect(parseNumber("$1,234.50", 0)).toBeCloseTo(1234.5));
+});
+
+describe("downsampleChartData", () => {
+  it("returns shallow copy when data within limit", () => {
+    const data = [1, 2, 3];
+    const result = downsampleChartData(data, { maxPoints: 5 });
+    expect(result).toEqual(data);
+    expect(result).not.toBe(data);
+  });
+
+  it("limits number of points while preserving first/last", () => {
+    const data = Array.from({ length: 10 }, (_, index) => ({
+      index,
+      value: index,
+    }));
+
+    const result = downsampleChartData(data, { maxPoints: 4 });
+
+    expect(result[0].index).toBe(0);
+    expect(result[result.length - 1].index).toBe(9);
+    expect(result.length).toBeLessThanOrEqual(5); // includes last point addition
+  });
+
+  it("preserves specified indices", () => {
+    const data = Array.from({ length: 20 }, (_, index) => index);
+    const preserveIndex = 13;
+    const result = downsampleChartData(data, {
+      maxPoints: 5,
+      preserveIndices: [preserveIndex],
+    });
+
+    expect(result).toContain(preserveIndex);
+  });
 });
