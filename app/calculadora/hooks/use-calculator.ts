@@ -3,7 +3,15 @@
  * Handles input validation, calculation logic, and result caching
  */
 
-import { useState, useCallback, useEffect, useMemo } from "react";
+import {
+  useState,
+  useCallback,
+  useEffect,
+  useMemo,
+  useDeferredValue,
+  useTransition,
+  useRef,
+} from "react";
 import {
   CalculatorInputs,
   CalculationResults,
@@ -46,6 +54,10 @@ export function useCalculator(options: UseCalculatorOptions = {}) {
     []
   );
 
+  const [isPending, startTransition] = useTransition();
+  const calculationIdRef = useRef(0);
+  const deferredInputs = useDeferredValue(state.inputs);
+
   // Update individual input field
   const updateInput = useCallback(
     (field: keyof CalculatorInputs, value: number) => {
@@ -84,63 +96,80 @@ export function useCalculator(options: UseCalculatorOptions = {}) {
   }, []);
 
   // Perform calculation
-  const calculate = useCallback(() => {
-    setState((prevState) => ({ ...prevState, isCalculating: true }));
+  const calculate = useCallback(
+    (inputsOverride?: CalculatorInputs) => {
+      const snapshot = inputsOverride ?? state.inputs;
+      const calculationId = ++calculationIdRef.current;
 
-    // Validate inputs
-    const errors = validateCalculatorInputs(state.inputs);
+      setState((prevState) => ({ ...prevState, isCalculating: true }));
 
-    if (errors.length > 0) {
-      setValidationErrors(errors);
-      onValidationError?.(errors);
-      setState((prevState) => ({ ...prevState, isCalculating: false }));
-      return;
-    }
+      const errors = validateCalculatorInputs(snapshot);
 
-    try {
-      // Clear validation errors
+      if (errors.length > 0) {
+        setValidationErrors(errors);
+        onValidationError?.(errors);
+        setState((prevState) => ({ ...prevState, isCalculating: false }));
+        return;
+      }
+
       setValidationErrors([]);
 
-      // Perform calculations
-      const results = calculateResults(state.inputs);
+      startTransition(() => {
+        try {
+          const results = calculateResults(snapshot);
 
-      // Update state with results
-      setState((prevState) => ({
-        ...prevState,
-        results,
-        isCalculating: false,
-        hasResults: true,
-        lastCalculated: new Date(),
-      }));
+          if (calculationIdRef.current !== calculationId) {
+            return;
+          }
 
-      // Call completion callback
-      onCalculationComplete?.(results);
-    } catch (error) {
-      console.error("Calculation error:", error);
-      setValidationErrors([
-        {
-          field: "oneTimePrice",
-          message:
-            "Error en el cálculo. Por favor, verifica los datos ingresados.",
-          severity: "error",
-        },
-      ]);
-      setState((prevState) => ({ ...prevState, isCalculating: false }));
-    }
-  }, [state.inputs, onCalculationComplete, onValidationError]);
+          setState((prevState) => ({
+            ...prevState,
+            results,
+            isCalculating: false,
+            hasResults: true,
+            lastCalculated: new Date(),
+          }));
+
+          onCalculationComplete?.(results);
+        } catch (error) {
+          console.error("Calculation error:", error);
+
+          if (calculationIdRef.current !== calculationId) {
+            return;
+          }
+
+          setValidationErrors([
+            {
+              field: "oneTimePrice",
+              message:
+                "Error en el cálculo. Por favor, verifica los datos ingresados.",
+              severity: "error",
+            },
+          ]);
+
+          setState((prevState) => ({ ...prevState, isCalculating: false }));
+        }
+      });
+    },
+    [state.inputs, onCalculationComplete, onValidationError, startTransition]
+  );
 
   // Debounced calculation for auto-calculate mode
   const debouncedCalculate = useMemo(
-    () => debounce(calculate, debounceMs),
+    () =>
+      debounce((...args: unknown[]) => {
+        const [nextInputs] = args as [CalculatorInputs?];
+        calculate(nextInputs);
+      }, debounceMs),
     [calculate, debounceMs]
   );
 
   // Auto-calculate when inputs change (if enabled)
   useEffect(() => {
     if (autoCalculate && !state.isCalculating) {
-      debouncedCalculate();
+      debouncedCalculate(deferredInputs);
     }
-  }, [state.inputs, autoCalculate, debouncedCalculate, state.isCalculating]);
+  }, [deferredInputs, autoCalculate, debouncedCalculate, state.isCalculating]);
 
   // Manual calculation trigger (for non-auto mode)
   const triggerCalculation = useCallback(() => {
@@ -193,6 +222,7 @@ export function useCalculator(options: UseCalculatorOptions = {}) {
     inputs: state.inputs,
     results: state.results,
     isCalculating: state.isCalculating,
+    isPending,
     hasResults: state.hasResults,
     lastCalculated: state.lastCalculated,
 

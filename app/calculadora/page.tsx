@@ -147,6 +147,7 @@ export default function CalculadoraPage() {
     inputs,
     results,
     isCalculating,
+    isPending,
     validationErrors,
     shouldShowResults,
     handleInputChange,
@@ -369,6 +370,7 @@ export default function CalculadoraPage() {
           context: (
             <StepThreeContext
               isCalculating={isCalculating}
+              isPending={isPending}
               hasRequestedResults={hasRequestedResults}
               shouldShowResults={shouldShowResults}
               renderableResults={renderableResults}
@@ -409,6 +411,7 @@ export default function CalculadoraPage() {
     handleScheduleConsultation,
     handleReset,
     stepErrors,
+    isPending,
   ]);
 
   const { form: activeForm, context: activeContext } = stepContent;
@@ -562,10 +565,12 @@ export default function CalculadoraPage() {
                   {isLastStep ? (
                     <Button
                       onClick={handleGenerateAnalysis}
-                      disabled={isCalculating}
+                      disabled={isCalculating || isPending}
                       className="flex-1 sm:flex-none bg-[#FFD100] text-[#0a0612] hover:bg-[#FFD100]/90 font-bold shadow-[0_0_10px_rgba(255,210,0,0.5)]"
                     >
-                      {isCalculating ? "Calculando..." : "Generar análisis"}
+                      {isCalculating || isPending
+                        ? "Calculando..."
+                        : "Generar análisis"}
                     </Button>
                   ) : (
                     <Button
@@ -1509,6 +1514,7 @@ function StepThreeForm({
 
 interface StepThreeContextProps {
   isCalculating: boolean;
+  isPending: boolean;
   hasRequestedResults: boolean;
   shouldShowResults: boolean;
   renderableResults: CalculationResults | null;
@@ -1524,6 +1530,7 @@ interface StepThreeContextProps {
 
 function StepThreeContext({
   isCalculating,
+  isPending,
   hasRequestedResults,
   shouldShowResults,
   renderableResults,
@@ -1536,17 +1543,12 @@ function StepThreeContext({
   onScheduleConsultation,
   onReset,
 }: StepThreeContextProps) {
+  const isBusy = isCalculating || isPending;
   const canRenderResults =
-    hasRequestedResults &&
-    shouldShowResults &&
-    !!renderableResults &&
-    !isCalculating;
+    hasRequestedResults && shouldShowResults && !!renderableResults && !isBusy;
 
   const shouldRenderLoadingState =
-    isCalculating &&
-    hasRequestedResults &&
-    !showResultsError &&
-    !canRenderResults;
+    isBusy && hasRequestedResults && !showResultsError && !canRenderResults;
 
   return (
     <CalculatorErrorBoundary onRetry={onReset}>
