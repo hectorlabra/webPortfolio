@@ -22,7 +22,6 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  Legend,
   ReferenceLine,
 } from "recharts";
 import type { TooltipProps } from "recharts";
@@ -50,20 +49,10 @@ type ChartTooltipPayloadItem = NonNullable<
   TooltipProps<number, string>["payload"]
 >[number];
 
-interface CustomTooltipProps {
-  active?: boolean;
-  payload?: ChartTooltipPayloadItem[];
-  label?: string;
-  chartType: string;
-}
+type CustomTooltipProps = TooltipProps<number, string>;
 
-function CustomTooltip({
-  active,
-  payload,
-  label,
-  chartType,
-}: CustomTooltipProps) {
-  if (!active || !payload || !payload.length) return null;
+function CustomTooltip({ active, payload, label }: CustomTooltipProps) {
+  if (!active || !payload || payload.length === 0) return null;
 
   const getNumberValue = (entry?: ChartTooltipPayloadItem) => {
     if (!entry) return 0;
@@ -83,100 +72,49 @@ function CustomTooltip({
     return Number.isFinite(numeric) ? numeric : 0;
   };
 
-  const getTooltipContent = () => {
-    switch (chartType) {
-      case "revenue-comparison":
-        return (
-          <div className="space-y-2">
-            <p className="font-medium">{label}</p>
-            <div className="space-y-1">
-              <p className="text-white/80">
-                Único:{" "}
-                {formatCurrency(
-                  getNumberValue(
-                    payload.find((p) => p.dataKey === "oneTimeRevenue")
-                  )
-                )}
-              </p>
-              <p className="text-[#64E365]">
-                Suscripción:{" "}
-                {formatCurrency(
-                  getNumberValue(
-                    payload.find((p) => p.dataKey === "subscriptionRevenue")
-                  )
-                )}
-              </p>
-            </div>
-          </div>
-        );
+  const rows = payload
+    .map((entry, index) => {
+      const name =
+        entry.name ?? entry.dataKey?.toString() ?? `Serie ${index + 1}`;
+      const color = entry.color ?? "#ffffff";
+      const value = getNumberValue(entry as ChartTooltipPayloadItem);
 
-      case "profit-comparison":
-        return (
-          <div className="space-y-2">
-            <p className="font-medium">{label}</p>
-            <div className="space-y-1">
-              <p className="text-white/80">
-                Único:{" "}
-                {formatCurrency(
-                  getNumberValue(
-                    payload.find((p) => p.dataKey === "oneTimeProfit")
-                  )
-                )}
-              </p>
-              <p className="text-[#64E365]">
-                Suscripción:{" "}
-                {formatCurrency(
-                  getNumberValue(
-                    payload.find((p) => p.dataKey === "subscriptionProfit")
-                  )
-                )}
-              </p>
-            </div>
-          </div>
-        );
+      return {
+        name,
+        color,
+        value,
+      };
+    })
+    .filter((row) => Number.isFinite(row.value));
 
-      case "cumulative":
-        return (
-          <div className="space-y-2">
-            <p className="font-medium">{label}</p>
-            <div className="space-y-1">
-              <p className="text-blue-600">
-                Único (Acum.):{" "}
-                {formatCurrency(
-                  getNumberValue(
-                    payload.find((p) => p.dataKey === "cumulativeOneTime")
-                  )
-                )}
-              </p>
-              <p className="text-green-600">
-                Suscripción (Acum.):{" "}
-                {formatCurrency(
-                  getNumberValue(
-                    payload.find((p) => p.dataKey === "cumulativeSubscription")
-                  )
-                )}
-              </p>
-            </div>
-          </div>
-        );
+  if (rows.length === 0) return null;
 
-      default:
-        return (
-          <div className="space-y-2">
-            <p className="font-medium">{label}</p>
-            {payload.map((entry, index) => (
-              <p key={index} style={{ color: entry.color ?? "#ffffff" }}>
-                {entry.name}: {formatCurrency(getNumberValue(entry))}
-              </p>
-            ))}
-          </div>
-        );
-    }
-  };
+  const hasLabel = typeof label === "string" && label.length > 0;
+  const listClassName = hasLabel ? "mt-1 space-y-0.5" : "space-y-0.5";
 
   return (
-    <div className="bg-white p-3 rounded-lg shadow-lg border">
-      {getTooltipContent()}
+    <div className="rounded-md border border-white/20 bg-black/80 px-3 py-2 text-xs text-white shadow-md">
+      {hasLabel && <p className="font-medium text-white/90">{label}</p>}
+      <ul className={listClassName}>
+        {rows.map((row, index) => (
+          <li
+            key={`${row.name}-${index}`}
+            className="flex items-center justify-between gap-2"
+          >
+            <span className="flex items-center gap-2">
+              <span
+                aria-hidden="true"
+                className="h-2 w-2 rounded-full"
+                style={{ backgroundColor: row.color }}
+              />
+              <span>{row.name}</span>
+            </span>
+            <span className="font-semibold text-white/90">
+              {formatCurrency(row.value)}
+            </span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
@@ -280,8 +218,7 @@ export function ComparisonChart({
           tick={{ fontSize: 12 }}
           tickFormatter={(value) => formatCompactNumber(value)}
         />
-        <Tooltip content={<CustomTooltip chartType="revenue-comparison" />} />
-        <Legend />
+        <Tooltip content={<CustomTooltip />} />
         <Bar
           dataKey="oneTimeRevenue"
           fill="#3B82F6"
@@ -327,8 +264,7 @@ export function ComparisonChart({
           tick={{ fontSize: 12 }}
           tickFormatter={(value) => formatCompactNumber(value)}
         />
-        <Tooltip content={<CustomTooltip chartType="profit-comparison" />} />
-        <Legend />
+        <Tooltip content={<CustomTooltip />} />
         <Bar
           dataKey="oneTimeProfit"
           fill="rgba(255, 255, 255, 0.7)"
@@ -374,8 +310,7 @@ export function ComparisonChart({
           tick={{ fontSize: 12 }}
           tickFormatter={(value) => formatCompactNumber(value)}
         />
-        <Tooltip content={<CustomTooltip chartType="cumulative" />} />
-        <Legend />
+        <Tooltip content={<CustomTooltip />} />
         <Area
           type="monotone"
           dataKey="cumulativeOneTime"
@@ -427,8 +362,7 @@ export function ComparisonChart({
           tick={{ fontSize: 12 }}
           tickFormatter={(value) => formatCompactNumber(value)}
         />
-        <Tooltip content={<CustomTooltip chartType="cumulative" />} />
-        <Legend />
+        <Tooltip content={<CustomTooltip />} />
         <Line
           type="monotone"
           dataKey="cumulativeOneTime"
