@@ -29,7 +29,7 @@
 
 ## Fase 4.4 – UX y Accesibilidad
 
-- [ ] T130 Inputs plegables por sección y ayuda contextual mejorada
+- [x] T130 Inputs plegables por sección y ayuda contextual mejorada
 - [ ] T131 Atajos de teclado (/, g r, g c) y focos visibles
 - [ ] T132 Revisar textos: títulos, “Próximos Pasos Recomendados” y microcopy
 

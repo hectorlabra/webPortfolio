@@ -14,6 +14,12 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {
   Calculator,
   TrendingUp,
   BarChart3,
@@ -756,206 +762,273 @@ function StepOneForm({
   const getErrorMessage = (field: keyof typeof DEFAULT_INPUTS) =>
     errors.find((error) => error.field === field)?.message;
 
+  const pricingHelpId = "step1-pricing-help";
+  const funnelHelpId = "step1-funnel-help";
+
   return (
     <div className="space-y-6">
-      {/* Pricing Section */}
-      <div className="rounded-lg bg-white/5 p-4 sm:p-6 border border-white/20">
-        <h3 className="font-mono text-lg sm:text-xl text-white mb-4">
-          Precios y Costos
-        </h3>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {/* One-Time Price */}
-          <div>
-            <label
-              htmlFor="oneTimePrice"
-              className="block text-sm font-medium text-white/90"
-            >
-              Precio del Producto Único
-            </label>
-            <div className="mt-1 relative rounded-md shadow-sm">
-              <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                <DollarSign className="h-5 w-5 text-white/50" />
-              </span>
-              <input
-                id="oneTimePrice"
-                type="number"
-                value={inputs.oneTimePrice}
-                onChange={(e) =>
-                  onInputChange("oneTimePrice", parseFloat(e.target.value))
-                }
-                className="block w-full rounded-md border border-white/20 bg-white/5 px-3 py-2 text-white placeholder:text-white/60 focus:border-[#64E365] focus:ring-1 focus:ring-[#64E365]/50 pl-10"
-                placeholder="0"
-                min="0"
-                step="0.01"
-              />
-            </div>
-            {getErrorMessage("oneTimePrice") && (
-              <p className="mt-2 text-sm text-red-400">
-                {getErrorMessage("oneTimePrice")}
-              </p>
-            )}
-          </div>
-
-          {/* Subscription Price */}
-          <div>
-            <label
-              htmlFor="subscriptionPrice"
-              className="block text-sm font-medium text-white/90"
-            >
-              Precio Mensual de Suscripción
-            </label>
-            <div className="mt-1 relative rounded-md shadow-sm">
-              <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                <DollarSign className="h-5 w-5 text-white/50" />
-              </span>
-              <input
-                id="subscriptionPrice"
-                type="number"
-                value={inputs.subscriptionPrice}
-                onChange={(e) =>
-                  onInputChange("subscriptionPrice", parseFloat(e.target.value))
-                }
-                className="block w-full rounded-md border border-white/20 bg-white/5 px-3 py-2 text-white placeholder:text-white/60 focus:border-[#64E365] focus:ring-1 focus:ring-[#64E365]/50 pl-10"
-                placeholder="0"
-                min="0"
-                step="0.01"
-              />
-            </div>
-            {getErrorMessage("subscriptionPrice") && (
-              <p className="mt-2 text-sm text-red-400">
-                {getErrorMessage("subscriptionPrice")}
-              </p>
-            )}
-          </div>
-
-          {/* One-Time Cost */}
-          <div>
-            <label
-              htmlFor="oneTimeCost"
-              className="block text-sm font-medium text-white/90"
-            >
-              Costo por Cliente (Único)
-            </label>
-            <div className="mt-1 relative rounded-md shadow-sm">
-              <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                <DollarSign className="h-5 w-5 text-white/50" />
-              </span>
-              <input
-                id="oneTimeCost"
-                type="number"
-                value={inputs.oneTimeCost}
-                onChange={(e) =>
-                  onInputChange("oneTimeCost", parseFloat(e.target.value))
-                }
-                className="block w-full rounded-md border border-white/20 bg-white/5 px-3 py-2 text-white placeholder:text-white/60 focus:border-[#64E365] focus:ring-1 focus:ring-[#64E365]/50 pl-10"
-                placeholder="0"
-                min="0"
-                step="0.01"
-              />
-            </div>
-            {getErrorMessage("oneTimeCost") && (
-              <p className="mt-2 text-sm text-red-400">
-                {getErrorMessage("oneTimeCost")}
-              </p>
-            )}
-          </div>
-
-          {/* Subscription Cost */}
-          <div>
-            <label
-              htmlFor="subscriptionCost"
-              className="block text-sm font-medium text-white/90"
-            >
-              Costo Mensual por Cliente (Suscripción)
-            </label>
-            <div className="mt-1 relative rounded-md shadow-sm">
-              <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                <DollarSign className="h-5 w-5 text-white/50" />
-              </span>
-              <input
-                id="subscriptionCost"
-                type="number"
-                value={inputs.subscriptionCost}
-                onChange={(e) =>
-                  onInputChange("subscriptionCost", parseFloat(e.target.value))
-                }
-                className="block w-full rounded-md border border-white/20 bg-white/5 px-3 py-2 text-white placeholder:text-white/60 focus:border-[#64E365] focus:ring-1 focus:ring-[#64E365]/50 pl-10"
-                placeholder="0"
-                min="0"
-                step="0.01"
-              />
-            </div>
-            {getErrorMessage("subscriptionCost") && (
-              <p className="mt-2 text-sm text-red-400">
-                {getErrorMessage("subscriptionCost")}
-              </p>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Conversion Rate */}
-      <div>
-        <label
-          htmlFor="conversionRate"
-          className="block text-sm font-medium text-white/90"
+      <Accordion
+        type="multiple"
+        defaultValue={["pricing", "funnel"]}
+        className="space-y-4"
+      >
+        <AccordionItem
+          value="pricing"
+          className="overflow-hidden rounded-lg border border-white/20 bg-white/5 shadow-sm"
         >
-          Tasa de Conversión (%)
-        </label>
-        <input
-          id="conversionRate"
-          type="number"
-          value={inputs.conversionRate}
-          onChange={(e) =>
-            onInputChange("conversionRate", parseFloat(e.target.value))
-          }
-          className="mt-1 block w-full rounded-md border border-white/20 bg-white/5 px-3 py-2 text-white placeholder:text-white/60 focus:border-[#64E365] focus:ring-1 focus:ring-[#64E365]/50"
-          placeholder="Ej. 2.5"
-          min="0"
-          max="100"
-          step="0.01"
-        />
-        {getErrorMessage("conversionRate") && (
-          <p className="mt-2 text-sm text-red-400">
-            {getErrorMessage("conversionRate")}
-          </p>
-        )}
-      </div>
+          <AccordionTrigger className="px-4 text-left font-mono text-base text-white">
+            Precios y costos
+          </AccordionTrigger>
+          <AccordionContent className="space-y-4 px-4 pb-4">
+            <p id={pricingHelpId} className="text-sm text-white/70">
+              Define el precio y costo unitario de ambas ofertas para comparar
+              margen y atractivo percibido. Ajusta estos valores según tus
+              escenarios bajo y alto.
+            </p>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div>
+                <label
+                  htmlFor="oneTimePrice"
+                  className="block text-sm font-medium text-white/90"
+                >
+                  Precio del producto único
+                </label>
+                <div className="relative mt-1 rounded-md shadow-sm">
+                  <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                    <DollarSign className="h-5 w-5 text-white/50" />
+                  </span>
+                  <input
+                    id="oneTimePrice"
+                    type="number"
+                    value={inputs.oneTimePrice}
+                    onChange={(e) =>
+                      onInputChange("oneTimePrice", parseFloat(e.target.value))
+                    }
+                    className="block w-full rounded-md border border-white/20 bg-white/5 px-3 py-2 pl-10 text-white placeholder:text-white/60 focus:border-[#64E365] focus:ring-1 focus:ring-[#64E365]/50"
+                    placeholder="0"
+                    min="0"
+                    step="0.01"
+                    aria-describedby={pricingHelpId}
+                  />
+                </div>
+                {getErrorMessage("oneTimePrice") ? (
+                  <p className="mt-2 text-sm text-red-400">
+                    {getErrorMessage("oneTimePrice")}
+                  </p>
+                ) : (
+                  <p className="mt-2 text-xs text-white/60">
+                    Usa el precio total de tu curso, workshop o paquete actual.
+                  </p>
+                )}
+              </div>
 
-      {/* Customers Acquired */}
-      <div>
-        <label
-          htmlFor="oneTimeCustomers"
-          className="block text-sm font-medium text-white/90"
+              <div>
+                <label
+                  htmlFor="subscriptionPrice"
+                  className="block text-sm font-medium text-white/90"
+                >
+                  Precio mensual de suscripción
+                </label>
+                <div className="relative mt-1 rounded-md shadow-sm">
+                  <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                    <DollarSign className="h-5 w-5 text-white/50" />
+                  </span>
+                  <input
+                    id="subscriptionPrice"
+                    type="number"
+                    value={inputs.subscriptionPrice}
+                    onChange={(e) =>
+                      onInputChange(
+                        "subscriptionPrice",
+                        parseFloat(e.target.value)
+                      )
+                    }
+                    className="block w-full rounded-md border border-white/20 bg-white/5 px-3 py-2 pl-10 text-white placeholder:text-white/60 focus:border-[#64E365] focus:ring-1 focus:ring-[#64E365]/50"
+                    placeholder="0"
+                    min="0"
+                    step="0.01"
+                    aria-describedby={pricingHelpId}
+                  />
+                </div>
+                {getErrorMessage("subscriptionPrice") ? (
+                  <p className="mt-2 text-sm text-red-400">
+                    {getErrorMessage("subscriptionPrice")}
+                  </p>
+                ) : (
+                  <p className="mt-2 text-xs text-white/60">
+                    Selecciona un precio competitivo que permita margen tras
+                    costos variables.
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <label
+                  htmlFor="oneTimeCost"
+                  className="block text-sm font-medium text-white/90"
+                >
+                  Costo por cliente (único)
+                </label>
+                <div className="relative mt-1 rounded-md shadow-sm">
+                  <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                    <DollarSign className="h-5 w-5 text-white/50" />
+                  </span>
+                  <input
+                    id="oneTimeCost"
+                    type="number"
+                    value={inputs.oneTimeCost}
+                    onChange={(e) =>
+                      onInputChange("oneTimeCost", parseFloat(e.target.value))
+                    }
+                    className="block w-full rounded-md border border-white/20 bg-white/5 px-3 py-2 pl-10 text-white placeholder:text-white/60 focus:border-[#64E365] focus:ring-1 focus:ring-[#64E365]/50"
+                    placeholder="0"
+                    min="0"
+                    step="0.01"
+                    aria-describedby={pricingHelpId}
+                  />
+                </div>
+                {getErrorMessage("oneTimeCost") ? (
+                  <p className="mt-2 text-sm text-red-400">
+                    {getErrorMessage("oneTimeCost")}
+                  </p>
+                ) : (
+                  <p className="mt-2 text-xs text-white/60">
+                    Incluye comisiones, ads y soporte puntual por cliente.
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <label
+                  htmlFor="subscriptionCost"
+                  className="block text-sm font-medium text-white/90"
+                >
+                  Costo mensual por cliente (suscripción)
+                </label>
+                <div className="relative mt-1 rounded-md shadow-sm">
+                  <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                    <DollarSign className="h-5 w-5 text-white/50" />
+                  </span>
+                  <input
+                    id="subscriptionCost"
+                    type="number"
+                    value={inputs.subscriptionCost}
+                    onChange={(e) =>
+                      onInputChange(
+                        "subscriptionCost",
+                        parseFloat(e.target.value)
+                      )
+                    }
+                    className="block w-full rounded-md border border-white/20 bg-white/5 px-3 py-2 pl-10 text-white placeholder:text-white/60 focus:border-[#64E365] focus:ring-1 focus:ring-[#64E365]/50"
+                    placeholder="0"
+                    min="0"
+                    step="0.01"
+                    aria-describedby={pricingHelpId}
+                  />
+                </div>
+                {getErrorMessage("subscriptionCost") ? (
+                  <p className="mt-2 text-sm text-red-400">
+                    {getErrorMessage("subscriptionCost")}
+                  </p>
+                ) : (
+                  <p className="mt-2 text-xs text-white/60">
+                    Considera hosting, herramientas y horas de soporte
+                    recurrente.
+                  </p>
+                )}
+              </div>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+
+        <AccordionItem
+          value="funnel"
+          className="overflow-hidden rounded-lg border border-white/20 bg-white/5 shadow-sm"
         >
-          Clientes Adquiridos (Estimación)
-        </label>
-        <input
-          id="oneTimeCustomers"
-          type="number"
-          value={inputs.oneTimeCustomers}
-          onChange={(e) =>
-            onInputChange("oneTimeCustomers", parseInt(e.target.value))
-          }
-          className="mt-1 block w-full rounded-md border border-white/20 bg-white/5 px-3 py-2 text-white placeholder:text-white/60 focus:border-[#64E365] focus:ring-1 focus:ring-[#64E365]/50"
-          placeholder="Ej. 100"
-          min="0"
-        />
-        {getErrorMessage("oneTimeCustomers") && (
-          <p className="mt-2 text-sm text-red-400">
-            {getErrorMessage("oneTimeCustomers")}
-          </p>
-        )}
-      </div>
+          <AccordionTrigger className="px-4 text-left font-mono text-base text-white">
+            Embudo y volumen de clientes
+          </AccordionTrigger>
+          <AccordionContent className="space-y-4 px-4 pb-4">
+            <p id={funnelHelpId} className="text-sm text-white/70">
+              Ajusta la tasa de conversión y el volumen estimado de clientes
+              para proyectar ingresos. Puedes iterar rápido plegando esta
+              sección cuando quieras enfocarte en otros parámetros.
+            </p>
+            <div className="space-y-4">
+              <div>
+                <label
+                  htmlFor="conversionRate"
+                  className="block text-sm font-medium text-white/90"
+                >
+                  Tasa de conversión (%)
+                </label>
+                <input
+                  id="conversionRate"
+                  type="number"
+                  value={inputs.conversionRate}
+                  onChange={(e) =>
+                    onInputChange("conversionRate", parseFloat(e.target.value))
+                  }
+                  className="mt-1 block w-full rounded-md border border-white/20 bg-white/5 px-3 py-2 text-white placeholder:text-white/60 focus:border-[#64E365] focus:ring-1 focus:ring-[#64E365]/50"
+                  placeholder="Ej. 2.5"
+                  min="0"
+                  max="100"
+                  step="0.01"
+                  aria-describedby={funnelHelpId}
+                />
+                {getErrorMessage("conversionRate") ? (
+                  <p className="mt-2 text-sm text-red-400">
+                    {getErrorMessage("conversionRate")}
+                  </p>
+                ) : (
+                  <p className="mt-2 text-xs text-white/60">
+                    Usa datos reales si los tienes; de lo contrario, parte de un
+                    escenario conservador entre 1% y 3%.
+                  </p>
+                )}
+              </div>
 
-      {/* Manual Calculation Trigger */}
+              <div>
+                <label
+                  htmlFor="oneTimeCustomers"
+                  className="block text-sm font-medium text-white/90"
+                >
+                  Clientes adquiridos (estimación)
+                </label>
+                <input
+                  id="oneTimeCustomers"
+                  type="number"
+                  value={inputs.oneTimeCustomers}
+                  onChange={(e) =>
+                    onInputChange("oneTimeCustomers", parseInt(e.target.value))
+                  }
+                  className="mt-1 block w-full rounded-md border border-white/20 bg-white/5 px-3 py-2 text-white placeholder:text-white/60 focus:border-[#64E365] focus:ring-1 focus:ring-[#64E365]/50"
+                  placeholder="Ej. 100"
+                  min="0"
+                  aria-describedby={funnelHelpId}
+                />
+                {getErrorMessage("oneTimeCustomers") ? (
+                  <p className="mt-2 text-sm text-red-400">
+                    {getErrorMessage("oneTimeCustomers")}
+                  </p>
+                ) : (
+                  <p className="mt-2 text-xs text-white/60">
+                    Determina cuántos clientes puedes activar con tu embudo o
+                    base actual.
+                  </p>
+                )}
+              </div>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+
       <div className="flex justify-end">
         <Button
           onClick={onNext}
-          className="w-full sm:w-auto bg-[#64E365] text-white hover:bg-[#64E365]/90 font-bold shadow-[0_0_10px_rgba(100,227,101,0.5)]"
+          className="w-full bg-[#64E365] font-bold text-white shadow-[0_0_10px_rgba(100,227,101,0.5)] hover:bg-[#64E365]/90 sm:w-auto"
         >
-          Calcular Modelo Único
+          Calcular modelo único
           <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
       </div>
@@ -1072,154 +1145,213 @@ function StepTwoForm({
   const getErrorMessage = (field: keyof typeof DEFAULT_INPUTS) =>
     errors.find((error) => error.field === field)?.message;
 
+  const revenueHelpId = "step2-revenue-help";
+  const retentionHelpId = "step2-retention-help";
+
   return (
     <div className="space-y-6">
-      {/* Subscription Model Description */}
-      <div className="rounded-lg bg-white/5 p-4 sm:p-6 border border-white/20">
-        <h3 className="font-mono text-lg sm:text-xl text-white mb-4">
-          Modelo de Suscripción Recurrente
+      <div className="rounded-lg border border-white/20 bg-white/5 p-4 sm:p-6">
+        <h3 className="font-mono text-lg text-white sm:text-xl">
+          Modelo de suscripción recurrente
         </h3>
-        <p className="text-sm text-white/70">
-          Configura tu oferta recurrente para estimar ingresos mensuales y
-          churn.
+        <p className="mt-3 text-sm text-white/70">
+          Ajusta los parámetros clave de tu oferta mensual para entender cómo
+          evoluciona el ingreso recurrente. Puedes plegar cada sección para
+          mantener el foco mientras iteras.
         </p>
       </div>
 
-      {/* Pricing Section */}
-      <div className="rounded-lg bg-white/5 p-4 sm:p-6 border border-white/20">
-        <h4 className="font-mono text-base text-white mb-4">
-          Ingresos recurrentes esperados
-        </h4>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {/* Subscription Price */}
-          <div>
-            <label
-              htmlFor="subscriptionPriceStep2"
-              className="block text-sm font-medium text-white/90"
-            >
-              Precio Mensual de Suscripción
-            </label>
-            <div className="mt-1 relative rounded-md shadow-sm">
-              <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                <DollarSign className="h-5 w-5 text-white/50" />
-              </span>
-              <input
-                id="subscriptionPriceStep2"
-                type="number"
-                value={inputs.subscriptionPrice}
-                onChange={(e) =>
-                  onInputChange("subscriptionPrice", parseFloat(e.target.value))
-                }
-                className="block w-full rounded-md border border-white/20 bg-white/5 px-3 py-2 text-white placeholder:text-white/60 focus:border-[#64E365] focus:ring-1 focus:ring-[#64E365]/50 pl-10"
-                placeholder="Ej. 49"
-                min="0"
-                step="0.01"
-              />
-            </div>
-            {getErrorMessage("subscriptionPrice") && (
-              <p className="mt-2 text-sm text-red-400">
-                {getErrorMessage("subscriptionPrice")}
-              </p>
-            )}
-          </div>
-
-          {/* Subscription Cost */}
-          <div>
-            <label
-              htmlFor="subscriptionCostStep2"
-              className="block text-sm font-medium text-white/90"
-            >
-              Costo Mensual por Cliente
-            </label>
-            <div className="mt-1 relative rounded-md shadow-sm">
-              <span className="absolute inset-y-0 left-0 flex items-center pl-3">
-                <DollarSign className="h-5 w-5 text-white/50" />
-              </span>
-              <input
-                id="subscriptionCostStep2"
-                type="number"
-                value={inputs.subscriptionCost}
-                onChange={(e) =>
-                  onInputChange("subscriptionCost", parseFloat(e.target.value))
-                }
-                className="block w-full rounded-md border border-white/20 bg-white/5 px-3 py-2 text-white placeholder:text-white/60 focus:border-[#64E365] focus:ring-1 focus:ring-[#64E365]/50 pl-10"
-                placeholder="Ej. 5"
-                min="0"
-                step="0.01"
-              />
-            </div>
-            {getErrorMessage("subscriptionCost") && (
-              <p className="mt-2 text-sm text-red-400">
-                {getErrorMessage("subscriptionCost")}
-              </p>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Churn Rate */}
-      <div>
-        <label
-          htmlFor="churnRateStep2"
-          className="block text-sm font-medium text-white/90"
+      <Accordion
+        type="multiple"
+        defaultValue={["revenue", "retention"]}
+        className="space-y-4"
+      >
+        <AccordionItem
+          value="revenue"
+          className="overflow-hidden rounded-lg border border-white/20 bg-white/5 shadow-sm"
         >
-          Tasa de Abandono Mensual (%)
-        </label>
-        <input
-          id="churnRateStep2"
-          type="number"
-          value={inputs.churnRate}
-          onChange={(e) =>
-            onInputChange("churnRate", parseFloat(e.target.value))
-          }
-          className="mt-1 block w-full rounded-md border border-white/20 bg-white/5 px-3 py-2 text-white placeholder:text-white/60 focus:border-[#64E365] focus:ring-1 focus:ring-[#64E365]/50"
-          placeholder="Ej. 4"
-          min="0"
-          max="100"
-          step="0.01"
-        />
-        {getErrorMessage("churnRate") && (
-          <p className="mt-2 text-sm text-red-400">
-            {getErrorMessage("churnRate")}
-          </p>
-        )}
-      </div>
+          <AccordionTrigger className="px-4 text-left font-mono text-base text-white">
+            Ingresos recurrentes
+          </AccordionTrigger>
+          <AccordionContent className="space-y-4 px-4 pb-4">
+            <p id={revenueHelpId} className="text-sm text-white/70">
+              Ajusta precio y costo mensual para visualizar margen y crecimiento
+              potencial. Compara distintos escenarios duplicando la sección y
+              cerrando la anterior.
+            </p>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div>
+                <label
+                  htmlFor="subscriptionPrice"
+                  className="block text-sm font-medium text-white/90"
+                >
+                  Precio mensual de suscripción
+                </label>
+                <div className="relative mt-1 rounded-md shadow-sm">
+                  <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                    <DollarSign className="h-5 w-5 text-white/50" />
+                  </span>
+                  <input
+                    id="subscriptionPrice"
+                    type="number"
+                    value={inputs.subscriptionPrice}
+                    onChange={(e) =>
+                      onInputChange(
+                        "subscriptionPrice",
+                        parseFloat(e.target.value)
+                      )
+                    }
+                    className="block w-full rounded-md border border-white/20 bg-white/5 px-3 py-2 pl-10 text-white placeholder:text-white/60 focus:border-[#64E365] focus:ring-1 focus:ring-[#64E365]/50"
+                    placeholder="Ej. 49"
+                    min="0"
+                    step="0.01"
+                    aria-describedby={revenueHelpId}
+                  />
+                </div>
+                {getErrorMessage("subscriptionPrice") ? (
+                  <p className="mt-2 text-sm text-red-400">
+                    {getErrorMessage("subscriptionPrice")}
+                  </p>
+                ) : (
+                  <p className="mt-2 text-xs text-white/60">
+                    Evalúa si incluye niveles (starter, pro) y usa el precio
+                    medio más representativo.
+                  </p>
+                )}
+              </div>
 
-      {/* Time Horizon */}
-      <div>
-        <label
-          htmlFor="timeHorizonStep2"
-          className="block text-sm font-medium text-white/90"
+              <div>
+                <label
+                  htmlFor="subscriptionCost"
+                  className="block text-sm font-medium text-white/90"
+                >
+                  Costo mensual por cliente
+                </label>
+                <div className="relative mt-1 rounded-md shadow-sm">
+                  <span className="absolute inset-y-0 left-0 flex items-center pl-3">
+                    <DollarSign className="h-5 w-5 text-white/50" />
+                  </span>
+                  <input
+                    id="subscriptionCost"
+                    type="number"
+                    value={inputs.subscriptionCost}
+                    onChange={(e) =>
+                      onInputChange(
+                        "subscriptionCost",
+                        parseFloat(e.target.value)
+                      )
+                    }
+                    className="block w-full rounded-md border border-white/20 bg-white/5 px-3 py-2 pl-10 text-white placeholder:text-white/60 focus:border-[#64E365] focus:ring-1 focus:ring-[#64E365]/50"
+                    placeholder="Ej. 5"
+                    min="0"
+                    step="0.01"
+                    aria-describedby={revenueHelpId}
+                  />
+                </div>
+                {getErrorMessage("subscriptionCost") ? (
+                  <p className="mt-2 text-sm text-red-400">
+                    {getErrorMessage("subscriptionCost")}
+                  </p>
+                ) : (
+                  <p className="mt-2 text-xs text-white/60">
+                    Suma herramientas SaaS, comisiones y tiempo de tu equipo por
+                    cliente activo.
+                  </p>
+                )}
+              </div>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+
+        <AccordionItem
+          value="retention"
+          className="overflow-hidden rounded-lg border border-white/20 bg-white/5 shadow-sm"
         >
-          Horizonte Temporal (meses)
-        </label>
-        <input
-          id="timeHorizonStep2"
-          type="number"
-          value={inputs.timeHorizon}
-          onChange={(e) =>
-            onInputChange("timeHorizon", parseInt(e.target.value))
-          }
-          className="mt-1 block w-full rounded-md border border-white/20 bg-white/5 px-3 py-2 text-white placeholder:text-white/60 focus:border-[#64E365] focus:ring-1 focus:ring-[#64E365]/50"
-          placeholder="Ej. 12"
-          min="1"
-          max="24"
-        />
-        {getErrorMessage("timeHorizon") && (
-          <p className="mt-2 text-sm text-red-400">
-            {getErrorMessage("timeHorizon")}
-          </p>
-        )}
-      </div>
+          <AccordionTrigger className="px-4 text-left font-mono text-base text-white">
+            Retención y horizonte
+          </AccordionTrigger>
+          <AccordionContent className="space-y-4 px-4 pb-4">
+            <p id={retentionHelpId} className="text-sm text-white/70">
+              Ajusta churn y horizonte temporal para entender cuándo supera al
+              modelo único. Si haces experimentos, colapsa esta sección para
+              mantener un registro visual claro.
+            </p>
+            <div className="space-y-4">
+              <div>
+                <label
+                  htmlFor="churnRate"
+                  className="block text-sm font-medium text-white/90"
+                >
+                  Tasa de abandono mensual (%)
+                </label>
+                <input
+                  id="churnRate"
+                  type="number"
+                  value={inputs.churnRate}
+                  onChange={(e) =>
+                    onInputChange("churnRate", parseFloat(e.target.value))
+                  }
+                  className="mt-1 block w-full rounded-md border border-white/20 bg-white/5 px-3 py-2 text-white placeholder:text-white/60 focus:border-[#64E365] focus:ring-1 focus:ring-[#64E365]/50"
+                  placeholder="Ej. 4"
+                  min="0"
+                  max="100"
+                  step="0.01"
+                  aria-describedby={retentionHelpId}
+                />
+                {getErrorMessage("churnRate") ? (
+                  <p className="mt-2 text-sm text-red-400">
+                    {getErrorMessage("churnRate")}
+                  </p>
+                ) : (
+                  <p className="mt-2 text-xs text-white/60">
+                    Una tasa menor al 5% mensual suele indicar product-market
+                    fit en micro-SaaS.
+                  </p>
+                )}
+              </div>
 
-      {/* Manual Calculation Trigger */}
+              <div>
+                <label
+                  htmlFor="timeHorizon"
+                  className="block text-sm font-medium text-white/90"
+                >
+                  Horizonte temporal (meses)
+                </label>
+                <input
+                  id="timeHorizon"
+                  type="number"
+                  value={inputs.timeHorizon}
+                  onChange={(e) =>
+                    onInputChange("timeHorizon", parseInt(e.target.value))
+                  }
+                  className="mt-1 block w-full rounded-md border border-white/20 bg-white/5 px-3 py-2 text-white placeholder:text-white/60 focus:border-[#64E365] focus:ring-1 focus:ring-[#64E365]/50"
+                  placeholder="Ej. 12"
+                  min="1"
+                  max="60"
+                  aria-describedby={retentionHelpId}
+                />
+                {getErrorMessage("timeHorizon") ? (
+                  <p className="mt-2 text-sm text-red-400">
+                    {getErrorMessage("timeHorizon")}
+                  </p>
+                ) : (
+                  <p className="mt-2 text-xs text-white/60">
+                    Analiza entre 12 y 36 meses para medir retorno y estabilidad
+                    inicial.
+                  </p>
+                )}
+              </div>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+
       <div className="flex justify-end">
         <Button
           onClick={onNext}
-          className="w-full sm:w-auto bg-[#64E365] text-white hover:bg-[#64E365]/90 font-bold shadow-[0_0_10px_rgba(100,227,101,0.5)]"
+          className="w-full bg-[#64E365] font-bold text-white shadow-[0_0_10px_rgba(100,227,101,0.5)] hover:bg-[#64E365]/90 sm:w-auto"
         >
-          Calcular Modelo de Suscripción
+          Calcular modelo de suscripción
           <ArrowRight className="ml-2 h-4 w-4" />
         </Button>
       </div>
@@ -1365,149 +1497,182 @@ function StepThreeForm({
   const getErrorMessage = (field: keyof typeof DEFAULT_INPUTS) =>
     errors.find((error) => error.field === field)?.message;
 
+  const churnHelpId = "step3-churn-help";
+  const horizonHelpId = "step3-horizon-help";
+  const discountHelpId = "step3-discount-help";
+
   return (
     <div className="space-y-6">
-      {/* Summary Section */}
-      <div className="rounded-lg bg-white/5 p-4 sm:p-6 border border-white/20">
-        <h3 className="font-mono text-lg sm:text-xl text-white mb-4">
-          Resumen del Análisis
-        </h3>
+      <Accordion
+        type="multiple"
+        defaultValue={["summary", "advanced"]}
+        className="space-y-4"
+      >
+        <AccordionItem
+          value="summary"
+          className="overflow-hidden rounded-lg border border-white/20 bg-white/5 shadow-sm"
+        >
+          <AccordionTrigger className="px-4 text-left font-mono text-base text-white">
+            Resumen del análisis
+          </AccordionTrigger>
+          <AccordionContent className="space-y-4 px-4 pb-4">
+            <p className="text-sm text-white/70">
+              Revisa los resultados clave antes de ajustar métricas avanzadas.
+              Puedes plegar este resumen para concentrarte en la optimización.
+            </p>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div className="flex flex-col rounded-lg border border-white/10 bg-white/5 p-4">
+                <span className="text-sm font-medium text-white/60">
+                  Ganancia total (único)
+                </span>
+                <span className="mt-1 text-2xl font-bold text-white">
+                  {formatCurrency(totalOneTimeProfit)}
+                </span>
+              </div>
+              <div className="flex flex-col rounded-lg border border-white/10 bg-white/5 p-4">
+                <span className="text-sm font-medium text-white/60">
+                  Ganancia total (suscripción)
+                </span>
+                <span className="mt-1 text-2xl font-bold text-white">
+                  {formatCurrency(totalSubscriptionProfit)}
+                </span>
+              </div>
+              <div className="flex flex-col rounded-lg border border-white/10 bg-white/5 p-4">
+                <span className="text-sm font-medium text-white/60">
+                  Punto de equilibrio estimado
+                </span>
+                <span className="mt-1 text-2xl font-bold text-white">
+                  {breakEvenPoint > 0 ? `${breakEvenPoint} meses` : "Sin cruce"}
+                </span>
+              </div>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {/* Total Profit from One-Time Sales */}
-          <div className="flex flex-col">
-            <span className="text-sm font-medium text-white/60">
-              Ganancia Total (Único)
-            </span>
-            <span className="mt-1 text-2xl font-bold text-white">
-              {formatCurrency(totalOneTimeProfit)}
-            </span>
-          </div>
+        <AccordionItem
+          value="advanced"
+          className="overflow-hidden rounded-lg border border-white/20 bg-white/5 shadow-sm"
+        >
+          <AccordionTrigger className="px-4 text-left font-mono text-base text-white">
+            Ajustes avanzados
+          </AccordionTrigger>
+          <AccordionContent className="space-y-4 px-4 pb-4">
+            <p className="text-sm text-white/70">
+              Ajusta retención, horizonte y descuento para modelar distintos
+              escenarios de cashflow.
+            </p>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              <div>
+                <label
+                  htmlFor="churnRateStep3"
+                  className="block text-sm font-medium text-white/90"
+                >
+                  Tasa de abandono (%)
+                </label>
+                <input
+                  id="churnRateStep3"
+                  type="number"
+                  value={inputs.churnRate}
+                  onChange={(e) =>
+                    onInputChange("churnRate", parseFloat(e.target.value))
+                  }
+                  className="mt-1 block w-full rounded-md border border-white/20 bg-white/5 px-3 py-2 text-white placeholder:text-white/60 focus:border-[#64E365] focus:ring-1 focus:ring-[#64E365]/50"
+                  placeholder="Ej. 5"
+                  min="0"
+                  max="100"
+                  step="0.01"
+                  aria-describedby={churnHelpId}
+                />
+                {getErrorMessage("churnRate") ? (
+                  <p className="mt-2 text-sm text-red-400">
+                    {getErrorMessage("churnRate")}
+                  </p>
+                ) : (
+                  <p id={churnHelpId} className="mt-2 text-xs text-white/60">
+                    Reduce churn con onboarding y seguimiento proactivo; intenta
+                    mantenerlo bajo 5%.
+                  </p>
+                )}
+              </div>
 
-          {/* Total Profit from Subscriptions */}
-          <div className="flex flex-col">
-            <span className="text-sm font-medium text-white/60">
-              Ganancia Total (Suscripción)
-            </span>
-            <span className="mt-1 text-2xl font-bold text-white">
-              {formatCurrency(totalSubscriptionProfit)}
-            </span>
-          </div>
+              <div>
+                <label
+                  htmlFor="timeHorizonStep3"
+                  className="block text-sm font-medium text-white/90"
+                >
+                  Horizonte temporal (meses)
+                </label>
+                <input
+                  id="timeHorizonStep3"
+                  type="number"
+                  value={inputs.timeHorizon}
+                  onChange={(e) =>
+                    onInputChange("timeHorizon", parseInt(e.target.value))
+                  }
+                  className="mt-1 block w-full rounded-md border border-white/20 bg-white/5 px-3 py-2 text-white placeholder:text-white/60 focus:border-[#64E365] focus:ring-1 focus:ring-[#64E365]/50"
+                  placeholder="Ej. 12"
+                  min="1"
+                  max="60"
+                  aria-describedby={horizonHelpId}
+                />
+                {getErrorMessage("timeHorizon") ? (
+                  <p className="mt-2 text-sm text-red-400">
+                    {getErrorMessage("timeHorizon")}
+                  </p>
+                ) : (
+                  <p id={horizonHelpId} className="mt-2 text-xs text-white/60">
+                    Evalúa 12, 24 y 36 meses para identificar picos de
+                    rentabilidad.
+                  </p>
+                )}
+              </div>
 
-          {/* Break-Even Point */}
-          <div className="flex flex-col">
-            <span className="text-sm font-medium text-white/60">
-              Punto de Equilibrio
-            </span>
-            <span className="mt-1 text-2xl font-bold text-white">
-              {breakEvenPoint} meses
-            </span>
-          </div>
-        </div>
-      </div>
+              <div className="sm:col-span-2">
+                <label
+                  htmlFor="discountRateStep3"
+                  className="block text-sm font-medium text-white/90"
+                >
+                  Tasa de descuento (%)
+                </label>
+                <input
+                  id="discountRateStep3"
+                  type="number"
+                  value={inputs.discountRate}
+                  onChange={(e) =>
+                    onInputChange("discountRate", parseFloat(e.target.value))
+                  }
+                  className="mt-1 block w-full rounded-md border border-white/20 bg-white/5 px-3 py-2 text-white placeholder:text-white/60 focus:border-[#64E365] focus:ring-1 focus:ring-[#64E365]/50"
+                  placeholder="Ej. 10"
+                  min="0"
+                  max="50"
+                  step="0.01"
+                  aria-describedby={discountHelpId}
+                />
+                {getErrorMessage("discountRate") ? (
+                  <p className="mt-2 text-sm text-red-400">
+                    {getErrorMessage("discountRate")}
+                  </p>
+                ) : (
+                  <p id={discountHelpId} className="mt-2 text-xs text-white/60">
+                    Usa una tasa mayor si tu negocio es riesgoso o si buscas
+                    escenarios conservadores.
+                  </p>
+                )}
+              </div>
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
 
-      {/* Detailed Results Section */}
-      <div className="rounded-lg bg-white/5 p-4 sm:p-6 border border-white/20">
-        <h3 className="font-mono text-lg sm:text-xl text-white mb-4">
-          Detalles del Análisis
-        </h3>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {/* Churn Rate */}
-          <div>
-            <label
-              htmlFor="churnRateStep3"
-              className="block text-sm font-medium text-white/90"
-            >
-              Tasa de Abandono (%)
-            </label>
-            <input
-              id="churnRateStep3"
-              type="number"
-              value={inputs.churnRate}
-              onChange={(e) =>
-                onInputChange("churnRate", parseFloat(e.target.value))
-              }
-              className="mt-1 block w-full rounded-md border border-white/20 bg-white/5 px-3 py-2 text-white placeholder:text-white/60 focus:border-[#64E365] focus:ring-1 focus:ring-[#64E365]/50"
-              placeholder="Ej. 5"
-              min="0"
-              max="100"
-              step="0.01"
-            />
-            {getErrorMessage("churnRate") && (
-              <p className="mt-2 text-sm text-red-400">
-                {getErrorMessage("churnRate")}
-              </p>
-            )}
-          </div>
-
-          {/* Time Horizon */}
-          <div>
-            <label
-              htmlFor="timeHorizonStep3"
-              className="block text-sm font-medium text-white/90"
-            >
-              Horizonte Temporal (meses)
-            </label>
-            <input
-              id="timeHorizonStep3"
-              type="number"
-              value={inputs.timeHorizon}
-              onChange={(e) =>
-                onInputChange("timeHorizon", parseInt(e.target.value))
-              }
-              className="mt-1 block w-full rounded-md border border-white/20 bg-white/5 px-3 py-2 text-white placeholder:text-white/60 focus:border-[#64E365] focus:ring-1 focus:ring-[#64E365]/50"
-              placeholder="Ej. 12"
-              min="1"
-              max="24"
-            />
-            {getErrorMessage("timeHorizon") && (
-              <p className="mt-2 text-sm text-red-400">
-                {getErrorMessage("timeHorizon")}
-              </p>
-            )}
-          </div>
-
-          {/* Discount Rate */}
-          <div>
-            <label
-              htmlFor="discountRateStep3"
-              className="block text-sm font-medium text-white/90"
-            >
-              Tasa de Descuento (%)
-            </label>
-            <input
-              id="discountRateStep3"
-              type="number"
-              value={inputs.discountRate}
-              onChange={(e) =>
-                onInputChange("discountRate", parseFloat(e.target.value))
-              }
-              className="mt-1 block w-full rounded-md border border-white/20 bg-white/5 px-3 py-2 text-white placeholder:text-white/60 focus:border-[#64E365] focus:ring-1 focus:ring-[#64E365]/50"
-              placeholder="Ej. 10"
-              min="0"
-              max="50"
-              step="0.01"
-            />
-            {getErrorMessage("discountRate") && (
-              <p className="mt-2 text-sm text-red-400">
-                {getErrorMessage("discountRate")}
-              </p>
-            )}
-          </div>
-        </div>
-      </div>
-
-      {/* Final Actions */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between">
         <div className="flex gap-2">
           <Button
             onClick={onBack}
             variant="outline"
             size="sm"
-            className="border-white/20 text-white/70 hover:text-white hover:border-white/40 bg-transparent"
+            className="border-white/20 bg-transparent text-white/70 hover:border-white/40 hover:text-white"
           >
-            <ChevronLeft className="h-4 w-4 mr-1" />
+            <ChevronLeft className="mr-1 h-4 w-4" />
             Volver
           </Button>
         </div>
@@ -1567,7 +1732,7 @@ function StepThreeContext({
           <AlertDescription className="space-y-3 text-sm">
             <p>Ajusta los siguientes valores para que el cálculo sea válido:</p>
             <ul className="space-y-1 pl-4 list-disc">
-              {validationErrors.map((error, index) => (
+              {validationErrors.map((error: ValidationError, index: number) => (
                 <li key={index}>{error.message}</li>
               ))}
             </ul>
