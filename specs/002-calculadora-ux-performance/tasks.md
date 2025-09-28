@@ -25,7 +25,7 @@
 - [x] T121 Virtualizar lista mensual en `ResultsDisplay` (si > 60 ítems)
 - [x] T122 `useTransition`/`useDeferredValue` en inputs más pesados
 - [x] T123 Web Worker opcional para cálculos (si profiling lo justifica)
-- [ ] T124 Debounce/commit de cálculos al avanzar de paso
+- [x] T124 Debounce/commit de cálculos al avanzar de paso
 
 ## Fase 4.4 – UX y Accesibilidad
 

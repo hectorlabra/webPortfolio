@@ -252,7 +252,11 @@ export default function CalculadoraPage() {
       prev.includes(currentStep) ? prev : [...prev, currentStep]
     );
     setCurrentStep((step) => Math.min(STEP_COUNT, step + 1));
-  }, [currentStep, validateStep]);
+
+    if (currentStep < STEP_COUNT) {
+      calculate();
+    }
+  }, [currentStep, validateStep, calculate]);
 
   const handleGoToStep = useCallback(
     (targetStep: number) => {
