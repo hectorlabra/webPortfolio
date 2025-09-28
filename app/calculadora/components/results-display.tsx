@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import {
   Card,
   CardContent,
@@ -26,6 +27,18 @@ import {
   getTrendIndicator,
 } from "@/app/calculadora/lib/utils";
 
+const VIRTUALIZATION_THRESHOLD = 60;
+const VIRTUALIZED_ROW_HEIGHT = 88;
+const VIRTUALIZED_ROW_GAP = 12;
+const VIRTUALIZED_ITEM_HEIGHT = VIRTUALIZED_ROW_HEIGHT + VIRTUALIZED_ROW_GAP;
+const VIRTUAL_OVERSCAN = 4;
+
+interface MonthlyItem {
+  month: number;
+  revenue: number;
+  profit: number;
+}
+
 interface ResultsDisplayProps {
   results: CalculationResults;
   timeHorizon: number;
@@ -37,7 +50,7 @@ interface MetricCardProps {
   value: string;
   subtitle?: string;
   trend?: "up" | "down" | "neutral";
-  icon?: React.ReactNode;
+  icon?: ReactNode;
   variant?: "default" | "success" | "warning" | "destructive";
   progress?: number;
   description?: string;
@@ -187,6 +200,152 @@ function ComparisonCard({
   );
 }
 
+function MonthlyListItem({
+  item,
+  height,
+}: {
+  item: MonthlyItem;
+  height?: number;
+}) {
+  const profitColor = getValueColor(item.profit)
+    .replace("text-green-600", "text-[#64E365]")
+    .replace("text-red-600", "text-red-400");
+
+  return (
+    <div
+      role="listitem"
+      className="flex h-full flex-col gap-3 rounded-lg border border-white/10 bg-white/5 px-3 py-3 sm:flex-row sm:items-center sm:justify-between"
+      style={height ? { height } : undefined}
+    >
+      <div className="flex items-center space-x-3">
+        <span className="min-w-[60px] rounded-md border border-white/15 bg-white/10 px-2 py-1 text-center font-mono text-[11px] text-white/70">
+          Mes {item.month}
+        </span>
+        <div>
+          <p className="font-medium text-white/90">
+            {formatCurrency(item.revenue)}
+          </p>
+          <p className="text-xs text-white/60">Ingresos</p>
+        </div>
+      </div>
+
+      <div className="text-left sm:text-right">
+        <p className={`font-medium ${profitColor}`}>
+          {formatCurrency(item.profit)}
+        </p>
+        <p className="text-xs text-white/60">Beneficio</p>
+      </div>
+    </div>
+  );
+}
+
+function VirtualizedMonthlyList({ items }: { items: MonthlyItem[] }) {
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const [scrollTop, setScrollTop] = useState(0);
+  const [containerHeight, setContainerHeight] = useState(0);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (!container) return;
+
+    const handleScroll = () => {
+      setScrollTop(container.scrollTop);
+    };
+
+    const handleResize = () => {
+      if (containerRef.current) {
+        setContainerHeight(containerRef.current.clientHeight);
+      }
+    };
+
+    container.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", handleResize);
+    handleResize();
+
+    return () => {
+      container.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  useEffect(() => {
+    const container = containerRef.current;
+    if (container) {
+      container.scrollTop = 0;
+    }
+    setScrollTop(0);
+  }, [items]);
+
+  const effectiveHeight = containerHeight || VIRTUALIZED_ITEM_HEIGHT * 4;
+  const startIndex = Math.max(
+    0,
+    Math.floor(scrollTop / VIRTUALIZED_ITEM_HEIGHT) - VIRTUAL_OVERSCAN
+  );
+  const visibleCount =
+    Math.ceil(effectiveHeight / VIRTUALIZED_ITEM_HEIGHT) + VIRTUAL_OVERSCAN * 2;
+  const endIndex = Math.min(items.length, startIndex + visibleCount);
+  const visibleItems = items.slice(startIndex, endIndex);
+  const offsetY = startIndex * VIRTUALIZED_ITEM_HEIGHT;
+
+  return (
+    <div
+      ref={containerRef}
+      className="h-80 overflow-y-auto pr-2"
+      role="list"
+      aria-label="Evolución mensual completa"
+    >
+      <div
+        className="relative"
+        style={{ height: items.length * VIRTUALIZED_ITEM_HEIGHT }}
+      >
+        {visibleItems.map((item, index) => (
+          <div
+            key={item.month}
+            className="absolute left-0 right-0"
+            style={{
+              transform: `translateY(${
+                offsetY + index * VIRTUALIZED_ITEM_HEIGHT
+              }px)`,
+              height: VIRTUALIZED_ITEM_HEIGHT,
+              paddingBottom: VIRTUALIZED_ROW_GAP,
+            }}
+          >
+            <MonthlyListItem item={item} height={VIRTUALIZED_ROW_HEIGHT} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function MonthlyList({
+  items,
+  virtualize,
+}: {
+  items: MonthlyItem[];
+  virtualize: boolean;
+}) {
+  if (items.length === 0) {
+    return (
+      <p className="text-sm text-white/60">
+        No hay datos mensuales disponibles para este horizonte.
+      </p>
+    );
+  }
+
+  if (virtualize) {
+    return <VirtualizedMonthlyList items={items} />;
+  }
+
+  return (
+    <div className="space-y-3" role="list">
+      {items.map((item) => (
+        <MonthlyListItem key={item.month} item={item} />
+      ))}
+    </div>
+  );
+}
+
 export function ResultsDisplay({
   results,
   timeHorizon,
@@ -207,6 +366,27 @@ export function ResultsDisplay({
     : results.breakEvenPoint === -1
     ? 0
     : Math.min((timeHorizon / results.breakEvenPoint) * 100, 100);
+
+  const monthlyItems = useMemo<MonthlyItem[]>(
+    () =>
+      results.monthlyRevenue.map((revenue, index) => ({
+        month: index + 1,
+        revenue,
+        profit: results.monthlyProfit[index] || 0,
+      })),
+    [results.monthlyProfit, results.monthlyRevenue]
+  );
+
+  const shouldVirtualize = monthlyItems.length > VIRTUALIZATION_THRESHOLD;
+  const recentItems = shouldVirtualize
+    ? monthlyItems
+    : monthlyItems.slice(-Math.min(6, monthlyItems.length));
+  const monthlyTitleSuffix = shouldVirtualize
+    ? `${monthlyItems.length} meses`
+    : `Últimos ${recentItems.length} meses`;
+  const monthlyDescription = shouldVirtualize
+    ? "Desplázate para revisar ingresos y beneficios de todo el horizonte."
+    : "Ingresos y beneficios mensuales del modelo de suscripción.";
 
   return (
     <div
@@ -333,50 +513,14 @@ export function ResultsDisplay({
         <CardHeader>
           <CardTitle className="flex items-center space-x-2 font-mono text-white">
             <Calendar className="h-5 w-5 text-[#64E365]" />
-            <span>Evolución Mensual (Últimos 6 meses)</span>
+            <span>Evolución Mensual ({monthlyTitleSuffix})</span>
           </CardTitle>
           <CardDescription className="text-white/70">
-            Ingresos y beneficios mensuales del modelo de suscripción
+            {monthlyDescription}
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <div className="space-y-3">
-            {results.monthlyRevenue.slice(-6).map((revenue, index) => {
-              const actualIndex = results.monthlyRevenue.length - 6 + index;
-              const profit = results.monthlyProfit[actualIndex] || 0;
-              const month = actualIndex + 1;
-
-              return (
-                <div
-                  key={month}
-                  className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between p-3 rounded-lg bg-white/5 border border-white/10"
-                >
-                  <div className="flex items-center space-x-3">
-                    <span className="min-w-[60px] text-[11px] px-2 py-1 rounded-md bg-white/10 border border-white/15 text-white/70 text-center font-mono">
-                      Mes {month}
-                    </span>
-                    <div>
-                      <p className="font-medium text-white/90">
-                        {formatCurrency(revenue)}
-                      </p>
-                      <p className="text-xs text-white/60">Ingresos</p>
-                    </div>
-                  </div>
-
-                  <div className="text-left sm:text-right">
-                    <p
-                      className={`font-medium ${getValueColor(profit)
-                        .replace("text-green-600", "text-[#64E365]")
-                        .replace("text-red-600", "text-red-400")}`}
-                    >
-                      {formatCurrency(profit)}
-                    </p>
-                    <p className="text-xs text-white/60">Beneficio</p>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+          <MonthlyList items={recentItems} virtualize={shouldVirtualize} />
         </CardContent>
       </Card>
 

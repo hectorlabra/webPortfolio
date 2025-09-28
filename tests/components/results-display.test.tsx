@@ -23,6 +23,18 @@ function makeResults(partial: Partial<CalculationResults>): CalculationResults {
   };
 }
 
+function buildSeries(length: number, start: number, step: number) {
+  return Array.from({ length }, (_, index) => start + index * step);
+}
+
+function buildCumulative(values: number[]) {
+  return values.reduce<number[]>((acc, value, index) => {
+    const previous = acc[index - 1] ?? 0;
+    acc.push(previous + value);
+    return acc;
+  }, []);
+}
+
 describe("ResultsDisplay", () => {
   it("muestra encabezado y horizonte", () => {
     renderWithProviders(
@@ -97,5 +109,31 @@ describe("ResultsDisplay", () => {
     expect(screen.getByText(/Margen Producto Único/)).toBeInTheDocument();
     expect(screen.getByText(/Comparación de Ingresos/)).toBeInTheDocument();
     expect(screen.getByText(/Comparación de Beneficios/)).toBeInTheDocument();
+  });
+
+  it("virtualiza la lista mensual cuando supera el umbral", () => {
+    const months = 120;
+    const monthlyRevenue = buildSeries(months, 1800, 25);
+    const monthlyProfit = buildSeries(months, 950, 10);
+    const cumulativeRevenue = buildCumulative(monthlyRevenue);
+    const cumulativeProfit = buildCumulative(monthlyProfit);
+
+    renderWithProviders(
+      <ResultsDisplay
+        results={makeResults({
+          monthlyRevenue,
+          monthlyProfit,
+          cumulativeRevenue,
+          cumulativeProfit,
+        })}
+        timeHorizon={months}
+      />
+    );
+
+    expect(
+      screen.getByText(/Evolución Mensual \(120 meses\)/)
+    ).toBeInTheDocument();
+    expect(screen.getAllByText(/^Mes\s+1$/).length).toBeGreaterThan(0);
+    expect(screen.queryByText(/^Mes\s+120$/)).not.toBeInTheDocument();
   });
 });
