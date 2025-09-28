@@ -24,7 +24,7 @@
 - [x] T120 Memo cache para cálculos por hash de inputs en `lib/calculations.ts`
 - [x] T121 Virtualizar lista mensual en `ResultsDisplay` (si > 60 ítems)
 - [x] T122 `useTransition`/`useDeferredValue` en inputs más pesados
-- [ ] T123 Web Worker opcional para cálculos (si profiling lo justifica)
+- [x] T123 Web Worker opcional para cálculos (si profiling lo justifica)
 - [ ] T124 Debounce/commit de cálculos al avanzar de paso
 
 ## Fase 4.4 – UX y Accesibilidad

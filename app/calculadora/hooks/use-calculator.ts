@@ -23,13 +23,20 @@ import {
   calculateResults,
   validateCalculatorInputs,
 } from "@/app/calculadora/lib/calculations";
+import type {
+  CalculationWorkerRequest,
+  CalculationWorkerResponse,
+} from "@/app/calculadora/lib/worker-messages";
 import { debounce } from "@/app/calculadora/lib/utils";
+
+type WorkerMode = "auto" | "always" | "never";
 
 interface UseCalculatorOptions {
   autoCalculate?: boolean;
   debounceMs?: number;
   onCalculationComplete?: (results: CalculationResults) => void;
   onValidationError?: (errors: ValidationError[]) => void;
+  workerMode?: WorkerMode;
 }
 
 export function useCalculator(options: UseCalculatorOptions = {}) {
@@ -38,6 +45,7 @@ export function useCalculator(options: UseCalculatorOptions = {}) {
     debounceMs = 300,
     onCalculationComplete,
     onValidationError,
+    workerMode = "auto",
   } = options;
 
   // Main calculator state
@@ -54,9 +62,17 @@ export function useCalculator(options: UseCalculatorOptions = {}) {
     []
   );
 
+  const workerRef = useRef<Worker | null>(null);
+  const pendingInputsRef = useRef<Map<number, CalculatorInputs>>(new Map());
+  const onCalculationCompleteRef = useRef(onCalculationComplete);
+
   const [isPending, startTransition] = useTransition();
   const calculationIdRef = useRef(0);
   const deferredInputs = useDeferredValue(state.inputs);
+
+  useEffect(() => {
+    onCalculationCompleteRef.current = onCalculationComplete;
+  }, [onCalculationComplete]);
 
   // Update individual input field
   const updateInput = useCallback(
@@ -114,6 +130,30 @@ export function useCalculator(options: UseCalculatorOptions = {}) {
 
       setValidationErrors([]);
 
+      const worker = workerRef.current;
+      const canUseWorker =
+        workerMode !== "never" &&
+        worker &&
+        (workerMode === "always" || shouldUseCalculationWorker(snapshot));
+
+      if (canUseWorker) {
+        pendingInputsRef.current.set(calculationId, { ...snapshot });
+
+        const message: CalculationWorkerRequest = {
+          type: "calculate",
+          id: calculationId,
+          inputs: snapshot,
+        };
+
+        try {
+          worker.postMessage(message);
+          return;
+        } catch (error) {
+          console.error("Fallo al delegar cálculo al worker:", error);
+          pendingInputsRef.current.delete(calculationId);
+        }
+      }
+
       startTransition(() => {
         try {
           const results = calculateResults(snapshot);
@@ -130,7 +170,7 @@ export function useCalculator(options: UseCalculatorOptions = {}) {
             lastCalculated: new Date(),
           }));
 
-          onCalculationComplete?.(results);
+          onCalculationCompleteRef.current?.(results);
         } catch (error) {
           console.error("Calculation error:", error);
 
@@ -151,7 +191,7 @@ export function useCalculator(options: UseCalculatorOptions = {}) {
         }
       });
     },
-    [state.inputs, onCalculationComplete, onValidationError, startTransition]
+    [state.inputs, workerMode, onValidationError, startTransition]
   );
 
   // Debounced calculation for auto-calculate mode
@@ -217,6 +257,110 @@ export function useCalculator(options: UseCalculatorOptions = {}) {
     [validationErrors]
   );
 
+  useEffect(() => {
+    if (typeof window === "undefined" || !("Worker" in window)) {
+      return;
+    }
+
+    try {
+      const worker = new Worker(
+        new URL("../workers/calculation-worker.ts", import.meta.url),
+        { type: "module" }
+      );
+
+      workerRef.current = worker;
+
+      const handleMessage = (
+        event: MessageEvent<CalculationWorkerResponse>
+      ) => {
+        const data = event.data;
+
+        if (!data) {
+          return;
+        }
+
+        const pendingInputs = pendingInputsRef.current.get(data.id);
+        pendingInputsRef.current.delete(data.id);
+
+        if (data.id !== calculationIdRef.current) {
+          return;
+        }
+
+        if (data.type === "result") {
+          startTransition(() => {
+            setState((prevState) => ({
+              ...prevState,
+              results: data.results,
+              isCalculating: false,
+              hasResults: true,
+              lastCalculated: new Date(),
+            }));
+          });
+
+          onCalculationCompleteRef.current?.(data.results);
+        } else if (data.type === "error") {
+          console.error("Calculation worker error:", data.message);
+
+          if (pendingInputs) {
+            try {
+              const results = calculateResults(pendingInputs);
+
+              startTransition(() => {
+                setState((prevState) => ({
+                  ...prevState,
+                  results,
+                  isCalculating: false,
+                  hasResults: true,
+                  lastCalculated: new Date(),
+                }));
+              });
+
+              onCalculationCompleteRef.current?.(results);
+              return;
+            } catch (fallbackError) {
+              console.error("Fallback calculation error:", fallbackError);
+            }
+          }
+
+          startTransition(() => {
+            setState((prevState) => ({
+              ...prevState,
+              isCalculating: false,
+            }));
+          });
+
+          setValidationErrors([
+            {
+              field: "oneTimePrice",
+              message:
+                "Error en el cálculo. Por favor, verifica los datos ingresados.",
+              severity: "error",
+            },
+          ]);
+        }
+      };
+
+      const handleError = (event: ErrorEvent) => {
+        console.error("Calculation worker crashed:", event.message);
+      };
+
+      const pendingInputsMap = pendingInputsRef.current;
+
+      worker.addEventListener("message", handleMessage as EventListener);
+      worker.addEventListener("error", handleError as EventListener);
+
+      return () => {
+        worker.removeEventListener("message", handleMessage as EventListener);
+        worker.removeEventListener("error", handleError as EventListener);
+        worker.terminate();
+        workerRef.current = null;
+        pendingInputsMap.clear();
+      };
+    } catch (error) {
+      console.error("Failed to initialize calculation worker:", error);
+    }
+  }, [startTransition]);
+
   return {
     // State
     inputs: state.inputs,
@@ -253,4 +397,14 @@ export function useCalculator(options: UseCalculatorOptions = {}) {
         state.results.cumulativeProfit.length - 1
       ] || 0,
   };
+}
+
+const WORKER_TIME_HORIZON_THRESHOLD = 36;
+const WORKER_CUSTOMER_THRESHOLD = 5000;
+
+function shouldUseCalculationWorker(inputs: CalculatorInputs): boolean {
+  return (
+    inputs.timeHorizon >= WORKER_TIME_HORIZON_THRESHOLD ||
+    inputs.oneTimeCustomers >= WORKER_CUSTOMER_THRESHOLD
+  );
 }
