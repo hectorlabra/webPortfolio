@@ -31,7 +31,7 @@
 
 - [x] T130 Inputs plegables por sección y ayuda contextual mejorada
 - [x] T131 Atajos de teclado (/, g r, g c) y focos visibles
-- [ ] T132 Revisar textos: títulos, “Próximos Pasos Recomendados” y microcopy
+- [x] T132 Revisar textos: títulos, “Próximos Pasos Recomendados” y microcopy
 
 ## Fase 4.5 – QA y Medición
 

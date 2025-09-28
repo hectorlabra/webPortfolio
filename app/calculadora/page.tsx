@@ -591,14 +591,15 @@ export default function CalculadoraPage() {
               <div className="space-y-4">
                 <div className="flex items-center justify-center space-x-3">
                   <Calculator className="h-8 w-8 text-[#64E365]" />
-                  <h1 className="font-mono text-3xl sm:text-4xl font-bold text-white">
-                    Calculadora de Ingresos
+                  <h1 className="font-mono text-3xl sm:text-4xl font-bold text-white text-balance">
+                    Calculadora de ingresos SaaS vs producto único
                   </h1>
                 </div>
 
-                <p className="text-lg sm:text-xl text-white/70 max-w-3xl mx-auto">
-                  Compara modelo único vs suscripción para transformar tu
-                  infoproducto en un micro-SaaS rentable
+                <p className="text-lg sm:text-xl text-white/70 max-w-3xl mx-auto text-balance">
+                  Descubre cuánto más puedes generar migrando tu oferta one-time
+                  a un modelo recurrente y obtén argumentos claros para tu
+                  próxima decisión estratégica.
                 </p>
 
                 <div className="flex flex-wrap items-center justify-center gap-3 mt-6">
@@ -607,21 +608,21 @@ export default function CalculadoraPage() {
                     className="border-white/20 text-white/80 bg-white/5"
                   >
                     <TrendingUp className="h-4 w-4 mr-1 text-[#64E365]" />
-                    Análisis Financiero
+                    Modelo financiero comparativo
                   </Badge>
                   <Badge
                     variant="outline"
                     className="border-white/20 text-white/80 bg-white/5"
                   >
                     <BarChart3 className="h-4 w-4 mr-1 text-[#64E365]" />
-                    Visualización Interactiva
+                    Gráficos en tiempo real
                   </Badge>
                   <Badge
                     variant="outline"
                     className="border-white/20 text-white/80 bg-white/5"
                   >
                     <Lightbulb className="h-4 w-4 mr-1 text-[#64E365]" />
-                    Insights Inteligentes
+                    Recomendaciones accionables
                   </Badge>
                 </div>
               </div>
@@ -644,8 +645,8 @@ export default function CalculadoraPage() {
             <Card className="bg-white/5 border-white/20 shadow-lg backdrop-blur animate-circular-glow">
               <CardHeader className="space-y-4">
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                  <CardTitle className="font-mono text-lg sm:text-xl text-white">
-                    Tu ruta hacia el análisis
+                  <CardTitle className="font-mono text-lg sm:text-xl text-white text-balance">
+                    Guía paso a paso para comparar tus modelos
                   </CardTitle>
                   <Button
                     onClick={handleReset}
@@ -657,8 +658,9 @@ export default function CalculadoraPage() {
                     Reiniciar
                   </Button>
                 </div>
-                <CardDescription className="text-white/70">
-                  Completa los pasos a continuación para obtener tu análisis
+                <CardDescription className="text-white/70 text-balance">
+                  Recorre cada etapa, valida tus supuestos y genera un informe
+                  listo para presentar a tu equipo o stakeholders.
                 </CardDescription>
               </CardHeader>
 
@@ -1240,8 +1242,9 @@ function StepOneContext({ inputs }: { inputs: typeof DEFAULT_INPUTS }) {
             <TrendingUp className="h-5 w-5 text-[#64E365]" />
             <span>Resumen rápido del modelo único</span>
           </CardTitle>
-          <CardDescription className="text-white/70">
-            Ajusta tus supuestos antes de avanzar al modelo recurrente
+          <CardDescription className="text-white/70 text-balance">
+            Confirma que los supuestos del modelo one-time representan tu
+            operación actual antes de proyectar la transición a SaaS.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -1298,19 +1301,18 @@ function StepOneContext({ inputs }: { inputs: typeof DEFAULT_INPUTS }) {
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <ul className="list-disc list-inside space-y-2 text-sm text-white/70">
+          <ul className="list-disc list-inside space-y-2 text-sm text-white/70 text-balance">
             <li>
-              Valida que tu precio esté dentro del rango definido en tu
-              estrategia comercial (por ejemplo 47–197 USD para infoproductos
-              premium).
+              Revisa benchmarks de tu nicho: la mayoría de infoproductos premium
+              oscilan entre USD 47 y USD 197.
             </li>
             <li>
-              Mantén la tasa de conversión conservadora. Ajusta hacia abajo si
-              aún no tienes datos históricos.
+              Mantén la conversión conservadora (1%–3%) si aún no tienes datos
+              consistentes; evita escenarios optimistas.
             </li>
             <li>
-              Usa el campo de clientes objetivo como un escenario base para
-              comparar contra la suscripción.
+              Utiliza la estimación de clientes como un escenario base desde el
+              cual contrastar la escalabilidad del modelo recurrente.
             </li>
           </ul>
         </CardContent>
@@ -1339,13 +1341,13 @@ function StepTwoForm({
   return (
     <div className="space-y-6">
       <div className="rounded-lg border border-white/20 bg-white/5 p-4 sm:p-6">
-        <h3 className="font-mono text-lg text-white sm:text-xl">
+        <h3 className="font-mono text-lg text-white sm:text-xl text-balance">
           Modelo de suscripción recurrente
         </h3>
-        <p className="mt-3 text-sm text-white/70">
-          Ajusta los parámetros clave de tu oferta mensual para entender cómo
-          evoluciona el ingreso recurrente. Puedes plegar cada sección para
-          mantener el foco mientras iteras.
+        <p className="mt-3 text-sm text-white/70 text-balance">
+          Define precios, costes y métricas de retención para visualizar el
+          margen mensual y prever el impacto de tus mejoras de producto o
+          marketing.
         </p>
       </div>
 
@@ -1573,13 +1575,13 @@ function StepTwoContext({
     <div className="space-y-6">
       <Card className="bg-white/5 border-white/20">
         <CardHeader>
-          <CardTitle className="flex items-center space-x-2 font-mono text-white text-base">
+          <CardTitle className="flex items-center space-x-2 font-mono text-white text-base text-balance">
             <BarChart3 className="h-5 w-5 text-[#64E365]" />
             <span>Insights del modelo recurrente</span>
           </CardTitle>
-          <CardDescription className="text-white/70">
-            Comprueba que tu oferta mensual genera margen y se acerca al punto
-            de equilibrio esperado
+          <CardDescription className="text-white/70 text-balance">
+            Verifica que los supuestos del modelo mensual sostienen el margen y
+            timing de equilibrio que necesitas antes de pasar al análisis final.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -1631,32 +1633,35 @@ function StepTwoContext({
 
       <Card className="bg-white/5 border-white/20">
         <CardHeader>
-          <CardTitle className="flex items-center space-x-2 font-mono text-white text-base">
+          <CardTitle className="flex items-center space-x-2 font-mono text-white text-base text-balance">
             <Repeat className="h-5 w-5 text-[#FFD100]" />
             <span>Qué vigilar antes de avanzar</span>
           </CardTitle>
         </CardHeader>
-        <CardContent className="space-y-4 text-sm text-white/70">
+        <CardContent className="space-y-4 text-sm text-white/70 text-balance">
           <p>
-            Con un horizonte de {timeHorizon} meses, tu suscripción proyecta un
+            Considerando un horizonte de {timeHorizon} meses, el modelo
+            recurrente proyecta un
             {profitDelta >= 0 ? " incremento" : " déficit"} de{" "}
-            {formatCurrency(Math.abs(profitDelta))} frente al modelo único.
+            {formatCurrency(Math.abs(profitDelta))}
+            frente a la oferta única.
           </p>
           <ul className="list-disc list-inside space-y-2">
             <li>
               Ajusta churn y retención antes de avanzar; cada punto porcentual
-              cambia drásticamente el LTV.
+              puede alterar el LTV y el payback.
             </li>
             <li>
-              Si tu punto de equilibrio (
+              Si el punto de equilibrio (
               {breakEvenPoint && breakEvenPoint > 0
                 ? formatTimePeriod(breakEvenPoint)
                 : "sin cruce aún"}
-              ) supera el horizonte, considera mejorar la oferta o pricing.
+              ) supera el horizonte, refina la propuesta de valor o revisa tu
+              pricing.
             </li>
             <li>
-              Usa estos supuestos para preparar mensajes de onboarding y
-              retención desde el día 0.
+              Usa estos supuestos para diseñar onboarding, nutrir a los clientes
+              y sostener la retención.
             </li>
           </ul>
         </CardContent>

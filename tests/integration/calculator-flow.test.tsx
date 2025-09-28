@@ -55,7 +55,9 @@ describe("Calculator Flow Integration", () => {
   it("muestra estado vacío inicialmente y luego resultados tras cambios", async () => {
     renderWithProviders(<CalculadoraPage />);
 
-    expect(screen.getByText(/Tu ruta hacia el análisis/i)).toBeInTheDocument();
+    expect(
+      screen.getByText(/Calculadora de ingresos SaaS vs producto único/i)
+    ).toBeInTheDocument();
 
     const resultados = await completeWizardAndGenerateResults();
     expect(resultados).toBeInTheDocument();
@@ -80,7 +82,11 @@ describe("Calculator Flow Integration", () => {
     const resetButton = screen.getByRole("button", { name: /Reiniciar/i });
     fireEvent.click(resetButton);
 
-    await screen.findByText(/Tu ruta hacia el análisis/, {}, { timeout: 3000 });
+    await screen.findByText(
+      /Calculadora de ingresos SaaS vs producto único/,
+      {},
+      { timeout: 3000 }
+    );
 
     window.confirm = originalConfirm;
   });

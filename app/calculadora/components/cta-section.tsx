@@ -222,7 +222,7 @@ export function CTASection({
       id: "subscription",
       title: "Implementa tu Suscripción",
       description:
-        "Los números favorecen el modelo recurrente. Te ayudo a transformar tu producto.",
+        "Tus métricas validan el modelo recurrente; trabajemos juntos la migración y el lanzamiento sin sobresaltos.",
       primaryAction: {
         text: "Comenzar Transformación",
         onClick: () => window.open("/quien-soy#contacto", "_blank"),
@@ -246,7 +246,7 @@ export function CTASection({
       id: "consultation",
       title: "Consulta Estratégica",
       description:
-        "Necesitas una estrategia personalizada para optimizar tu modelo de negocio.",
+        "¿Aún tienes dudas? Analizamos tu contexto y definimos un plan concreto para capturar el potencial de estos datos.",
       primaryAction: {
         text: "Agendar Consulta Gratuita",
         onClick: () =>
@@ -272,7 +272,7 @@ export function CTASection({
       id: "learning",
       title: "Aprende sobre Micro-SaaS",
       description:
-        "Profundiza tus conocimientos antes de tomar la decisión final.",
+        "Prefieres sumar contexto antes de actuar. Explora recursos que amplían las cifras del análisis.",
       primaryAction: {
         text: "Leer Guías Completas",
         onClick: () => window.open("/blog", "_blank"),
@@ -299,13 +299,14 @@ export function CTASection({
     <div className={`space-y-10 ${className}`}>
       {/* Header */}
       <div className="text-center space-y-3">
-        <h2 className="text-2xl font-bold font-mono text-white flex items-center justify-center space-x-2">
+        <h2 className="text-2xl font-bold font-mono text-white flex items-center justify-center space-x-2 text-balance">
           <Rocket className="h-6 w-6 text-[#64E365]" />
-          <span>¿Qué sigue ahora?</span>
+          <span>Convierte el análisis en acción</span>
         </h2>
-        <p className="text-white/70 text-sm max-w-2xl mx-auto leading-relaxed">
-          Tienes los datos, ahora necesitas la ejecución. Te ayudo a convertir
-          estos números en un negocio recurrente exitoso.
+        <p className="text-white/70 text-sm max-w-2xl mx-auto leading-relaxed text-balance">
+          Selecciona el siguiente movimiento según tus resultados: implementa tu
+          suscripción, valida tu estrategia o sigue aprendiendo para maximizar
+          el LTV de tus usuarios.
         </p>
       </div>
 
@@ -314,10 +315,11 @@ export function CTASection({
         <CardHeader>
           <CardTitle className="flex items-center space-x-2 font-mono text-white">
             <Share2 className="h-5 w-5 text-[#64E365]" />
-            <span>Acciones Rápidas</span>
+            <span>Acciones inmediatas</span>
           </CardTitle>
-          <CardDescription className="text-white/70">
-            Guarda y comparte tus resultados
+          <CardDescription className="text-white/70 text-sm">
+            Guarda, comparte o reinicia la simulación en un clic para iterar
+            sobre nuevos escenarios.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -357,7 +359,7 @@ export function CTASection({
       {/* Main Actions */}
       <div className="space-y-4">
         <h3 className="text-lg font-mono font-semibold text-center text-white">
-          Próximos Pasos Recomendados
+          Siguientes pasos recomendados
         </h3>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
