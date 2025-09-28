@@ -17,7 +17,7 @@
 - [x] T115 Dynamic import del chart con `ssr: false`
 - [x] T116 Guardas de tamaño: no render si `containerWidth/height === 0`
 - [x] T117 Desactivar animaciones y simplificar tooltip/legend
-- [ ] T118 Memo de datasets y throttle en interacciones
+- [x] T118 Memo de datasets y throttle en interacciones
 
 ## Fase 4.3 – Performance
 

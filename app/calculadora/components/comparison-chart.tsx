@@ -49,28 +49,58 @@ type ChartTooltipPayloadItem = NonNullable<
   TooltipProps<number, string>["payload"]
 >[number];
 
+const getNumberValue = (entry?: ChartTooltipPayloadItem): number => {
+  if (!entry) return 0;
+
+  const { value } = entry;
+
+  if (typeof value === "number") {
+    return value;
+  }
+
+  if (Array.isArray(value)) {
+    const numeric = Number(value[0]);
+    return Number.isFinite(numeric) ? numeric : 0;
+  }
+
+  const numeric = Number(value);
+  return Number.isFinite(numeric) ? numeric : 0;
+};
+
+const createResultsSignature = (results: CalculationResults): string => {
+  const {
+    oneTimeRevenue,
+    oneTimeProfit,
+    revenueDifference,
+    profitDifference,
+    breakEvenPoint,
+    ltv,
+    paybackPeriod,
+    monthlyRevenue,
+    monthlyProfit,
+    cumulativeRevenue,
+    cumulativeProfit,
+  } = results;
+
+  return [
+    oneTimeRevenue,
+    oneTimeProfit,
+    revenueDifference,
+    profitDifference,
+    breakEvenPoint,
+    ltv,
+    paybackPeriod,
+    monthlyRevenue.join(","),
+    monthlyProfit.join(","),
+    cumulativeRevenue.join(","),
+    cumulativeProfit.join(","),
+  ].join("|");
+};
+
 type CustomTooltipProps = TooltipProps<number, string>;
 
 function CustomTooltip({ active, payload, label }: CustomTooltipProps) {
   if (!active || !payload || payload.length === 0) return null;
-
-  const getNumberValue = (entry?: ChartTooltipPayloadItem) => {
-    if (!entry) return 0;
-
-    const { value } = entry;
-
-    if (typeof value === "number") {
-      return value;
-    }
-
-    if (Array.isArray(value)) {
-      const numeric = Number(value[0]);
-      return Number.isFinite(numeric) ? numeric : 0;
-    }
-
-    const numeric = Number(value);
-    return Number.isFinite(numeric) ? numeric : 0;
-  };
 
   const rows = payload
     .map((entry, index) => {
@@ -127,14 +157,42 @@ export function ComparisonChart({
   const [selectedView, setSelectedView] = useState<string>("cumulative");
   const containerRefs = useRef<Record<string, HTMLDivElement | null>>({});
   const containerObservers = useRef<Record<string, ResizeObserver | null>>({});
+  const containerFrameIds = useRef<Record<string, number | null>>({});
   const [containerSize, setContainerSize] = useState<
     Record<string, { width: number; height: number }>
   >({});
 
-  const chartData = useMemo(
-    () => transformToChartData(results, timeHorizon),
-    [results, timeHorizon]
+  const resultsSignature = useMemo(
+    () => createResultsSignature(results),
+    [results]
   );
+
+  const chartDataCacheRef = useRef<{
+    signature: string;
+    horizon: number;
+    data: ReturnType<typeof transformToChartData>;
+  } | null>(null);
+
+  const chartData = useMemo(() => {
+    const cached = chartDataCacheRef.current;
+
+    if (
+      cached &&
+      cached.signature === resultsSignature &&
+      cached.horizon === timeHorizon
+    ) {
+      return cached.data;
+    }
+
+    const data = transformToChartData(results, timeHorizon);
+    chartDataCacheRef.current = {
+      signature: resultsSignature,
+      horizon: timeHorizon,
+      data,
+    };
+
+    return data;
+  }, [results, resultsSignature, timeHorizon]);
 
   const breakEvenPoint = results.breakEvenPoint;
   const breakEvenIndex =
@@ -163,23 +221,51 @@ export function ComparisonChart({
     return (node: HTMLDivElement | null) => {
       containerRefs.current[key] = node;
 
-      const updateSize = (target: HTMLDivElement | null) => {
-        const width = target?.offsetWidth ?? 0;
-        const height = target?.offsetHeight ?? 0;
-
+      const commitSize = (target: HTMLDivElement | null) => {
         setContainerSize((prev) => {
+          if (!target) {
+            if (!(key in prev)) {
+              return prev;
+            }
+
+            const next = { ...prev };
+            delete next[key];
+            return next;
+          }
+
+          const width = target.offsetWidth ?? 0;
+          const height = target.offsetHeight ?? 0;
           const previous = prev[key];
+
           if (
             previous &&
             previous.width === width &&
             previous.height === height
-          )
+          ) {
             return prev;
+          }
 
           return {
             ...prev,
             [key]: { width, height },
           };
+        });
+      };
+
+      const scheduleSizeUpdate = (target: HTMLDivElement | null) => {
+        if (typeof window === "undefined") {
+          commitSize(target);
+          return;
+        }
+
+        const frameId = containerFrameIds.current[key];
+        if (frameId != null) {
+          window.cancelAnimationFrame(frameId);
+        }
+
+        containerFrameIds.current[key] = window.requestAnimationFrame(() => {
+          containerFrameIds.current[key] = null;
+          commitSize(target);
         });
       };
 
@@ -189,15 +275,20 @@ export function ComparisonChart({
       }
 
       if (node) {
-        updateSize(node);
+        scheduleSizeUpdate(node);
 
         if (typeof ResizeObserver !== "undefined") {
-          const observer = new ResizeObserver(() => updateSize(node));
+          const observer = new ResizeObserver((entries) => {
+            const entryTarget =
+              (entries[0]?.target as HTMLDivElement | undefined) ?? node;
+            scheduleSizeUpdate(entryTarget ?? null);
+          });
+
           observer.observe(node);
           containerObservers.current[key] = observer;
         }
       } else {
-        updateSize(null);
+        scheduleSizeUpdate(null);
       }
     };
   }, []);
@@ -433,9 +524,17 @@ export function ComparisonChart({
 
   useEffect(() => {
     const observers = containerObservers.current;
+    const frameIds = containerFrameIds.current;
 
     return () => {
       Object.values(observers).forEach((observer) => observer?.disconnect());
+      if (typeof window !== "undefined") {
+        Object.values(frameIds).forEach((frameId) => {
+          if (frameId != null) {
+            window.cancelAnimationFrame(frameId);
+          }
+        });
+      }
     };
   }, []);
 
