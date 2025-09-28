@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, beforeEach } from "vitest";
 import {
   calculateLTV,
   calculatePaybackPeriod,
@@ -9,6 +9,7 @@ import {
   calculateMargin,
   calculateResults,
   validateCalculatorInputs,
+  clearCalculationCache,
 } from "@/app/calculadora/lib/calculations";
 
 const baseInputs = {
@@ -22,6 +23,10 @@ const baseInputs = {
   timeHorizon: 24,
   discountRate: 10,
 };
+
+beforeEach(() => {
+  clearCalculationCache();
+});
 
 describe("Financial calculations", () => {
   it("calculates LTV correctly with non-zero denominator", () => {
@@ -86,6 +91,23 @@ describe("Results aggregation", () => {
     expect(results).toHaveProperty("oneTimeRevenue");
     expect(results).toHaveProperty("monthlyRevenue");
     expect(results.monthlyRevenue.length).toBe(baseInputs.timeHorizon);
+  });
+
+  it("returns memoized results for identical input values", () => {
+    const first = calculateResults(baseInputs as any);
+    const second = calculateResults({ ...baseInputs } as any);
+    expect(second).toBe(first);
+  });
+
+  it("invalidates cache when inputs change", () => {
+    const first = calculateResults(baseInputs as any);
+    const modifiedInputs = {
+      ...baseInputs,
+      subscriptionPrice: baseInputs.subscriptionPrice + 5,
+    };
+    const second = calculateResults(modifiedInputs as any);
+    expect(second).not.toBe(first);
+    expect(second.monthlyRevenue).not.toEqual(first.monthlyRevenue);
   });
 });
 

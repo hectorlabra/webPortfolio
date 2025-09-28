@@ -9,6 +9,49 @@ import {
   ValidationError,
 } from "@/lib/types/calculator";
 
+const CALCULATION_CACHE_KEYS: Array<keyof CalculatorInputs> = [
+  "oneTimePrice",
+  "oneTimeCost",
+  "oneTimeCustomers",
+  "subscriptionPrice",
+  "subscriptionCost",
+  "churnRate",
+  "timeHorizon",
+  "conversionRate",
+  "discountRate",
+];
+
+const MAX_CALCULATION_CACHE_SIZE = 50;
+
+const calculationResultsCache = new Map<string, CalculationResults>();
+
+function formatCacheValue(value: number): string {
+  if (Number.isNaN(value)) return "NaN";
+  if (!Number.isFinite(value)) return value > 0 ? "Infinity" : "-Infinity";
+  if (Object.is(value, -0)) return "0";
+  return value === 0 ? "0" : value.toString();
+}
+
+function createInputsSignature(inputs: CalculatorInputs): string {
+  return CALCULATION_CACHE_KEYS.map((key) =>
+    formatCacheValue(inputs[key])
+  ).join("|");
+}
+
+function addToCache(signature: string, results: CalculationResults) {
+  calculationResultsCache.set(signature, results);
+  if (calculationResultsCache.size > MAX_CALCULATION_CACHE_SIZE) {
+    const oldestKey = calculationResultsCache.keys().next().value;
+    if (oldestKey) {
+      calculationResultsCache.delete(oldestKey);
+    }
+  }
+}
+
+export function clearCalculationCache() {
+  calculationResultsCache.clear();
+}
+
 /**
  * Calculate Lifetime Value (LTV) for subscription model
  * Formula: (Monthly Revenue × Gross Margin) / (Churn Rate + Discount Rate)
@@ -126,6 +169,13 @@ export function calculateMargin(revenue: number, cost: number): number {
  * Main calculation function that processes all inputs and returns complete results
  */
 export function calculateResults(inputs: CalculatorInputs): CalculationResults {
+  const signature = createInputsSignature(inputs);
+  const cachedResults = calculationResultsCache.get(signature);
+
+  if (cachedResults) {
+    return cachedResults;
+  }
+
   // One-time model calculations
   const adjustedCustomers =
     inputs.oneTimeCustomers * (inputs.conversionRate / 100);
@@ -177,7 +227,7 @@ export function calculateResults(inputs: CalculatorInputs): CalculationResults {
   const profitDifference = finalSubscriptionProfit - oneTimeProfit;
   const breakEvenPoint = findBreakEvenPoint(oneTimeProfit, cumulativeProfit);
 
-  return {
+  const results: CalculationResults = {
     // One-time results
     oneTimeRevenue: Math.round(oneTimeRevenue * 100) / 100,
     oneTimeProfit: Math.round(oneTimeProfit * 100) / 100,
@@ -196,6 +246,10 @@ export function calculateResults(inputs: CalculatorInputs): CalculationResults {
     profitDifference: Math.round(profitDifference * 100) / 100,
     breakEvenPoint,
   };
+
+  addToCache(signature, results);
+
+  return results;
 }
 
 /**

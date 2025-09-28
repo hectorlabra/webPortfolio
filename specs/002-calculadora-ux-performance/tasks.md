@@ -21,7 +21,7 @@
 
 ## Fase 4.3 – Performance
 
-- [ ] T120 Memo cache para cálculos por hash de inputs en `lib/calculations.ts`
+- [x] T120 Memo cache para cálculos por hash de inputs en `lib/calculations.ts`
 - [ ] T121 Virtualizar lista mensual en `ResultsDisplay` (si > 60 ítems)
 - [ ] T122 `useTransition`/`useDeferredValue` en inputs más pesados
 - [ ] T123 Web Worker opcional para cálculos (si profiling lo justifica)
