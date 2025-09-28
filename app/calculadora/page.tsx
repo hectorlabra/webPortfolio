@@ -1,6 +1,13 @@
 "use client";
 
-import { useState, useCallback, useDeferredValue, useMemo } from "react";
+import {
+  useState,
+  useCallback,
+  useDeferredValue,
+  useMemo,
+  useEffect,
+  useRef,
+} from "react";
 import dynamic from "next/dynamic";
 import {
   Card,
@@ -143,6 +150,14 @@ const STEP_FIELD_GROUPS: Record<
   3: ["churnRate", "timeHorizon", "discountRate"],
 };
 
+const PRIMARY_FIELD_BY_STEP: Record<number, string> = {
+  1: "#oneTimePrice",
+  2: "#subscriptionPrice",
+  3: "#churnRateStep3",
+};
+
+const GO_SHORTCUT_TIMEOUT_MS = 800;
+
 export default function CalculadoraPage() {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [completedSteps, setCompletedSteps] = useState<number[]>([]);
@@ -190,6 +205,142 @@ export default function CalculadoraPage() {
         console.log("Estado guardado en localStorage");
       },
     });
+
+  const formColumnRef = useRef<HTMLDivElement | null>(null);
+  const contextColumnRef = useRef<HTMLDivElement | null>(null);
+  const ctaButtonRef = useRef<HTMLButtonElement | null>(null);
+  const pendingGoShortcutRef = useRef(false);
+  const goShortcutTimeoutRef = useRef<number | null>(null);
+
+  const registerCtaRef = useCallback((node: HTMLButtonElement | null) => {
+    ctaButtonRef.current = node;
+  }, []);
+
+  const focusFirstField = useCallback(() => {
+    if (typeof window === "undefined") return;
+
+    const selector = PRIMARY_FIELD_BY_STEP[currentStep];
+    if (selector) {
+      const element = document.querySelector<HTMLInputElement>(selector);
+      if (element) {
+        element.focus({ preventScroll: false });
+        if (typeof element.select === "function") {
+          element.select();
+        }
+        element.scrollIntoView({ behavior: "smooth", block: "center" });
+        return;
+      }
+    }
+
+    if (formColumnRef.current) {
+      formColumnRef.current.focus({ preventScroll: false });
+      formColumnRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+    }
+  }, [currentStep]);
+
+  const focusResultsColumn = useCallback(() => {
+    if (!contextColumnRef.current) return;
+
+    contextColumnRef.current.focus({ preventScroll: false });
+    contextColumnRef.current.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }, []);
+
+  const focusConsultationCta = useCallback(() => {
+    if (ctaButtonRef.current) {
+      ctaButtonRef.current.focus({ preventScroll: false });
+      ctaButtonRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
+      return;
+    }
+
+    const fallbackLink = document.querySelector<HTMLAnchorElement>(
+      'a[href="/quien-soy#contacto"]'
+    );
+    if (fallbackLink) {
+      fallbackLink.focus({ preventScroll: false });
+      fallbackLink.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  }, []);
+
+  useEffect(() => {
+    const isEditableElement = (target: EventTarget | null): boolean => {
+      if (!(target instanceof HTMLElement)) {
+        return false;
+      }
+
+      const tagName = target.tagName;
+      return (
+        target.isContentEditable ||
+        tagName === "INPUT" ||
+        tagName === "TEXTAREA" ||
+        tagName === "SELECT" ||
+        target.getAttribute("role") === "textbox"
+      );
+    };
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.metaKey || event.ctrlKey || event.altKey) {
+        return;
+      }
+
+      if (event.key === "/" && !isEditableElement(event.target)) {
+        event.preventDefault();
+        focusFirstField();
+        return;
+      }
+
+      const key = event.key.toLowerCase();
+
+      if (key === "g" && !isEditableElement(event.target)) {
+        event.preventDefault();
+        pendingGoShortcutRef.current = true;
+        if (goShortcutTimeoutRef.current) {
+          window.clearTimeout(goShortcutTimeoutRef.current);
+          goShortcutTimeoutRef.current = null;
+        }
+        goShortcutTimeoutRef.current = window.setTimeout(() => {
+          pendingGoShortcutRef.current = false;
+          goShortcutTimeoutRef.current = null;
+        }, GO_SHORTCUT_TIMEOUT_MS);
+        return;
+      }
+
+      if (pendingGoShortcutRef.current && !isEditableElement(event.target)) {
+        if (key === "r") {
+          event.preventDefault();
+          focusResultsColumn();
+        } else if (key === "c") {
+          event.preventDefault();
+          focusConsultationCta();
+        }
+
+        pendingGoShortcutRef.current = false;
+        if (goShortcutTimeoutRef.current) {
+          window.clearTimeout(goShortcutTimeoutRef.current);
+          goShortcutTimeoutRef.current = null;
+        }
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      if (goShortcutTimeoutRef.current) {
+        window.clearTimeout(goShortcutTimeoutRef.current);
+        goShortcutTimeoutRef.current = null;
+      }
+      pendingGoShortcutRef.current = false;
+    };
+  }, [focusConsultationCta, focusFirstField, focusResultsColumn]);
 
   const deferredResults = useDeferredValue(results);
   const deferredTimeHorizon = useDeferredValue(timeHorizon);
@@ -392,6 +543,7 @@ export default function CalculadoraPage() {
               onShareResults={handleShareResults}
               onScheduleConsultation={handleScheduleConsultation}
               onReset={handleReset}
+              registerCtaRef={registerCtaRef}
             />
           ),
         };
@@ -422,6 +574,7 @@ export default function CalculadoraPage() {
     handleReset,
     stepErrors,
     isPending,
+    registerCtaRef,
   ]);
 
   const { form: activeForm, context: activeContext } = stepContent;
@@ -516,6 +669,28 @@ export default function CalculadoraPage() {
                   onStepClick={handleGoToStep}
                 />
 
+                <p className="text-xs text-white/60" role="note">
+                  Atajos de teclado:
+                  <kbd className="mx-1 rounded border border-white/20 bg-white/10 px-1 font-mono text-[11px] uppercase tracking-wide">
+                    /
+                  </kbd>
+                  enfoca el formulario,
+                  <kbd className="mx-1 rounded border border-white/20 bg-white/10 px-1 font-mono text-[11px] uppercase tracking-wide">
+                    g
+                  </kbd>
+                  <kbd className="mr-1 rounded border border-white/20 bg-white/10 px-1 font-mono text-[11px] uppercase tracking-wide">
+                    r
+                  </kbd>
+                  abre el contexto/resultados y
+                  <kbd className="mx-1 rounded border border-white/20 bg-white/10 px-1 font-mono text-[11px] uppercase tracking-wide">
+                    g
+                  </kbd>
+                  <kbd className="rounded border border-white/20 bg-white/10 px-1 font-mono text-[11px] uppercase tracking-wide">
+                    c
+                  </kbd>
+                  salta a agendar una consulta.
+                </p>
+
                 <div className="rounded-xl border border-white/10 bg-white/5 p-6">
                   <div className="mb-6 space-y-2">
                     <Badge className="bg-[#64E365]/15 text-[#64E365]">
@@ -532,11 +707,23 @@ export default function CalculadoraPage() {
                   </div>
 
                   <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(320px,380px)_minmax(0,1fr)]">
-                    <div className="lg:sticky lg:top-6">
+                    <div
+                      ref={formColumnRef}
+                      className="lg:sticky lg:top-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#64E365] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0612]"
+                      tabIndex={-1}
+                      aria-label="Formulario del paso actual"
+                    >
                       <div className="space-y-6">{activeForm}</div>
                     </div>
 
-                    <div className="space-y-6">{activeContext}</div>
+                    <div
+                      ref={contextColumnRef}
+                      className="space-y-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#64E365] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0612]"
+                      tabIndex={-1}
+                      aria-label="Contexto y resultados"
+                    >
+                      {activeContext}
+                    </div>
                   </div>
 
                   {stepErrors.length > 0 && (
@@ -695,7 +882,7 @@ function WizardStepper({
           const canNavigate = step.id < currentStep;
 
           const buttonClasses = [
-            "flex items-center gap-3 rounded-lg border px-4 py-3 text-left transition-all",
+            "flex items-center gap-3 rounded-lg border px-4 py-3 text-left transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#FFD100] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0612]",
             isActive
               ? "border-[#FFD100]/80 bg-[#FFD100]/10 text-white shadow-lg"
               : "border-white/10 bg-white/5 text-white/70",
@@ -720,6 +907,7 @@ function WizardStepper({
               className={buttonClasses}
               onClick={() => (canNavigate ? onStepClick(step.id) : undefined)}
               disabled={!canNavigate}
+              aria-current={isActive ? "step" : undefined}
             >
               <span className={circleClasses}>
                 {isComplete ? <Check className="h-4 w-4" /> : step.id}
@@ -1695,6 +1883,7 @@ interface StepThreeContextProps {
   onShareResults: () => Promise<void> | void;
   onScheduleConsultation: () => void;
   onReset: () => void;
+  registerCtaRef?: (node: HTMLButtonElement | null) => void;
 }
 
 function StepThreeContext({
@@ -1711,6 +1900,7 @@ function StepThreeContext({
   onShareResults,
   onScheduleConsultation,
   onReset,
+  registerCtaRef,
 }: StepThreeContextProps) {
   const isBusy = isCalculating || isPending;
   const canRenderResults =
@@ -1718,6 +1908,14 @@ function StepThreeContext({
 
   const shouldRenderLoadingState =
     isBusy && hasRequestedResults && !showResultsError && !canRenderResults;
+
+  useEffect(() => {
+    if (!registerCtaRef) return;
+
+    if (!canRenderResults) {
+      registerCtaRef(null);
+    }
+  }, [canRenderResults, registerCtaRef]);
 
   return (
     <CalculatorErrorBoundary onRetry={onReset}>
@@ -1798,6 +1996,7 @@ function StepThreeContext({
                 onClick={onScheduleConsultation}
                 variant="outline"
                 className="border-[#FFD100]/40 text-[#FFD100] hover:bg-[#FFD100]/10"
+                ref={registerCtaRef ?? undefined}
               >
                 <Calendar className="h-4 w-4 mr-2" /> Agendar sesión
               </Button>
