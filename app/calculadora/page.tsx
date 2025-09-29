@@ -9,6 +9,7 @@ import {
   useRef,
 } from "react";
 import dynamic from "next/dynamic";
+import clsx from "clsx";
 import {
   Card,
   CardContent,
@@ -581,6 +582,7 @@ export default function CalculadoraPage() {
 
   const canGoBack = currentStep > 1;
   const isLastStep = currentStep === STEP_COUNT;
+  const isStepThree = currentStep === 3;
 
   return (
     <div className="mx-auto w-full max-w-[1000px]">
@@ -708,10 +710,19 @@ export default function CalculadoraPage() {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 gap-8 lg:grid-cols-[minmax(320px,380px)_minmax(0,1fr)]">
+                  <div
+                    className={clsx(
+                      "grid grid-cols-1 gap-8",
+                      !isStepThree &&
+                        "lg:grid-cols-[minmax(320px,380px)_minmax(0,1fr)]"
+                    )}
+                  >
                     <div
                       ref={formColumnRef}
-                      className="lg:sticky lg:top-6 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#64E365] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0612]"
+                      className={clsx(
+                        "focus:outline-none focus-visible:ring-2 focus-visible:ring-[#64E365] focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0612]",
+                        !isStepThree && "lg:sticky lg:top-6"
+                      )}
                       tabIndex={-1}
                       aria-label="Formulario del paso actual"
                     >
