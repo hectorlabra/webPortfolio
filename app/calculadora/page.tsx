@@ -42,8 +42,6 @@ import {
   Repeat,
   Sparkles,
   Loader2,
-  Share2,
-  Calendar,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { useCalculator } from "@/app/calculadora/hooks/use-calculator";
@@ -490,7 +488,6 @@ export default function CalculadoraPage() {
             <StepOneForm
               inputs={inputs}
               onInputChange={handleInputChangeWithSave}
-              onNext={handleNext}
               errors={stepErrors}
             />
           ),
@@ -502,7 +499,6 @@ export default function CalculadoraPage() {
             <StepTwoForm
               inputs={inputs}
               onInputChange={handleInputChangeWithSave}
-              onNext={handleNext}
               errors={stepErrors}
             />
           ),
@@ -556,7 +552,6 @@ export default function CalculadoraPage() {
     inputs,
     timeHorizon,
     handleInputChangeWithSave,
-    handleNext,
     totalOneTimeProfit,
     totalSubscriptionProfit,
     breakEvenPoint,
@@ -952,12 +947,10 @@ function WizardStepper({
 function StepOneForm({
   inputs,
   onInputChange,
-  onNext,
   errors = [],
 }: {
   inputs: typeof DEFAULT_INPUTS;
   onInputChange: (field: keyof typeof DEFAULT_INPUTS, value: number) => void;
-  onNext: () => void;
   errors?: ValidationError[];
 }) {
   const getErrorMessage = (field: keyof typeof DEFAULT_INPUTS) =>
@@ -1223,16 +1216,6 @@ function StepOneForm({
           </AccordionContent>
         </AccordionItem>
       </Accordion>
-
-      <div className="flex justify-end">
-        <Button
-          onClick={onNext}
-          className="w-full bg-[#64E365] font-bold text-white shadow-[0_0_10px_rgba(100,227,101,0.5)] hover:bg-[#64E365]/90 sm:w-auto"
-        >
-          Calcular modelo único
-          <ArrowRight className="ml-2 h-4 w-4" />
-        </Button>
-      </div>
     </div>
   );
 }
@@ -1335,12 +1318,10 @@ function StepOneContext({ inputs }: { inputs: typeof DEFAULT_INPUTS }) {
 function StepTwoForm({
   inputs,
   onInputChange,
-  onNext,
   errors = [],
 }: {
   inputs: typeof DEFAULT_INPUTS;
   onInputChange: (field: keyof typeof DEFAULT_INPUTS, value: number) => void;
-  onNext: () => void;
   errors?: ValidationError[];
 }) {
   const getErrorMessage = (field: keyof typeof DEFAULT_INPUTS) =>
@@ -1546,16 +1527,6 @@ function StepTwoForm({
           </AccordionContent>
         </AccordionItem>
       </Accordion>
-
-      <div className="flex justify-end">
-        <Button
-          onClick={onNext}
-          className="w-full bg-[#64E365] font-bold text-white shadow-[0_0_10px_rgba(100,227,101,0.5)] hover:bg-[#64E365]/90 sm:w-auto"
-        >
-          Calcular modelo de suscripción
-          <ArrowRight className="ml-2 h-4 w-4" />
-        </Button>
-      </div>
     </div>
   );
 }
@@ -1994,29 +1965,6 @@ function StepThreeContext({
                 timeHorizon={renderableTimeHorizon}
               />
             </CardContent>
-            <CardFooter className="flex flex-wrap gap-3">
-              <Button
-                onClick={onDownloadReport}
-                className="bg-[#64E365] text-white hover:bg-[#64E365]/90"
-              >
-                Descargar reporte
-              </Button>
-              <Button
-                onClick={onShareResults}
-                variant="outline"
-                className="border-white/30 text-white hover:bg-white/10"
-              >
-                <Share2 className="h-4 w-4 mr-2" /> Compartir resultados
-              </Button>
-              <Button
-                onClick={onScheduleConsultation}
-                variant="outline"
-                className="border-[#FFD100]/40 text-[#FFD100] hover:bg-[#FFD100]/10"
-                ref={registerCtaRef ?? undefined}
-              >
-                <Calendar className="h-4 w-4 mr-2" /> Agendar sesión
-              </Button>
-            </CardFooter>
           </Card>
 
           <Card className="bg-white/5 border-white/20">
@@ -2061,10 +2009,9 @@ function StepThreeContext({
             results={renderableResults}
             timeHorizon={renderableTimeHorizon}
             onDownloadReport={onDownloadReport}
-            onShareResults={() => {
-              void onShareResults();
-            }}
+            onShareResults={onShareResults}
             onScheduleConsultation={onScheduleConsultation}
+            registerCtaRef={registerCtaRef}
           />
         </div>
       ) : hasRequestedResults ? (

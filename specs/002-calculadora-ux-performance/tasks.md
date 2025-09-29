@@ -36,7 +36,7 @@
 ## Fase 4.4.1 – UX Refinements
 
 - [x] T133 Simplificar layout del Paso 3: mostrar resultados en una sola columna y ajustar jerarquía visual
-- [ ] T134 Consolidar botones redundantes en Paso 3 y CTA para reducir fricción y duplicados
+- [x] T134 Consolidar botones redundantes en Paso 3 y CTA para reducir fricción y duplicados
 - [ ] T135 Rediseñar atajos de teclado con combinaciones más intuitivas y comunicadas in-product
 
 ## Fase 4.5 – QA y Medición

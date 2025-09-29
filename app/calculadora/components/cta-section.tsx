@@ -22,6 +22,7 @@ import {
   ExternalLink,
   CheckCircle2,
   Star,
+  Calendar,
 } from "lucide-react";
 import { CalculationResults } from "@/lib/types/calculator";
 import { formatCurrency } from "@/app/calculadora/lib/utils";
@@ -33,6 +34,7 @@ interface CTASectionProps {
   onDownloadReport?: () => void;
   onShareResults?: () => void;
   onScheduleConsultation?: () => void;
+  registerCtaRef?: (node: HTMLButtonElement | null) => void;
 }
 
 interface ActionCardProps {
@@ -156,6 +158,7 @@ export function CTASection({
   onDownloadReport,
   onShareResults,
   onScheduleConsultation,
+  registerCtaRef,
 }: CTASectionProps) {
   const [isSharing, setIsSharing] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
@@ -177,44 +180,26 @@ export function CTASection({
 
   const recommendedAction = getRecommendedAction();
 
-  // Handle sharing
   const handleShare = async () => {
+    if (!onShareResults) return;
+
     setIsSharing(true);
-
     try {
-      if (navigator.share) {
-        await navigator.share({
-          title: "Resultados de Calculadora de Ingresos",
-          text: `Comparé modelo único vs suscripción: ${
-            isSubscriptionBetter ? "Suscripción" : "Único"
-          } es más rentable por ${formatCurrency(
-            Math.abs(results.profitDifference)
-          )} en ${timeHorizon} meses.`,
-          url: window.location.href,
-        });
-      } else {
-        // Fallback: copy to clipboard
-        await navigator.clipboard.writeText(window.location.href);
-        alert("Enlace copiado al portapapeles");
-      }
-
-      onShareResults?.();
-    } catch (error) {
-      console.error("Error sharing:", error);
+      await Promise.resolve(onShareResults());
     } finally {
       setIsSharing(false);
     }
   };
 
-  // Handle download
-  const handleDownload = () => {
-    setIsDownloading(true);
+  const handleDownload = async () => {
+    if (!onDownloadReport) return;
 
-    // Here you would implement PDF generation
-    setTimeout(() => {
+    setIsDownloading(true);
+    try {
+      await Promise.resolve(onDownloadReport());
+    } finally {
       setIsDownloading(false);
-      onDownloadReport?.();
-    }, 2000);
+    }
   };
 
   const actions = [
@@ -327,7 +312,7 @@ export function CTASection({
             <Button
               onClick={handleDownload}
               variant="outline"
-              disabled={isDownloading}
+              disabled={isDownloading || !onDownloadReport}
               className="w-full sm:flex-1 sm:min-w-[200px] border-white/30 text-white hover:bg-white/10"
             >
               <Download className="mr-2 h-4 w-4" />
@@ -337,7 +322,7 @@ export function CTASection({
             <Button
               onClick={handleShare}
               variant="outline"
-              disabled={isSharing}
+              disabled={isSharing || !onShareResults}
               className="w-full sm:flex-1 sm:min-w-[200px] border-white/30 text-white hover:bg-white/10"
             >
               <Share2 className="mr-2 h-4 w-4" />
@@ -345,12 +330,15 @@ export function CTASection({
             </Button>
 
             <Button
-              onClick={() => window.location.reload()}
+              onClick={() => {
+                onScheduleConsultation?.();
+              }}
               variant="outline"
-              className="w-full sm:flex-1 sm:min-w-[200px] border-white/30 text-white hover:bg-white/10"
+              className="w-full sm:flex-1 sm:min-w-[200px] border-[#FFD100]/40 text-[#FFD100] hover:bg-[#FFD100]/10"
+              ref={registerCtaRef ?? undefined}
             >
-              <ArrowRight className="mr-2 h-4 w-4" />
-              Nueva Simulación
+              <Calendar className="mr-2 h-4 w-4" />
+              Agendar Consulta
             </Button>
           </div>
         </CardContent>
