@@ -32,7 +32,7 @@ Tomar una decisión informada sobre mantener Recharts optimizado o migrar a uPlo
 Migrar gradualmente a **uPlot** conservando un fallback con Recharts mientras se reimplementan las features de UX imprescindibles.
 
 - **Fase 1 (actual)**: Mantener prototipo en `/playground/uplot` y construir wrapper reutilizable (`components/charts/uplot-comparison.tsx`).
-- **Fase 2**: Replicar tooltips, estados activos y colores accesibles; documentar interacciones y atajos.
+- **Fase 2**: Replicar tooltips, estados activos y colores accesibles; documentar interacciones clave.
 - **Fase 3**: Reemplazar Recharts en el Paso 3 condicionando la carga a la finalización del wrapper (feature flag o prop).
 - **Fallback**: Mantener la versión actual con Recharts por si surgen regressions en SSR/hidratación.
 

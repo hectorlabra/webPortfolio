@@ -34,7 +34,6 @@ interface CTASectionProps {
   onDownloadReport?: () => void;
   onShareResults?: () => void;
   onScheduleConsultation?: () => void;
-  registerCtaRef?: (node: HTMLButtonElement | null) => void;
 }
 
 interface ActionCardProps {
@@ -158,7 +157,6 @@ export function CTASection({
   onDownloadReport,
   onShareResults,
   onScheduleConsultation,
-  registerCtaRef,
 }: CTASectionProps) {
   const [isSharing, setIsSharing] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
@@ -335,7 +333,6 @@ export function CTASection({
               }}
               variant="outline"
               className="w-full sm:flex-1 sm:min-w-[200px] border-[#FFD100]/40 text-[#FFD100] hover:bg-[#FFD100]/10"
-              ref={registerCtaRef ?? undefined}
             >
               <Calendar className="mr-2 h-4 w-4" />
               Agendar Consulta
