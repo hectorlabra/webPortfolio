@@ -1,6 +1,7 @@
 import { MetadataRoute } from "next";
 
-// Nota: /calculadora está permitida para indexación (contenido evergreen / herramienta interactiva)
+// Nota: /calculadora se ha archivado y ya no forma parte de la navegación pública.
+// Si se restaura, actualizar esta regla según convenga.
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
