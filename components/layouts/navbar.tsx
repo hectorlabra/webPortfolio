@@ -37,12 +37,6 @@ export function Navbar() {
               >
                 Blog
               </Link>
-              <Link
-                href="/calculadora"
-                className="text-sm font-medium transition-colors hover:text-white/70"
-              >
-                Calculadora
-              </Link>
             </nav>
             {/* Contact Button */}
             <Button
@@ -104,13 +98,6 @@ export function Navbar() {
               onClick={() => setMenuOpen(false)}
             >
               Blog
-            </Link>
-            <Link
-              href="/calculadora"
-              className="text-lg font-medium"
-              onClick={() => setMenuOpen(false)}
-            >
-              Calculadora
             </Link>
             <Button
               className="bg-[#64E365] text-[#0a0612] hover:bg-[#64E365]/90 w-full mt-4"
