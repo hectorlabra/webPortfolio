@@ -1,0 +1,1 @@
+export { GeometricPattern } from "./GeometricPattern";
