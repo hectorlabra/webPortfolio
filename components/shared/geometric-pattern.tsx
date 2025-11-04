@@ -3,11 +3,72 @@
 import { motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 
+// Color palette for LEGO blocks
+const LEGO_COLORS = [
+  { fill: "#64E365", stroke: "#4CAF50" }, // Verde
+  { fill: "#FFD100", stroke: "#FFA500" }, // Amarillo
+  { fill: "#FF3B30", stroke: "#CC0000" }, // Rojo
+  { fill: "#007AFF", stroke: "#0052CC" }, // Azul
+  { fill: "#4CD964", stroke: "#2D9E4A" }, // Verde manzana
+  { fill: "#FFCC00", stroke: "#CCAA00" }, // Amarillo oro
+];
+
+interface LegoBlockProps {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+  colorIndex: number;
+}
+
+function LegoBlock({ x, y, width, height, colorIndex }: LegoBlockProps) {
+  const color = LEGO_COLORS[colorIndex % LEGO_COLORS.length];
+  const stubSize = 4;
+  const stubSpacing = width / 4;
+
+  return (
+    <g>
+      {/* Main block rectangle */}
+      <rect
+        x={x}
+        y={y}
+        width={width}
+        height={height}
+        fill={color.fill}
+        stroke={color.stroke}
+        strokeWidth="1"
+        rx="1"
+      />
+
+      {/* LEGO studs (puntitos característicos) - solo arriba */}
+      {[0, 1, 2, 3].map((i) => (
+        <circle
+          key={`stud-${i}`}
+          cx={x + stubSpacing * (i + 0.5)}
+          cy={y + height / 2}
+          r={stubSize / 2}
+          fill={color.stroke}
+          opacity="0.6"
+        />
+      ))}
+
+      {/* Highlight line */}
+      <line
+        x1={x}
+        y1={y + 1}
+        x2={x + width}
+        y2={y + 1}
+        stroke="rgba(255,255,255,0.2)"
+        strokeWidth="0.5"
+      />
+    </g>
+  );
+}
+
 export function GeometricPattern() {
   const prefersReducedMotion = useReducedMotion();
   const [isMobile, setIsMobile] = useState(false);
 
-  // Detectar si estamos en móvil
   useEffect(() => {
     const checkIfMobile = () => {
       setIsMobile(window.innerWidth < 768);
@@ -18,31 +79,56 @@ export function GeometricPattern() {
     return () => window.removeEventListener("resize", checkIfMobile);
   }, []);
 
-  // Ancho de un solo cubo (reducido un 15%)
-  const cubeWidth = 110;
-  const animationDuration = 60;
+  // Bloques más pequeños y compactos
+  const blockWidth = 90;
+  const blockHeight = 24;
+  const blockGap = 6;
 
-  // Versiones separadas de animación, pero con la misma estructura básica
+  // Desktop: 1 fila con muchos bloques para cubrir y loop
+  const desktopBlocks: LegoBlockProps[] = [];
+  for (let i = 0; i < 30; i++) {
+    desktopBlocks.push({
+      x: i * (blockWidth + blockGap),
+      y: 0,
+      width: blockWidth,
+      height: blockHeight,
+      colorIndex: i,
+    });
+  }
+
+  // Mobile: 1 fila con bloques suficientes
+  const mobileBlocks: LegoBlockProps[] = [];
+  for (let i = 0; i < 20; i++) {
+    mobileBlocks.push({
+      x: i * (blockWidth + blockGap),
+      y: 0,
+      width: blockWidth,
+      height: blockHeight,
+      colorIndex: i,
+    });
+  }
+
+  const repeatWidth = (blockWidth + blockGap) * 6; // Repetir cada 6 bloques
+
   const desktopAnimationProps = {
-    x: prefersReducedMotion ? 0 : [0, -cubeWidth * 2],
+    x: prefersReducedMotion ? 0 : [0, -repeatWidth],
     transition: {
       x: {
         repeat: Infinity,
-        repeatType: "loop",
-        duration: animationDuration / 9,
+        repeatType: "loop" as const,
+        duration: 12,
         ease: "linear",
       },
     },
   };
 
-  // Para móvil, hacemos una animación más agresiva con mayor desplazamiento
   const mobileAnimationProps = {
-    x: prefersReducedMotion ? 0 : [0, -220], // Valor fijo para garantizar movimiento
+    x: prefersReducedMotion ? 0 : [0, -repeatWidth],
     transition: {
       x: {
         repeat: Infinity,
-        repeatType: "loop",
-        duration: 3, // Más rápido para que sea obvio
+        repeatType: "loop" as const,
+        duration: 10,
         ease: "linear",
       },
     },
@@ -56,63 +142,44 @@ export function GeometricPattern() {
       >
         {isMobile ? (
           <motion.div
-            className="absolute top-0 left-0 h-full"
-            animate={mobileAnimationProps} // Usar la animación móvil específica
+            className="absolute top-0 left-0 h-full flex items-center"
+            animate={mobileAnimationProps}
           >
             <svg
-              className="h-full"
-              width={cubeWidth * 12} // Reducido para prueba
+              width={(blockWidth + blockGap) * 20}
               height="100%"
-              viewBox="0 0 1320 120" // Actualizado para reflejar el nuevo width
+              viewBox={`0 0 ${(blockWidth + blockGap) * 20} ${
+                blockHeight + 10
+              }`}
               xmlns="http://www.w3.org/2000/svg"
-              preserveAspectRatio="xMinYMid meet" // Cambiado a xMin para que empiece desde la izquierda
+              preserveAspectRatio="xMinYMid meet"
             >
-              <defs>
-                <g
-                  id="mobileCube"
-                  stroke="rgba(255, 255, 255, 0.5)"
-                  strokeWidth="0.9"
-                  fill="none"
-                >
-                  <path d={`M0,34 L38,15 L76,34 L38,53 L0,34`} />
-                  <path d={`M0,34 L38,15 L19,2 L-19,21 L0,34`} />
-                  <path d={`M76,34 L38,53 L38,66 L76,47 L76,34`} />
-                </g>
-              </defs>
-
-              {Array.from({ length: 12 }).map((_, i) => (
-                <use key={i} href="#mobileCube" x={i * cubeWidth} y="10" />
-              ))}
+              <g transform={`translate(0, 5)`}>
+                {mobileBlocks.map((block, idx) => (
+                  <LegoBlock key={idx} {...block} />
+                ))}
+              </g>
             </svg>
           </motion.div>
         ) : (
           <motion.div
-            className="absolute top-0 left-0 h-full"
+            className="absolute top-0 left-0 h-full flex items-center"
             animate={desktopAnimationProps}
           >
             <svg
-              className="h-full"
-              width={cubeWidth * 22}
-              height="80"
+              width={(blockWidth + blockGap) * 30}
+              height="100%"
+              viewBox={`0 0 ${(blockWidth + blockGap) * 30} ${
+                blockHeight + 10
+              }`}
               xmlns="http://www.w3.org/2000/svg"
               preserveAspectRatio="xMidYMid slice"
             >
-              <defs>
-                <g
-                  id="desktopCube"
-                  stroke="rgba(255, 255, 255, 0.5)"
-                  strokeWidth="0.9"
-                  fill="none"
-                >
-                  <path d={`M0,34 L38,15 L76,34 L38,53 L0,34`} />
-                  <path d={`M0,34 L38,15 L19,2 L-19,21 L0,34`} />
-                  <path d={`M76,34 L38,53 L38,66 L76,47 L76,34`} />
-                </g>
-              </defs>
-
-              {Array.from({ length: 22 }).map((_, i) => (
-                <use key={i} href="#desktopCube" x={i * cubeWidth} y="0" />
-              ))}
+              <g transform={`translate(0, 5)`}>
+                {desktopBlocks.map((block, idx) => (
+                  <LegoBlock key={idx} {...block} />
+                ))}
+              </g>
             </svg>
           </motion.div>
         )}
