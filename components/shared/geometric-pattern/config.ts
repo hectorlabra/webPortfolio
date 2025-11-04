@@ -20,6 +20,7 @@ export const BLOCK_CONFIG: BlockConfiguration = {
 // Dimensiones del bloque
 export const BLOCK_DIMENSIONS = {
   height: 20,
+  depth: 12, // Profundidad para efecto isométrico
 } as const;
 
 // Duración de animaciones

@@ -11,7 +11,7 @@ interface UseLegoBlocksReturn {
 
 export function useLegoBlocks(): UseLegoBlocksReturn {
   return useMemo(() => {
-    const { widths, rowGap } = BLOCK_CONFIG;
+    const { widths } = BLOCK_CONFIG;
 
     const colorFamily = (idx: number): "green" | "yellow" | "red" | "blue" => {
       if (idx === 0 || idx === 4) return "green";
@@ -58,137 +58,57 @@ export function useLegoBlocks(): UseLegoBlocksReturn {
       };
     };
 
-    const collectOverlappingFamilies = (
-      blocks: LegoBlockProps[],
-      x: number,
-      width: number
-    ) => {
-      const topEnd = x + width;
-      const families = new Set<ReturnType<typeof colorFamily>>();
-      for (const block of blocks) {
-        const blockEnd = block.x + block.width;
-        if (!(topEnd <= block.x || x >= blockEnd)) {
-          families.add(colorFamily(block.colorIndex));
-        }
-      }
-      return families;
-    };
-
-    // Desktop blocks
+    // Desktop blocks - una sola fila - una sola fila
     const desktopBlocks: LegoBlockProps[] = [];
     let xPos = 0;
+    let pointer = 0;
+    let prevFamily: ReturnType<typeof colorFamily> | null = null;
 
-    // Fila inferior - secuencia normal de colores
-    const bottomBlocks: LegoBlockProps[] = [];
-    let bottomPointer = 0;
-    let prevBottomFamily: ReturnType<typeof colorFamily> | null = null;
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 25; i++) {
       const width = widths[i % widths.length];
       const { colorIndex, nextPointer } = findNextColor(
-        bottomPointer,
-        prevBottomFamily,
+        pointer,
+        prevFamily,
         new Set()
       );
-      const block = {
+      desktopBlocks.push({
         x: xPos,
-        y: 35,
+        y: 30,
         width,
         colorIndex,
-      };
-      bottomBlocks.push(block);
-      desktopBlocks.push(block);
-      bottomPointer = nextPointer;
-      prevBottomFamily = colorFamily(colorIndex);
+      });
+      pointer = nextPointer;
+      prevFamily = colorFamily(colorIndex);
       xPos += width;
     }
 
     const desktopTotalWidth = xPos;
 
-    // Fila superior - offset para encaje + verificación de colores
-    const avgWidth = widths.reduce((a, b) => a + b, 0) / widths.length;
-    const offset = Math.floor(avgWidth / 2);
-    xPos = -offset;
-    let topPointer = (bottomPointer + 3) % palette.length;
-    let prevTopFamily: ReturnType<typeof colorFamily> | null = null;
-    for (let i = 0; i < 21; i++) {
-      const width = widths[(i + 4) % widths.length];
-      const overlappingFamilies = collectOverlappingFamilies(
-        bottomBlocks,
-        xPos,
-        width
-      );
+    // Mobile blocks - una sola fila
+    const mobileBlocks: LegoBlockProps[] = [];
+    xPos = 0;
+    pointer = 0;
+    prevFamily = null;
+
+    for (let i = 0; i < 18; i++) {
+      const width = widths[i % widths.length];
       const { colorIndex, nextPointer } = findNextColor(
-        topPointer,
-        prevTopFamily,
-        overlappingFamilies
+        pointer,
+        prevFamily,
+        new Set()
       );
-      desktopBlocks.push({
+      mobileBlocks.push({
         x: xPos,
-        y: 35 - rowGap,
+        y: 30,
         width,
         colorIndex,
       });
-      topPointer = nextPointer;
-      prevTopFamily = colorFamily(colorIndex);
-      xPos += width;
-    }
-
-    // Mobile blocks
-    const mobileBlocks: LegoBlockProps[] = [];
-    xPos = 0;
-
-    // Fila inferior
-    const bottomBlocksMobile: LegoBlockProps[] = [];
-    bottomPointer = 0;
-    prevBottomFamily = null;
-    for (let i = 0; i < 15; i++) {
-      const width = widths[i % widths.length];
-      const { colorIndex, nextPointer } = findNextColor(
-        bottomPointer,
-        prevBottomFamily,
-        new Set()
-      );
-      const block = {
-        x: xPos,
-        y: 35,
-        width,
-        colorIndex,
-      };
-      bottomBlocksMobile.push(block);
-      mobileBlocks.push(block);
-      bottomPointer = nextPointer;
-      prevBottomFamily = colorFamily(colorIndex);
+      pointer = nextPointer;
+      prevFamily = colorFamily(colorIndex);
       xPos += width;
     }
 
     const mobileTotalWidth = xPos;
-
-    // Fila superior mobile
-    xPos = -offset;
-    topPointer = (bottomPointer + 3) % palette.length;
-    prevTopFamily = null;
-    for (let i = 0; i < 16; i++) {
-      const width = widths[(i + 3) % widths.length];
-      const overlappingFamilies = collectOverlappingFamilies(
-        bottomBlocksMobile,
-        xPos,
-        width
-      );
-      const { colorIndex, nextPointer } = findNextColor(
-        topPointer,
-        prevTopFamily,
-        overlappingFamilies
-      );
-      mobileBlocks.push({
-        x: xPos,
-        y: 35 - rowGap,
-        width,
-        colorIndex,
-      });
-      topPointer = nextPointer;
-      prevTopFamily = colorFamily(colorIndex);
-      xPos += width;
-    }
 
     return {
       desktopBlocks,
