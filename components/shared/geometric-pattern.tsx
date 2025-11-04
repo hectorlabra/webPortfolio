@@ -5,61 +5,111 @@ import { useEffect, useState } from "react";
 
 // Color palette for LEGO blocks
 const LEGO_COLORS = [
-  { fill: "#64E365", stroke: "#4CAF50" }, // Verde
-  { fill: "#FFD100", stroke: "#FFA500" }, // Amarillo
-  { fill: "#FF3B30", stroke: "#CC0000" }, // Rojo
-  { fill: "#007AFF", stroke: "#0052CC" }, // Azul
-  { fill: "#4CD964", stroke: "#2D9E4A" }, // Verde manzana
-  { fill: "#FFCC00", stroke: "#CCAA00" }, // Amarillo oro
+  { fill: "#64E365", stroke: "#4CAF50", shadow: "#2D7A2F" }, // Verde
+  { fill: "#FFD100", stroke: "#FFA500", shadow: "#CC8800" }, // Amarillo
+  { fill: "#FF3B30", stroke: "#CC0000", shadow: "#990000" }, // Rojo
+  { fill: "#007AFF", stroke: "#0052CC", shadow: "#003D99" }, // Azul
+  { fill: "#4CD964", stroke: "#2D9E4A", shadow: "#1A5C2A" }, // Verde manzana
+  { fill: "#FFCC00", stroke: "#CCAA00", shadow: "#998800" }, // Amarillo oro
 ];
 
 interface LegoBlockProps {
   x: number;
   y: number;
   width: number;
-  height: number;
   colorIndex: number;
 }
 
-function LegoBlock({ x, y, width, height, colorIndex }: LegoBlockProps) {
+function LegoBlock({ x, y, width, colorIndex }: LegoBlockProps) {
   const color = LEGO_COLORS[colorIndex % LEGO_COLORS.length];
-  const stubSize = 4;
-  const stubSpacing = width / 4;
+  const blockHeight = 24; // Altura fija más apropiada
+  const depth = 12; // Profundidad isométrica
+
+  // Calcular número de studs según el ancho
+  const studCount = Math.max(2, Math.floor(width / 25));
+  const studSpacing = width / (studCount + 1);
 
   return (
     <g>
-      {/* Main block rectangle */}
-      <rect
-        x={x}
-        y={y}
-        width={width}
-        height={height}
+      {/* Cara superior (isométrica) */}
+      <polygon
+        points={`
+          ${x},${y}
+          ${x + width},${y}
+          ${x + width + depth},${y - depth * 0.5}
+          ${x + depth},${y - depth * 0.5}
+        `}
         fill={color.fill}
         stroke={color.stroke}
         strokeWidth="1"
-        rx="1"
+        opacity="0.95"
       />
 
-      {/* LEGO studs (puntitos característicos) - solo arriba */}
-      {[0, 1, 2, 3].map((i) => (
-        <circle
-          key={`stud-${i}`}
-          cx={x + stubSpacing * (i + 0.5)}
-          cy={y + height / 2}
-          r={stubSize / 2}
-          fill={color.stroke}
-          opacity="0.6"
-        />
-      ))}
+      {/* Cara frontal */}
+      <polygon
+        points={`
+          ${x},${y}
+          ${x + width},${y}
+          ${x + width},${y + blockHeight}
+          ${x},${y + blockHeight}
+        `}
+        fill={color.shadow}
+        stroke={color.stroke}
+        strokeWidth="1"
+        opacity="0.8"
+      />
 
-      {/* Highlight line */}
+      {/* Cara lateral derecha */}
+      <polygon
+        points={`
+          ${x + width},${y}
+          ${x + width + depth},${y - depth * 0.5}
+          ${x + width + depth},${y + blockHeight - depth * 0.5}
+          ${x + width},${y + blockHeight}
+        `}
+        fill={color.shadow}
+        stroke={color.stroke}
+        strokeWidth="1"
+        opacity="0.7"
+      />
+
+      {/* Studs en la cara superior */}
+      {Array.from({ length: studCount }).map((_, i) => {
+        const studX = x + studSpacing * (i + 1);
+        const studY = y - 2;
+        return (
+          <g key={`stud-${i}`}>
+            {/* Sombra del stud */}
+            <ellipse
+              cx={studX + depth / 2}
+              cy={studY - depth * 0.25 + 1}
+              rx={4}
+              ry={2}
+              fill={color.shadow}
+              opacity="0.4"
+            />
+            {/* Stud principal */}
+            <ellipse
+              cx={studX + depth / 2}
+              cy={studY - depth * 0.25}
+              rx={4}
+              ry={2}
+              fill={color.stroke}
+              stroke={color.stroke}
+              strokeWidth="0.5"
+            />
+          </g>
+        );
+      })}
+
+      {/* Highlight en cara superior */}
       <line
-        x1={x}
-        y1={y + 1}
-        x2={x + width}
-        y2={y + 1}
-        stroke="rgba(255,255,255,0.2)"
-        strokeWidth="0.5"
+        x1={x + 3}
+        y1={y - 1}
+        x2={x + width - 3}
+        y2={y - 1}
+        stroke="rgba(255,255,255,0.25)"
+        strokeWidth="1"
       />
     </g>
   );
@@ -79,63 +129,70 @@ export function GeometricPattern() {
     return () => window.removeEventListener("resize", checkIfMobile);
   }, []);
 
-  // Bloques más pequeños y compactos
-  const blockWidth = 90;
-  const blockHeight = 24;
-  const blockGap = 6;
+  // Configuración más simple: una sola fila de bloques con anchos variados
+  const blockGap = 8;
+  const blockWidths = [60, 80, 70, 90, 65, 75, 85, 55]; // Anchos variados
 
-  // Desktop: 1 fila con muchos bloques para cubrir y loop
+  // Desktop blocks
   const desktopBlocks: LegoBlockProps[] = [];
-  for (let i = 0; i < 30; i++) {
-    desktopBlocks.push({
-      x: i * (blockWidth + blockGap),
-      y: 0,
-      width: blockWidth,
-      height: blockHeight,
-      colorIndex: i,
-    });
-  }
+  let xPos = 0;
 
-  // Mobile: 1 fila con bloques suficientes
-  const mobileBlocks: LegoBlockProps[] = [];
   for (let i = 0; i < 20; i++) {
-    mobileBlocks.push({
-      x: i * (blockWidth + blockGap),
-      y: 0,
-      width: blockWidth,
-      height: blockHeight,
+    const width = blockWidths[i % blockWidths.length];
+    desktopBlocks.push({
+      x: xPos,
+      y: 30, // Centrado verticalmente
+      width,
       colorIndex: i,
     });
+    xPos += width + blockGap;
   }
 
-  const repeatWidth = (blockWidth + blockGap) * 6; // Repetir cada 6 bloques
+  const desktopTotalWidth = xPos;
+
+  // Mobile blocks
+  const mobileBlocks: LegoBlockProps[] = [];
+  xPos = 0;
+
+  for (let i = 0; i < 15; i++) {
+    const width = blockWidths[i % blockWidths.length];
+    mobileBlocks.push({
+      x: xPos,
+      y: 30,
+      width,
+      colorIndex: i,
+    });
+    xPos += width + blockGap;
+  }
+
+  const mobileTotalWidth = xPos;
 
   const desktopAnimationProps = {
-    x: prefersReducedMotion ? 0 : [0, -repeatWidth],
+    x: prefersReducedMotion ? 0 : [0, -desktopTotalWidth],
     transition: {
       x: {
         repeat: Infinity,
         repeatType: "loop" as const,
-        duration: 12,
+        duration: 25,
         ease: "linear",
       },
     },
   };
 
   const mobileAnimationProps = {
-    x: prefersReducedMotion ? 0 : [0, -repeatWidth],
+    x: prefersReducedMotion ? 0 : [0, -mobileTotalWidth],
     transition: {
       x: {
         repeat: Infinity,
         repeatType: "loop" as const,
-        duration: 10,
+        duration: 20,
         ease: "linear",
       },
     },
   };
 
   return (
-    <div className="relative w-full h-20 md:h-16 lg:h-20 bg-[#0a0612]">
+    <div className="relative w-full h-20 md:h-16 lg:h-20 bg-gradient-to-b from-transparent via-primary/5 to-transparent">
       <div
         className="absolute top-0 left-0 w-screen h-full overflow-hidden"
         style={{ left: "50%", transform: "translateX(-50%)" }}
@@ -146,17 +203,20 @@ export function GeometricPattern() {
             animate={mobileAnimationProps}
           >
             <svg
-              width={(blockWidth + blockGap) * 20}
+              width={mobileTotalWidth * 2}
               height="100%"
-              viewBox={`0 0 ${(blockWidth + blockGap) * 20} ${
-                blockHeight + 10
-              }`}
+              viewBox={`0 0 ${mobileTotalWidth * 2} 80`}
               xmlns="http://www.w3.org/2000/svg"
               preserveAspectRatio="xMinYMid meet"
             >
-              <g transform={`translate(0, 5)`}>
+              {/* Primera copia */}
+              {mobileBlocks.map((block, idx) => (
+                <LegoBlock key={idx} {...block} />
+              ))}
+              {/* Segunda copia para loop seamless */}
+              <g transform={`translate(${mobileTotalWidth}, 0)`}>
                 {mobileBlocks.map((block, idx) => (
-                  <LegoBlock key={idx} {...block} />
+                  <LegoBlock key={`dup-${idx}`} {...block} />
                 ))}
               </g>
             </svg>
@@ -167,17 +227,20 @@ export function GeometricPattern() {
             animate={desktopAnimationProps}
           >
             <svg
-              width={(blockWidth + blockGap) * 30}
+              width={desktopTotalWidth * 2}
               height="100%"
-              viewBox={`0 0 ${(blockWidth + blockGap) * 30} ${
-                blockHeight + 10
-              }`}
+              viewBox={`0 0 ${desktopTotalWidth * 2} 80`}
               xmlns="http://www.w3.org/2000/svg"
               preserveAspectRatio="xMidYMid slice"
             >
-              <g transform={`translate(0, 5)`}>
+              {/* Primera copia */}
+              {desktopBlocks.map((block, idx) => (
+                <LegoBlock key={idx} {...block} />
+              ))}
+              {/* Segunda copia para loop seamless */}
+              <g transform={`translate(${desktopTotalWidth}, 0)`}>
                 {desktopBlocks.map((block, idx) => (
-                  <LegoBlock key={idx} {...block} />
+                  <LegoBlock key={`dup-${idx}`} {...block} />
                 ))}
               </g>
             </svg>
