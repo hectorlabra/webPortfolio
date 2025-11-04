@@ -22,8 +22,8 @@ interface LegoBlockProps {
 
 function LegoBlock({ x, y, width, colorIndex }: LegoBlockProps) {
   const color = LEGO_COLORS[colorIndex % LEGO_COLORS.length];
-  const blockHeight = 24; // Altura fija más apropiada
-  const depth = 12; // Profundidad isométrica
+  const blockHeight = 20; // Altura del bloque
+  const depth = 10; // Profundidad isométrica
 
   // Calcular número de studs según el ancho
   const studCount = Math.max(2, Math.floor(width / 25));
@@ -42,7 +42,6 @@ function LegoBlock({ x, y, width, colorIndex }: LegoBlockProps) {
         fill={color.fill}
         stroke={color.stroke}
         strokeWidth="1"
-        opacity="0.95"
       />
 
       {/* Cara frontal */}
@@ -56,7 +55,6 @@ function LegoBlock({ x, y, width, colorIndex }: LegoBlockProps) {
         fill={color.shadow}
         stroke={color.stroke}
         strokeWidth="1"
-        opacity="0.8"
       />
 
       {/* Cara lateral derecha */}
@@ -70,7 +68,7 @@ function LegoBlock({ x, y, width, colorIndex }: LegoBlockProps) {
         fill={color.shadow}
         stroke={color.stroke}
         strokeWidth="1"
-        opacity="0.7"
+        opacity="0.85"
       />
 
       {/* Studs en la cara superior */}
@@ -129,19 +127,21 @@ export function GeometricPattern() {
     return () => window.removeEventListener("resize", checkIfMobile);
   }, []);
 
-  // Configuración más simple: una sola fila de bloques con anchos variados
-  const blockGap = 8;
-  const blockWidths = [60, 80, 70, 90, 65, 75, 85, 55]; // Anchos variados
+  // Configuración: dos filas encajadas estilo "brick wall"
+  const blockGap = 6;
+  const blockWidths = [70, 85, 75, 95, 65, 80, 90, 60]; // Anchos variados
+  const rowGap = 22; // Separación entre filas para encaje perfecto
 
   // Desktop blocks
   const desktopBlocks: LegoBlockProps[] = [];
   let xPos = 0;
 
+  // Fila inferior
   for (let i = 0; i < 20; i++) {
     const width = blockWidths[i % blockWidths.length];
     desktopBlocks.push({
       x: xPos,
-      y: 30, // Centrado verticalmente
+      y: 35, // Fila inferior
       width,
       colorIndex: i,
     });
@@ -150,15 +150,31 @@ export function GeometricPattern() {
 
   const desktopTotalWidth = xPos;
 
+  // Fila superior - offset de aproximadamente la mitad del ancho promedio
+  const offsetAmount =
+    blockWidths.reduce((a, b) => a + b, 0) / blockWidths.length / 2;
+  xPos = -Math.floor(offsetAmount);
+  for (let i = 0; i < 20; i++) {
+    const width = blockWidths[(i + 4) % blockWidths.length]; // Diferente secuencia
+    desktopBlocks.push({
+      x: xPos,
+      y: 35 - rowGap, // Fila superior
+      width,
+      colorIndex: i + 20, // Diferentes colores
+    });
+    xPos += width + blockGap;
+  }
+
   // Mobile blocks
   const mobileBlocks: LegoBlockProps[] = [];
   xPos = 0;
 
+  // Fila inferior
   for (let i = 0; i < 15; i++) {
     const width = blockWidths[i % blockWidths.length];
     mobileBlocks.push({
       x: xPos,
-      y: 30,
+      y: 35,
       width,
       colorIndex: i,
     });
@@ -166,6 +182,19 @@ export function GeometricPattern() {
   }
 
   const mobileTotalWidth = xPos;
+
+  // Fila superior mobile - offset calculado
+  xPos = -Math.floor(offsetAmount);
+  for (let i = 0; i < 15; i++) {
+    const width = blockWidths[(i + 3) % blockWidths.length];
+    mobileBlocks.push({
+      x: xPos,
+      y: 35 - rowGap,
+      width,
+      colorIndex: i + 15,
+    });
+    xPos += width + blockGap;
+  }
 
   const desktopAnimationProps = {
     x: prefersReducedMotion ? 0 : [0, -desktopTotalWidth],
