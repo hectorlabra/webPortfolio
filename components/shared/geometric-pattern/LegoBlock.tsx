@@ -23,43 +23,59 @@ export function LegoBlock({ x, y, width, colorIndex }: LegoBlockProps) {
     x + width + depth
   } ${y} L ${x + depth} ${y} Z`;
 
-  // Studs LEGO en la cara superior - distribución mejorada
-  const studCount = width > 85 ? 3 : width > 70 ? 2 : 1;
-  const studs = [];
-  const studRadius = 2.5;
-  const studSpacing = width / (studCount + 1);
+  // Data points - círculos tipo "data science" distribuidos orgánicamente
+  const dataPointCount = width > 85 ? 5 : width > 70 ? 4 : 3;
+  const dataPoints = [];
 
-  for (let i = 0; i < studCount; i++) {
-    const offsetX = studSpacing * (i + 1);
-    // Proyección isométrica del stud
-    const studX = x + depth * 0.5 + offsetX;
-    const studY = y + depth * 0.5 - offsetX * 0.5;
+  // Semilla pseudo-aleatoria basada en posición para consistencia
+  const seed = (x + y + colorIndex) % 100;
 
-    studs.push(
+  for (let i = 0; i < dataPointCount; i++) {
+    // Distribución orgánica pero balanceada
+    const offsetX =
+      (width / (dataPointCount + 1)) * (i + 1) + (((seed + i * 7) % 10) - 5);
+    const offsetY = ((seed + i * 13) % 8) - 4;
+
+    // Proyección isométrica del punto
+    const pointX = x + depth * 0.5 + offsetX;
+    const pointY = y + depth * 0.5 - offsetX * 0.5 + offsetY;
+
+    // Tamaños variados
+    const baseRadius = 2 + ((seed + i * 11) % 3) * 0.5;
+
+    dataPoints.push(
       <g key={i}>
-        {/* Base del stud */}
+        {/* Aura exterior - efecto glow suave */}
         <circle
-          cx={studX}
-          cy={studY}
-          r={studRadius + 0.5}
-          fill={color.shadow}
-          opacity={0.3}
-        />
-        {/* Stud principal */}
-        <circle
-          cx={studX}
-          cy={studY - 0.5}
-          r={studRadius}
+          cx={pointX}
+          cy={pointY}
+          r={baseRadius + 2}
           fill={color.fill}
-          opacity={0.85}
+          opacity={0.15}
         />
-        {/* Highlight del stud */}
+        {/* Círculo medio - transición */}
         <circle
-          cx={studX - 0.5}
-          cy={studY - 1}
-          r={0.8}
-          fill="white"
+          cx={pointX}
+          cy={pointY}
+          r={baseRadius + 0.8}
+          fill={color.fill}
           opacity={0.4}
+        />
+        {/* Core del data point */}
+        <circle
+          cx={pointX}
+          cy={pointY}
+          r={baseRadius}
+          fill={color.fill}
+          opacity={0.9}
+        />
+        {/* Highlight píxel brillante */}
+        <circle
+          cx={pointX - baseRadius * 0.3}
+          cy={pointY - baseRadius * 0.3}
+          r={baseRadius * 0.35}
+          fill="white"
+          opacity={0.7}
         />
       </g>
     );
@@ -67,36 +83,64 @@ export function LegoBlock({ x, y, width, colorIndex }: LegoBlockProps) {
 
   return (
     <g>
-      {/* Cara derecha - profundidad */}
-      <path d={rightFace} fill={color.shadow} />
+      {/* Cara derecha - profundidad con borde pixel-art */}
+      <path
+        d={rightFace}
+        fill={color.shadow}
+        stroke={color.shadow}
+        strokeWidth="0.5"
+      />
 
-      {/* Cara superior */}
-      <path d={topFace} fill={color.stroke} />
+      {/* Cara superior con borde definido */}
+      <path
+        d={topFace}
+        fill={color.stroke}
+        stroke={color.shadow}
+        strokeWidth="0.5"
+        opacity={0.95}
+      />
 
-      {/* Cara frontal */}
-      <path d={frontFace} fill={color.fill} />
+      {/* Cara frontal con borde pixel-art */}
+      <path
+        d={frontFace}
+        fill={color.fill}
+        stroke={color.stroke}
+        strokeWidth="1"
+      />
 
-      {/* Studs LEGO */}
-      {studs}
+      {/* Sombra interna sutil en cara frontal - efecto pixel art */}
+      <rect
+        x={x + 1}
+        y={y + depth + blockHeight - 3}
+        width={width - 2}
+        height={2}
+        fill={color.shadow}
+        opacity={0.2}
+      />
 
-      {/* Highlights sutiles */}
+      {/* Data points tipo "data science" */}
+      {dataPoints}
+
+      {/* Highlight superior - más marcado estilo pixel art */}
       <line
         x1={x}
-        y1={y + depth + 2}
+        y1={y + depth + 1}
         x2={x + width}
-        y2={y + depth + 2}
+        y2={y + depth + 1}
         stroke="white"
-        strokeWidth="1"
-        opacity={0.25}
+        strokeWidth="1.5"
+        opacity={0.35}
       />
+
+      {/* Borde superior de la cara top - efecto digital */}
       <line
-        x1={x + depth}
+        x1={x + depth + 1}
         y1={y + 1}
-        x2={x + width + depth}
+        x2={x + width + depth - 1}
         y2={y + 1}
         stroke="white"
         strokeWidth="0.5"
-        opacity={0.15}
+        opacity={0.25}
       />
     </g>
   );
