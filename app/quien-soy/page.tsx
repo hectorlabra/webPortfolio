@@ -1,15 +1,24 @@
-"use client";
-
+// Server Component - Quien Soy page
 import Image from "next/image";
 import { ArrowRight, Github, Twitter, Linkedin } from "lucide-react";
+import type { Metadata } from "next";
 
-// UI Components imports
+// Server Components - Static markup
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { GeometricPattern } from "@/components/shared/geometric-pattern";
 import { SocialProof } from "@/components/sections/home/social-proof";
-import { TypewriterText } from "@/components/shared/typewriter-text";
-import { GitHubContributionGraph } from "@/components/quien-soy/GitHubContributionGraph";
+
+// Client Islands - Interactive components only
+import { GeometricPattern } from "@/components/shared/geometric-pattern-client";
+import { TypewriterText } from "@/components/shared/typewriter-text-client";
+import { GitHubContributionGraph } from "@/components/quien-soy/GitHubContributionGraph-client";
+
+// Metadata for SEO
+export const metadata: Metadata = {
+  title: "Quien Soy | Héctor Labra",
+  description:
+    "Software developer y polímata digital. Conoce mi historia, valores y experiencia en desarrollo web moderno.",
+};
 
 export default function QuienSoyPage() {
   return (
