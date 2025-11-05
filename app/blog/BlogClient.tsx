@@ -44,7 +44,7 @@ export function BlogClient({ posts, metadata }: BlogClientProps) {
               {/* Hero Content */}
               <div className="flex flex-col justify-center space-y-4 sm:space-y-6">
                 <div className="space-y-3 sm:space-y-4">
-                  <h1 className="font-mono text-[2rem] sm:text-4xl md:text-5xl font-bold tracking-tighter leading-tight">
+                  <h1 className="font-mono text-[1.7rem] sm:text-3xl md:text-4xl font-bold tracking-tighter">
                     Aprende desarrollo moderno.
                   </h1>
                   <p className="text-base sm:text-lg text-white/70 max-w-xl">
@@ -54,7 +54,7 @@ export function BlogClient({ posts, metadata }: BlogClientProps) {
                 </div>
 
                 {/* Grid de categorías principales */}
-                <div className="grid grid-cols-2 gap-3 sm:gap-4 pt-2">
+                <div className="grid grid-cols-2 gap-2 sm:gap-3 pt-2">
                   {metadata.categories.slice(0, 4).map((category) => {
                     const categoryPosts = posts.filter(
                       (p) => p.category === category
@@ -72,15 +72,15 @@ export function BlogClient({ posts, metadata }: BlogClientProps) {
                     return (
                       <div
                         key={category}
-                        className="group rounded-lg border border-white/10 bg-white/5 hover:bg-white/8 hover:border-[#64E365]/30 transition-all duration-300 p-3 sm:p-4 cursor-pointer"
+                        className="group rounded-lg border border-white/10 bg-white/5 hover:bg-white/8 hover:border-[#64E365]/30 transition-all duration-300 p-2.5 sm:p-3 cursor-pointer"
                       >
-                        <div className="flex items-center gap-2 mb-1.5">
-                          <span className="text-lg sm:text-xl">{icon}</span>
-                          <h3 className="font-mono text-xs sm:text-sm font-bold text-white group-hover:text-[#64E365] transition-colors">
+                        <div className="flex items-center gap-1.5 mb-1">
+                          <span className="text-base sm:text-lg">{icon}</span>
+                          <h3 className="font-mono text-[0.7rem] sm:text-xs font-bold text-white group-hover:text-[#64E365] transition-colors">
                             {category}
                           </h3>
                         </div>
-                        <p className="text-[0.7rem] sm:text-xs text-white/50">
+                        <p className="text-[0.65rem] sm:text-[0.7rem] text-white/50">
                           {categoryPosts.length}{" "}
                           {categoryPosts.length === 1
                             ? "artículo"
