@@ -6,6 +6,7 @@ export interface BlogPost {
   description: string;
   date: string;
   author: string;
+  authorImage?: string;
   tags: string[];
   category: string;
   readingTime: number;
@@ -13,6 +14,7 @@ export interface BlogPost {
   published: boolean;
   content: string;
   excerpt: string;
+  coverImage?: string;
 }
 
 export interface BlogFrontmatter {
@@ -52,7 +54,7 @@ export interface PaginationInfo {
 }
 
 export interface BlogPostWithNavigation extends BlogPost {
-  previousPost?: Pick<BlogPost, 'slug' | 'title'>;
-  nextPost?: Pick<BlogPost, 'slug' | 'title'>;
+  previousPost?: Pick<BlogPost, "slug" | "title">;
+  nextPost?: Pick<BlogPost, "slug" | "title">;
   tableOfContents: TableOfContentsItem[];
 }
