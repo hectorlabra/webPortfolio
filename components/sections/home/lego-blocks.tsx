@@ -2,6 +2,7 @@ interface LegoBlocksProps {
   fullWidth?: boolean;
 }
 
+// Server Component - No client-side interactivity needed
 export function LegoBlocks({ fullWidth = false }: LegoBlocksProps) {
   return (
     <div className={`w-full ${fullWidth ? "" : "max-w-3xl mx-auto"}`}>

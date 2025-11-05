@@ -1,3 +1,4 @@
+// Server Component - Static social proof display
 export function SocialProof() {
   return (
     <div className="flex items-center gap-2">
@@ -20,6 +21,5 @@ export function SocialProof() {
         1145 <span className="underline">developers</span> ya iniciaron...
       </span>
     </div>
-  )
+  );
 }
-

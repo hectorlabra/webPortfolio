@@ -1,17 +1,18 @@
-"use client";
-
+// Server Component - Main home page
 import Image from "next/image";
 import { ArrowRight, Check } from "lucide-react";
 
-// UI Components imports
+// Server Components - Static markup
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { NewsletterForm } from "@/components/sections/home/newsletter-form";
-import { FaqAccordion } from "@/components/sections/home/faq-accordion";
 import { LegoBlocks } from "@/components/sections/home/lego-blocks";
-import { GeometricPattern } from "@/components/shared/geometric-pattern";
 import { SocialProof } from "@/components/sections/home/social-proof";
-import { TypewriterText } from "@/components/shared/typewriter-text";
+
+// Client Islands - Interactive components only
+import { NewsletterForm } from "@/components/sections/home/newsletter-form-client";
+import { FaqAccordion } from "@/components/sections/home/faq-accordion-client";
+import { GeometricPattern } from "@/components/shared/geometric-pattern-client";
+import { TypewriterText } from "@/components/shared/typewriter-text-client";
 
 export default function HomePage() {
   return (
