@@ -81,7 +81,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Geometric Pattern Component */}
+        {/* Geometric Pattern - Reduced from 3 to 1 instance for performance */}
         <GeometricPattern />
 
         {/* Features Section - Con espaciado responsive */}
@@ -117,8 +117,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Geometric Pattern Component */}
-        <GeometricPattern />
+        {/* Geometric Pattern removed - Keeping only 1 instance for better performance */}
 
         {/* Blog Section - Con espaciado responsive */}
         <section className="w-full py-16 sm:py-24 md:py-36 lg:py-52">
@@ -208,8 +207,7 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Geometric Pattern Component */}
-        <GeometricPattern />
+        {/* Geometric Pattern removed - Keeping only 1 instance for better performance */}
 
         {/* FAQ Section - Con espaciado responsive */}
         <section className="w-full py-16 sm:py-24">
