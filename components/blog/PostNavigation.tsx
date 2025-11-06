@@ -18,7 +18,7 @@ export async function PostNavigation({ currentSlug }: PostNavigationProps) {
 
   return (
     <nav
-      className="mt-16 pt-12 border-t border-white/10"
+      className="mt-20"
       aria-label="Post navigation"
     >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

@@ -1,6 +1,5 @@
 import { getRelatedPosts } from "@/lib/blog-utils";
 import { BlogCard } from "./BlogCard";
-import { BookOpen } from "lucide-react";
 
 interface RelatedPostsProps {
   currentSlug: string;
@@ -14,15 +13,15 @@ export async function RelatedPosts({ currentSlug }: RelatedPostsProps) {
   }
 
   return (
-    <section className="mt-20 pt-16 border-t border-white/10">
-      <div className="flex items-center gap-3 mb-8">
-        <BookOpen className="h-6 w-6 text-accent-green" />
+    <section className="mt-24">
+      <div className="flex items-center gap-3 mb-6">
+        <div className="w-1.5 h-8 bg-accent-green rounded-full" />
         <h2 className="text-2xl md:text-3xl font-bold font-mono text-white">
           Artículos Relacionados
         </h2>
       </div>
 
-      <p className="text-white/70 mb-8">
+      <p className="text-white/60 text-sm mb-10">
         Continúa explorando contenido similar que podría interesarte
       </p>
 
