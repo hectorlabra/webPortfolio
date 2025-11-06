@@ -124,7 +124,7 @@ export function PostLayout({
           </aside>
 
           {/* Contenido principal - Centered */}
-          <article className="min-w-0 max-w-[700px] mx-auto w-full">
+          <article className="min-w-0 w-full">
             {/* Contenido del post */}
             <div
               className="prose prose-invert max-w-none

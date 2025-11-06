@@ -307,19 +307,19 @@
 .prose h4,
 .prose h5,
 .prose h6 {
-  @apply text-accent-green;
+  @apply text-white;
 }
 
 .prose a {
-  @apply text-accent-green hover:text-accent-yellow transition-colors;
+  @apply text-white underline decoration-white/30 hover:decoration-white transition-colors;
 }
 
 .prose strong {
-  @apply text-accent-yellow font-semibold;
+  @apply text-white font-semibold;
 }
 
 .prose blockquote {
-  @apply border-l-4 border-accent-green bg-white/5 rounded-r-lg;
+  @apply border-l-4 border-white/30 bg-white/5 rounded-r-lg;
   padding: 1rem 1.5rem;
   margin: 1.5rem 0;
 }
@@ -333,7 +333,7 @@
 }
 
 .prose table th {
-  @apply bg-white/5 text-accent-green font-semibold;
+  @apply bg-white/5 text-white font-semibold;
 }
 
 .prose table td {
@@ -341,16 +341,16 @@
 }
 
 .prose ul li::marker {
-  color: var(--prism-keyword);
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .prose ol li::marker {
-  color: var(--prism-keyword);
+  color: rgba(255, 255, 255, 0.5);
 }
 
 /* Enlaces de anchor para headings */
 .anchor-link {
-  @apply text-white/40 hover:text-accent-green transition-colors;
+  @apply text-white/40 hover:text-white transition-colors;
   text-decoration: none !important;
 }
 
