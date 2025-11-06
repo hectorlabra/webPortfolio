@@ -7,14 +7,10 @@ import { BlogPost, TableOfContentsItem } from "@/lib/types/blog";
 import { TableOfContents } from "./TableOfContents";
 import { ReadingProgressBar } from "./ReadingProgressBar";
 import { Breadcrumbs } from "./Breadcrumbs";
-import { ShareButtons } from "./ShareButtons";
-import { AuthorCard } from "./AuthorCard";
 import { NewsletterInPost } from "./NewsletterInPost";
 import { RelatedPosts } from "./RelatedPosts";
 import { PostNavigation } from "./PostNavigation";
 import { TableOfContentsMobile } from "./TableOfContentsMobile";
-import { JumpToTop } from "./JumpToTop";
-import { CodeBlockEnhancer } from "./CodeBlockEnhancer";
 import { LazyGeometricPattern } from "@/components/shared/LazyGeometricPattern";
 
 interface PostLayoutProps {
@@ -35,9 +31,6 @@ export function PostLayout({
 
       {/* Table of Contents Mobile */}
       <TableOfContentsMobile items={tableOfContents} />
-
-      {/* Jump to Top Button */}
-      <JumpToTop />
 
       {/* Header con navegación */}
       <header className="border-b border-white/10 bg-[#0a0612]/95 backdrop-blur-sm sticky top-0 z-50">
@@ -106,15 +99,6 @@ export function PostLayout({
                 </div>
               </div>
 
-              {/* Share Buttons */}
-              <ShareButtons
-                url={`${
-                  process.env.NEXT_PUBLIC_SITE_URL || "https://hectorlabra.dev"
-                }/blog/${post.slug}`}
-                title={post.title}
-                description={post.description}
-              />
-
               {/* Tags */}
               {post.tags.length > 0 && (
                 <div className="flex flex-wrap gap-3 mt-8">
@@ -156,7 +140,7 @@ export function PostLayout({
               prose-td:border-t prose-td:border-white/10 prose-td:text-white/90
               prose-img:rounded-lg prose-img:shadow-lg"
             >
-              <CodeBlockEnhancer>{children}</CodeBlockEnhancer>
+              {children}
             </div>
 
             {/* Newsletter Section */}
@@ -169,18 +153,6 @@ export function PostLayout({
           <aside className="lg:col-span-1">
             <div className="sticky top-24 space-y-6">
               <TableOfContents items={tableOfContents} />
-
-              <AuthorCard
-                name={post.author}
-                bio="Desarrollador Full Stack apasionado por crear experiencias web excepcionales. Especializado en Next.js, React y TypeScript."
-                avatar="/avatar.jpg"
-                social={{
-                  github: "https://github.com/hectorlabra",
-                  linkedin: "https://www.linkedin.com/in/hectorlabra",
-                  twitter: "https://twitter.com/hectorlabra",
-                  website: "https://hectorlabra.dev",
-                }}
-              />
             </div>
           </aside>
         </div>
