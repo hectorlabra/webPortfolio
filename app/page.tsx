@@ -11,7 +11,7 @@ import { SocialProof } from "@/components/sections/home/social-proof";
 // Client Islands - Interactive components only
 import { NewsletterForm } from "@/components/sections/home/newsletter-form-client";
 import { FaqAccordion } from "@/components/sections/home/faq-accordion-client";
-import { GeometricPattern } from "@/components/shared/geometric-pattern-client";
+import { LazyGeometricPattern } from "@/components/shared/geometric-pattern-client";
 import { TypewriterText } from "@/components/shared/typewriter-text-client";
 
 export default function HomePage() {
@@ -81,8 +81,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Geometric Pattern - Reduced from 3 to 1 instance for performance */}
-        <GeometricPattern />
+        {/* Geometric Pattern - Priority (always visible in hero) */}
+        <LazyGeometricPattern priority={true} />
 
         {/* Features Section - Con espaciado responsive */}
         <section className="w-full py-16 sm:py-24 md:py-36 lg:py-48">
@@ -117,7 +117,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Geometric Pattern removed - Keeping only 1 instance for better performance */}
+        {/* Geometric Pattern - Lazy loaded (pauses when off-screen) */}
+        <LazyGeometricPattern />
 
         {/* Blog Section - Con espaciado responsive */}
         <section className="w-full py-16 sm:py-24 md:py-36 lg:py-52">
@@ -207,7 +208,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Geometric Pattern removed - Keeping only 1 instance for better performance */}
+        {/* Geometric Pattern - Lazy loaded (pauses when off-screen) */}
+        <LazyGeometricPattern />
 
         {/* FAQ Section - Con espaciado responsive */}
         <section className="w-full py-16 sm:py-24">

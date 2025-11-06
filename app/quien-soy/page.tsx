@@ -9,7 +9,7 @@ import { Card } from "@/components/ui/card";
 import { SocialProof } from "@/components/sections/home/social-proof";
 
 // Client Islands - Interactive components only
-import { GeometricPattern } from "@/components/shared/geometric-pattern-client";
+import { LazyGeometricPattern } from "@/components/shared/geometric-pattern-client";
 import { TypewriterText } from "@/components/shared/typewriter-text-client";
 import { GitHubContributionGraph } from "@/components/quien-soy/GitHubContributionGraph-client";
 
@@ -84,8 +84,8 @@ export default function QuienSoyPage() {
           </div>
         </section>
 
-        {/* GeometricPattern ahora va fuera de la sección */}
-        <GeometricPattern />
+        {/* GeometricPattern - Lazy loaded separator */}
+        <LazyGeometricPattern />
 
         {/* Historia personal y profesional */}
         <section className="w-full py-16 sm:py-24">

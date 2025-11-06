@@ -5,6 +5,7 @@ import { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { LazyGeometricPattern } from "@/components/shared/geometric-pattern-client";
 import { BlogCard } from "@/components/blog/BlogCard";
 
 export const metadata: Metadata = {
@@ -168,7 +169,8 @@ export default async function BlogPage() {
             </div>
           </section>
 
-          {/* Geometric Pattern removed - Using only 1 instance in home for better performance */}
+          {/* Geometric Pattern - Lazy loaded separator */}
+          <LazyGeometricPattern />
 
           {/* Últimos Artículos */}
           <section className="w-full py-16 sm:py-24 md:py-36 lg:py-48">
