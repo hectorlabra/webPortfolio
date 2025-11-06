@@ -19,7 +19,6 @@ export async function PostNavigation({ currentSlug }: PostNavigationProps) {
   return (
     <nav className="mt-16 pt-12 border-t border-white/10" aria-label="Post navigation">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Previous Post */}
         {previousPost ? (
           <Link
             href={`/blog/${previousPost.slug}`}
@@ -40,10 +39,9 @@ export async function PostNavigation({ currentSlug }: PostNavigationProps) {
             </div>
           </Link>
         ) : (
-          <div /> {/* Spacer para mantener el grid */}
+          <div />
         )}
 
-        {/* Next Post */}
         {nextPost && (
           <Link
             href={`/blog/${nextPost.slug}`}

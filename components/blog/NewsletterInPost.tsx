@@ -1,20 +1,26 @@
-'use client';
+"use client";
 
-import { NewsletterForm } from '@/components/sections/home/newsletter-form-client';
-import { Mail, Sparkles } from 'lucide-react';
+import { NewsletterForm } from "@/components/sections/home/newsletter-form-client";
+import { Mail, Sparkles } from "lucide-react";
 
 interface NewsletterInPostProps {
-  variant?: 'prominent' | 'subtle';
+  variant?: "prominent" | "subtle";
 }
 
-export function NewsletterInPost({ variant = 'prominent' }: NewsletterInPostProps) {
-  const isProminent = variant === 'prominent';
+export function NewsletterInPost({
+  variant = "prominent",
+}: NewsletterInPostProps) {
+  const isProminent = variant === "prominent";
 
   return (
     <div
       className={`
         relative overflow-hidden rounded-xl
-        ${isProminent ? 'border-2 border-accent-green bg-gradient-to-br from-accent-green/10 to-accent-yellow/5 p-8 shadow-[0_0_30px_rgba(100,227,101,0.2)]' : 'border border-white/15 bg-white/5 p-6'}
+        ${
+          isProminent
+            ? "border-2 border-accent-green bg-gradient-to-br from-accent-green/10 to-accent-yellow/5 p-8 shadow-[0_0_30px_rgba(100,227,101,0.2)]"
+            : "border border-white/15 bg-white/5 p-6"
+        }
       `}
     >
       {/* Decorative elements */}
@@ -40,18 +46,18 @@ export function NewsletterInPost({ variant = 'prominent' }: NewsletterInPostProp
 
           <div className="flex-1">
             <h3 className="text-xl md:text-2xl font-bold font-mono text-white mb-2">
-              {isProminent ? '¿Te gustó este artículo?' : 'Mantente al día'}
+              {isProminent ? "¿Te gustó este artículo?" : "Mantente al día"}
             </h3>
             <p className="text-white/70 text-sm md:text-base">
               {isProminent
-                ? 'Recibe contenido similar directamente en tu inbox. Sin spam, solo calidad.'
-                : 'Únete al newsletter y recibe los mejores artículos cada semana.'}
+                ? "Recibe contenido similar directamente en tu inbox. Sin spam, solo calidad."
+                : "Únete al newsletter y recibe los mejores artículos cada semana."}
             </p>
           </div>
         </div>
 
         {/* Newsletter Form */}
-        <NewsletterForm variant="compact" />
+        <NewsletterForm compact={true} />
 
         {/* Footer text */}
         <p className="text-xs text-white/50 mt-4 text-center">
