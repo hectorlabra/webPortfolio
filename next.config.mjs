@@ -20,6 +20,18 @@ const nextConfig = {
     webpackBuildWorker: true,
     parallelServerBuildTraces: true,
     parallelServerCompiles: true,
+    // Optimize package imports for faster dev compilation
+    optimizePackageImports: ['framer-motion', 'lucide-react'],
+  },
+  // Faster dev compilation
+  webpack: (config, { dev, isServer }) => {
+    if (dev && !isServer) {
+      config.watchOptions = {
+        ...config.watchOptions,
+        ignored: ['**/.git/**', '**/node_modules/**', '**/.next/**'],
+      }
+    }
+    return config
   },
 }
 

@@ -86,7 +86,7 @@ export function NewsletterForm({
                 className={`bg-[#FFD24C] text-[#0a0612] hover:bg-[#FFD24C]/90 ${
                   compact ? "h-9 w-full sm:w-9" : "h-10 sm:h-12 w-full sm:w-12"
                 } p-0 shadow-[0_0_8px_rgba(255,220,100,0.4)] hover:shadow-[0_0_12px_rgba(255,220,100,0.6)] transition-shadow mt-2 sm:mt-0`}
-                style={{ willChange: isSubmitting ? 'auto' : 'box-shadow' }}
+                style={{ willChange: isSubmitting ? "auto" : "box-shadow" }}
               >
                 {isSubmitting ? (
                   <motion.span
@@ -149,7 +149,7 @@ export function NewsletterForm({
                 type="submit"
                 disabled={isSubmitting}
                 className="bg-[#FFD24C] text-[#0a0612] hover:bg-[#FFD24C]/90 h-11 sm:h-12 text-base w-full rounded-md font-medium transition-all shadow-[0_0_8px_rgba(255,210,76,0.3)] hover:shadow-[0_0_12px_rgba(255,210,76,0.5)]"
-                style={{ willChange: isSubmitting ? 'auto' : 'box-shadow' }}
+                style={{ willChange: isSubmitting ? "auto" : "box-shadow" }}
               >
                 <AnimatePresence mode="wait">
                   {isSubmitting ? (
@@ -193,7 +193,8 @@ export function NewsletterForm({
             </AnimatePresence>
             <div className="pt-2 sm:pt-0">
               <p className="text-[0.55rem] sm:text-sm text-white/70 text-center">
-                Curso intensivo por email de 14 días exclusivo para suscriptores.
+                Curso intensivo por email de 14 días exclusivo para
+                suscriptores.
               </p>
             </div>
           </motion.form>

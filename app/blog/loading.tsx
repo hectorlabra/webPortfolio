@@ -18,11 +18,14 @@ export default function BlogLoading() {
                 <div className="space-y-6">
                   <div className="h-10 w-3/4 bg-white/10 rounded" />
                   <div className="h-6 w-full bg-white/10 rounded" />
-                  
+
                   {/* Categories grid */}
                   <div className="grid grid-cols-2 gap-3 pt-4">
                     {[1, 2, 3, 4].map((i) => (
-                      <div key={i} className="h-20 bg-white/5 border border-white/10 rounded-lg" />
+                      <div
+                        key={i}
+                        className="h-20 bg-white/5 border border-white/10 rounded-lg"
+                      />
                     ))}
                   </div>
                 </div>
@@ -41,7 +44,10 @@ export default function BlogLoading() {
               <div className="h-8 w-48 bg-white/10 rounded mb-8" />
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {[1, 2, 3].map((i) => (
-                  <div key={i} className="h-96 bg-white/5 border border-white/15 rounded-lg" />
+                  <div
+                    key={i}
+                    className="h-96 bg-white/5 border border-white/15 rounded-lg"
+                  />
                 ))}
               </div>
             </div>
