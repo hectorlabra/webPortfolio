@@ -32,7 +32,7 @@ export function PostLayout({
       <TableOfContentsMobile items={tableOfContents} />
 
       {/* Hero Section with Geometric Pattern */}
-      <section className="relative py-16 overflow-hidden border-b border-white/10">
+      <section className="relative py-20 overflow-hidden border-b border-white/10">
         {/* Geometric Pattern Background */}
         <div className="absolute inset-0 opacity-30">
           <LazyGeometricPattern priority={true} />
@@ -118,7 +118,7 @@ export function PostLayout({
       </section>
 
       {/* Main Content Area */}
-      <div className="container mx-auto px-4 py-16">
+      <div className="container mx-auto px-4 py-20">
 
         {/* 3-Column Layout: Left Empty | Article Centered | Right Sidebar */}
         <div className="grid grid-cols-1 xl:grid-cols-[250px_1fr_300px] gap-8 max-w-[1400px] mx-auto">
@@ -158,10 +158,12 @@ export function PostLayout({
 
           {/* Right Sidebar - Sticky TOC + Newsletter */}
           <aside className="hidden xl:block">
-            <div className="sticky top-24 space-y-8">
+            <div className="sticky top-24 space-y-6">
               <TableOfContents items={tableOfContents} />
               {/* Newsletter sticky on desktop */}
-              <NewsletterInPost variant="compact" />
+              <div className="pt-6 border-t border-white/10">
+                <NewsletterInPost variant="compact" />
+              </div>
             </div>
           </aside>
         </div>
