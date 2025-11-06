@@ -14,6 +14,7 @@ import { RelatedPosts } from "./RelatedPosts";
 import { PostNavigation } from "./PostNavigation";
 import { TableOfContentsMobile } from "./TableOfContentsMobile";
 import { JumpToTop } from "./JumpToTop";
+import { CodeBlockEnhancer } from "./CodeBlockEnhancer";
 
 interface PostLayoutProps {
   post: BlogPost;
@@ -154,7 +155,7 @@ export function PostLayout({
               prose-td:border-t prose-td:border-white/10 prose-td:text-white/90
               prose-img:rounded-lg prose-img:shadow-lg"
             >
-              {children}
+              <CodeBlockEnhancer>{children}</CodeBlockEnhancer>
             </div>
 
             {/* Newsletter Section */}
