@@ -32,7 +32,7 @@ export function PostLayout({ post, tableOfContents, children }: PostLayoutProps)
           {/* Contenido principal */}
           <article className="min-w-0 max-w-[720px]">
             {/* Metadatos del post */}
-            <header className="mb-8">
+            <header className="mb-12 space-y-6">
               <div className="flex flex-wrap items-center gap-2 mb-4">
                 <Badge variant="secondary">{post.category}</Badge>
                 {post.featured && (
@@ -42,15 +42,15 @@ export function PostLayout({ post, tableOfContents, children }: PostLayoutProps)
                 )}
               </div>
 
-              <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-4">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-mono tracking-tight mb-6 text-accent-green leading-tight">
                 {post.title}
               </h1>
 
-              <p className="text-xl text-muted-foreground mb-6">
+              <p className="text-xl md:text-2xl text-white/80 leading-relaxed">
                 {post.description}
               </p>
 
-              <div className="flex flex-wrap items-center gap-6 text-sm text-muted-foreground">
+              <div className="flex flex-wrap items-center gap-6 text-sm text-white/70">
                 <div className="flex items-center gap-2">
                   <User className="h-4 w-4" />
                   <span>{post.author}</span>
@@ -75,14 +75,14 @@ export function PostLayout({ post, tableOfContents, children }: PostLayoutProps)
 
               {/* Tags */}
               {post.tags.length > 0 && (
-                <div className="flex flex-wrap gap-2 mt-6">
+                <div className="flex flex-wrap gap-3 mt-8">
                   {post.tags.map((tag) => (
                     <Link
                       key={tag}
                       href={`/blog/tag/${encodeURIComponent(tag)}`}
                       className="inline-block"
                     >
-                      <Badge variant="outline" className="hover:bg-primary hover:text-primary-foreground transition-colors">
+                      <Badge variant="outline" className="border-accent-green/40 text-white/90 hover:bg-accent-green/10 hover:border-accent-green transition-all duration-200">
                         #{tag}
                       </Badge>
                     </Link>
