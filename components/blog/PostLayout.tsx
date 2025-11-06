@@ -13,6 +13,7 @@ import { NewsletterInPost } from "./NewsletterInPost";
 import { RelatedPosts } from "./RelatedPosts";
 import { PostNavigation } from "./PostNavigation";
 import { TableOfContentsMobile } from "./TableOfContentsMobile";
+import { JumpToTop } from "./JumpToTop";
 
 interface PostLayoutProps {
   post: BlogPost;
@@ -32,6 +33,9 @@ export function PostLayout({
 
       {/* Table of Contents Mobile */}
       <TableOfContentsMobile items={tableOfContents} />
+
+      {/* Jump to Top Button */}
+      <JumpToTop />
 
       {/* Header con navegación */}
       <header className="border-b border-white/10 bg-[#0a0612]/95 backdrop-blur-sm sticky top-0 z-50">
