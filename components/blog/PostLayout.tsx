@@ -14,12 +14,12 @@ interface PostLayoutProps {
 
 export function PostLayout({ post, tableOfContents, children }: PostLayoutProps) {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-[#0a0612] text-white">
       {/* Header con navegación */}
-      <header className="border-b bg-background/80 backdrop-blur-sm sticky top-0 z-50">
+      <header className="border-b border-white/10 bg-[#0a0612]/95 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <Link href="/blog">
-            <Button variant="ghost" size="sm" className="mb-4">
+            <Button variant="ghost" size="sm" className="mb-4 hover:bg-white/10 hover:text-accent-green transition-colors">
               <ArrowLeft className="mr-2 h-4 w-4" />
               Volver al blog
             </Button>
@@ -27,10 +27,10 @@ export function PostLayout({ post, tableOfContents, children }: PostLayoutProps)
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-8">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      <div className="container mx-auto px-4 py-8 max-w-[1200px]">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8 xl:gap-12">
           {/* Contenido principal */}
-          <article className="lg:col-span-3">
+          <article className="min-w-0 max-w-[720px]">
             {/* Metadatos del post */}
             <header className="mb-8">
               <div className="flex flex-wrap items-center gap-2 mb-4">
@@ -99,7 +99,7 @@ export function PostLayout({ post, tableOfContents, children }: PostLayoutProps)
 
           {/* Sidebar con tabla de contenidos */}
           <aside className="lg:col-span-1">
-            <div className="sticky top-24">
+            <div className="sticky top-24 space-y-6">
               <TableOfContents items={tableOfContents} />
             </div>
           </aside>
