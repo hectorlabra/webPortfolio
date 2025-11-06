@@ -7,6 +7,7 @@ import { BlogPost, TableOfContentsItem } from '@/lib/types/blog';
 import { TableOfContents } from './TableOfContents';
 import { ReadingProgressBar } from './ReadingProgressBar';
 import { Breadcrumbs } from './Breadcrumbs';
+import { ShareButtons } from './ShareButtons';
 
 interface PostLayoutProps {
   post: BlogPost;
@@ -82,6 +83,13 @@ export function PostLayout({ post, tableOfContents, children }: PostLayoutProps)
                   <span>{post.readingTime} min de lectura</span>
                 </div>
               </div>
+
+              {/* Share Buttons */}
+              <ShareButtons
+                url={`${process.env.NEXT_PUBLIC_SITE_URL || 'https://hectorlabra.dev'}/blog/${post.slug}`}
+                title={post.title}
+                description={post.description}
+              />
 
               {/* Tags */}
               {post.tags.length > 0 && (
