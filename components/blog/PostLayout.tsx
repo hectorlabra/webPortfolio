@@ -7,9 +7,10 @@ import { BlogPost, TableOfContentsItem } from "@/lib/types/blog";
 import { TableOfContents } from "./TableOfContents";
 import { ReadingProgressBar } from "./ReadingProgressBar";
 import { Breadcrumbs } from "./Breadcrumbs";
-import { ShareButtons } from './ShareButtons';
+import { ShareButtons } from "./ShareButtons";
 import { AuthorCard } from './AuthorCard';
 import { NewsletterInPost } from './NewsletterInPost';
+import { RelatedPosts } from './RelatedPosts';
 
 interface PostLayoutProps {
   post: BlogPost;
@@ -172,6 +173,9 @@ export function PostLayout({
             </div>
           </aside>
         </div>
+
+        {/* Related Posts */}
+        <RelatedPosts currentSlug={post.slug} />
       </div>
     </div>
   );

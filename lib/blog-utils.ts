@@ -142,3 +142,57 @@ export function buildTableOfContents(markdown: string): TableOfContentsItem[] {
 
   return toc;
 }
+
+// Función para obtener posts relacionados por tags
+export async function getRelatedPosts(currentSlug: string, limit: number = 3): Promise<BlogPost[]> {
+  const currentPost = await getPostBySlug(currentSlug);
+  if (!currentPost) return [];
+
+  const allPosts = await getAllPosts();
+  
+  // Filtrar el post actual
+  const otherPosts = allPosts.filter(post => post.slug !== currentSlug);
+  
+  // Calcular relevancia basada en tags compartidos
+  const postsWithScore = otherPosts.map(post => {
+    const sharedTags = post.tags.filter(tag => currentPost.tags.includes(tag));
+    const sameCategory = post.category === currentPost.category ? 1 : 0;
+    const score = sharedTags.length * 2 + sameCategory;
+    
+    return { post, score };
+  });
+  
+  // Ordenar por relevancia y luego por fecha
+  const sortedPosts = postsWithScore
+    .sort((a, b) => {
+      if (b.score !== a.score) return b.score - a.score;
+      return new Date(b.post.date).getTime() - new Date(a.post.date).getTime();
+    })
+    .map(item => item.post);
+  
+  return sortedPosts.slice(0, limit);
+}
+
+// Función para obtener el post anterior
+export async function getPreviousPost(currentSlug: string): Promise<BlogPost | null> {
+  const allPosts = await getAllPosts();
+  const currentIndex = allPosts.findIndex(post => post.slug === currentSlug);
+  
+  if (currentIndex === -1 || currentIndex === allPosts.length - 1) {
+    return null;
+  }
+  
+  return allPosts[currentIndex + 1];
+}
+
+// Función para obtener el siguiente post
+export async function getNextPost(currentSlug: string): Promise<BlogPost | null> {
+  const allPosts = await getAllPosts();
+  const currentIndex = allPosts.findIndex(post => post.slug === currentSlug);
+  
+  if (currentIndex === -1 || currentIndex === 0) {
+    return null;
+  }
+  
+  return allPosts[currentIndex - 1];
+}
