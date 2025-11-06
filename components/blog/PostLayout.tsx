@@ -48,13 +48,19 @@ export function PostLayout({
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-8 max-w-[1200px]">
+      <div className="container mx-auto px-4 py-8">
         {/* Breadcrumbs */}
-        <Breadcrumbs post={post} />
+        <div className="max-w-[1400px] mx-auto">
+          <Breadcrumbs post={post} />
+        </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8 xl:gap-12">
-          {/* Contenido principal */}
-          <article className="min-w-0 max-w-[720px]">
+        {/* 3-Column Layout: Left Empty | Article Centered | Right Sidebar */}
+        <div className="grid grid-cols-1 xl:grid-cols-[250px_1fr_300px] gap-8 max-w-[1400px] mx-auto">
+          {/* Left Sidebar - Empty on purpose for visual balance */}
+          <aside className="hidden xl:block" />
+
+          {/* Contenido principal - Centered */}
+          <article className="min-w-0 max-w-[680px] mx-auto w-full">
             {/* Metadatos del post */}
             <header className="mb-12 space-y-6">
               <div className="flex flex-wrap items-center gap-3">
@@ -143,16 +149,18 @@ export function PostLayout({
               {children}
             </div>
 
-            {/* Newsletter Section */}
-            <div className="mt-16">
+            {/* Newsletter Section - Will move to sidebar */}
+            <div className="mt-16 xl:hidden">
               <NewsletterInPost variant="prominent" />
             </div>
           </article>
 
-          {/* Sidebar con tabla de contenidos */}
-          <aside className="lg:col-span-1">
-            <div className="sticky top-24 space-y-6">
+          {/* Right Sidebar - Sticky TOC + Newsletter */}
+          <aside className="hidden xl:block">
+            <div className="sticky top-24 space-y-8">
               <TableOfContents items={tableOfContents} />
+              {/* Newsletter sticky on desktop */}
+              <NewsletterInPost variant="compact" />
             </div>
           </aside>
         </div>
