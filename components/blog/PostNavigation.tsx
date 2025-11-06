@@ -17,10 +17,7 @@ export async function PostNavigation({ currentSlug }: PostNavigationProps) {
   }
 
   return (
-    <nav
-      className="mt-20"
-      aria-label="Post navigation"
-    >
+    <nav className="mt-20" aria-label="Post navigation">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {previousPost ? (
           <Link

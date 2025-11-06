@@ -53,7 +53,7 @@ export function TableOfContents({ items }: TableOfContentsProps) {
   const renderItems = (items: TableOfContentsItem[], level = 0) => {
     return items.map((item) => {
       const isActive = activeId === item.id;
-      
+
       return (
         <li key={item.id} className={cn("", level > 0 && "ml-4")}>
           <button
@@ -75,11 +75,13 @@ export function TableOfContents({ items }: TableOfContentsProps) {
                   : "bg-white/20 group-hover:bg-accent-green/50 group-hover:w-2 group-hover:h-2"
               )}
             />
-            
-            <span className={cn(
-              "block transition-colors",
-              isActive && "text-accent-green"
-            )}>
+
+            <span
+              className={cn(
+                "block transition-colors",
+                isActive && "text-accent-green"
+              )}
+            >
               {item.text}
             </span>
           </button>

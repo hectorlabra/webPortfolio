@@ -119,7 +119,6 @@ export function PostLayout({
 
       {/* Main Content Area */}
       <div className="container mx-auto px-4 py-20">
-
         {/* 3-Column Layout: Left Empty | Article Centered | Right Sidebar */}
         <div className="grid grid-cols-1 xl:grid-cols-[250px_1fr_300px] gap-8 max-w-[1400px] mx-auto">
           {/* Left Sidebar - Empty on purpose for visual balance */}
