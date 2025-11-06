@@ -96,14 +96,11 @@ export function TableOfContents({ items }: TableOfContentsProps) {
   };
 
   return (
-    <nav className="space-y-4">
-      <div className="flex items-center gap-2">
-        <div className="w-1 h-6 bg-accent-green rounded-full" />
-        <h3 className="font-bold text-sm text-white uppercase tracking-wider">
-          En este artículo
-        </h3>
-      </div>
-      <ul className="space-y-1 pl-1">{renderItems(items)}</ul>
+    <nav className="space-y-3">
+      <h3 className="font-mono font-semibold text-xs text-white/60 uppercase tracking-wider">
+        En este artículo
+      </h3>
+      <ul className="space-y-0.5">{renderItems(items)}</ul>
     </nav>
   );
 }

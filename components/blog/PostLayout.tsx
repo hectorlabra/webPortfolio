@@ -40,32 +40,27 @@ export function PostLayout({
 
         <div className="container mx-auto px-4 relative z-10">
           {/* Breadcrumbs at top */}
-          <div className="max-w-[1400px] mx-auto mb-8">
+          <div className="max-w-[1200px] mx-auto mb-8">
             <Breadcrumbs post={post} />
           </div>
 
           {/* Hero Content - Centered */}
-          <div className="max-w-[680px] mx-auto">
+          <div className="max-w-[700px] mx-auto">
             <header className="space-y-6">
-              {/* Category & Featured Badge */}
+              {/* Category Badge */}
               <div className="flex flex-wrap items-center gap-3">
-                <Badge className="bg-accent-yellow text-[#0a0612] hover:bg-accent-yellow/90 font-semibold px-4 py-1.5 text-sm">
+                <Badge className="bg-accent-yellow text-[#0a0612] hover:bg-accent-yellow/90 font-semibold px-3 py-1 text-xs">
                   {post.category}
                 </Badge>
-                {post.featured && (
-                  <Badge className="bg-accent-green text-[#0a0612] hover:bg-accent-green/90 font-semibold px-4 py-1.5 text-sm shadow-[0_0_15px_rgba(100,227,101,0.4)]">
-                    ⭐ Destacado
-                  </Badge>
-                )}
               </div>
 
               {/* Title */}
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-mono tracking-tight text-accent-green leading-tight">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-mono tracking-tight text-accent-green leading-tight">
                 {post.title}
               </h1>
 
               {/* Description */}
-              <p className="text-xl md:text-2xl text-white/80 leading-relaxed">
+              <p className="text-lg sm:text-xl text-white/70 leading-relaxed">
                 {post.description}
               </p>
 
@@ -119,16 +114,20 @@ export function PostLayout({
 
       {/* Main Content Area */}
       <div className="container mx-auto px-4 py-20">
-        {/* 3-Column Layout: Left Empty | Article Centered | Right Sidebar */}
-        <div className="grid grid-cols-1 xl:grid-cols-[250px_1fr_300px] gap-8 max-w-[1400px] mx-auto">
-          {/* Left Sidebar - Empty on purpose for visual balance */}
-          <aside className="hidden xl:block" />
+        {/* 3-Column Layout: Left TOC | Article Centered | Right Newsletter */}
+        <div className="grid grid-cols-1 xl:grid-cols-[280px_1fr_320px] gap-8 max-w-[1200px] mx-auto">
+          {/* Left Sidebar - TOC */}
+          <aside className="hidden xl:block">
+            <div className="sticky top-24">
+              <TableOfContents items={tableOfContents} />
+            </div>
+          </aside>
 
           {/* Contenido principal - Centered */}
-          <article className="min-w-0 max-w-[680px] mx-auto w-full">
+          <article className="min-w-0 max-w-[700px] mx-auto w-full">
             {/* Contenido del post */}
             <div
-              className="prose prose-invert prose-lg max-w-none
+              className="prose prose-invert max-w-none
               prose-headings:font-mono prose-headings:font-bold
               prose-h1:text-accent-green prose-h1:text-4xl
               prose-h2:text-accent-green prose-h2:text-3xl
@@ -155,14 +154,11 @@ export function PostLayout({
             </div>
           </article>
 
-          {/* Right Sidebar - Sticky TOC + Newsletter */}
+          {/* Right Sidebar - Newsletter */}
           <aside className="hidden xl:block">
-            <div className="sticky top-24 space-y-6">
-              <TableOfContents items={tableOfContents} />
+            <div className="sticky top-24">
               {/* Newsletter sticky on desktop */}
-              <div className="pt-6 border-t border-white/10">
-                <NewsletterInPost variant="compact" />
-              </div>
+              <NewsletterInPost variant="compact" />
             </div>
           </aside>
         </div>
