@@ -92,7 +92,23 @@ export function PostLayout({ post, tableOfContents, children }: PostLayoutProps)
             </header>
 
             {/* Contenido del post */}
-            <div className="prose prose-gray dark:prose-invert prose-lg max-w-none">
+            <div className="prose prose-invert prose-lg max-w-none
+              prose-headings:font-mono prose-headings:font-bold
+              prose-h1:text-accent-green prose-h1:text-4xl
+              prose-h2:text-accent-green prose-h2:text-3xl
+              prose-h3:text-accent-green prose-h3:text-2xl
+              prose-p:text-white/90 prose-p:leading-relaxed
+              prose-a:text-accent-green prose-a:no-underline prose-a:font-medium hover:prose-a:text-accent-yellow prose-a:transition-colors
+              prose-strong:text-accent-yellow prose-strong:font-semibold
+              prose-code:text-accent-yellow prose-code:bg-white/10 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-code:before:content-[''] prose-code:after:content-['']
+              prose-pre:bg-[#0a0612] prose-pre:border prose-pre:border-white/10 prose-pre:rounded-lg
+              prose-blockquote:border-l-4 prose-blockquote:border-accent-green prose-blockquote:bg-white/5 prose-blockquote:rounded-r-lg prose-blockquote:pl-4
+              prose-ul:text-white/90 prose-ol:text-white/90
+              prose-li:text-white/90 prose-li:marker:text-accent-green
+              prose-table:border prose-table:border-white/10
+              prose-th:bg-white/5 prose-th:text-accent-green prose-th:font-semibold
+              prose-td:border-t prose-td:border-white/10 prose-td:text-white/90
+              prose-img:rounded-lg prose-img:shadow-lg">
               {children}
             </div>
           </article>
