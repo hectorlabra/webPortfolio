@@ -1,15 +1,15 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { cn } from '@/lib/utils';
-import { TableOfContentsItem } from '@/lib/types/blog';
+import { useState, useEffect } from "react";
+import { cn } from "@/lib/utils";
+import { TableOfContentsItem } from "@/lib/types/blog";
 
 interface TableOfContentsProps {
   items: TableOfContentsItem[];
 }
 
 export function TableOfContents({ items }: TableOfContentsProps) {
-  const [activeId, setActiveId] = useState<string>('');
+  const [activeId, setActiveId] = useState<string>("");
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -21,7 +21,7 @@ export function TableOfContents({ items }: TableOfContentsProps) {
         });
       },
       {
-        rootMargin: '-20% 0% -35% 0%',
+        rootMargin: "-20% 0% -35% 0%",
       }
     );
 
@@ -40,8 +40,8 @@ export function TableOfContents({ items }: TableOfContentsProps) {
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
+        behavior: "smooth",
+        block: "start",
       });
     }
   };
@@ -52,15 +52,16 @@ export function TableOfContents({ items }: TableOfContentsProps) {
 
   const renderItems = (items: TableOfContentsItem[], level = 0) => {
     return items.map((item) => (
-      <li key={item.id} className={cn('', level > 0 && 'ml-4')}>
+      <li key={item.id} className={cn("", level > 0 && "ml-4")}>
         <button
           onClick={() => handleClick(item.id)}
           className={cn(
-            'block w-full text-left py-2 px-3 text-sm rounded-lg transition-all',
-            'border-l-2 border-transparent hover:border-accent-green hover:bg-white/5',
-            activeId === item.id && 'bg-white/5 border-accent-green text-accent-green font-medium',
-            level === 0 && 'font-medium text-white/90',
-            level > 0 && 'text-white/70'
+            "block w-full text-left py-2 px-3 text-sm rounded-lg transition-all",
+            "border-l-2 border-transparent hover:border-accent-green hover:bg-white/5",
+            activeId === item.id &&
+              "bg-white/5 border-accent-green text-accent-green font-medium",
+            level === 0 && "font-medium text-white/90",
+            level > 0 && "text-white/70"
           )}
         >
           {item.text}
@@ -79,9 +80,7 @@ export function TableOfContents({ items }: TableOfContentsProps) {
       <h3 className="font-semibold text-sm text-white/60 uppercase tracking-wider">
         Tabla de contenidos
       </h3>
-      <ul className="space-y-1">
-        {renderItems(items)}
-      </ul>
+      <ul className="space-y-1">{renderItems(items)}</ul>
     </nav>
   );
 }

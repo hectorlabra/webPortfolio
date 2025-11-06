@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { Check, Copy } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { useState } from "react";
+import { Check, Copy } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface CopyCodeButtonProps {
   code: string;
@@ -17,7 +17,7 @@ export function CopyCodeButton({ code }: CopyCodeButtonProps) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (error) {
-      console.error('Error al copiar:', error);
+      console.error("Error al copiar:", error);
     }
   };
 

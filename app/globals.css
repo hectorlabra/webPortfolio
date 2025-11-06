@@ -51,7 +51,7 @@
   body {
     @apply bg-[#130c24] text-white;
   }
-  
+
   /* Aplicando leading-relaxed globalmente a todos los párrafos */
   p {
     @apply leading-relaxed;
@@ -70,7 +70,7 @@
   width: 4px; /* Aumentado de 2px a 4px para hacerlo más grueso */
   height: 1.2em; /* Ligeramente más alto */
   margin-left: 2px;
-  background-color: #64E365;
+  background-color: #64e365;
   vertical-align: text-top;
   border-radius: 1px; /* Pequeño redondeo en las esquinas */
   animation: blink 0.7s infinite;
@@ -78,7 +78,8 @@
 }
 
 @keyframes blink {
-  0%, 100% {
+  0%,
+  100% {
     opacity: 0.9;
   }
   50% {
@@ -92,19 +93,21 @@
     padding-left: 1rem;
     padding-right: 1rem;
   }
-  
-  h1, h2, h3 {
+
+  h1,
+  h2,
+  h3 {
     word-break: break-word;
   }
-  
+
   h1 {
     font-size: clamp(1.75rem, 6vw, 2.25rem);
   }
-  
+
   h2 {
     font-size: clamp(1.5rem, 5vw, 1.875rem);
   }
-  
+
   h3 {
     font-size: clamp(1.25rem, 4vw, 1.5rem);
   }
@@ -163,20 +166,19 @@
   }
 }
 
-
 /* Estilos para Prism.js - Tema personalizado oscuro */
 :root {
   --prism-background: #0a0612;
   --prism-foreground: #ffffff;
   --prism-comment: #6b7280;
-  --prism-string: #64E365;
-  --prism-number: #FFD100;
-  --prism-keyword: #64E365;
-  --prism-function: #FFD100;
-  --prism-operator: #64E365;
+  --prism-string: #64e365;
+  --prism-number: #ffd100;
+  --prism-keyword: #64e365;
+  --prism-function: #ffd100;
+  --prism-operator: #64e365;
   --prism-punctuation: #ffffff;
-  --prism-property: #FFD100;
-  --prism-selector: #64E365;
+  --prism-property: #ffd100;
+  --prism-selector: #64e365;
   --prism-variable: #ffffff;
 }
 
@@ -185,7 +187,8 @@
   @apply bg-[#0a0612] border border-white/10 rounded-lg p-4 overflow-x-auto;
   background: var(--prism-background) !important;
   margin: 1.5rem 0;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
   position: relative; /* Para posicionar el botón de copiar */
 }
 
@@ -346,7 +349,12 @@
   @apply text-white/90;
 }
 
-.prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4,
+.prose h5,
+.prose h6 {
   @apply text-accent-green;
 }
 

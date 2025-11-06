@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { useEffect, useRef } from 'react';
-import { CopyCodeButton } from './CopyCodeButton';
-import { createRoot } from 'react-dom/client';
+import { useEffect, useRef } from "react";
+import { CopyCodeButton } from "./CopyCodeButton";
+import { createRoot } from "react-dom/client";
 
 interface CodeBlockEnhancerProps {
   children: React.ReactNode;
@@ -14,20 +14,20 @@ export function CodeBlockEnhancer({ children }: CodeBlockEnhancerProps) {
   useEffect(() => {
     if (!containerRef.current) return;
 
-    const codeBlocks = containerRef.current.querySelectorAll('pre');
+    const codeBlocks = containerRef.current.querySelectorAll("pre");
 
     codeBlocks.forEach((pre) => {
       // Evitar agregar múltiples botones
-      if (pre.querySelector('.copy-code-button-container')) return;
+      if (pre.querySelector(".copy-code-button-container")) return;
 
-      const code = pre.querySelector('code');
+      const code = pre.querySelector("code");
       if (!code) return;
 
-      const codeText = code.textContent || '';
+      const codeText = code.textContent || "";
 
       // Crear contenedor para el botón
-      const buttonContainer = document.createElement('div');
-      buttonContainer.className = 'copy-code-button-container';
+      const buttonContainer = document.createElement("div");
+      buttonContainer.className = "copy-code-button-container";
       pre.appendChild(buttonContainer);
 
       // Renderizar el botón de React

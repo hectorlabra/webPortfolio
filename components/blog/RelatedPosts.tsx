@@ -1,6 +1,6 @@
-import { getRelatedPosts } from '@/lib/blog-utils';
-import { BlogCard } from './BlogCard';
-import { BookOpen } from 'lucide-react';
+import { getRelatedPosts } from "@/lib/blog-utils";
+import { BlogCard } from "./BlogCard";
+import { BookOpen } from "lucide-react";
 
 interface RelatedPostsProps {
   currentSlug: string;

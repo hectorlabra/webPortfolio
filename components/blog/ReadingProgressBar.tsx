@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 export function ReadingProgressBar() {
   const [progress, setProgress] = useState(0);
@@ -8,9 +8,11 @@ export function ReadingProgressBar() {
   useEffect(() => {
     const calculateProgress = () => {
       const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight - windowHeight;
+      const documentHeight =
+        document.documentElement.scrollHeight - windowHeight;
       const scrolled = window.scrollY;
-      const progress = documentHeight > 0 ? (scrolled / documentHeight) * 100 : 0;
+      const progress =
+        documentHeight > 0 ? (scrolled / documentHeight) * 100 : 0;
       setProgress(Math.min(progress, 100));
     };
 
@@ -26,12 +28,12 @@ export function ReadingProgressBar() {
       timeoutId = setTimeout(calculateProgress, 50);
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    window.addEventListener('resize', calculateProgress, { passive: true });
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("resize", calculateProgress, { passive: true });
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      window.removeEventListener('resize', calculateProgress);
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", calculateProgress);
       if (timeoutId) {
         clearTimeout(timeoutId);
       }

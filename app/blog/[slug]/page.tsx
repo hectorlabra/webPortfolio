@@ -1,11 +1,11 @@
-import { notFound } from 'next/navigation';
-import { getPostBySlug, getAllPostSlugs } from '@/lib/blog-utils';
-import { buildTableOfContents } from '@/lib/blog-utils';
-import { PostLayout } from '@/components/blog/PostLayout';
-import { generateArticleStructuredData } from '@/lib/structured-data';
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
+import { notFound } from "next/navigation";
+import { getPostBySlug, getAllPostSlugs } from "@/lib/blog-utils";
+import { buildTableOfContents } from "@/lib/blog-utils";
+import { PostLayout } from "@/components/blog/PostLayout";
+import { generateArticleStructuredData } from "@/lib/structured-data";
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
 
 interface PostPageProps {
   params: {
@@ -23,10 +23,10 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: PostPageProps) {
   const { slug } = await params;
   const post = await getPostBySlug(slug);
-  
+
   if (!post) {
     return {
-      title: 'Post no encontrado',
+      title: "Post no encontrado",
     };
   }
 
@@ -38,16 +38,16 @@ export async function generateMetadata({ params }: PostPageProps) {
     openGraph: {
       title: post.title,
       description: post.description,
-      type: 'article',
+      type: "article",
       publishedTime: post.date,
       authors: [post.author],
       tags: post.tags,
       url: `https://hectorlabra.dev/blog/${post.slug}`,
-      siteName: 'Héctor Labra - Desarrollador Full Stack',
-      locale: 'es_ES',
+      siteName: "Héctor Labra - Desarrollador Full Stack",
+      locale: "es_ES",
       images: [
         {
-          url: 'https://hectorlabra.dev/og-image-blog.jpg',
+          url: "https://hectorlabra.dev/og-image-blog.jpg",
           width: 1200,
           height: 630,
           alt: post.title,
@@ -55,12 +55,12 @@ export async function generateMetadata({ params }: PostPageProps) {
       ],
     },
     twitter: {
-      card: 'summary_large_image',
+      card: "summary_large_image",
       title: post.title,
       description: post.description,
-      images: ['https://hectorlabra.dev/og-image-blog.jpg'],
-      creator: '@hectorlabra',
-      site: '@hectorlabra',
+      images: ["https://hectorlabra.dev/og-image-blog.jpg"],
+      creator: "@hectorlabra",
+      site: "@hectorlabra",
     },
     alternates: {
       canonical: `https://hectorlabra.dev/blog/${post.slug}`,
@@ -71,9 +71,9 @@ export async function generateMetadata({ params }: PostPageProps) {
       googleBot: {
         index: true,
         follow: true,
-        'max-video-preview': -1,
-        'max-image-preview': 'large',
-        'max-snippet': -1,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
       },
     },
   };
@@ -82,14 +82,14 @@ export async function generateMetadata({ params }: PostPageProps) {
 export default async function PostPage({ params }: PostPageProps) {
   const { slug } = await params;
   const post = await getPostBySlug(slug);
-  
+
   if (!post) {
     notFound();
   }
 
   // Obtener el contenido markdown original para la tabla de contenidos
-  const fullPath = path.join(process.cwd(), 'content/posts', `${slug}.md`);
-  const fileContents = fs.readFileSync(fullPath, 'utf8');
+  const fullPath = path.join(process.cwd(), "content/posts", `${slug}.md`);
+  const fileContents = fs.readFileSync(fullPath, "utf8");
   const { content } = matter(fileContents);
   const tableOfContents = buildTableOfContents(content);
 
@@ -105,7 +105,7 @@ export default async function PostPage({ params }: PostPageProps) {
           __html: JSON.stringify(structuredData),
         }}
       />
-      
+
       <PostLayout post={post} tableOfContents={tableOfContents}>
         <div dangerouslySetInnerHTML={{ __html: post.content }} />
       </PostLayout>

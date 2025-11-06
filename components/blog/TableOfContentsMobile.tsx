@@ -1,17 +1,17 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { List, X } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { useState } from "react";
+import { List, X } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-} from '@/components/ui/sheet';
-import { TableOfContentsItem } from '@/lib/types/blog';
-import { cn } from '@/lib/utils';
+} from "@/components/ui/sheet";
+import { TableOfContentsItem } from "@/lib/types/blog";
+import { cn } from "@/lib/utils";
 
 interface TableOfContentsMobileProps {
   items: TableOfContentsItem[];
@@ -19,7 +19,7 @@ interface TableOfContentsMobileProps {
 
 export function TableOfContentsMobile({ items }: TableOfContentsMobileProps) {
   const [open, setOpen] = useState(false);
-  const [activeId, setActiveId] = useState<string>('');
+  const [activeId, setActiveId] = useState<string>("");
 
   if (items.length === 0) {
     return null;
@@ -29,8 +29,8 @@ export function TableOfContentsMobile({ items }: TableOfContentsMobileProps) {
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
+        behavior: "smooth",
+        block: "start",
       });
       setOpen(false); // Cerrar el sheet después de navegar
     }
@@ -38,15 +38,16 @@ export function TableOfContentsMobile({ items }: TableOfContentsMobileProps) {
 
   const renderItems = (items: TableOfContentsItem[], level = 0) => {
     return items.map((item) => (
-      <li key={item.id} className={cn('', level > 0 && 'ml-4')}>
+      <li key={item.id} className={cn("", level > 0 && "ml-4")}>
         <button
           onClick={() => handleClick(item.id)}
           className={cn(
-            'block w-full text-left py-2 px-3 text-sm rounded-lg transition-all',
-            'border-l-2 border-transparent hover:border-accent-green hover:bg-white/5',
-            activeId === item.id && 'bg-white/5 border-accent-green text-accent-green font-medium',
-            level === 0 && 'font-medium text-white/90',
-            level > 0 && 'text-white/70'
+            "block w-full text-left py-2 px-3 text-sm rounded-lg transition-all",
+            "border-l-2 border-transparent hover:border-accent-green hover:bg-white/5",
+            activeId === item.id &&
+              "bg-white/5 border-accent-green text-accent-green font-medium",
+            level === 0 && "font-medium text-white/90",
+            level > 0 && "text-white/70"
           )}
         >
           {item.text}
@@ -72,8 +73,8 @@ export function TableOfContentsMobile({ items }: TableOfContentsMobileProps) {
           <List className="h-6 w-6 text-accent-green" />
         </Button>
       </SheetTrigger>
-      <SheetContent 
-        side="right" 
+      <SheetContent
+        side="right"
         className="w-[300px] sm:w-[400px] bg-[#0a0612] border-l border-white/10 text-white overflow-y-auto"
       >
         <SheetHeader>
@@ -82,9 +83,7 @@ export function TableOfContentsMobile({ items }: TableOfContentsMobileProps) {
           </SheetTitle>
         </SheetHeader>
         <nav className="mt-6">
-          <ul className="space-y-1">
-            {renderItems(items)}
-          </ul>
+          <ul className="space-y-1">{renderItems(items)}</ul>
         </nav>
       </SheetContent>
     </Sheet>

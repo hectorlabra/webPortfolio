@@ -1,45 +1,50 @@
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
-import { BlogPost, BlogFrontmatter, BlogMetadata, TableOfContentsItem } from './types/blog';
-import { markdownToHtml, extractTableOfContents } from './markdown';
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
+import {
+  BlogPost,
+  BlogFrontmatter,
+  BlogMetadata,
+  TableOfContentsItem,
+} from "./types/blog";
+import { markdownToHtml, extractTableOfContents } from "./markdown";
 
-const POSTS_DIRECTORY = path.join(process.cwd(), 'content/posts');
+const POSTS_DIRECTORY = path.join(process.cwd(), "content/posts");
 
 // Función para leer todos los archivos de posts
 export function getAllPostSlugs(): string[] {
   if (!fs.existsSync(POSTS_DIRECTORY)) {
     return [];
   }
-  
+
   const fileNames = fs.readdirSync(POSTS_DIRECTORY);
   return fileNames
-    .filter(fileName => fileName.endsWith('.md'))
-    .map(fileName => fileName.replace(/\.md$/, ''));
+    .filter((fileName) => fileName.endsWith(".md"))
+    .map((fileName) => fileName.replace(/\.md$/, ""));
 }
 
 // Función para obtener datos de un post específico
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   try {
     const fullPath = path.join(POSTS_DIRECTORY, `${slug}.md`);
-    
+
     if (!fs.existsSync(fullPath)) {
       return null;
     }
-    
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
+
+    const fileContents = fs.readFileSync(fullPath, "utf8");
     const { data, content } = matter(fileContents);
-    
+
     const frontmatter = data as BlogFrontmatter;
     const htmlContent = await markdownToHtml(content);
-    
+
     // Calcular tiempo de lectura (aproximadamente 200 palabras por minuto)
     const wordCount = content.split(/\s+/).length;
     const readingTime = Math.ceil(wordCount / 200);
-    
+
     // Generar excerpt (primeros 150 caracteres del contenido)
-    const excerpt = content.slice(0, 150).trim() + '...';
-    
+    const excerpt = content.slice(0, 150).trim() + "...";
+
     return {
       slug,
       title: frontmatter.title,
@@ -63,43 +68,43 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
 // Función para obtener todos los posts
 export async function getAllPosts(): Promise<BlogPost[]> {
   const slugs = getAllPostSlugs();
-  const posts = await Promise.all(
-    slugs.map(slug => getPostBySlug(slug))
-  );
-  
+  const posts = await Promise.all(slugs.map((slug) => getPostBySlug(slug)));
+
   return posts
     .filter((post): post is BlogPost => post !== null && post.published)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
 // Función para obtener posts por categoría
-export async function getPostsByCategory(category: string): Promise<BlogPost[]> {
+export async function getPostsByCategory(
+  category: string
+): Promise<BlogPost[]> {
   const allPosts = await getAllPosts();
-  return allPosts.filter(post => post.category === category);
+  return allPosts.filter((post) => post.category === category);
 }
 
 // Función para obtener posts por tag
 export async function getPostsByTag(tag: string): Promise<BlogPost[]> {
   const allPosts = await getAllPosts();
-  return allPosts.filter(post => post.tags.includes(tag));
+  return allPosts.filter((post) => post.tags.includes(tag));
 }
 
 // Función para obtener metadatos del blog
 export async function getBlogMetadata(): Promise<BlogMetadata> {
   const allPosts = await getAllPosts();
-  
+
   // Extraer categorías únicas
-  const categories = [...new Set(allPosts.map(post => post.category))];
-  
+  const categories = [...new Set(allPosts.map((post) => post.category))];
+
   // Extraer tags únicos
-  const tags = [...new Set(allPosts.flatMap(post => post.tags))];
-  
+  const tags = [...new Set(allPosts.flatMap((post) => post.tags))];
+
   // Posts recientes (últimos 5)
   const recentPosts = allPosts.slice(0, 5);
-  
+
   // Posts destacados
-  const featuredPosts = allPosts.filter(post => post.featured);
-  
+  const featuredPosts = allPosts.filter((post) => post.featured);
+
   return {
     totalPosts: allPosts.length,
     categories,
@@ -115,7 +120,7 @@ export function buildTableOfContents(markdown: string): TableOfContentsItem[] {
   const toc: TableOfContentsItem[] = [];
   const stack: TableOfContentsItem[] = [];
 
-  flatHeadings.forEach(heading => {
+  flatHeadings.forEach((heading) => {
     const item: TableOfContentsItem = {
       id: heading.id,
       text: heading.text,
@@ -144,55 +149,64 @@ export function buildTableOfContents(markdown: string): TableOfContentsItem[] {
 }
 
 // Función para obtener posts relacionados por tags
-export async function getRelatedPosts(currentSlug: string, limit: number = 3): Promise<BlogPost[]> {
+export async function getRelatedPosts(
+  currentSlug: string,
+  limit: number = 3
+): Promise<BlogPost[]> {
   const currentPost = await getPostBySlug(currentSlug);
   if (!currentPost) return [];
 
   const allPosts = await getAllPosts();
-  
+
   // Filtrar el post actual
-  const otherPosts = allPosts.filter(post => post.slug !== currentSlug);
-  
+  const otherPosts = allPosts.filter((post) => post.slug !== currentSlug);
+
   // Calcular relevancia basada en tags compartidos
-  const postsWithScore = otherPosts.map(post => {
-    const sharedTags = post.tags.filter(tag => currentPost.tags.includes(tag));
+  const postsWithScore = otherPosts.map((post) => {
+    const sharedTags = post.tags.filter((tag) =>
+      currentPost.tags.includes(tag)
+    );
     const sameCategory = post.category === currentPost.category ? 1 : 0;
     const score = sharedTags.length * 2 + sameCategory;
-    
+
     return { post, score };
   });
-  
+
   // Ordenar por relevancia y luego por fecha
   const sortedPosts = postsWithScore
     .sort((a, b) => {
       if (b.score !== a.score) return b.score - a.score;
       return new Date(b.post.date).getTime() - new Date(a.post.date).getTime();
     })
-    .map(item => item.post);
-  
+    .map((item) => item.post);
+
   return sortedPosts.slice(0, limit);
 }
 
 // Función para obtener el post anterior
-export async function getPreviousPost(currentSlug: string): Promise<BlogPost | null> {
+export async function getPreviousPost(
+  currentSlug: string
+): Promise<BlogPost | null> {
   const allPosts = await getAllPosts();
-  const currentIndex = allPosts.findIndex(post => post.slug === currentSlug);
-  
+  const currentIndex = allPosts.findIndex((post) => post.slug === currentSlug);
+
   if (currentIndex === -1 || currentIndex === allPosts.length - 1) {
     return null;
   }
-  
+
   return allPosts[currentIndex + 1];
 }
 
 // Función para obtener el siguiente post
-export async function getNextPost(currentSlug: string): Promise<BlogPost | null> {
+export async function getNextPost(
+  currentSlug: string
+): Promise<BlogPost | null> {
   const allPosts = await getAllPosts();
-  const currentIndex = allPosts.findIndex(post => post.slug === currentSlug);
-  
+  const currentIndex = allPosts.findIndex((post) => post.slug === currentSlug);
+
   if (currentIndex === -1 || currentIndex === 0) {
     return null;
   }
-  
+
   return allPosts[currentIndex - 1];
 }

@@ -1,6 +1,6 @@
-import { getPreviousPost, getNextPost } from '@/lib/blog-utils';
-import Link from 'next/link';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { getPreviousPost, getNextPost } from "@/lib/blog-utils";
+import Link from "next/link";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 
 interface PostNavigationProps {
   currentSlug: string;
@@ -17,7 +17,10 @@ export async function PostNavigation({ currentSlug }: PostNavigationProps) {
   }
 
   return (
-    <nav className="mt-16 pt-12 border-t border-white/10" aria-label="Post navigation">
+    <nav
+      className="mt-16 pt-12 border-t border-white/10"
+      aria-label="Post navigation"
+    >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {previousPost ? (
           <Link
