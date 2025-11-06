@@ -11,6 +11,7 @@ import { ShareButtons } from "./ShareButtons";
 import { AuthorCard } from './AuthorCard';
 import { NewsletterInPost } from './NewsletterInPost';
 import { RelatedPosts } from './RelatedPosts';
+import { PostNavigation } from './PostNavigation';
 
 interface PostLayoutProps {
   post: BlogPost;
@@ -176,6 +177,9 @@ export function PostLayout({
 
         {/* Related Posts */}
         <RelatedPosts currentSlug={post.slug} />
+
+        {/* Post Navigation */}
+        <PostNavigation currentSlug={post.slug} />
       </div>
     </div>
   );
