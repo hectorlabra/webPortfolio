@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ChevronRight, Home } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import { BlogPost } from "@/lib/types/blog";
 
 interface BreadcrumbsProps {
@@ -8,62 +8,39 @@ interface BreadcrumbsProps {
 
 export function Breadcrumbs({ post }: BreadcrumbsProps) {
   const breadcrumbs = [
-    { label: "Inicio", href: "/", icon: Home },
+    { label: "Inicio", href: "/" },
     { label: "Blog", href: "/blog" },
-    {
-      label: post.category,
-      href: `/blog?category=${encodeURIComponent(post.category)}`,
-    },
     { label: post.title, href: `/blog/${post.slug}`, current: true },
   ];
 
-  // Truncar título si es muy largo
-  const truncateTitle = (title: string, maxLength: number = 50) => {
-    if (title.length <= maxLength) return title;
-    return title.slice(0, maxLength) + "...";
-  };
-
   return (
     <>
-      <nav aria-label="Breadcrumb" className="mb-8">
-        <ol className="flex flex-wrap items-center gap-2 text-sm text-white/60">
+      <nav aria-label="Breadcrumb" className="mb-6">
+        <ol className="flex flex-wrap items-center gap-2 text-sm">
           {breadcrumbs.map((crumb, index) => {
             const isLast = index === breadcrumbs.length - 1;
-            const Icon = crumb.icon;
-            const displayLabel = isLast
-              ? truncateTitle(crumb.label)
-              : crumb.label;
 
             return (
               <li key={crumb.href} className="flex items-center gap-2">
                 {index > 0 && (
                   <ChevronRight
-                    className="h-3 w-3 text-white/40"
+                    className="h-3.5 w-3.5 text-white/30"
                     aria-hidden="true"
                   />
                 )}
                 {isLast ? (
                   <span
-                    className="text-white/90 font-medium line-clamp-1 max-w-[200px] sm:max-w-[300px] md:max-w-[400px]"
+                    className="text-white/50 text-xs line-clamp-1 max-w-[150px] sm:max-w-[250px] md:max-w-none"
                     aria-current="page"
                   >
-                    {Icon && (
-                      <Icon
-                        className="inline h-3 w-3 mr-1"
-                        aria-hidden="true"
-                      />
-                    )}
-                    {displayLabel}
+                    {crumb.label}
                   </span>
                 ) : (
                   <Link
                     href={crumb.href}
-                    className="hover:text-accent-green transition-colors flex items-center"
+                    className="text-white/60 hover:text-accent-green transition-colors text-xs font-medium"
                   >
-                    {Icon && (
-                      <Icon className="h-3 w-3 mr-1" aria-hidden="true" />
-                    )}
-                    {displayLabel}
+                    {crumb.label}
                   </Link>
                 )}
               </li>
