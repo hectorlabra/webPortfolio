@@ -15,6 +15,7 @@ import { PostNavigation } from "./PostNavigation";
 import { TableOfContentsMobile } from "./TableOfContentsMobile";
 import { JumpToTop } from "./JumpToTop";
 import { CodeBlockEnhancer } from "./CodeBlockEnhancer";
+import { LazyGeometricPattern } from "@/components/shared/LazyGeometricPattern";
 
 interface PostLayoutProps {
   post: BlogPost;
@@ -182,6 +183,11 @@ export function PostLayout({
               />
             </div>
           </aside>
+        </div>
+
+        {/* Geometric Pattern Separator */}
+        <div className="my-20">
+          <LazyGeometricPattern priority={false} />
         </div>
 
         {/* Related Posts */}
