@@ -50,9 +50,7 @@ export function NewsletterInPost({
 
             <div className="flex-1">
               <h3 className="font-bold font-mono text-white text-xl md:text-2xl mb-2">
-                {isProminent
-                  ? "¿Te gustó este artículo?"
-                  : "Mantente al día"}
+                {isProminent ? "¿Te gustó este artículo?" : "Mantente al día"}
               </h3>
               <p className="text-white/70 text-sm md:text-base">
                 {isProminent

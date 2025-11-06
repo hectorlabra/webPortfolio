@@ -55,38 +55,19 @@ export function TableOfContents({ items }: TableOfContentsProps) {
       const isActive = activeId === item.id;
 
       return (
-        <li key={item.id} className={cn("", level > 0 && "ml-4")}>
+        <li key={item.id} className={cn("", level > 0 && "ml-3")}>
           <button
             onClick={() => handleClick(item.id)}
             className={cn(
-              "group relative block w-full text-left py-2.5 px-3 text-sm rounded-lg transition-all",
-              "hover:bg-white/5",
-              isActive && "bg-white/5",
-              level === 0 && "font-medium text-white/90",
-              level > 0 && "text-white/70"
+              "block w-full text-left py-1 text-xs transition-colors text-white/60",
+              "hover:text-white",
+              isActive && "text-white font-medium"
             )}
           >
-            {/* Progress Dot Indicator */}
-            <span
-              className={cn(
-                "absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-1.5 rounded-full transition-all",
-                isActive
-                  ? "bg-accent-green w-2 h-2 shadow-[0_0_8px_rgba(100,227,101,0.6)]"
-                  : "bg-white/20 group-hover:bg-accent-green/50 group-hover:w-2 group-hover:h-2"
-              )}
-            />
-
-            <span
-              className={cn(
-                "block transition-colors",
-                isActive && "text-accent-green"
-              )}
-            >
-              {item.text}
-            </span>
+            {item.text}
           </button>
           {item.children && item.children.length > 0 && (
-            <ul className="mt-1 space-y-1">
+            <ul className="mt-0.5 space-y-0.5">
               {renderItems(item.children, level + 1)}
             </ul>
           )}
@@ -96,11 +77,13 @@ export function TableOfContents({ items }: TableOfContentsProps) {
   };
 
   return (
-    <nav className="space-y-3">
-      <h3 className="font-mono font-semibold text-xs text-white/60 uppercase tracking-wider">
+    <nav className="space-y-2">
+      <h3 className="text-xs font-semibold text-white/40 uppercase tracking-wide mb-3">
         En este artículo
       </h3>
-      <ul className="space-y-0.5">{renderItems(items)}</ul>
+      <ul className="space-y-0.5 border-l border-white/10 pl-3">
+        {renderItems(items)}
+      </ul>
     </nav>
   );
 }
