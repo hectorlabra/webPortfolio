@@ -21,7 +21,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PostPageProps) {
-  const post = await getPostBySlug(params.slug);
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
   
   if (!post) {
     return {
@@ -79,14 +80,15 @@ export async function generateMetadata({ params }: PostPageProps) {
 }
 
 export default async function PostPage({ params }: PostPageProps) {
-  const post = await getPostBySlug(params.slug);
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
   
   if (!post) {
     notFound();
   }
 
   // Obtener el contenido markdown original para la tabla de contenidos
-  const fullPath = path.join(process.cwd(), 'content/posts', `${params.slug}.md`);
+  const fullPath = path.join(process.cwd(), 'content/posts', `${slug}.md`);
   const fileContents = fs.readFileSync(fullPath, 'utf8');
   const { content } = matter(fileContents);
   const tableOfContents = buildTableOfContents(content);
