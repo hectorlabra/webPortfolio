@@ -115,7 +115,7 @@ export function PostLayout({
       {/* Main Content Area */}
       <div className="container mx-auto px-4 py-20">
         {/* 3-Column Layout: Left TOC | Article Centered | Right Newsletter */}
-        <div className="grid grid-cols-1 xl:grid-cols-[280px_1fr_320px] gap-8 max-w-[1200px] mx-auto">
+        <div className="grid grid-cols-1 xl:grid-cols-[200px_1fr_250px] gap-12 max-w-[1400px] mx-auto">
           {/* Left Sidebar - TOC */}
           <aside className="hidden xl:block">
             <div className="sticky top-24">
@@ -124,19 +124,20 @@ export function PostLayout({
           </aside>
 
           {/* Contenido principal - Centered */}
-          <article className="min-w-0 w-full max-w-[700px] mx-auto">
+          <article className="min-w-0 w-full">
             {/* Contenido del post */}
             <div
-              className="prose prose-invert max-w-none
+              className="prose prose-invert max-w-[700px] mx-auto
               prose-headings:font-bold prose-headings:text-white
               prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl
-              prose-p:text-base prose-p:sm:text-lg prose-p:text-white/80 prose-p:leading-relaxed
+              prose-p:text-base prose-p:sm:text-lg prose-p:text-white/80 prose-p:leading-relaxed prose-p:mb-6
               prose-a:text-white prose-a:underline prose-a:decoration-white/30 hover:prose-a:decoration-white prose-a:transition-colors
               prose-strong:text-white prose-strong:font-semibold
               prose-code:text-white/90 prose-code:bg-white/10 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-code:before:content-[''] prose-code:after:content-['']
               prose-pre:bg-[#0a0612] prose-pre:border prose-pre:border-white/10 prose-pre:rounded-lg
               prose-blockquote:border-l-4 prose-blockquote:border-white/30 prose-blockquote:bg-white/5 prose-blockquote:rounded-r-lg prose-blockquote:pl-4 prose-blockquote:text-white/70
-              prose-ul:text-white/80 prose-ol:text-white/80
+              prose-ul:text-base prose-ul:sm:text-lg prose-ul:text-white/80 
+              prose-ol:text-base prose-ol:sm:text-lg prose-ol:text-white/80
               prose-li:text-white/80 prose-li:marker:text-white/50
               prose-table:border prose-table:border-white/10
               prose-th:bg-white/5 prose-th:text-white prose-th:font-semibold
