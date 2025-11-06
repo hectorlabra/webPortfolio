@@ -41,11 +41,13 @@ export function PostLayout({ post, tableOfContents, children }: PostLayoutProps)
           <article className="min-w-0 max-w-[720px]">
             {/* Metadatos del post */}
             <header className="mb-12 space-y-6">
-              <div className="flex flex-wrap items-center gap-2 mb-4">
-                <Badge variant="secondary">{post.category}</Badge>
+              <div className="flex flex-wrap items-center gap-3">
+                <Badge className="bg-accent-yellow text-[#0a0612] hover:bg-accent-yellow/90 font-semibold px-4 py-1.5 text-sm">
+                  {post.category}
+                </Badge>
                 {post.featured && (
-                  <Badge variant="default" className="bg-yellow-500 hover:bg-yellow-600">
-                    Destacado
+                  <Badge className="bg-accent-green text-[#0a0612] hover:bg-accent-green/90 font-semibold px-4 py-1.5 text-sm shadow-[0_0_15px_rgba(100,227,101,0.4)]">
+                    ⭐ Destacado
                   </Badge>
                 )}
               </div>
