@@ -56,17 +56,17 @@ export function TableOfContents({ items }: TableOfContentsProps) {
         <button
           onClick={() => handleClick(item.id)}
           className={cn(
-            'block w-full text-left py-1 px-2 text-sm rounded transition-colors hover:bg-muted',
-            'border-l-2 border-transparent hover:border-muted-foreground/30',
-            activeId === item.id && 'bg-muted border-primary text-primary font-medium',
-            level === 0 && 'font-medium',
-            level > 0 && 'text-muted-foreground'
+            'block w-full text-left py-2 px-3 text-sm rounded-lg transition-all',
+            'border-l-2 border-transparent hover:border-accent-green hover:bg-white/5',
+            activeId === item.id && 'bg-white/5 border-accent-green text-accent-green font-medium',
+            level === 0 && 'font-medium text-white/90',
+            level > 0 && 'text-white/70'
           )}
         >
           {item.text}
         </button>
         {item.children && item.children.length > 0 && (
-          <ul className="mt-1">
+          <ul className="mt-1 space-y-1">
             {renderItems(item.children, level + 1)}
           </ul>
         )}
@@ -76,7 +76,7 @@ export function TableOfContents({ items }: TableOfContentsProps) {
 
   return (
     <nav className="space-y-2">
-      <h3 className="font-semibold text-sm text-muted-foreground uppercase tracking-wide">
+      <h3 className="font-semibold text-sm text-white/60 uppercase tracking-wider">
         Tabla de contenidos
       </h3>
       <ul className="space-y-1">

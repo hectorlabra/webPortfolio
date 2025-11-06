@@ -8,10 +8,11 @@ import { TableOfContents } from "./TableOfContents";
 import { ReadingProgressBar } from "./ReadingProgressBar";
 import { Breadcrumbs } from "./Breadcrumbs";
 import { ShareButtons } from "./ShareButtons";
-import { AuthorCard } from './AuthorCard';
-import { NewsletterInPost } from './NewsletterInPost';
-import { RelatedPosts } from './RelatedPosts';
-import { PostNavigation } from './PostNavigation';
+import { AuthorCard } from "./AuthorCard";
+import { NewsletterInPost } from "./NewsletterInPost";
+import { RelatedPosts } from "./RelatedPosts";
+import { PostNavigation } from "./PostNavigation";
+import { TableOfContentsMobile } from "./TableOfContentsMobile";
 
 interface PostLayoutProps {
   post: BlogPost;
@@ -28,6 +29,9 @@ export function PostLayout({
     <div className="min-h-screen bg-[#0a0612] text-white">
       {/* Reading Progress Bar */}
       <ReadingProgressBar />
+
+      {/* Table of Contents Mobile */}
+      <TableOfContentsMobile items={tableOfContents} />
 
       {/* Header con navegación */}
       <header className="border-b border-white/10 bg-[#0a0612]/95 backdrop-blur-sm sticky top-0 z-50">
