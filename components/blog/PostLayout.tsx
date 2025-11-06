@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
 import { Badge } from "@/components/ui/badge";
-import { Calendar, Clock, User, ArrowLeft } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Calendar, Clock, User } from "lucide-react";
 import Link from "next/link";
 import { BlogPost, TableOfContentsItem } from "@/lib/types/blog";
 import { TableOfContents } from "./TableOfContents";
@@ -32,37 +31,23 @@ export function PostLayout({
       {/* Table of Contents Mobile */}
       <TableOfContentsMobile items={tableOfContents} />
 
-      {/* Header con navegación */}
-      <header className="border-b border-white/10 bg-[#0a0612]/95 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <Link href="/blog">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="mb-4 hover:bg-white/10 hover:text-accent-green transition-colors"
-            >
-              <ArrowLeft className="mr-2 h-4 w-4" />
-              Volver al blog
-            </Button>
-          </Link>
-        </div>
-      </header>
-
-      <div className="container mx-auto px-4 py-8">
-        {/* Breadcrumbs */}
-        <div className="max-w-[1400px] mx-auto">
-          <Breadcrumbs post={post} />
+      {/* Hero Section with Geometric Pattern */}
+      <section className="relative py-16 overflow-hidden border-b border-white/10">
+        {/* Geometric Pattern Background */}
+        <div className="absolute inset-0 opacity-30">
+          <LazyGeometricPattern priority={true} />
         </div>
 
-        {/* 3-Column Layout: Left Empty | Article Centered | Right Sidebar */}
-        <div className="grid grid-cols-1 xl:grid-cols-[250px_1fr_300px] gap-8 max-w-[1400px] mx-auto">
-          {/* Left Sidebar - Empty on purpose for visual balance */}
-          <aside className="hidden xl:block" />
+        <div className="container mx-auto px-4 relative z-10">
+          {/* Breadcrumbs at top */}
+          <div className="max-w-[1400px] mx-auto mb-8">
+            <Breadcrumbs post={post} />
+          </div>
 
-          {/* Contenido principal - Centered */}
-          <article className="min-w-0 max-w-[680px] mx-auto w-full">
-            {/* Metadatos del post */}
-            <header className="mb-12 space-y-6">
+          {/* Hero Content - Centered */}
+          <div className="max-w-[680px] mx-auto">
+            <header className="space-y-6">
+              {/* Category & Featured Badge */}
               <div className="flex flex-wrap items-center gap-3">
                 <Badge className="bg-accent-yellow text-[#0a0612] hover:bg-accent-yellow/90 font-semibold px-4 py-1.5 text-sm">
                   {post.category}
@@ -74,14 +59,17 @@ export function PostLayout({
                 )}
               </div>
 
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-mono tracking-tight mb-6 text-accent-green leading-tight">
+              {/* Title */}
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold font-mono tracking-tight text-accent-green leading-tight">
                 {post.title}
               </h1>
 
+              {/* Description */}
               <p className="text-xl md:text-2xl text-white/80 leading-relaxed">
                 {post.description}
               </p>
 
+              {/* Meta info */}
               <div className="flex flex-wrap items-center gap-6 text-sm text-white/70">
                 <div className="flex items-center gap-2">
                   <User className="h-4 w-4" />
@@ -107,7 +95,7 @@ export function PostLayout({
 
               {/* Tags */}
               {post.tags.length > 0 && (
-                <div className="flex flex-wrap gap-3 mt-8">
+                <div className="flex flex-wrap gap-3">
                   {post.tags.map((tag) => (
                     <Link
                       key={tag}
@@ -125,7 +113,20 @@ export function PostLayout({
                 </div>
               )}
             </header>
+          </div>
+        </div>
+      </section>
 
+      {/* Main Content Area */}
+      <div className="container mx-auto px-4 py-16">
+
+        {/* 3-Column Layout: Left Empty | Article Centered | Right Sidebar */}
+        <div className="grid grid-cols-1 xl:grid-cols-[250px_1fr_300px] gap-8 max-w-[1400px] mx-auto">
+          {/* Left Sidebar - Empty on purpose for visual balance */}
+          <aside className="hidden xl:block" />
+
+          {/* Contenido principal - Centered */}
+          <article className="min-w-0 max-w-[680px] mx-auto w-full">
             {/* Contenido del post */}
             <div
               className="prose prose-invert prose-lg max-w-none
@@ -165,8 +166,8 @@ export function PostLayout({
           </aside>
         </div>
 
-        {/* Geometric Pattern Separator */}
-        <div className="my-20">
+        {/* Separator - already has geometric pattern built-in */}
+        <div className="my-24">
           <LazyGeometricPattern priority={false} />
         </div>
 
