@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { BlogPost, TableOfContentsItem } from '@/lib/types/blog';
 import { TableOfContents } from './TableOfContents';
 import { ReadingProgressBar } from './ReadingProgressBar';
+import { Breadcrumbs } from './Breadcrumbs';
 
 interface PostLayoutProps {
   post: BlogPost;
@@ -32,6 +33,9 @@ export function PostLayout({ post, tableOfContents, children }: PostLayoutProps)
       </header>
 
       <div className="container mx-auto px-4 py-8 max-w-[1200px]">
+        {/* Breadcrumbs */}
+        <Breadcrumbs post={post} />
+        
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8 xl:gap-12">
           {/* Contenido principal */}
           <article className="min-w-0 max-w-[720px]">
