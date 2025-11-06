@@ -166,58 +166,53 @@
   }
 }
 
-/* Estilos para Prism.js - Tema personalizado oscuro */
+/* Estilos para Prism.js - Tema minimalista profesional */
 :root {
   --prism-background: #0a0612;
-  --prism-foreground: #ffffff;
+  --prism-foreground: #e4e4e7;
   --prism-comment: #6b7280;
   --prism-string: #64e365;
   --prism-number: #ffd100;
   --prism-keyword: #64e365;
   --prism-function: #ffd100;
-  --prism-operator: #64e365;
-  --prism-punctuation: #ffffff;
+  --prism-operator: #a1a1aa;
+  --prism-punctuation: #d4d4d8;
   --prism-property: #ffd100;
   --prism-selector: #64e365;
-  --prism-variable: #ffffff;
+  --prism-variable: #e4e4e7;
 }
 
-/* Contenedor de código */
+/* Contenedor de código - Clean minimal style */
 .prose pre {
-  @apply bg-[#0a0612] border border-white/10 rounded-lg p-4 overflow-x-auto;
+  @apply bg-[#0a0612] rounded-xl overflow-x-auto;
   background: var(--prism-background) !important;
-  margin: 1.5rem 0;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-    0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  position: relative; /* Para posicionar el botón de copiar */
-}
-
-/* Wrapper para code block con copy button */
-.code-block-wrapper {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  margin: 2rem 0;
+  padding: 1.5rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4),
+              0 0 0 1px rgba(255, 255, 255, 0.05) inset;
   position: relative;
-  margin: 1.5rem 0;
 }
 
-.code-block-wrapper pre {
-  margin: 0;
-}
-
+/* Code text inside pre */
 .prose pre code {
-  @apply bg-transparent p-0 text-sm font-mono;
+  @apply bg-transparent p-0 font-mono;
   color: var(--prism-foreground) !important;
   background: none !important;
   border: none !important;
-  border-radius: 0 !important;
+  font-size: 0.9rem;
+  line-height: 1.7;
   text-shadow: none !important;
 }
 
-/* Inline code */
+/* Inline code - Subtle highlighting */
 .prose code:not(pre code) {
-  @apply bg-white/10 text-accent-yellow px-2 py-1 rounded text-sm font-mono;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  @apply bg-white/10 text-accent-yellow px-2 py-0.5 rounded font-mono;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 0.9em;
 }
 
-/* Tokens de Prism */
+/* Tokens de Prism - Clean syntax highlighting */
 .token.comment,
 .token.prolog,
 .token.doctype,
@@ -235,8 +230,7 @@
 .token.boolean,
 .token.number,
 .token.constant,
-.token.symbol,
-.token.deleted {
+.token.symbol {
   color: var(--prism-number);
 }
 
@@ -244,16 +238,13 @@
 .token.attr-name,
 .token.string,
 .token.char,
-.token.builtin,
-.token.inserted {
+.token.builtin {
   color: var(--prism-string);
 }
 
 .token.operator,
 .token.entity,
-.token.url,
-.language-css .token.string,
-.style .token.string {
+.token.url {
   color: var(--prism-operator);
 }
 
@@ -261,13 +252,13 @@
 .token.attr-value,
 .token.keyword {
   color: var(--prism-keyword);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .token.function,
 .token.class-name {
   color: var(--prism-function);
-  font-weight: 600;
+  font-weight: 500;
 }
 
 .token.regex,
@@ -276,47 +267,12 @@
   color: var(--prism-variable);
 }
 
-.token.important,
-.token.bold {
-  font-weight: bold;
-}
-
-.token.italic {
-  font-style: italic;
-}
-
-.token.entity {
-  cursor: help;
-}
-
-/* Líneas de código numeradas */
-.code-line {
-  display: block;
-  padding-left: 16px;
-  padding-right: 16px;
-  margin-left: -16px;
-  margin-right: -16px;
-  border-left: 4px solid transparent;
-}
-
-.code-line.inserted {
-  background-color: rgba(100, 227, 101, 0.1);
-  border-left-color: var(--prism-string);
-}
-
-.code-line.deleted {
-  background-color: rgba(239, 68, 68, 0.1);
-  border-left-color: #ef4444;
-}
-
-.highlight-line {
-  background-color: rgba(255, 255, 255, 0.05);
-  border-left: 4px solid var(--prism-keyword);
-}
-
-/* Títulos de lenguajes */
+/* Language and file labels */
 .code-title {
-  @apply bg-white/5 text-white/70 px-4 py-2 text-sm font-mono border-b border-white/10;
+  @apply bg-white/5 text-white/60 px-4 py-2 text-xs font-mono border-b border-white/10 rounded-t-xl;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
   margin-bottom: 0;
 }
 
