@@ -8,6 +8,7 @@ import { TableOfContents } from './TableOfContents';
 import { ReadingProgressBar } from './ReadingProgressBar';
 import { Breadcrumbs } from './Breadcrumbs';
 import { ShareButtons } from './ShareButtons';
+import { AuthorCard } from './AuthorCard';
 
 interface PostLayoutProps {
   post: BlogPost;
@@ -135,6 +136,18 @@ export function PostLayout({ post, tableOfContents, children }: PostLayoutProps)
           <aside className="lg:col-span-1">
             <div className="sticky top-24 space-y-6">
               <TableOfContents items={tableOfContents} />
+              
+              <AuthorCard
+                name={post.author}
+                bio="Desarrollador Full Stack apasionado por crear experiencias web excepcionales. Especializado en Next.js, React y TypeScript."
+                avatar="/avatar.jpg"
+                social={{
+                  github: 'https://github.com/hectorlabra',
+                  linkedin: 'https://www.linkedin.com/in/hectorlabra',
+                  twitter: 'https://twitter.com/hectorlabra',
+                  website: 'https://hectorlabra.dev',
+                }}
+              />
             </div>
           </aside>
         </div>
