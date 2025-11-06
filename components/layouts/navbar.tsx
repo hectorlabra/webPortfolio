@@ -11,8 +11,8 @@ export function Navbar() {
 
   return (
     <>
-      {/* Header Section - Moviendo sticky al contenedor exterior */}
-      <header className="sticky top-0 z-40 w-full border-b border-white/10 bg-[#0a0612]/95 backdrop-blur supports-[backdrop-filter]:bg-[#0a0612]/60">
+      {/* Header Section - Optimizado backdrop-blur */}
+      <header className="sticky top-0 z-40 w-full border-b border-white/10 bg-[#0a0612]/95 backdrop-blur-sm supports-[backdrop-filter]:bg-[#0a0612]/60">
         <div className="mx-auto w-full max-w-[1000px]">
           <div className="container flex h-16 items-center justify-between">
             {/* Logo Component */}
@@ -45,11 +45,11 @@ export function Navbar() {
             >
               Trabaja Conmigo
             </Button>
-            {/* Mobile Menu Button */}
+            {/* Mobile Menu Button - Simplificado shadow */}
             <Button
               variant="default"
               size="icon"
-              className="md:hidden bg-[#FFD100] text-[#0a0612] hover:bg-[#FFD100]/90 h-10 w-10 shadow-[0_0_10px_rgba(255,210,0,0.5),0_0_15px_rgba(255,210,0,0.3)]"
+              className="md:hidden bg-[#FFD100] text-[#0a0612] hover:bg-[#FFD100]/90 h-10 w-10 shadow-[0_0_15px_rgba(255,210,0,0.4)]"
               onClick={() => setMenuOpen(true)}
             >
               <span className="sr-only">Toggle menu</span>

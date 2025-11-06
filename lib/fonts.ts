@@ -1,19 +1,16 @@
-import { JetBrains_Mono, Inter } from 'next/font/google';
+import { JetBrains_Mono, Inter } from "next/font/google";
 
-// Configuración de JetBrains Mono desde Google Fonts con optimización
+// Configuración de JetBrains Mono - optimizado para menor FOUT
 export const jetbrainsMono = JetBrains_Mono({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-jetbrains-mono',
+  subsets: ["latin"],
+  display: "optional", // Cambiado de 'swap' a 'optional' para evitar FOUT
+  variable: "--font-jetbrains-mono",
 });
 
-// Inter como fuente principal para texto, optimizada para interfaces digitales
+// Inter como fuente principal - solo pesos necesarios
 export const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  weight: ['100', '200', '300', '400', '500', '600', '700'], // Añadidos pesos ligeros
-  variable: '--font-inter',
+  subsets: ["latin"],
+  display: "optional", // Cambiado de 'swap' a 'optional' para evitar FOUT
+  weight: ["400", "500", "700"], // Reducido de 7 pesos a 3 (eliminados 100,200,300,600)
+  variable: "--font-inter",
 });
-
-// Nota: Inter es una tipografía moderna diseñada específicamente para pantallas
-// con excelente legibilidad y un estilo tech-friendly que complementa la identidad developer

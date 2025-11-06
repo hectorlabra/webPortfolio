@@ -35,6 +35,7 @@ export default function QuienSoyPage() {
                   alt="Héctor Labra"
                   width={144}
                   height={144}
+                  priority
                   className="rounded-full object-cover"
                 />
               </div>

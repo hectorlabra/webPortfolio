@@ -1,6 +1,7 @@
 // Server Component - Main home page
 import Image from "next/image";
 import { ArrowRight, Check } from "lucide-react";
+import dynamic from "next/dynamic";
 
 // Server Components - Static markup
 import { Button } from "@/components/ui/button";
@@ -10,9 +11,19 @@ import { SocialProof } from "@/components/sections/home/social-proof";
 
 // Client Islands - Interactive components only
 import { NewsletterForm } from "@/components/sections/home/newsletter-form-client";
-import { FaqAccordion } from "@/components/sections/home/faq-accordion-client";
 import { LazyGeometricPattern } from "@/components/shared/geometric-pattern-client";
 import { TypewriterText } from "@/components/shared/typewriter-text-client";
+
+// Lazy load FAQ - below the fold (with loading state)
+const FaqAccordion = dynamic(
+  () =>
+    import("@/components/sections/home/faq-accordion-client").then(
+      (mod) => mod.FaqAccordion
+    ),
+  {
+    loading: () => <div className="h-96 animate-pulse bg-white/5 rounded-lg" />,
+  }
+);
 
 export default function HomePage() {
   return (
