@@ -16,7 +16,7 @@ export function NewsletterInPost({
   return (
     <div
       className={`
-        relative overflow-hidden rounded-xl
+        relative w-full overflow-hidden rounded-xl
         ${
           isProminent
             ? "border-2 border-accent-green bg-gradient-to-br from-accent-green/10 to-accent-yellow/5 p-8 shadow-[0_0_30px_rgba(100,227,101,0.2)]"
