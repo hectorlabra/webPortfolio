@@ -114,20 +114,18 @@ export function PostLayout({
 
       {/* Main Content Area */}
       <div className="container mx-auto px-4 py-20">
-        {/* 3-Column Layout: Left TOC | Article Centered | Right Newsletter */}
-        <div className="grid grid-cols-1 xl:grid-cols-[200px_1fr_250px] gap-12 max-w-[1400px] mx-auto">
+        <div className="grid grid-cols-1 gap-16 xl:grid-cols-[220px_minmax(0,700px)_260px] xl:justify-center">
           {/* Left Sidebar - TOC */}
-          <aside className="hidden xl:block">
+          <aside className="hidden xl:block w-[220px]">
             <div className="sticky top-24">
               <TableOfContents items={tableOfContents} />
             </div>
           </aside>
 
           {/* Contenido principal - Centered */}
-          <article className="min-w-0 w-full">
-            {/* Contenido del post */}
+          <article className="min-w-0 w-full max-w-[700px] mx-auto">
             <div
-              className="prose prose-invert max-w-[700px] mx-auto
+              className="prose prose-invert max-w-none
               prose-headings:font-bold prose-headings:text-white
               prose-h1:text-3xl prose-h2:text-2xl prose-h3:text-xl
               prose-p:text-base prose-p:sm:text-lg prose-p:text-white/80 prose-p:leading-relaxed prose-p:mb-6
@@ -147,16 +145,14 @@ export function PostLayout({
               {children}
             </div>
 
-            {/* Newsletter Section - Will move to sidebar */}
             <div className="mt-16 xl:hidden">
               <NewsletterInPost variant="prominent" />
             </div>
           </article>
 
           {/* Right Sidebar - Newsletter */}
-          <aside className="hidden xl:block">
+          <aside className="hidden xl:block w-[260px]">
             <div className="sticky top-24">
-              {/* Newsletter sticky on desktop */}
               <NewsletterInPost variant="compact" />
             </div>
           </aside>
