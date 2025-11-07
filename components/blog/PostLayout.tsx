@@ -25,9 +25,9 @@ export function PostLayout(props: PostLayoutProps) {
       <div className="mx-auto w-full max-w-[700px]">
         <main className="flex-1">
           {/* Hero Section with Geometric Pattern */}
-          <section className="relative py-20 overflow-hidden border-b border-white/10">
-            {/* Geometric Pattern Background */}
-            <div className="absolute inset-0 opacity-30">
+          <section className="relative py-20 border-b border-white/10">
+            {/* Geometric Pattern Background - Full width */}
+            <div className="absolute inset-0 left-1/2 w-screen -translate-x-1/2 opacity-30 overflow-hidden">
               <LazyGeometricPattern priority={true} />
             </div>
 
