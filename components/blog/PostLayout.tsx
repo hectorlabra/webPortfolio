@@ -9,7 +9,6 @@ import { NewsletterInPost } from "./NewsletterInPost";
 import { RelatedPosts } from "./RelatedPosts";
 import { PostNavigation } from "./PostNavigation";
 import { LazyGeometricPattern } from "@/components/shared/LazyGeometricPattern";
-import { TableOfContents } from "./TableOfContents";
 import { PostSidebarsClient } from "./PostSidebarsClient";
 
 interface PostLayoutProps {

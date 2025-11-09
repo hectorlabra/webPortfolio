@@ -7,11 +7,7 @@ import fs from "fs";
 import path from "path";
 import matter from "gray-matter";
 
-interface PostPageProps {
-  params: {
-    slug: string;
-  };
-}
+type SlugParams = { slug: string };
 
 export async function generateStaticParams() {
   const slugs = getAllPostSlugs();
@@ -20,8 +16,12 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: PostPageProps) {
-  const { slug } = params;
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<SlugParams>;
+}) {
+  const { slug } = await params;
   const post = await getPostBySlug(slug);
 
   if (!post) {
@@ -79,8 +79,12 @@ export async function generateMetadata({ params }: PostPageProps) {
   };
 }
 
-export default async function PostPage({ params }: PostPageProps) {
-  const { slug } = params;
+export default async function PostPage({
+  params,
+}: {
+  params: Promise<SlugParams>;
+}) {
+  const { slug } = await params;
   const post = await getPostBySlug(slug);
 
   if (!post) {
