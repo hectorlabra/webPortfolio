@@ -10,6 +10,7 @@ import { RelatedPosts } from "./RelatedPosts";
 import { PostNavigation } from "./PostNavigation";
 import { LazyGeometricPattern } from "@/components/shared/LazyGeometricPattern";
 import { TableOfContents } from "./TableOfContents";
+import { PostSidebarsClient } from "./PostSidebarsClient";
 
 interface PostLayoutProps {
   post: BlogPost;
@@ -23,29 +24,17 @@ export function PostLayout(props: PostLayoutProps) {
     <div className="min-h-screen bg-[#0a0612] text-white">
       {/* Reading Progress Bar */}
       <ReadingProgressBar />
-      {/* Desktop left TOC (fuera del flujo para no tocar el ancho sagrado) */}
-      <div className="hidden xl:block" aria-hidden>
-        <div
-          style={{
-            position: "fixed",
-            top: "120px", // ajustar a tu header / offset
-            left: "calc(50% - 350px - 220px)", // 350 = 700/2 (mitad del ancho sagrado), 220 = ancho del TOC (ajusta si cambia)
-            width: "200px", // ancho visible del TOC (ajusta a tu diseño)
-          }}
-        >
-          {/* Usa tu TOC real: p.e. <TableOfContents items={tableOfContents} /> */}
-          <div className="w-full">
-            {/* Placeholder / componente TOC */}
-            <TableOfContents items={tableOfContents} />
-          </div>
-        </div>
-      </div>
+      {/* Sidebars (appear after hero via IO + dynamic top) */}
+      <PostSidebarsClient tableOfContents={tableOfContents} />
 
       {/* Aquí va el wrapper sagrado (NO TOCAR): */}
       <div className="mx-auto w-full max-w-[700px]">
         <main className="flex-1">
           {/* Hero Section with Geometric Pattern */}
-          <section className="relative py-20 border-b border-white/10">
+          <section
+            id="post-hero"
+            className="relative py-20 border-b border-white/10"
+          >
             {/* Geometric Pattern Background - Full width */}
             <div className="absolute inset-0 left-1/2 w-screen -translate-x-1/2 opacity-30 overflow-hidden">
               <LazyGeometricPattern priority={true} />
@@ -123,8 +112,8 @@ export function PostLayout(props: PostLayoutProps) {
             </div>
           </section>
 
-          {/* Separador decorativo al igual que en "quien-soy" */}
-          <LazyGeometricPattern />
+          {/* Sentinel to control sidebar appearance (below hero) */}
+          <div id="post-hero-sentinel" className="h-1 w-full" />
 
           {/* Contenido principal */}
           <section className="w-full py-16 sm:py-24">
@@ -149,23 +138,6 @@ export function PostLayout(props: PostLayoutProps) {
             </div>
           </section>
         </main>
-      </div>
-
-      {/* Desktop right newsletter (fuera del flujo para no tocar el ancho sagrado) */}
-      <div className="hidden xl:block" aria-hidden>
-        <div
-          style={{
-            position: "fixed",
-            top: "120px",
-            left: "calc(50% + 350px + 32px)", // 350 = 700/2, 32px gap a la derecha del contenido
-            width: "260px", // ancho de la newsletter compacta
-          }}
-        >
-          {/* Componente newsletter compacto; no importa que dentro tenga su propio padding */}
-          <div className="w-full">
-            <NewsletterInPost variant="compact" />
-          </div>
-        </div>
       </div>
     </div>
   );
