@@ -9,6 +9,7 @@ import { NewsletterInPost } from "./NewsletterInPost";
 import { RelatedPosts } from "./RelatedPosts";
 import { PostNavigation } from "./PostNavigation";
 import { LazyGeometricPattern } from "@/components/shared/LazyGeometricPattern";
+import { TableOfContents } from "./TableOfContents";
 
 interface PostLayoutProps {
   post: BlogPost;
@@ -17,11 +18,30 @@ interface PostLayoutProps {
 }
 
 export function PostLayout(props: PostLayoutProps) {
-  const { post, children } = props;
+  const { post, children, tableOfContents } = props;
   return (
     <div className="min-h-screen bg-[#0a0612] text-white">
       {/* Reading Progress Bar */}
       <ReadingProgressBar />
+      {/* Desktop left TOC (fuera del flujo para no tocar el ancho sagrado) */}
+      <div className="hidden xl:block" aria-hidden>
+        <div
+          style={{
+            position: "fixed",
+            top: "120px", // ajustar a tu header / offset
+            left: "calc(50% - 350px - 220px)", // 350 = 700/2 (mitad del ancho sagrado), 220 = ancho del TOC (ajusta si cambia)
+            width: "200px", // ancho visible del TOC (ajusta a tu diseño)
+          }}
+        >
+          {/* Usa tu TOC real: p.e. <TableOfContents items={tableOfContents} /> */}
+          <div className="w-full">
+            {/* Placeholder / componente TOC */}
+            <TableOfContents items={tableOfContents} />
+          </div>
+        </div>
+      </div>
+
+      {/* Aquí va el wrapper sagrado (NO TOCAR): */}
       <div className="mx-auto w-full max-w-[700px]">
         <main className="flex-1">
           {/* Hero Section with Geometric Pattern */}
@@ -129,6 +149,23 @@ export function PostLayout(props: PostLayoutProps) {
             </div>
           </section>
         </main>
+      </div>
+
+      {/* Desktop right newsletter (fuera del flujo para no tocar el ancho sagrado) */}
+      <div className="hidden xl:block" aria-hidden>
+        <div
+          style={{
+            position: "fixed",
+            top: "120px",
+            left: "calc(50% + 350px + 32px)", // 350 = 700/2, 32px gap a la derecha del contenido
+            width: "260px", // ancho de la newsletter compacta
+          }}
+        >
+          {/* Componente newsletter compacto; no importa que dentro tenga su propio padding */}
+          <div className="w-full">
+            <NewsletterInPost variant="compact" />
+          </div>
+        </div>
       </div>
     </div>
   );
