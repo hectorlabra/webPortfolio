@@ -36,7 +36,8 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
     const { data, content } = matter(fileContents);
 
     const frontmatter = data as BlogFrontmatter;
-    const htmlContent = await markdownToHtml(content);
+    // Pasamos el título al parser para que elimine un H1 duplicado si coincide
+    const htmlContent = await markdownToHtml(content, frontmatter.title);
 
     // Calcular tiempo de lectura (aproximadamente 200 palabras por minuto)
     const wordCount = content.split(/\s+/).length;
@@ -115,8 +116,31 @@ export async function getBlogMetadata(): Promise<BlogMetadata> {
 }
 
 // Función para generar tabla de contenido jerarquizada
-export function buildTableOfContents(markdown: string): TableOfContentsItem[] {
+function normalizeTextTOC(s: string) {
+  return s
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+export function buildTableOfContents(
+  markdown: string,
+  titleToPrune?: string
+): TableOfContentsItem[] {
   const flatHeadings = extractTableOfContents(markdown);
+
+  // Eliminar el primer H1 si coincide con el título canónico (para evitar TOC roto)
+  if (titleToPrune && flatHeadings.length > 0) {
+    const first = flatHeadings[0];
+    // En extractTableOfContents el H1 queda con level = 0 (por la lógica existente)
+    if (
+      (first.level === 0 || first.level === 1) &&
+      normalizeTextTOC(first.text) === normalizeTextTOC(titleToPrune)
+    ) {
+      flatHeadings.shift();
+    }
+  }
   const toc: TableOfContentsItem[] = [];
   const stack: TableOfContentsItem[] = [];
 

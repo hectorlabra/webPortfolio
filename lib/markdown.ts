@@ -1,29 +1,72 @@
-import { remark } from 'remark';
-import remarkHtml from 'remark-html';
-import remarkParse from 'remark-parse';
-import rehypeSlug from 'rehype-slug';
-import rehypeAutolinkHeadings from 'rehype-autolink-headings';
-import rehypePrismPlus from 'rehype-prism-plus';
+import { remark } from "remark";
+import remarkParse from "remark-parse";
+import remarkRehype from "remark-rehype";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypePrismPlus from "rehype-prism-plus";
+import rehypeStringify from "rehype-stringify";
+import type { Root, Heading, PhrasingContent, Text } from "mdast";
+import { toString } from "mdast-util-to-string";
+import type { Plugin } from "unified";
 
-// Configuración del pipeline de remark para procesar Markdown
-export const markdownProcessor = remark()
-  .use(remarkParse)
-  .use(remarkHtml, { sanitize: false })
-  .use(rehypeSlug) // Añade IDs a los headings
-  .use(rehypeAutolinkHeadings, {
-    behavior: 'wrap',
-    properties: {
-      className: ['anchor-link'],
-    },
-  }) // Crea enlaces automáticos en headings
-  .use(rehypePrismPlus, {
-    showLineNumbers: true,
-    ignoreMissing: true,
-  }); // Syntax highlighting
+// Utilidad para comparar textos de forma robusta
+function normalizeText(s: string) {
+  return s
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
 
-// Función para convertir Markdown a HTML
-export async function markdownToHtml(markdown: string): Promise<string> {
-  const result = await markdownProcessor.process(markdown);
+// Plugin remark que elimina el primer H1 si coincide con el título canónico
+type PruneOptions = { title?: string };
+
+const headingToText = (node: Heading): string => toString(node).trim();
+
+const remarkPruneFirstH1IfMatches: Plugin<[PruneOptions?], Root> =
+  (options?: PruneOptions) => (tree: Root) => {
+    const title = options?.title;
+    if (!title) return;
+    const { children } = tree;
+    for (let i = 0; i < children.length; i++) {
+      const node = children[i];
+      if (node.type === "heading" && node.depth === 1) {
+        const text = headingToText(node as Heading);
+        if (normalizeText(text) === normalizeText(title)) {
+          children.splice(i, 1);
+        }
+        break; // Solo el primer heading
+      }
+    }
+  };
+
+// Crea un processor por invocación para poder inyectar el título dinámicamente
+function createMarkdownProcessor(title?: string) {
+  return (
+    remark()
+      .use(remarkParse)
+      .use(remarkPruneFirstH1IfMatches, { title })
+      // Pasamos de MDAST (remark) a HAST (rehype)
+      .use(remarkRehype)
+      // Plugins rehype sobre el árbol HTML (HAST)
+      .use(rehypeSlug)
+      .use(rehypeAutolinkHeadings, {
+        behavior: "wrap",
+        properties: { className: ["anchor-link"] },
+      })
+      .use(rehypePrismPlus, { showLineNumbers: true, ignoreMissing: true })
+      // Serializamos a HTML
+      .use(rehypeStringify)
+  );
+}
+
+// Función para convertir Markdown a HTML (con título opcional para poda de H1)
+export async function markdownToHtml(
+  markdown: string,
+  title?: string
+): Promise<string> {
+  const processor = createMarkdownProcessor(title);
+  const result = await processor.process(markdown);
   return result.toString();
 }
 
@@ -34,12 +77,12 @@ export function extractTableOfContents(markdown: string) {
   let match;
 
   while ((match = headingRegex.exec(markdown)) !== null) {
-    const level = match[0].indexOf(' ') - 1; // Número de # menos 1
+    const level = match[0].indexOf(" ") - 1; // Número de # menos 1
     const text = match[1].trim();
     const id = text
       .toLowerCase()
-      .replace(/[^a-z0-9]+/g, '-')
-      .replace(/(^-|-$)/g, '');
+      .replace(/[^a-z0-9]+/g, "-")
+      .replace(/(^-|-$)/g, "");
 
     headings.push({
       id,

@@ -21,7 +21,7 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: PostPageProps) {
-  const { slug } = await params;
+  const { slug } = params;
   const post = await getPostBySlug(slug);
 
   if (!post) {
@@ -80,7 +80,7 @@ export async function generateMetadata({ params }: PostPageProps) {
 }
 
 export default async function PostPage({ params }: PostPageProps) {
-  const { slug } = await params;
+  const { slug } = params;
   const post = await getPostBySlug(slug);
 
   if (!post) {
@@ -91,7 +91,7 @@ export default async function PostPage({ params }: PostPageProps) {
   const fullPath = path.join(process.cwd(), "content/posts", `${slug}.md`);
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const { content } = matter(fileContents);
-  const tableOfContents = buildTableOfContents(content);
+  const tableOfContents = buildTableOfContents(content, post.title);
 
   // Generar structured data
   const structuredData = generateArticleStructuredData(post);
