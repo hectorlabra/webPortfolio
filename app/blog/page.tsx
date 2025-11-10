@@ -7,6 +7,7 @@ import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { LazyGeometricPattern } from "@/components/shared/geometric-pattern-client";
 import { BlogCard } from "@/components/blog/BlogCard";
+import { Heading } from "@/components/shared/Heading";
 
 export const metadata: Metadata = {
   title: "Blog | Héctor Labra - Desarrollador Full Stack",
@@ -121,9 +122,9 @@ export default async function BlogPage() {
                 {/* Hero Content */}
                 <div className="flex flex-col justify-center space-y-4 sm:space-y-6">
                   <div className="space-y-3 sm:space-y-4">
-                    <h1 className="font-mono text-[1.7rem] sm:text-3xl md:text-4xl font-bold tracking-tighter">
+                    <Heading level={1} className="text-[1.7rem] sm:text-3xl md:text-4xl tracking-tighter">
                       Aprende desarrollo moderno.
-                    </h1>
+                    </Heading>
                     <p className="text-base sm:text-lg text-white/70 max-w-xl">
                       Tutoriales prácticos de Next.js, React, TypeScript y IA
                       que puedes aplicar hoy mismo. Sin teoría innecesaria.
@@ -177,9 +178,9 @@ export default async function BlogPage() {
             <div className="container flex-1 flex flex-col px-4 md:px-6">
               <div className="flex flex-col items-start space-y-5">
                 <div className="space-y-3">
-                  <h2 className="font-mono text-3xl font-bold tracking-tighter">
+                  <Heading level={2} className="text-3xl tracking-tighter">
                     Últimos artículos
-                  </h2>
+                  </Heading>
                   <p className="text-lg text-white/70">
                     Construyendo tu carrera tech paso a paso con guías prácticas
                     y bloques de aprendizaje. 💻
@@ -202,9 +203,9 @@ export default async function BlogPage() {
           <section className="w-full py-16 sm:py-24 md:py-36">
             <div className="container flex-1 flex flex-col px-4 md:px-6">
               <div className="rounded-lg border-2 border-white/20 bg-gradient-to-b from-white/5 to-white/[0.02] backdrop-blur p-8 sm:p-12 text-center max-w-3xl mx-auto">
-                <h2 className="font-mono text-2xl sm:text-3xl font-bold text-white mb-4">
+                <Heading level={2} className="text-2xl sm:text-3xl mb-4">
                   ¿Te gustó lo que leíste?
-                </h2>
+                </Heading>
                 <p className="text-white/70 mb-8 max-w-lg mx-auto">
                   Recibe nuevos artículos cada semana directamente en tu inbox.
                   Sin spam, solo contenido de valor. 📬
