@@ -30,10 +30,7 @@ export function PostLayout(props: PostLayoutProps) {
       <div className="mx-auto w-full max-w-[700px]">
         <main className="flex-1">
           {/* Hero Section with Geometric Pattern */}
-          <section
-            id="post-hero"
-            className="relative py-20 border-b border-white/10"
-          >
+          <section id="post-hero" className="relative pt-20 pb-8">
             {/* Geometric Pattern Background - Full width */}
             <div className="absolute inset-0 left-1/2 w-screen -translate-x-1/2 opacity-30 overflow-hidden">
               <LazyGeometricPattern priority={true} />
@@ -112,21 +109,22 @@ export function PostLayout(props: PostLayoutProps) {
           </section>
 
           {/* Sentinel to control sidebar appearance (below hero) */}
-          <div id="post-hero-sentinel" className="h-1 w-full" />
+          {/* keep a 1px sentinel for IO work but remove visible gap */}
+          <div id="post-hero-sentinel" className="h-px w-full" />
 
           {/* Contenido principal */}
-          <section className="w-full py-16 sm:py-24">
+          <section className="w-full py-8 sm:py-12">
             <div className="container flex-1 flex flex-col px-4 md:px-6">
-              <div className="max-w-[700px] mx-auto w-full space-y-8">
-                <article className="min-w-0 w-full">
+              <div className="max-w-[700px] mx-auto w-full space-y-6">
+                <article className="min-w-0 w-full -mt-8">
                   <div className="blog-richtext space-y-6">{children}</div>
 
-                  <div className="mt-16">
+                  <div className="mt-12">
                     <NewsletterInPost variant="prominent" />
                   </div>
                 </article>
 
-                <div className="my-24">
+                <div className="my-16">
                   <LazyGeometricPattern priority={false} />
                 </div>
 
