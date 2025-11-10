@@ -52,7 +52,7 @@ export function PostLayout(props: PostLayoutProps) {
                 </div>
 
                 {/* Title */}
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight">
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight font-mono">
                   {post.title}
                 </h1>
 
