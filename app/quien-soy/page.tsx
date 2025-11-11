@@ -41,7 +41,10 @@ export default function QuienSoyPage() {
                 />
               </div>
               <div className="space-y-2 sm:space-y-3 mb-2">
-                <Heading level={1} className="text-xl sm:text-3xl lg:text-4xl tracking-tighter whitespace-nowrap overflow-hidden">
+                <Heading
+                  level={1}
+                  className="text-xl sm:text-3xl lg:text-4xl tracking-tighter whitespace-nowrap overflow-hidden"
+                >
                   Hola, soy <TypewriterText text="Héctor Labra" />
                 </Heading>
                 <p className="text-sm sm:text-lg text-white/70 max-w-[550px] mx-auto">
@@ -93,7 +96,12 @@ export default function QuienSoyPage() {
         <section className="w-full py-16 sm:py-24">
           <div className="container flex-1 flex flex-col px-4 md:px-6">
             <div className="max-w-[700px] mx-auto space-y-8">
-              <Heading level={2} className="text-2xl sm:text-3xl tracking-tighter">Mi historia</Heading>
+              <Heading
+                level={2}
+                className="text-2xl sm:text-3xl tracking-tighter"
+              >
+                Mi historia
+              </Heading>
 
               <div className="prose prose-invert max-w-none space-y-6">
                 <p className="text-base sm:text-lg text-white-80 mb-6">
@@ -217,7 +225,12 @@ export default function QuienSoyPage() {
         <section className="w-full py-16 sm:py-24 bg-gradient-to-b from-[#0a0612] to-[#0a0612]/90">
           <div className="container flex-1 flex flex-col px-4 md:px-6">
             <div className="max-w-[800px] mx-auto space-y-8">
-              <Heading level={2} className="text-2xl sm:text-3xl tracking-tighter text-center">Valores y filosofía</Heading>
+              <Heading
+                level={2}
+                className="text-2xl sm:text-3xl tracking-tighter text-center"
+              >
+                Valores y filosofía
+              </Heading>
 
               <div className="grid gap-3 sm:grid-cols-2">
                 <Card className="bg-[#FFD100] text-[#0a0612] border-none p-6 shadow-[0_0_15px_rgba(255,209,0,0.3)] transition-all hover:translate-y-[-4px]">
@@ -275,7 +288,12 @@ export default function QuienSoyPage() {
         <section className="w-full py-16 sm:py-24">
           <div className="container flex-1 flex flex-col px-4 md:px-6">
             <div className="max-w-[700px] mx-auto space-y-8">
-              <Heading level={2} className="text-2xl sm:text-3xl tracking-tighter">Experiencia y habilidades</Heading>
+              <Heading
+                level={2}
+                className="text-2xl sm:text-3xl tracking-tighter"
+              >
+                Experiencia y habilidades
+              </Heading>
 
               <div className="space-y-6">
                 <div className="flex flex-col gap-1">
@@ -387,7 +405,12 @@ export default function QuienSoyPage() {
         <section className="w-full py-16 sm:py-24">
           <div className="container flex-1 flex flex-col px-4 md:px-6">
             <div className="max-w-[700px] mx-auto space-y-8">
-              <Heading level={2} className="text-2xl sm:text-3xl tracking-tighter">Más allá del código</Heading>
+              <Heading
+                level={2}
+                className="text-2xl sm:text-3xl tracking-tighter"
+              >
+                Más allá del código
+              </Heading>
 
               <p className="text-base sm:text-lg text-white/80">
                 No todo en la vida es programación. Cuando no estoy frente a la
@@ -458,7 +481,12 @@ export default function QuienSoyPage() {
           <div className="container flex-1 flex flex-col px-4 md:px-6">
             <div className="max-w-[700px] mx-auto">
               <div className="rounded-xl border border-white/10 bg-white/5 p-6 sm:p-8 backdrop-blur">
-                <Heading level={2} className="text-2xl sm:text-3xl tracking-tighter mb-4">¿Trabajamos juntos?</Heading>
+                <Heading
+                  level={2}
+                  className="text-2xl sm:text-3xl tracking-tighter mb-4"
+                >
+                  ¿Trabajamos juntos?
+                </Heading>
                 <p className="text-base sm:text-lg text-white/80 mb-6">
                   Si tienes un proyecto en mente o simplemente quieres conectar,
                   no dudes en contactarme. Siempre estoy abierto a nuevas

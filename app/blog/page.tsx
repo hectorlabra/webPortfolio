@@ -122,7 +122,10 @@ export default async function BlogPage() {
                 {/* Hero Content */}
                 <div className="flex flex-col justify-center space-y-4 sm:space-y-6">
                   <div className="space-y-3 sm:space-y-4">
-                    <Heading level={1} className="text-[1.7rem] sm:text-3xl md:text-4xl tracking-tighter">
+                    <Heading
+                      level={1}
+                      className="text-[1.7rem] sm:text-3xl md:text-4xl tracking-tighter"
+                    >
                       Aprende desarrollo moderno.
                     </Heading>
                     <p className="text-base sm:text-lg text-white/70 max-w-xl">

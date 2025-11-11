@@ -35,7 +35,7 @@ export function Heading({
   children,
   ...rest
 }: HeadingProps) {
-  const Tag = (`h${level}` as unknown) as keyof JSX.IntrinsicElements;
+  const Tag = `h${level}` as unknown as keyof JSX.IntrinsicElements;
   const heading = createElement(
     Tag,
     {
@@ -56,9 +56,11 @@ export function Heading({
   if (!withAnchor || !id) return heading;
 
   return (
-    <div className={cn("flex items-baseline gap-2")}> 
+    <div className={cn("flex items-baseline gap-2")}>
       {heading}
-      <a href={`#${id}`} className="anchor-link text-xs">#</a>
+      <a href={`#${id}`} className="anchor-link text-xs">
+        #
+      </a>
     </div>
   );
 }
