@@ -9,10 +9,15 @@ interface LazyGeometricPatternProps {
    * If false, lazy loads and pauses when off-screen
    */
   priority?: boolean;
+  /**
+   * Opacidad base cuando el patrón está visible. Default: 0.3 (apariencia suave usada en PostLayout)
+   */
+  opacity?: number;
 }
 
 export function LazyGeometricPattern({
   priority = false,
+  opacity = 0.3,
 }: LazyGeometricPatternProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(priority);
@@ -62,7 +67,7 @@ export function LazyGeometricPattern({
       {hasLoaded ? (
         <div
           style={{
-            opacity: isVisible ? 1 : 0.3,
+            opacity: isVisible ? opacity : opacity * 0.4,
             transition: "opacity 0.3s ease",
           }}
         >

@@ -32,7 +32,8 @@ export function PostLayout(props: PostLayoutProps) {
           {/* Hero Section with Geometric Pattern */}
           <section id="post-hero" className="relative pt-20 pb-8">
             {/* Geometric Pattern Background - Full width */}
-            <div className="absolute inset-0 left-1/2 w-screen -translate-x-1/2 opacity-30 overflow-hidden">
+            {/* Geometric Pattern Background - Full width (opacity now handled inside component) */}
+            <div className="absolute inset-0 left-1/2 w-screen -translate-x-1/2 overflow-hidden">
               <LazyGeometricPattern priority={true} />
             </div>
 
