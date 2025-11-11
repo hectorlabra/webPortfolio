@@ -59,75 +59,77 @@ export function PostSidebarsClient({
     };
   }, []);
 
-  // Visibility control with start and end sentinels + robust fallback
+  // Hero visibility via IO (depends only on header height)
   useEffect(() => {
     const heroSentinel = document.getElementById("post-hero-sentinel");
-    const endSentinel = document.getElementById("post-end-sentinel");
-
     let heroObserver: IntersectionObserver | null = null;
-    let endObserver: IntersectionObserver | null = null;
-
-    const endMargin = 80; // px before article end to start hiding
-
     if (heroSentinel) {
       heroObserver = new IntersectionObserver(
         (entries) => {
           const entry = entries[0];
-          // heroPassed: true when the hero sentinel is no longer visible
           setHeroPassed(!entry.isIntersecting);
         },
         {
           root: null,
           threshold: 0,
-          // Trigger a bit earlier than the sticky header to counteract spacing below hero
           rootMargin: `-${headerHeight + 24}px 0px 0px 0px`,
         }
       );
       heroObserver.observe(heroSentinel);
-    }
-
-    if (endSentinel) {
-      endObserver = new IntersectionObserver(
-        (entries) => {
-          const entry = entries[0];
-          // atEnd: true when approaching the end area
-          setAtEnd(entry.isIntersecting);
-        },
-        {
-          root: null,
-          threshold: 0,
-          // Hide a bit before end so sidebars never collide with footer
-          rootMargin: `0px 0px -${endMargin}px 0px`,
-        }
-      );
-      endObserver.observe(endSentinel);
-    }
-
-    // Fallback with scroll if any sentinel is missing
-    if (!heroSentinel || !endSentinel) {
+    } else {
+      // Fallback when sentinel missing
       const onScroll = () => {
         const hPassed = window.scrollY >= Math.max(0, heroHeight - 1);
-        let endReached = false;
-        const article = document.getElementById("post-article");
-        if (article) {
-          const rect = article.getBoundingClientRect();
-          const articleBottom = rect.bottom + window.scrollY;
-          const viewportBottom = window.scrollY + window.innerHeight;
-          endReached = viewportBottom >= articleBottom - endMargin;
-        }
         setHeroPassed(hPassed);
-        setAtEnd(endReached);
       };
       onScroll();
       window.addEventListener("scroll", onScroll, { passive: true });
       return () => window.removeEventListener("scroll", onScroll);
     }
-
     return () => {
       if (heroObserver && heroSentinel) heroObserver.unobserve(heroSentinel);
-      if (endObserver && endSentinel) endObserver.unobserve(endSentinel);
     };
   }, [headerHeight]);
+
+  // End detection via scroll comparing sticky top vs end sentinel (stable deps)
+  useEffect(() => {
+    const endSentinel = document.getElementById("post-end-sentinel");
+    const endMargin = 140; // baseline margin before end
+    const ctaOffset = 500; // hide much earlier before the prominent CTA
+    const onScroll = () => {
+      let endReached = false;
+      // If there is a prominent CTA, hide well before it
+      const cta = document.getElementById("post-cta-newsletter");
+      if (cta) {
+        const rectCta = cta.getBoundingClientRect();
+        const ctaTop = rectCta.top + window.scrollY;
+        const sidebarTop = window.scrollY + (headerHeight + offset);
+        endReached = sidebarTop >= ctaTop - ctaOffset;
+        setAtEnd(endReached);
+        return;
+      }
+
+      if (endSentinel) {
+        const rectEnd = endSentinel.getBoundingClientRect();
+        const endTop = rectEnd.top + window.scrollY;
+        const sidebarTop = window.scrollY + (headerHeight + offset);
+        endReached = sidebarTop >= endTop - endMargin;
+      } else {
+        // Fallback to article bottom
+        const article = document.getElementById("post-article");
+        if (article) {
+          const rect = article.getBoundingClientRect();
+          const articleBottom = rect.bottom + window.scrollY;
+          const sidebarTop = window.scrollY + (headerHeight + offset);
+          endReached = sidebarTop >= articleBottom - endMargin;
+        }
+      }
+      setAtEnd(endReached);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [headerHeight, offset]);
 
   const computedTop = headerHeight + offset; // place below sticky navbar
 

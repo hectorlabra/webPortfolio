@@ -119,7 +119,7 @@ export function PostLayout(props: PostLayoutProps) {
                 <article id="post-article" className="min-w-0 w-full -mt-8">
                   <div className="blog-richtext space-y-6">{children}</div>
 
-                  <div className="mt-12">
+                  <div id="post-cta-newsletter" className="mt-12">
                     <NewsletterInPost variant="prominent" />
                   </div>
                 </article>
