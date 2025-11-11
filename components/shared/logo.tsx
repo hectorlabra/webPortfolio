@@ -1,112 +1,96 @@
+"use client";
+
+import { LEGO_COLORS } from "./geometric-pattern/config";
+
 export function Logo({
   size = "default",
 }: { size?: "default" | "small" } = {}) {
-  const scale = size === "small" ? 0.62 : 0.72; // Ligeramente reducido
-  const baseWidth = 34 * scale;
-  const baseHeight = 34 * scale;
+  const isSmall = size === "small";
+
+  // Sistema minimalista alemán: precisión, geometría pura, grid estricto
+  // Ajuste fino: bloques aún más pequeños para equilibrar mejor con el texto
+  // Reduce nuevamente para que los bloques queden discretos junto al texto
+  const unit = isSmall ? 1.6 : 2.1;
+  const blockSize = unit * 2.6; // bloques cuadrados perfectos (reducidos para mejor balance con el texto)
+  const gap = unit * 0.15; // gap mínimo, casi flush
+
+  // Grid 2x2 preciso (Bauhaus-inspired)
+  const x1 = 0;
+  const x2 = blockSize + gap;
+  const y1 = 0;
+  const y2 = blockSize + gap;
+
+  const viewBox = {
+    w: x2 + blockSize,
+    h: y2 + blockSize,
+  } as const;
+
+  // Reduce el tamaño real del símbolo (no solo el sistema de unidades)
+  // para que la diferencia sea claramente visible junto al texto
+  const svgHeight = isSmall ? 16 : 20;
+  const svgWidth = svgHeight; // logo cuadrado, perfecto
+
+  // Bloque minimalista: flat design, sin sombras, bordes precisos
+  const MinimalBlock = ({
+    x,
+    y,
+    size,
+    colorIndex,
+  }: {
+    x: number;
+    y: number;
+    size: number;
+    colorIndex: number;
+  }) => {
+    const color = LEGO_COLORS[colorIndex % LEGO_COLORS.length];
+    const strokeW = unit * 0.15;
+    const radius = unit * 0.25; // corner radius sutil
+
+    return (
+      <rect
+        x={x}
+        y={y}
+        width={size}
+        height={size}
+        rx={radius}
+        ry={radius}
+        fill={color.fill}
+        stroke={color.stroke}
+        strokeWidth={strokeW}
+      />
+    );
+  };
 
   return (
     <div className="flex items-center gap-2">
       <div
-        className="flex items-center justify-center"
-        style={{
-          height: size === "small" ? "20px" : "24px",
-          marginTop: size === "small" ? "-5px" : "-6px", // Ajuste fino para centrar verticalmente
-        }}
+        className="relative"
+        style={{ height: `${svgHeight}px`, width: `${svgWidth}px` }}
       >
         <svg
-          width={baseWidth}
-          height={baseHeight}
-          viewBox="0 0 40 40"
+          role="img"
+          aria-label="hectorlabra.dev"
+          width={svgWidth}
+          height={svgHeight}
+          viewBox={`0 0 ${viewBox.w} ${viewBox.h}`}
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          preserveAspectRatio="xMidYMid meet"
         >
-          {/* Pieza amarilla (base izquierda) - perspectiva isométrica */}
-          <g transform="translate(6, 14)">
-            {/* Cara superior */}
-            <path d="M2 12l8 -4l8 4v8l-8 4l-8 -4z" fill="#FFD100" />
-            {/* Cara derecha */}
-            <path d="M10 8l8 4v8l-8 -4v-8z" fill="#D4AD00" />
-            {/* Cara izquierda */}
-            <path d="M2 12l8 -4v8l-8 4v-8z" fill="#E6BC00" />
-            {/* Conectores LEGO */}
-            <circle
-              cx="6"
-              cy="10"
-              r="1.2"
-              fill="#E6BC00"
-              stroke="#FFD100"
-              strokeWidth="0.3"
-            />
-            <circle
-              cx="10"
-              cy="10"
-              r="1.2"
-              fill="#E6BC00"
-              stroke="#FFD100"
-              strokeWidth="0.3"
-            />
-          </g>
+          <title>hectorlabra.dev</title>
 
-          {/* Pieza azul (base derecha) - perspectiva isométrica */}
-          <g transform="translate(18, 14)">
-            {/* Cara superior */}
-            <path d="M2 12l8 -4l8 4v8l-8 4l-8 -4z" fill="#00A3FF" />
-            {/* Cara derecha */}
-            <path d="M10 8l8 4v8l-8 -4v-8z" fill="#0081CC" />
-            {/* Cara izquierda */}
-            <path d="M2 12l8 -4v8l-8 4v-8z" fill="#0090E0" />
-            {/* Conectores LEGO */}
-            <circle
-              cx="6"
-              cy="10"
-              r="1.2"
-              fill="#0090E0"
-              stroke="#00A3FF"
-              strokeWidth="0.3"
-            />
-            <circle
-              cx="10"
-              cy="10"
-              r="1.2"
-              fill="#0090E0"
-              stroke="#00A3FF"
-              strokeWidth="0.3"
-            />
-          </g>
-
-          {/* Pieza roja (encima) - perspectiva isométrica */}
-          <g transform="translate(12, 4)">
-            {/* Cara superior */}
-            <path d="M2 12l8 -4l8 4v8l-8 4l-8 -4z" fill="#FF3B30" />
-            {/* Cara derecha */}
-            <path d="M10 8l8 4v8l-8 -4v-8z" fill="#CC2F26" />
-            {/* Cara izquierda */}
-            <path d="M2 12l8 -4v8l-8 4v-8z" fill="#E0352C" />
-            {/* Conectores LEGO */}
-            <circle
-              cx="6"
-              cy="10"
-              r="1.2"
-              fill="#E0352C"
-              stroke="#FF3B30"
-              strokeWidth="0.3"
-            />
-            <circle
-              cx="10"
-              cy="10"
-              r="1.2"
-              fill="#E0352C"
-              stroke="#FF3B30"
-              strokeWidth="0.3"
-            />
-          </g>
+          {/* Grid 2x2: verde, rojo, azul, vacío (asimetría intencional) */}
+          <MinimalBlock x={x1} y={y1} size={blockSize} colorIndex={0} />
+          <MinimalBlock x={x2} y={y1} size={blockSize} colorIndex={2} />
+          <MinimalBlock x={x1} y={y2} size={blockSize} colorIndex={3} />
+          {/* x2,y2 vacío - espacio negativo funcional */}
         </svg>
       </div>
+
       <span
         className={`font-mono ${
-          size === "small" ? "text-xs" : "text-sm"
-        } font-bold`}
+          isSmall ? "text-[11px]" : "text-sm"
+        } font-semibold tracking-tight`}
       >
         hectorlabra.dev
       </span>
