@@ -35,7 +35,8 @@ export function Heading({
   children,
   ...rest
 }: HeadingProps) {
-  const Tag = `h${level}` as unknown as keyof JSX.IntrinsicElements;
+  type HeadingTagName = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  const Tag = `h${level}` as HeadingTagName;
   const heading = createElement(
     Tag,
     {
