@@ -116,13 +116,16 @@ export function PostLayout(props: PostLayoutProps) {
           <section className="w-full py-8 sm:py-12">
             <div className="container flex-1 flex flex-col px-4 md:px-6">
               <div className="max-w-[700px] mx-auto w-full space-y-6">
-                <article className="min-w-0 w-full -mt-8">
+                <article id="post-article" className="min-w-0 w-full -mt-8">
                   <div className="blog-richtext space-y-6">{children}</div>
 
                   <div className="mt-12">
                     <NewsletterInPost variant="prominent" />
                   </div>
                 </article>
+
+                {/* Sentinel to hide sidebars when article ends */}
+                <div id="post-end-sentinel" className="h-px w-full" />
 
                 <div className="my-16">
                   <LazyGeometricPattern priority={false} />

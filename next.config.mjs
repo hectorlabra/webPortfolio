@@ -20,16 +20,6 @@ const nextConfig = {
     // Optimize package imports for faster compilation
     optimizePackageImports: ["framer-motion", "lucide-react"],
   },
-  // Faster dev compilation
-  webpack: (config, { dev, isServer }) => {
-    if (dev && !isServer) {
-      config.watchOptions = {
-        ...config.watchOptions,
-        ignored: ["**/.git/**", "**/node_modules/**", "**/.next/**"],
-      };
-    }
-    return config;
-  },
 };
 
 mergeConfig(nextConfig, userConfig);

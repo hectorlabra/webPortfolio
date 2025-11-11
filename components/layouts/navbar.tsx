@@ -12,7 +12,10 @@ export function Navbar() {
   return (
     <>
       {/* Header Section - Optimizado backdrop-blur */}
-      <header className="sticky top-0 z-40 w-full border-b border-white/10 bg-[#0a0612]/95 backdrop-blur-sm supports-[backdrop-filter]:bg-[#0a0612]/60">
+      <header
+        id="site-header"
+        className="sticky top-0 z-40 w-full border-b border-white/10 bg-[#0a0612]/95 backdrop-blur-sm supports-[backdrop-filter]:bg-[#0a0612]/60"
+      >
         <div className="mx-auto w-full max-w-[1000px]">
           <div className="container flex h-16 items-center justify-between">
             {/* Logo Component */}
