@@ -167,19 +167,39 @@
 }
 
 /* Estilos para Prism.js - Tema minimalista profesional */
+/* Prism design tokens (dark) – desaturados para reducir fatiga visual */
 :root {
-  --prism-background: #0a0612;
-  --prism-foreground: #e4e4e7;
-  --prism-comment: #6b7280;
-  --prism-string: #64e365;
-  --prism-number: #ffd100;
-  --prism-keyword: #64e365;
-  --prism-function: #ffd100;
-  --prism-operator: #a1a1aa;
-  --prism-punctuation: #d4d4d8;
-  --prism-property: #ffd100;
-  --prism-selector: #64e365;
-  --prism-variable: #e4e4e7;
+  --prism-background: #0a0612; /* base dark */
+  --prism-surface-accent-top: rgba(
+    255,
+    255,
+    255,
+    0.03
+  ); /* micro gradient overlay */
+  --prism-foreground: #e4e4e7; /* texto base */
+  --prism-comment: #676b74; /* gris frío medio */
+  --prism-string: #7fd3a7; /* verde suave tipo VSCode strings */
+  --prism-number: #f2c35e; /* ámbar atenuado */
+  --prism-keyword: #9db6ff; /* azul VSCode-like para control flow */
+  --prism-function: #caa6ff; /* lavanda sutil para funciones/clases */
+  --prism-operator: #a0a2ad; /* neutro medio */
+  --prism-punctuation: #b8bbc5; /* neutro claro */
+  --prism-property: #f2c35e; /* mismo que number */
+  --prism-selector: #9db6ff; /* mismo que keyword */
+  --prism-variable: #e4e4e7; /* base */
+  --prism-line-number: #6e6e75; /* gutter */
+  --prism-line-number-active: #bcbcc2; /* línea activa */
+  --prism-line-highlight-bg: rgba(
+    255,
+    255,
+    255,
+    0.04
+  ); /* fondo línea marcada */
+  --prism-selection: rgba(100, 227, 101, 0.18); /* overlay selección */
+  --prism-diff-add-bg: rgba(100, 227, 101, 0.1);
+  --prism-diff-del-bg: rgba(255, 72, 72, 0.12);
+  --prism-gutter-width: 3.25rem; /* espacio reservado a numeración */
+  --prism-line-number-width: 2.25rem; /* ancho de los dígitos */
 }
 
 /* Contenedor de código - Clean minimal style */
@@ -188,10 +208,33 @@
   background: var(--prism-background) !important;
   border: 1px solid rgba(255, 255, 255, 0.08);
   margin: 2rem 0;
-  padding: 1.5rem;
+  padding: 1.5rem 1.5rem 1.5rem var(--prism-gutter-width); /* gutter consistente */
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4),
     0 0 0 1px rgba(255, 255, 255, 0.05) inset;
   position: relative;
+  background-image: linear-gradient(
+    to bottom,
+    var(--prism-surface-accent-top),
+    rgba(0, 0, 0, 0)
+  );
+}
+
+/* Scrollbar minimal dentro de los bloques de código */
+.prose pre::-webkit-scrollbar,
+.blog-richtext pre::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+.prose pre::-webkit-scrollbar-track,
+.blog-richtext pre::-webkit-scrollbar-track {
+  background: transparent;
+}
+.prose pre::-webkit-scrollbar-thumb,
+.blog-richtext pre::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.12);
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  border-radius: 8px;
 }
 
 /* Code text inside pre */
@@ -203,11 +246,70 @@
   font-size: 0.9rem;
   line-height: 1.7;
   text-shadow: none !important;
+  counter-reset: line; /* para fallback manual si fuese necesario */
+  tab-size: 2;
+}
+
+/* Gutter para números de línea generados por rehype-prism-plus (clases line-number) */
+.prose pre .line-number {
+  position: relative;
+  display: block;
+  padding-left: var(--prism-gutter-width);
+  margin-left: calc(-1 * var(--prism-gutter-width)); /* invade zona gutter */
+  border-left: 1px solid rgba(255, 255, 255, 0.06);
+}
+.prose pre .line-number::before {
+  content: attr(line);
+  position: absolute;
+  left: 0;
+  width: var(--prism-line-number-width);
+  text-align: right;
+  color: var(--prism-line-number);
+  font-size: 0.75rem;
+  user-select: none;
+  padding-right: 0.5rem; /* respiro entre número y borde */
+}
+.prose pre .line-number:hover::before {
+  color: var(--prism-line-number-active);
+}
+.prose pre .line-number:hover {
+  background: var(--prism-line-highlight-bg);
+}
+
+/* Línea específicamente resaltada (meta de highlight) */
+.prose pre .highlight-line {
+  background: var(--prism-line-highlight-bg);
+  position: relative;
+}
+.prose pre .highlight-line::after {
+  content: "";
+  position: absolute;
+  left: -1.75rem;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: rgba(100, 227, 101, 0.7); /* usar acento de marca para la guía */
+  border-radius: 2px;
+  opacity: 0.6;
+}
+
+/* Diffs */
+.prose pre .inserted {
+  background: var(--prism-diff-add-bg);
+}
+.prose pre .deleted {
+  background: var(--prism-diff-del-bg);
+}
+
+/* Selección dentro del bloque */
+.prose pre ::selection {
+  background: var(--prism-selection);
 }
 
 /* Inline code - Subtle highlighting */
+/* Inline code: discreto, no usar los acentos saturados */
 .prose code:not(pre code) {
-  @apply bg-white/10 text-accent-yellow px-2 py-0.5 rounded font-mono;
+  @apply bg-white/10 text-white px-2 py-0.5 rounded font-mono;
   border: 1px solid rgba(255, 255, 255, 0.08);
   font-size: 0.9em;
 }
@@ -278,6 +380,12 @@
 .copy-button {
   @apply absolute top-2 right-2 bg-white/10 hover:bg-white/20 text-white/70 hover:text-white px-2 py-1 rounded text-xs transition-colors;
   border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Mostrar botón copiar al hover del bloque */
+.prose pre:hover .copy-button,
+.blog-richtext pre:hover .copy-button {
+  opacity: 1 !important;
 }
 
 /* Estilos específicos para diferentes lenguajes */
@@ -448,10 +556,18 @@
 }
 
 .blog-richtext pre {
-  @apply bg-[#0a0612] rounded-xl overflow-x-auto my-8 px-6 py-5 text-sm font-mono;
+  @apply bg-[#0a0612] rounded-xl overflow-x-auto my-8 text-sm font-mono;
+  padding: 1.25rem 1.25rem 1.25rem var(--prism-gutter-width); /* gutter consistente */
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4),
     0 0 0 1px rgba(255, 255, 255, 0.05) inset;
+  background: var(--prism-background);
+  background-image: linear-gradient(
+    to bottom,
+    var(--prism-surface-accent-top),
+    rgba(0, 0, 0, 0)
+  );
+  position: relative;
 }
 
 .blog-richtext pre code {
@@ -460,6 +576,57 @@
   border: none !important;
   display: block;
   line-height: 1.7;
+  color: var(--prism-foreground) !important;
+}
+
+/* Gutter line numbers dentro de blog-richtext */
+.blog-richtext pre .line-number {
+  position: relative;
+  display: block;
+  padding-left: var(--prism-gutter-width);
+  margin-left: calc(-1 * var(--prism-gutter-width));
+  border-left: 1px solid rgba(255, 255, 255, 0.06);
+}
+.blog-richtext pre .line-number::before {
+  content: attr(line);
+  position: absolute;
+  left: 0;
+  width: var(--prism-line-number-width);
+  text-align: right;
+  color: var(--prism-line-number);
+  font-size: 0.75rem;
+  user-select: none;
+  padding-right: 0.5rem;
+}
+.blog-richtext pre .line-number:hover::before {
+  color: var(--prism-line-number-active);
+}
+.blog-richtext pre .line-number:hover {
+  background: var(--prism-line-highlight-bg);
+}
+.blog-richtext pre .highlight-line {
+  background: var(--prism-line-highlight-bg);
+  position: relative;
+}
+.blog-richtext pre .highlight-line::after {
+  content: "";
+  position: absolute;
+  left: calc(-1 * var(--prism-gutter-width));
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: rgba(100, 227, 101, 0.7);
+  border-radius: 2px;
+  opacity: 0.6;
+}
+.blog-richtext pre .inserted {
+  background: var(--prism-diff-add-bg);
+}
+.blog-richtext pre .deleted {
+  background: var(--prism-diff-del-bg);
+}
+.blog-richtext pre ::selection {
+  background: var(--prism-selection);
 }
 
 .blog-richtext img {

@@ -26,7 +26,9 @@ export function CopyCodeButton({ code }: CopyCodeButtonProps) {
       onClick={copyToClipboard}
       size="sm"
       variant="ghost"
-      className="absolute top-2 right-2 h-8 w-8 p-0 hover:bg-white/10 transition-colors"
+      className={`copy-button absolute top-2 right-2 h-8 w-8 p-0 opacity-0 hover:opacity-100 focus:opacity-100 transition-all duration-300 ${
+        copied ? "shadow-green-glow scale-105" : ""
+      }`}
       aria-label="Copiar código"
     >
       {copied ? (
