@@ -11,6 +11,44 @@ import { markdownToHtml, extractTableOfContents } from "./markdown";
 
 const POSTS_DIRECTORY = path.join(process.cwd(), "content/posts");
 
+export type InlineNewsletterSplit = {
+  beforeHtml: string;
+  afterHtml: string;
+  mode: "second-h2" | "first-h2" | "start";
+};
+
+const H2_CLOSE_TAG = "</h2>";
+
+export function splitHtmlAfterSecondH2(html: string): InlineNewsletterSplit {
+  const matches = [...html.matchAll(/<\/h2>/gi)];
+
+  if (matches.length === 0) {
+    return {
+      beforeHtml: "",
+      afterHtml: html,
+      mode: "start",
+    };
+  }
+
+  const targetMatch = matches[1] ?? matches[0];
+  const index = targetMatch.index ?? -1;
+
+  if (index === -1) {
+    return {
+      beforeHtml: "",
+      afterHtml: html,
+      mode: "start",
+    };
+  }
+
+  const splitPoint = index + H2_CLOSE_TAG.length;
+  return {
+    beforeHtml: html.slice(0, splitPoint),
+    afterHtml: html.slice(splitPoint),
+    mode: matches.length >= 2 ? "second-h2" : "first-h2",
+  };
+}
+
 // Función para leer todos los archivos de posts
 export function getAllPostSlugs(): string[] {
   if (!fs.existsSync(POSTS_DIRECTORY)) {

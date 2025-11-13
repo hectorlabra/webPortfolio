@@ -1,6 +1,10 @@
 import { notFound } from "next/navigation";
-import { getPostBySlug, getAllPostSlugs } from "@/lib/blog-utils";
-import { buildTableOfContents } from "@/lib/blog-utils";
+import {
+  getPostBySlug,
+  getAllPostSlugs,
+  buildTableOfContents,
+  splitHtmlAfterSecondH2,
+} from "@/lib/blog-utils";
 import { PostLayout } from "@/components/blog/PostLayout";
 import { generateArticleStructuredData } from "@/lib/structured-data";
 import fs from "fs";
@@ -96,6 +100,7 @@ export default async function PostPage({
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const { content } = matter(fileContents);
   const tableOfContents = buildTableOfContents(content, post.title);
+  const inlineSegments = splitHtmlAfterSecondH2(post.content);
 
   // Generar structured data
   const structuredData = generateArticleStructuredData(post);
@@ -110,9 +115,11 @@ export default async function PostPage({
         }}
       />
 
-      <PostLayout post={post} tableOfContents={tableOfContents}>
-        <div dangerouslySetInnerHTML={{ __html: post.content }} />
-      </PostLayout>
+      <PostLayout
+        post={post}
+        tableOfContents={tableOfContents}
+        inlineSegments={inlineSegments}
+      />
     </>
   );
 }

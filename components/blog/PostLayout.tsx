@@ -1,8 +1,8 @@
-import { ReactNode } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Clock, User } from "lucide-react";
 import Link from "next/link";
 import { BlogPost, TableOfContentsItem } from "@/lib/types/blog";
+import type { InlineNewsletterSplit } from "@/lib/blog-utils";
 import { ReadingProgressBar } from "./ReadingProgressBar";
 import { Breadcrumbs } from "./Breadcrumbs";
 import { NewsletterInPost } from "./NewsletterInPost";
@@ -11,16 +11,16 @@ import { PostNavigation } from "./PostNavigation";
 import { LazyGeometricPattern } from "@/components/shared/LazyGeometricPattern";
 import { PostSidebarsClient } from "./PostSidebarsClient";
 import { MobileTOCButton } from "./MobileTOCButton";
-import { InlineNewsletterInjector } from "./InlineNewsletterInjector";
 
 interface PostLayoutProps {
   post: BlogPost;
   tableOfContents: TableOfContentsItem[];
-  children: ReactNode;
+  inlineSegments: InlineNewsletterSplit;
 }
 
 export function PostLayout(props: PostLayoutProps) {
-  const { post, children, tableOfContents } = props;
+  const { post, tableOfContents, inlineSegments } = props;
+  const { beforeHtml, afterHtml, mode } = inlineSegments;
   return (
     <div className="min-h-screen bg-[#0a0612] text-white">
       {/* Reading Progress Bar */}
@@ -122,9 +122,16 @@ export function PostLayout(props: PostLayoutProps) {
             <div className="container flex-1 flex flex-col px-4 md:px-6">
               <div className="max-w-[700px] mx-auto w-full space-y-6">
                 <article id="post-article" className="min-w-0 w-full -mt-8">
-                  {/* Inline newsletter injector (mobile only) */}
-                  <InlineNewsletterInjector />
-                  <div className="blog-richtext space-y-6">{children}</div>
+                  <div className="blog-richtext space-y-6">
+                    <RichTextChunk html={beforeHtml} />
+                    <div
+                      className="block xl:hidden my-10"
+                      data-inline-newsletter-mode={mode}
+                    >
+                      <NewsletterInPost variant="compact" />
+                    </div>
+                    <RichTextChunk html={afterHtml} />
+                  </div>
 
                   <div id="post-cta-newsletter" className="mt-12">
                     <NewsletterInPost variant="prominent" />
@@ -147,5 +154,16 @@ export function PostLayout(props: PostLayoutProps) {
         </main>
       </div>
     </div>
+  );
+}
+
+function RichTextChunk({ html }: { html: string }) {
+  if (!html) return null;
+  return (
+    <div
+      className="contents"
+      dangerouslySetInnerHTML={{ __html: html }}
+      suppressHydrationWarning
+    />
   );
 }
