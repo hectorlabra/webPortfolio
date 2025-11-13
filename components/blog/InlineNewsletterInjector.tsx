@@ -54,14 +54,19 @@ export function InlineNewsletterInjector() {
     // Mount React component into wrapper
     const root = createRoot(wrapper);
     root.render(
-      <div className="opacity-0 translate-y-2 will-change-transform transition-all duration-500" data-inline-newsletter>
+      <div
+        className="opacity-0 translate-y-2 will-change-transform transition-all duration-500"
+        data-inline-newsletter
+      >
         <NewsletterInPost variant="compact" />
       </div>
     );
 
     // Animate in after a tick
     requestAnimationFrame(() => {
-      const el = wrapper.querySelector('[data-inline-newsletter]') as HTMLElement | null;
+      const el = wrapper.querySelector(
+        "[data-inline-newsletter]"
+      ) as HTMLElement | null;
       if (el) {
         el.classList.remove("opacity-0", "translate-y-2");
         el.classList.add("opacity-100", "translate-y-0");
