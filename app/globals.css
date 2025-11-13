@@ -630,7 +630,8 @@
 }
 
 .blog-richtext img {
-  @apply rounded-lg shadow-lg mx-auto;
+  /* Ensure images from markdown never overflow their container */
+  @apply block max-w-full h-auto rounded-lg shadow-lg mx-auto;
 }
 
 .blog-richtext figcaption {

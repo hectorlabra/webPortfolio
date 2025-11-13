@@ -43,7 +43,7 @@ export default function QuienSoyPage() {
               <div className="space-y-2 sm:space-y-3 mb-2">
                 <Heading
                   level={1}
-                  className="text-xl sm:text-3xl lg:text-4xl tracking-tighter whitespace-nowrap overflow-hidden"
+                  className="text-xl sm:text-3xl lg:text-4xl tracking-tighter"
                 >
                   Hola, soy <TypewriterText text="Héctor Labra" />
                 </Heading>
@@ -125,6 +125,7 @@ export default function QuienSoyPage() {
                     alt="Trabajando en mi oficina"
                     width={700}
                     height={400}
+                    sizes="100vw"
                     className="rounded-lg object-cover w-full shadow-lg shadow-green-20"
                   />
                   <p className="text-sm text-white-50 text-center mt-2">
@@ -159,6 +160,7 @@ export default function QuienSoyPage() {
                     alt="Trabajando en mi oficina"
                     width={700}
                     height={400}
+                    sizes="100vw"
                     className="rounded-lg object-cover w-full shadow-lg shadow-green-20"
                   />
                   <p className="text-sm text-white-50 text-center mt-2">
@@ -363,6 +365,7 @@ export default function QuienSoyPage() {
                         alt="Proyecto 1"
                         width={400}
                         height={225}
+                        sizes="(min-width: 768px) 50vw, 100vw"
                         className="object-cover w-full h-full"
                       />
                     </div>
@@ -384,6 +387,7 @@ export default function QuienSoyPage() {
                         alt="Proyecto 2"
                         width={400}
                         height={225}
+                        sizes="(min-width: 768px) 50vw, 100vw"
                         className="object-cover w-full h-full"
                       />
                     </div>
@@ -424,6 +428,7 @@ export default function QuienSoyPage() {
                     src="/placeholder.jpg"
                     alt="Hobby 1"
                     fill
+                    sizes="(min-width: 768px) 33vw, 50vw"
                     className="object-cover"
                   />
                 </div>
@@ -432,6 +437,7 @@ export default function QuienSoyPage() {
                     src="/placeholder.jpg"
                     alt="Hobby 2"
                     fill
+                    sizes="(min-width: 768px) 33vw, 50vw"
                     className="object-cover"
                   />
                 </div>
@@ -440,6 +446,7 @@ export default function QuienSoyPage() {
                     src="/placeholder.jpg"
                     alt="Hobby 3"
                     fill
+                    sizes="(min-width: 768px) 33vw, 50vw"
                     className="object-cover"
                   />
                 </div>

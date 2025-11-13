@@ -26,6 +26,7 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
             alt={post.title}
             width={400}
             height={300}
+            sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
             className="object-cover w-full h-full transition-all hover:scale-105"
           />
           <div className="absolute top-3 left-3 inline-block rounded-md bg-[#FFD100] px-3 py-1 text-xs font-medium text-[#0a0612]">
