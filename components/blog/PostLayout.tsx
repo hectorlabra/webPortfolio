@@ -10,6 +10,7 @@ import { RelatedPosts } from "./RelatedPosts";
 import { PostNavigation } from "./PostNavigation";
 import { LazyGeometricPattern } from "@/components/shared/LazyGeometricPattern";
 import { PostSidebarsClient } from "./PostSidebarsClient";
+import { MobileTOCButton } from "./MobileTOCButton";
 
 interface PostLayoutProps {
   post: BlogPost;
@@ -25,6 +26,8 @@ export function PostLayout(props: PostLayoutProps) {
       <ReadingProgressBar />
       {/* Sidebars (appear after hero via IO + dynamic top) */}
       <PostSidebarsClient tableOfContents={tableOfContents} />
+      {/* Mobile TOC Access (hidden on xl and up) */}
+      <MobileTOCButton items={tableOfContents} />
 
       {/* Aquí va el wrapper sagrado (NO TOCAR): */}
       <div className="mx-auto w-full max-w-[700px]">
