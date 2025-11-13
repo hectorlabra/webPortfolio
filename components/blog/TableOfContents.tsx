@@ -6,9 +6,10 @@ import { TableOfContentsItem } from "@/lib/types/blog";
 
 interface TableOfContentsProps {
   items: TableOfContentsItem[];
+  onItemClick?: (id: string) => void;
 }
 
-export function TableOfContents({ items }: TableOfContentsProps) {
+export function TableOfContents({ items, onItemClick }: TableOfContentsProps) {
   const [activeId, setActiveId] = useState<string>("");
 
   useEffect(() => {
@@ -43,6 +44,9 @@ export function TableOfContents({ items }: TableOfContentsProps) {
         behavior: "smooth",
         block: "start",
       });
+    }
+    if (onItemClick) {
+      onItemClick(id);
     }
   };
 

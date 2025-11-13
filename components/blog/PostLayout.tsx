@@ -10,6 +10,8 @@ import { RelatedPosts } from "./RelatedPosts";
 import { PostNavigation } from "./PostNavigation";
 import { LazyGeometricPattern } from "@/components/shared/LazyGeometricPattern";
 import { PostSidebarsClient } from "./PostSidebarsClient";
+import { MobileTOCButton } from "./MobileTOCButton";
+import { InlineNewsletterInjector } from "./InlineNewsletterInjector";
 
 interface PostLayoutProps {
   post: BlogPost;
@@ -25,6 +27,8 @@ export function PostLayout(props: PostLayoutProps) {
       <ReadingProgressBar />
       {/* Sidebars (appear after hero via IO + dynamic top) */}
       <PostSidebarsClient tableOfContents={tableOfContents} />
+      {/* Mobile TOC Access (hidden on xl and up) */}
+      <MobileTOCButton items={tableOfContents} />
 
       {/* Aquí va el wrapper sagrado (NO TOCAR): */}
       <div className="mx-auto w-full max-w-[700px]">
@@ -118,6 +122,8 @@ export function PostLayout(props: PostLayoutProps) {
             <div className="container flex-1 flex flex-col px-4 md:px-6">
               <div className="max-w-[700px] mx-auto w-full space-y-6">
                 <article id="post-article" className="min-w-0 w-full -mt-8">
+                  {/* Inline newsletter injector (mobile only) */}
+                  <InlineNewsletterInjector />
                   <div className="blog-richtext space-y-6">{children}</div>
 
                   <div id="post-cta-newsletter" className="mt-12">
