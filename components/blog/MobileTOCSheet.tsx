@@ -49,7 +49,10 @@ export function MobileTOCSheet({
         </div>
         <div className="flex-1 overflow-y-auto pr-1 pb-4 -mr-1">
           {hasToc ? (
-            <TableOfContents items={items} onItemClick={() => onOpenChangeAction(false)} />
+            <TableOfContents
+              items={items}
+              onItemClick={() => onOpenChangeAction(false)}
+            />
           ) : (
             <p className="text-xs text-white/40">No hay títulos disponibles.</p>
           )}

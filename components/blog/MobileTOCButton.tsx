@@ -12,7 +12,10 @@ interface MobileTOCButtonProps {
   threshold?: number;
 }
 
-export function MobileTOCButton({ items, threshold = 400 }: MobileTOCButtonProps) {
+export function MobileTOCButton({
+  items,
+  threshold = 400,
+}: MobileTOCButtonProps) {
   const [show, setShow] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -47,7 +50,7 @@ export function MobileTOCButton({ items, threshold = 400 }: MobileTOCButtonProps
           </motion.button>
         )}
       </AnimatePresence>
-      <MobileTOCSheet open={open} onOpenChange={setOpen} items={items} />
+      <MobileTOCSheet open={open} onOpenChangeAction={setOpen} items={items} />
     </>
   );
 }
