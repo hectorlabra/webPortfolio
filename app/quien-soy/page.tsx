@@ -43,7 +43,7 @@ export default function QuienSoyPage() {
               <div className="space-y-2 sm:space-y-3 mb-2">
                 <Heading
                   level={1}
-                  className="text-xl sm:text-3xl lg:text-4xl tracking-tighter whitespace-nowrap overflow-hidden"
+                  className="text-xl sm:text-3xl lg:text-4xl tracking-tighter"
                 >
                   Hola, soy <TypewriterText text="Héctor Labra" />
                 </Heading>
