@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Footer } from "@/components/layouts/footer";
 import { Navbar } from "@/components/layouts/navbar";
@@ -8,6 +8,12 @@ export const metadata: Metadata = {
   title: "hectorlabra.dev",
   description: "Created by Héctor Labra",
   generator: "hectorlabra.dev",
+};
+
+// Explicit viewport for consistent mobile scaling
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
 };
 
 export default function RootLayout({
