@@ -65,7 +65,9 @@ export function InlineNewsletterInjector() {
         </div>
       );
       requestAnimationFrame(() => {
-        const el = wrapper.querySelector("[data-inline-newsletter]") as HTMLElement | null;
+        const el = wrapper.querySelector(
+          "[data-inline-newsletter]"
+        ) as HTMLElement | null;
         if (el) {
           el.classList.remove("opacity-0", "translate-y-2");
           el.classList.add("opacity-100", "translate-y-0");
