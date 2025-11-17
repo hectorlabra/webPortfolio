@@ -27,15 +27,25 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   ];
 
   // URLs dinámicas de posts
-  const postUrls: MetadataRoute.Sitemap = posts.map((post) => ({
-    url: `https://hectorlabra.dev/blog/${post.slug}`,
-    lastModified: new Date(post.date),
-    changeFrequency: "monthly" as const,
-    priority: post.featured ? 0.9 : 0.6,
-  }));
+  const postUrls: MetadataRoute.Sitemap = posts.map((post) => {
+    const d = new Date(post.date);
+    const lastModified = isNaN(d.getTime()) ? new Date() : d;
+    return {
+      url: `https://hectorlabra.dev/blog/${post.slug}`,
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: post.featured ? 0.9 : 0.6,
+    };
+  });
 
   // URLs de categorías (si hay posts en esas categorías)
-  const categories = [...new Set(posts.map((post) => post.category))];
+  const categories = [
+    ...new Set(
+      posts
+        .map((post) => post.category)
+        .filter((c): c is string => typeof c === "string" && c.length > 0)
+    ),
+  ];
   const categoryUrls: MetadataRoute.Sitemap = categories.map((category) => ({
     url: `https://hectorlabra.dev/blog/category/${encodeURIComponent(
       category.toLowerCase()

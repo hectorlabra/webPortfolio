@@ -8,6 +8,7 @@ import rehypeStringify from "rehype-stringify";
 import type { Root, Heading, PhrasingContent, Text } from "mdast";
 import { toString } from "mdast-util-to-string";
 import type { Plugin } from "unified";
+import { rehypeOptimizeImages } from "./rehype-optimize-images";
 
 // Utilidad para comparar textos de forma robusta
 function normalizeText(s: string) {
@@ -40,8 +41,15 @@ const remarkPruneFirstH1IfMatches: Plugin<[PruneOptions?], Root> =
     }
   };
 
-// Crea un processor por invocación para poder inyectar el título dinámicamente
-function createMarkdownProcessor(title?: string) {
+type MarkdownProcessorOptions = {
+  title?: string;
+  slug?: string;
+};
+
+// Crea un processor por invocación para poder inyectar opciones dinámicas
+function createMarkdownProcessor(options?: MarkdownProcessorOptions) {
+  const title = options?.title;
+  const slug = options?.slug;
   return (
     remark()
       .use(remarkParse)
@@ -54,6 +62,7 @@ function createMarkdownProcessor(title?: string) {
         behavior: "wrap",
         properties: { className: ["anchor-link"] },
       })
+      .use(rehypeOptimizeImages, { slug })
       .use(rehypePrismPlus, { showLineNumbers: true, ignoreMissing: true })
       // Serializamos a HTML
       .use(rehypeStringify)
@@ -63,9 +72,9 @@ function createMarkdownProcessor(title?: string) {
 // Función para convertir Markdown a HTML (con título opcional para poda de H1)
 export async function markdownToHtml(
   markdown: string,
-  title?: string
+  options?: MarkdownProcessorOptions
 ): Promise<string> {
-  const processor = createMarkdownProcessor(title);
+  const processor = createMarkdownProcessor(options);
   const result = await processor.process(markdown);
   return result.toString();
 }

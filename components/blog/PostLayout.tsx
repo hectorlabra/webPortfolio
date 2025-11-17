@@ -11,6 +11,7 @@ import { PostNavigation } from "./PostNavigation";
 import { LazyGeometricPattern } from "@/components/shared/LazyGeometricPattern";
 import { PostSidebarsClient } from "./PostSidebarsClient";
 import { MobileTOCButton } from "./MobileTOCButton";
+import Image from "next/image";
 
 interface PostLayoutProps {
   post: BlogPost;
@@ -107,6 +108,21 @@ export function PostLayout(props: PostLayoutProps) {
                         </Badge>
                       </Link>
                     ))}
+                  </div>
+                )}
+
+                {post.coverImage && (
+                  <div className="relative w-full overflow-hidden rounded-3xl border border-white/10 bg-white/5">
+                    <div className="relative aspect-[16/9] w-full">
+                      <Image
+                        src={post.coverImage}
+                        alt={post.coverAlt || post.title}
+                        fill
+                        sizes="(min-width: 1024px) 700px, (min-width: 768px) 80vw, 100vw"
+                        className="object-cover"
+                        priority
+                      />
+                    </div>
                   </div>
                 )}
               </div>

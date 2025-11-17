@@ -15,6 +15,7 @@ export interface BlogPost {
   content: string;
   excerpt: string;
   coverImage?: string;
+  coverAlt?: string;
 }
 
 export interface BlogFrontmatter {

@@ -75,7 +75,10 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
 
     const frontmatter = data as BlogFrontmatter;
     // Pasamos el título al parser para que elimine un H1 duplicado si coincide
-    const htmlContent = await markdownToHtml(content, frontmatter.title);
+    const htmlContent = await markdownToHtml(content, {
+      title: frontmatter.title,
+      slug,
+    });
 
     // Calcular tiempo de lectura (aproximadamente 200 palabras por minuto)
     const wordCount = content.split(/\s+/).length;
@@ -97,6 +100,8 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
       content: htmlContent,
       excerpt,
       readingTime,
+      coverImage: frontmatter.cover,
+      coverAlt: frontmatter.coverAlt,
     };
   } catch (error) {
     console.error(`Error loading post ${slug}:`, error);

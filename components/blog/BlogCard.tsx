@@ -23,7 +23,7 @@ export function BlogCard({ post, featured = false }: BlogCardProps) {
                 post.title
               )}`
             }
-            alt={post.title}
+            alt={post.coverAlt || post.title}
             width={400}
             height={300}
             sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
