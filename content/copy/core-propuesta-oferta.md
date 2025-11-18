@@ -1,10 +1,13 @@
 # CORE — Propuesta de Valor & Posicionamiento
 
-**Estado:** v1.0 CORE (base para oferta, copy y contenido)  
+**Estado:** v1.1 CORE (estrategia híbrida validada)  
 **Autor:** Héctor Labra (hectorlabra.dev)  
-**Última actualización:** 17 noviembre 2025  
-**Mercado objetivo:** Hispano (España + LatAm) — primario  
-**Estrategia:** Integrada (LinkedIn + Blog + SEO, todo en español)
+**Última actualización:** 18 noviembre 2025  
+**Mercado objetivo:** Hispano (España + LatAm) — primario | Internacional (USA/EU) — secundario  
+**Estrategia:** Híbrida — Mantener naming "Consultor SEO Técnico" para conversión + especialización en SEO Programático, Freetools y Growth Loops como diferenciador natural
+
+**Nota Estratégica:**  
+Este CORE refleja un posicionamiento híbrido donde el naming principal ("Consultor SEO Técnico & Desarrollador Full-Stack") sirve como punto de entrada reconocible en el mercado hispano, pero los servicios incluyen deliberadamente componentes de growth engineering (SEO programático, freetools, growth loops) que me apasionan y generan proyectos de mayor valor. No es dual-track (dos servicios separados), sino un solo servicio con múltiples capas de profundidad técnica.
 
 ---
 
@@ -94,11 +97,15 @@
 
 **UVP Principal (1 línea — usar en todo el sitio):**
 
-> No solo audito tu SEO técnico — lo implemento en código (React, Next.js, NestJS) y construyo sistemas de crecimiento automáticos.
+> No solo audito tu SEO técnico — lo implemento en código (React, Next.js, NestJS) y detecto oportunidades de crecimiento escalable: SEO programático, freetools y growth loops.
 
 **Alternativa directa (quote personal):**
 
 > "No pienso solo en cómo construirlo, sino en cómo hacerlo crecer." — Consultor SEO técnico que programa.
+
+**Especialización natural (sin rebrand):**
+
+> Consultor SEO Técnico especializado en SEO Programático, Freetools y Growth Engineering — igual que moneticé mi blog a $3K/mes con estas estrategias, las replico para clientes.
 
 **Beneficio principal:**
 Aumento medible de tráfico orgánico y conversiones mediante implementación técnica real (no solo reportes). PRs listos, código ejecutable, hand-off completo.
@@ -136,14 +143,38 @@ Las auditorías SEO tradicionales se quedan en PDFs. Yo entrego código ejecutab
 - **DevOps:** Docker, Git, Render, Vercel, CI/CD
 - Entrego PRs listos para deploy con documentación completa
 
-### Pilar 3: Growth Engineering
+### Pilar 3: Growth Engineering (SEO Programático, Freetools, Growth Loops)
 
-- Diseño de growth loops y sistemas de crecimiento
-- Freetools y micro-productos (lead magnets técnicos)
-- SEO programático con Next.js (generación dinámica de páginas)
+**Nota:** Este pilar representa mi especialización y pasión. No lo vendo como servicio separado, sino como **componente natural** de proyectos SEO técnicos cuando el cliente tiene oportunidad de escalar con código.
+
+**SEO Programático:**
+
+- Generación dinámica de páginas con Next.js (cientos/miles de páginas optimizadas)
+- Arquitectura de datos + templates + sistema de generación automática
+- Casos típicos: marketplaces (location × service), SaaS (app × integration), directorios
+- **Ejemplo real:** Zapier genera 8.6M+ visitas/mes con páginas programáticas
+
+**Freetools & Engineering as Marketing:**
+
+- Calculadoras interactivas, generadores, herramientas de diagnóstico
+- Lead magnets técnicos que capturan audiencia cualificada
+- **Ejemplo real:** Moneticé blog hasta $3K/mes usando freetools + SEO long-tail
+- **ROI comprobado:** HubSpot Website Grader, Ahrefs Free Tools, CoSchedule Headline Analyzer
+
+**Growth Loops:**
+
+- Diseño e implementación de mecánicas virales (referral, content, product loops)
+- Sistemas donde el producto mismo genera adquisición orgánica
 - Experiments, A/B testing, optimización de conversión (CRO)
-- Analytics y métricas de producto (GA4, tracking custom)
-- **Background verificable:** Gestioné >$20K USD/mes en paid media, optimicé funnels B2B
+- **Ejemplo real:** Dropbox creció 3,900% con referral loop, Calendly con viral sharing
+
+**Cómo lo integro en proyectos:**
+
+- Auditoría SEO técnica → identifico oportunidades de P-SEO/freetools
+- Roadmap incluye: Fase 1 (fixes técnicos) + Fase 2 (proyecto de crecimiento)
+- Cliente elige si ejecuta con su equipo (done-with-you) o yo lo construyo (done-for-you)
+
+- **Background verificable:** Gestioné >$20K USD/mes en paid media, optimicé funnels B2B, construí sistemas de growth para marca personal
 
 ---
 
@@ -730,7 +761,36 @@ Este documento es la **fuente de verdad (source of truth)** para todo el brandin
 
 ---
 
-> **Versión:** 1.0 CORE  
-> **Última revisión:** 17 nov 2025  
-> **Próxima revisión:** Tras feedback de primeros clientes  
+> **Versión:** 1.1 CORE (Estrategia Híbrida)  
+> **Última revisión:** 18 nov 2025  
+> **Próxima revisión:** Tras primeros 2-3 proyectos con componente growth  
 > **Siguiente trabajo:** Construcción de oferta comercial (Hormozi framework) a partir de este core
+
+---
+
+## Estrategia de Transición (12-18 meses)
+
+**Fase Actual (Meses 1-6):**
+
+- Naming: "Consultor SEO Técnico & Desarrollador Full-Stack"
+- Servicios: Auditorías SEO técnicas + implementación (conversión fácil)
+- Objetivo: Cerrar 2-3 clientes retainer ($2K-$5K/mes) para cash flow
+- **Paralelamente:** Incluir componente growth (P-SEO/freetool/loop) en 1-2 proyectos
+- Documentar casos con métricas reales
+
+**Fase Intermedia (Meses 7-12):**
+
+- Mantener naming principal
+- Servicios: SEO Técnico base + especialización en P-SEO/Freetools (upsell natural)
+- Objetivo: 1-2 proyectos growth exitosos, testimonials verificables
+- **Contenido:** Blog/LinkedIn enfocado en P-SEO, freetools, growth loops
+- Pricing: $8K-$25K proyectos growth (inicial, construir casos)
+
+**Fase Avanzada (Meses 13-18):**
+
+- Opción de renaming internacional: "Growth Product Engineer" (USA/EU)
+- Servicios: Mayoría proyectos growth, SEO técnico tradicional solo referrals/VIP
+- Objetivo: 100% proyectos que me apasionan, pricing premium ($15K-$50K)
+- **Mercado:** Shift hacia internacional (USD/EUR)
+
+**Principio rector:** No saltar al vacío, construir puente con casos reales antes de reposicionar.
