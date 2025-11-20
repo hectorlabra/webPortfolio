@@ -40,36 +40,37 @@ export default function HomePage() {
               <div className="flex flex-col justify-center space-y-4 sm:space-y-6">
                 <div className="space-y-3 sm:space-y-4">
                   <h1 className="font-mono text-[1.7rem] sm:text-3xl md:text-4xl font-bold tracking-tighter">
-                    Aprende a codificar en semanas
-                    <TypewriterText text=", no meses." />
+                    De dev anónimo
+                    <TypewriterText text=" → dev moderno." />
                   </h1>
                   <p className="text-base sm:text-lg text-white/70">
-                    Desarrolla software más rápido con IA. Pasa de cero a crear
-                    aplicaciones full-stack modernas en solo semanas.
+                    Aprende a construir proyectos con stack moderno, publica lo
+                    que aprendes con SEO práctico y crea oportunidades reales
+                    mientras avanzas.
                   </p>
                 </div>
                 {/* Highlight Banner */}
                 <div className="inline-flex w-fit rounded-md bg-[#64E365]/20 px-3.5 sm:px-4 py-2 text-[0.79rem] sm:text-sm md:text-base text-[#64E365] font-medium border border-[#64E365]/30 shadow-[0_0_8px_rgba(100,227,101,0.2)]">
-                  Codifica tu idea rápidamente, construye tu libertad.
+                  Build fast. Rank fast. Dev moderno + SEO práctico
                 </div>
                 {/* Features List */}
                 <div className="space-y-2 sm:space-y-4">
                   <div className="flex items-center gap-3 sm:gap-3">
                     <Check className="h-8 w-6 sm:h-6 sm:w-6 text-[#64E365]" />
                     <span className="text-sm sm:text-base">
-                      Aprende solo los fundamentos
+                      Actualiza tu stack (sin llenar tiempo libre)
                     </span>
                   </div>
                   <div className="flex items-center gap-3 sm:gap-3">
                     <Check className="h-8 w-6 sm:h-6 sm:w-6 text-[#64E365]" />
                     <span className="text-sm sm:text-base">
-                      Usa la IA para que codifique por ti
+                      Construye proyectos reales con CodeFast
                     </span>
                   </div>
                   <div className="flex items-center gap-3 sm:gap-3">
                     <Check className="h-8 w-6 sm:h-6 sm:w-6 text-[#64E365]" />
                     <span className="text-sm sm:text-base">
-                      Sigue aprendiendo sobre la marcha
+                      Publica y posiciona con Ski Slope (SEO práctico)
                     </span>
                   </div>
                 </div>
@@ -79,7 +80,7 @@ export default function HomePage() {
                 <div className="rounded-lg border-2 border-white/20 bg-white/5 p-5 sm:p-6 md:p-8 backdrop-blur w-full animate-circular-glow shadow-sm shadow-white/5">
                   <div className="space-y-3 sm:space-y-4">
                     <h2 className="font-mono text-xl sm:text-2xl lg:text-[1.4rem] font-bold text-center">
-                      ¡Únete con un click!
+                      Quiero aprender a construir + publicar
                     </h2>
                   </div>
                   <div className="mt-4 sm:mt-6">
