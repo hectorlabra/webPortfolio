@@ -17,7 +17,7 @@ export function SocialProof() {
           </svg>
         ))}
       </div>
-      <span className="text-white/80 text-xs">
+      <span className="text-white/80 text-[0.65rem] sm:text-xs">
         1,145+ <span className="underline">devs hispanos</span> actualizando su
         carrera
       </span>
