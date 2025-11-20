@@ -102,11 +102,11 @@ export default function HomePage() {
             <div className="flex flex-col items-start space-y-5">
               <div className="space-y-3">
                 <h2 className="font-mono text-3xl font-bold tracking-tighter">
-                  Enseñamos el enfoque completo.
+                  La hoja de ruta del dev moderno.
                 </h2>
                 <p className="text-lg text-white/70">
-                  Todo lo que necesitas para construir tu carrera de developer,
-                  incluso si eres un principiante absoluto. ✨
+                  Un framework probado que conecta tu stack, tus proyectos y tu
+                  contenido para atraer oportunidades reales. ✨
                 </p>
               </div>
             </div>
@@ -117,7 +117,7 @@ export default function HomePage() {
             <div className="flex justify-start">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between w-full gap-4">
                 <Button className="w-full sm:w-auto bg-[#FFD100] text-[#0a0612] hover:bg-[#FFD100]/90 text-sm h-10 px-4 font-bold shadow-[0_0_10px_rgba(255,210,0,0.5),0_0_15px_rgba(255,210,0,0.3)]">
-                  EMPIEZA AHORA
+                  VER LA HOJA DE RUTA
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
                 {/* Social Proof Component */}
