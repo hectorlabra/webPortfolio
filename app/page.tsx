@@ -44,33 +44,33 @@ export default function HomePage() {
                     <TypewriterText text=" → dev moderno." />
                   </h1>
                   <p className="text-base sm:text-lg text-white/70">
-                    Aprende a construir proyectos con stack moderno, publica lo
-                    que aprendes con SEO práctico y crea oportunidades reales
+                    Actualiza tu stack, construye proyectos reales, publica tu
+                    proceso y usa SEO práctico para atraer oportunidades
                     mientras avanzas.
                   </p>
                 </div>
                 {/* Highlight Banner */}
                 <div className="inline-flex w-fit rounded-md bg-[#64E365]/20 px-3.5 sm:px-4 py-2 text-[0.79rem] sm:text-sm md:text-base text-[#64E365] font-medium border border-[#64E365]/30 shadow-[0_0_8px_rgba(100,227,101,0.2)]">
-                  Build fast. Rank fast. Dev moderno + SEO práctico
+                  Construir → Publicar → Atraer
                 </div>
                 {/* Features List */}
                 <div className="space-y-2 sm:space-y-4">
                   <div className="flex items-center gap-3 sm:gap-3">
                     <Check className="h-8 w-6 sm:h-6 sm:w-6 text-[#64E365]" />
                     <span className="text-sm sm:text-base">
-                      Construye con stack moderno.
+                      Construye con stack moderno (Next.js).
                     </span>
                   </div>
                   <div className="flex items-center gap-3 sm:gap-3">
                     <Check className="h-8 w-6 sm:h-6 sm:w-6 text-[#64E365]" />
                     <span className="text-sm sm:text-base">
-                      Comparte lo que aprendes.
+                      Comparte lo que aprendes (LinkedIn).
                     </span>
                   </div>
                   <div className="flex items-center gap-3 sm:gap-3">
                     <Check className="h-8 w-6 sm:h-6 sm:w-6 text-[#64E365]" />
                     <span className="text-sm sm:text-base">
-                      Atrae oportunidades con SEO.
+                      Atrae oportunidades con SEO (blog & free-tools).
                     </span>
                   </div>
                 </div>
