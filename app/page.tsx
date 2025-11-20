@@ -58,19 +58,19 @@ export default function HomePage() {
                   <div className="flex items-center gap-3 sm:gap-3">
                     <Check className="h-8 w-6 sm:h-6 sm:w-6 text-[#64E365]" />
                     <span className="text-sm sm:text-base">
-                      Actualiza tu stack (sin llenar tiempo libre)
+                      Construye con stack moderno.
                     </span>
                   </div>
                   <div className="flex items-center gap-3 sm:gap-3">
                     <Check className="h-8 w-6 sm:h-6 sm:w-6 text-[#64E365]" />
                     <span className="text-sm sm:text-base">
-                      Construye proyectos reales con CodeFast
+                      Comparte lo que aprendes.
                     </span>
                   </div>
                   <div className="flex items-center gap-3 sm:gap-3">
                     <Check className="h-8 w-6 sm:h-6 sm:w-6 text-[#64E365]" />
                     <span className="text-sm sm:text-base">
-                      Publica y posiciona con Ski Slope (SEO práctico)
+                      Atrae oportunidades con SEO.
                     </span>
                   </div>
                 </div>

@@ -2,7 +2,7 @@
 export function SocialProof() {
   return (
     <div className="flex items-center gap-2">
-        <div className="flex items-center">
+      <div className="flex items-center">
         {[1, 2, 3, 4, 5].map((star) => (
           <svg
             key={star}
@@ -17,10 +17,10 @@ export function SocialProof() {
           </svg>
         ))}
       </div>
-        <span className="text-white/80 text-[0.65rem] sm:text-xs flex items-center leading-none translate-y-[1px]">
-          1,145+ <span className="underline ml-1">devs hispanos</span>
-          <span className="ml-2">actualizando su carrera</span>
-        </span>
+      <span className="text-white/80 text-[0.65rem] sm:text-xs flex items-center leading-none translate-y-[1px]">
+        1,145+ <span className="underline ml-1">devs hispanos</span>
+        <span className="ml-2">actualizando su carrera</span>
+      </span>
     </div>
   );
 }
