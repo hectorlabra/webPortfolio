@@ -39,7 +39,7 @@ export default function HomePage() {
               {/* Hero Content */}
               <div className="flex flex-col justify-center space-y-4 sm:space-y-6">
                 <div className="space-y-3 sm:space-y-4">
-                  <h1 className="font-mono text-[1.7rem] sm:text-3xl md:text-4xl font-bold tracking-tighter">
+                  <h1 className="font-mono text-[1.2rem] sm:text-lg md:text-xl lg:text-3xl font-bold tracking-tighter whitespace-nowrap">
                     De dev anónimo
                     <TypewriterText text=" → dev moderno." />
                   </h1>
