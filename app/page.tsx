@@ -50,7 +50,7 @@ export default function HomePage() {
                   </p>
                 </div>
                 {/* Highlight Banner */}
-                <div className="inline-flex w-fit rounded-md bg-[#64E365]/20 px-3.5 sm:px-4 py-2 text-[0.79rem] sm:text-sm md:text-base text-[#64E365] font-medium border border-[#64E365]/30 shadow-[0_0_8px_rgba(100,227,101,0.2)]">
+                <div className="inline-flex w-fit rounded-md bg-[#64E365]/20 px-4 py-3 text-base sm:px-5 sm:py-4 sm:text-lg md:px-6 md:text-xl text-[#64E365] font-medium border border-[#64E365]/30 shadow-[0_0_8px_rgba(100,227,101,0.2)] gap-4">
                   Construir → Publicar → Atraer
                 </div>
                 {/* Features List */}
