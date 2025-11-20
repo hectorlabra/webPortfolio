@@ -139,7 +139,7 @@ export function NewsletterForm({
             <div className="flex w-full flex-col gap-3">
               <Input
                 type="email"
-                placeholder="tu@email.com — quiero guías"
+                placeholder="tu@email.com — envíame las guías"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
