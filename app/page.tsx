@@ -80,7 +80,7 @@ export default function HomePage() {
                 <div className="rounded-lg border-2 border-white/20 bg-white/5 p-5 sm:p-6 md:p-8 backdrop-blur w-full animate-circular-glow shadow-sm shadow-white/5">
                   <div className="space-y-3 sm:space-y-4">
                     <h2 className="font-mono text-xl sm:text-2xl lg:text-[1.4rem] font-bold text-center">
-                      Quiero aprender a construir + publicar
+                      Aprende a construir → publicar → atraer
                     </h2>
                   </div>
                   <div className="mt-4 sm:mt-6">
