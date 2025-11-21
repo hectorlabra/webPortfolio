@@ -41,7 +41,10 @@ export default function HomePage() {
                 <div className="space-y-3 sm:space-y-4">
                   <h1 className="font-mono text-[1.2rem] sm:text-lg md:text-xl lg:text-3xl font-bold tracking-tighter whitespace-nowrap">
                     De dev anónimo
-                    <TypewriterText text=" → dev moderno." />
+                    <TypewriterText
+                      prefix=" a "
+                      text={["dev moderno.", "builder.", "dev creador."]}
+                    />
                   </h1>
                   <p className="text-base sm:text-lg text-white/70">
                     Actualiza tu stack, construye proyectos reales, publica tu
@@ -233,7 +236,7 @@ export default function HomePage() {
                   Preguntas frecuentes.
                 </h2>
                 <p className="text-lg text-white/70">
-                  Despeja tus dudas sobre carreras tech en tiempos de IA. 🚀
+                  Lo esencial que necesitas saber antes de comenzar. 🚀
                 </p>
               </div>
             </div>
@@ -245,7 +248,7 @@ export default function HomePage() {
             <div className="flex justify-start">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between w-full gap-4">
                 <Button className="w-full sm:w-auto bg-[#FFD100] text-[#0a0612] hover:bg-[#FFD100]/90 text-sm h-10 px-4 font-bold shadow-[0_0_10px_rgba(255,210,0,0.5),0_0_15px_rgba(255,210,0,0.3)]">
-                  EMPIEZA AHORA
+                  VER LA HOJA DE RUTA
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
                 {/* Social Proof Component */}

@@ -13,22 +13,17 @@ const faqs: FaqItem[] = [
   {
     question: "¿QUÉ ES HECTORLABRA.DEV?",
     answer:
-      "Hectorlabra.dev es una plataforma donde comparto estrategias, recursos y conocimientos para desarrolladores que buscan evolucionar sus carreras en la era de la IA. Mi objetivo es ayudarte a convertir los desafíos de la automatización en oportunidades, enseñándote a colaborar eficientemente con herramientas de IA mientras desarrollas las habilidades técnicas y creativas que las máquinas no pueden reemplazar.",
+      "Un sistema para developers que quieren actualizar su stack, construir proyectos reales y usar contenido estratégico para atraer oportunidades. No es una escuela: es un enfoque práctico con resultados concretos.",
   },
   {
     question: "¿POR QUÉ DESARROLLO WEB EN LA ERA DE LA IA?",
     answer:
-      "A pesar del auge de la IA generativa, el desarrollo web sigue siendo un campo fundamental donde los humanos marcan la diferencia. La creatividad, el pensamiento sistémico y la capacidad de traducir necesidades de usuario en soluciones técnicas son habilidades irremplazables. Te muestro cómo combinar estas capacidades humanas con las herramientas de IA para multiplicar tu productividad y valor como desarrollador, manteniendo tu relevancia en un ecosistema tecnológico en constante evolución.",
+      "Porque la IA acelera, pero no reemplaza: alguien debe diseñar, integrar, validar, optimizar y publicar. El dev que entiende sistemas, producto y contenido sigue siendo clave y la IA multiplica ese valor.",
   },
   {
     question: "¿CÓMO ME PUEDES AYUDAR?",
     answer:
-      "Te ofrezco recursos para navegar tu carrera técnica en la era de la IA: desde tutoriales sobre cómo aprovechar herramientas de IA en tu flujo de trabajo, hasta estrategias para identificar y desarrollar las habilidades que te mantendrán relevante. Mi enfoque se basa en el aprendizaje continuo, la adaptabilidad y el desarrollo de un 'stack personal' que combine dominio técnico con competencias que trascienden la automatización.",
-  },
-  {
-    question: "¿CÓMO PUEDO CONTACTARTE PARA UN PROYECTO?",
-    answer:
-      "Si buscas mentoría personalizada, colaboración en proyectos o tienes dudas sobre tu trayectoria profesional en tecnología, puedes contactarme a través del formulario en esta web, por email a hector@hectorlabra.dev o agendar una sesión de 30 minutos en mi calendario. Me especializo en ayudar a desarrolladores a potenciar sus carreras aprovechando (no temiendo) la revolución de la IA.",
+      "Con un marco claro: Construir proyectos con stack moderno → Publicar tu proceso con intención → Atraer oportunidades usando SEO, contenido y autoridad técnica.",
   },
 ];
 

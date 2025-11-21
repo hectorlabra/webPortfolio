@@ -1,53 +1,78 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from "react";
 
 interface TypewriterTextProps {
-  text: string;
+  // accept a single string or multiple variations
+  text: string | string[];
   className?: string;
+  prefix?: string; // optional prefix rendered before the typed text
+  typingSpeed?: number; // ms per char when typing
+  deletingSpeed?: number; // ms per char when deleting
+  pauseBeforeDelete?: number; // ms pause after completing a phrase
+  pauseBetween?: number; // ms pause after fully deleted before next variant
 }
 
 export const TypewriterText: React.FC<TypewriterTextProps> = ({
   text,
-  className
+  className,
+  prefix = "",
+  typingSpeed = 70,
+  deletingSpeed = 30,
+  pauseBeforeDelete = 2000,
+  pauseBetween = 300,
 }) => {
-  const [displayText, setDisplayText] = useState('');
+  const variants = useMemo(
+    () => (Array.isArray(text) ? text : [text]),
+    [typeof text === "string" ? text : JSON.stringify(text)]
+  );
+
+  const [index, setIndex] = useState(0);
+  const [displayText, setDisplayText] = useState("");
   const [isDeleting, setIsDeleting] = useState(false);
-  const [typingSpeed, setTypingSpeed] = useState(70); // Velocidad inicial más rápida
-  
+
+  // reset state when the provided text(s) change
   useEffect(() => {
-    const handleTyping = () => {
-      const current = displayText;
-      
-      if (!isDeleting && current === text) {
-        // Pausa antes de empezar a borrar
-        setTypingSpeed(2000); // Reducida de 3000 a 2000ms
-        setIsDeleting(true);
-        return;
-      } else if (isDeleting && current === '') {
-        // Pausa antes de empezar a escribir de nuevo
-        setTypingSpeed(300); // Reducida de 500 a 300ms
+    setIndex(0);
+    setDisplayText("");
+    setIsDeleting(false);
+  }, [typeof text === "string" ? text : JSON.stringify(text)]);
+
+  useEffect(() => {
+    const fullText = variants[index] || "";
+    let timeout: ReturnType<typeof setTimeout>;
+
+    if (!isDeleting && displayText === fullText) {
+      timeout = setTimeout(() => setIsDeleting(true), pauseBeforeDelete);
+    } else if (isDeleting && displayText === "") {
+      timeout = setTimeout(() => {
         setIsDeleting(false);
-        return;
-      }
-      
-      // Velocidad de escritura/borrado más rápida
-      setTypingSpeed(isDeleting ? 30 : 70); // Velocidades más rápidas
-      
-      // Lógica para escribir o borrar
-      const updatedText = isDeleting
-        ? current.substring(0, current.length - 1)
-        : text.substring(0, current.length + 1);
-        
-      setDisplayText(updatedText);
-    };
-    
-    const timer = setTimeout(handleTyping, typingSpeed);
-    return () => clearTimeout(timer);
-  }, [displayText, isDeleting, text, typingSpeed]);
-  
+        setIndex((i) => (i + 1) % variants.length);
+      }, pauseBetween);
+    } else {
+      const delta = isDeleting ? deletingSpeed : typingSpeed;
+      timeout = setTimeout(() => {
+        setDisplayText((prev) =>
+          isDeleting ? prev.slice(0, -1) : fullText.slice(0, prev.length + 1)
+        );
+      }, delta);
+    }
+
+    return () => clearTimeout(timeout);
+  }, [
+    displayText,
+    isDeleting,
+    index,
+    variants,
+    typingSpeed,
+    deletingSpeed,
+    pauseBeforeDelete,
+    pauseBetween,
+  ]);
+
   return (
-    <span className={`typewriter-container ${className || ''}`}>
+    <span className={`typewriter-container ${className || ""}`}>
+      {prefix}
       {displayText}
       <span className="typewriter-cursor"></span>
     </span>
