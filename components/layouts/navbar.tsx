@@ -46,7 +46,7 @@ export function Navbar() {
               size="sm"
               className="hidden md:flex bg-[#64E365] text-[#0a0612] hover:bg-[#64E365]/90 text-sm h-10 px-4"
             >
-              Trabaja Conmigo
+              Ver Hoja de Ruta
             </Button>
             {/* Mobile Menu Button - Simplificado shadow */}
             <Button
