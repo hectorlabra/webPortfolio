@@ -32,13 +32,7 @@ export function Footer() {
               >
                 Blog
               </Link>
-              {/* Calculadora archived - link removed */}
-              <Link
-                href="/projects"
-                className="text-sm text-white/70 hover:text-white"
-              >
-                Proyectos
-              </Link>
+
               <Link
                 href="/about"
                 className="text-sm text-white/70 hover:text-white"
