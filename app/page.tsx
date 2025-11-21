@@ -132,100 +132,113 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Geometric Pattern - Lazy loaded (pauses when off-screen) */}
+        {/* Geometric Pattern - Separator between Legos and FAQ */}
         <LazyGeometricPattern />
 
-        {/* Blog Section - Con espaciado responsive */}
-        <section className="w-full py-16 sm:py-24 md:py-36 lg:py-52">
-          <div className="container flex-1 flex flex-col px-4 md:px-6">
-            <div className="flex flex-col items-start space-y-5">
-              <div className="space-y-3">
-                <h2 className="font-mono text-3xl font-bold tracking-tighter">
-                  Últimos artículos
-                </h2>
-                <p className="text-lg text-white/70">
-                  Construyendo tu carrera tech paso a paso con guías prácticas y
-                  bloques de aprendizaje. 💻
-                </p>
-              </div>
-            </div>
-            <div className="py-12">
-              {" "}
-              {/* Contenedor con el mismo py-12 que Features */}
-              <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
-                {[1, 2, 3].map((i) => (
-                  <Card
-                    key={i}
-                    className="overflow-hidden bg-white/5 border-white/15 transition-all hover:bg-white/8 hover:border-white/20 hover:translate-y-[-4px] shadow-lg shadow-purple-500/5"
-                  >
-                    <div className="aspect-[5/4] w-full overflow-hidden bg-white/5 relative">
-                      <Image
-                        src={`/placeholder.svg?height=200&width=400&text=Article+${i}`}
-                        alt={`Article ${i}`}
-                        width={400}
-                        height={300}
-                        sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
-                        className="object-cover w-full h-full transition-all hover:scale-105"
-                      />
-                      <div className="absolute top-3 left-3 inline-block rounded-md bg-[#FFD100] px-3 py-1 text-xs font-medium text-[#0a0612]">
-                        Categoría
-                      </div>
-                    </div>
-                    <div className="p-4 sm:p-5">
-                      <div className="flex justify-end items-center">
-                        <p className="text-xs text-white/80">28 Mar</p>
-                      </div>
-                      <h3 className="mt-1 font-mono text-lg font-bold line-clamp-1 text-white">
-                        Título del artículo
-                      </h3>
-                      <p className="mt-2 text-xs sm:text-sm text-white/80 line-clamp-2">
-                        Una breve descripción del artículo y lo que los lectores
-                        pueden esperar aprender.
-                      </p>
-                      <div className="mt-4 flex items-center gap-2">
-                        <div className="h-7 w-7 rounded-full bg-white/15 ring-1 ring-white/20 overflow-hidden">
+        {/**
+         * BLOG SECTION TEMPORARILY DISABLED
+         * Includes the lazy geometric pattern + blog cards.
+         * Re-enable once articles are ready.
+         */}
+        {false && (
+          <>
+            {/* Geometric Pattern - Lazy loaded (pauses when off-screen) */}
+            <LazyGeometricPattern />
+
+            {/* Blog Section - Con espaciado responsive */}
+            <section className="w-full py-16 sm:py-24 md:py-36 lg:py-52">
+              <div className="container flex-1 flex flex-col px-4 md:px-6">
+                <div className="flex flex-col items-start space-y-5">
+                  <div className="space-y-3">
+                    <h2 className="font-mono text-3xl font-bold tracking-tighter">
+                      Últimos artículos
+                    </h2>
+                    <p className="text-lg text-white/70">
+                      Construyendo tu carrera tech paso a paso con guías
+                      prácticas y bloques de aprendizaje. 💻
+                    </p>
+                  </div>
+                </div>
+                <div className="py-12">
+                  {" "}
+                  {/* Contenedor con el mismo py-12 que Features */}
+                  <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
+                    {[1, 2, 3].map((i) => (
+                      <Card
+                        key={i}
+                        className="overflow-hidden bg-white/5 border-white/15 transition-all hover:bg-white/8 hover:border-white/20 hover:translate-y-[-4px] shadow-lg shadow-purple-500/5"
+                      >
+                        <div className="aspect-[5/4] w-full overflow-hidden bg-white/5 relative">
                           <Image
-                            src="/placeholder.svg?height=28&width=28"
-                            alt="Avatar"
-                            width={28}
-                            height={28}
-                            className="rounded-full"
+                            src={`/placeholder.svg?height=200&width=400&text=Article+${i}`}
+                            alt={`Article ${i}`}
+                            width={400}
+                            height={300}
+                            sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+                            className="object-cover w-full h-full transition-all hover:scale-105"
                           />
+                          <div className="absolute top-3 left-3 inline-block rounded-md bg-[#FFD100] px-3 py-1 text-xs font-medium text-[#0a0612]">
+                            Categoría
+                          </div>
                         </div>
-                        <p className="text-xs font-medium text-white/90">
-                          Hector Labra
-                        </p>
-                      </div>
-                      <div className="mt-4 pt-3 border-t border-white/10">
-                        <Button
-                          variant="link"
-                          className="p-0 h-auto text-xs text-[#64E365] hover:text-[#64E365]/80 font-medium"
-                        >
-                          Leer artículo <ArrowRight className="ml-1 h-3 w-3" />
-                        </Button>
-                      </div>
+                        <div className="p-4 sm:p-5">
+                          <div className="flex justify-end items-center">
+                            <p className="text-xs text-white/80">28 Mar</p>
+                          </div>
+                          <h3 className="mt-1 font-mono text-lg font-bold line-clamp-1 text-white">
+                            Título del artículo
+                          </h3>
+                          <p className="mt-2 text-xs sm:text-sm text-white/80 line-clamp-2">
+                            Una breve descripción del artículo y lo que los
+                            lectores pueden esperar aprender.
+                          </p>
+                          <div className="mt-4 flex items-center gap-2">
+                            <div className="h-7 w-7 rounded-full bg-white/15 ring-1 ring-white/20 overflow-hidden">
+                              <Image
+                                src="/placeholder.svg?height=28&width=28"
+                                alt="Avatar"
+                                width={28}
+                                height={28}
+                                className="rounded-full"
+                              />
+                            </div>
+                            <p className="text-xs font-medium text-white/90">
+                              Hector Labra
+                            </p>
+                          </div>
+                          <div className="mt-4 pt-3 border-t border-white/10">
+                            <Button
+                              variant="link"
+                              className="p-0 h-auto text-xs text-[#64E365] hover:text-[#64E365]/80 font-medium"
+                            >
+                              Leer artículo{" "}
+                              <ArrowRight className="ml-1 h-3 w-3" />
+                            </Button>
+                          </div>
+                        </div>
+                      </Card>
+                    ))}
+                  </div>
+                </div>
+                <div className="flex justify-start">
+                  <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between w-full gap-4">
+                    <Button className="w-full sm:w-auto bg-[#FFD100] text-[#0a0612] hover:bg-[#FFD100]/90 text-sm h-10 px-4 font-bold shadow-[0_0_10px_rgba(255,210,0,0.5),0_0_15px_rgba(255,210,0,0.3)]">
+                      EMPIEZA AHORA
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                    {/* Social Proof Component */}
+                    <div className="self-center sm:self-auto">
+                      <SocialProof />
                     </div>
-                  </Card>
-                ))}
-              </div>
-            </div>
-            <div className="flex justify-start">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between w-full gap-4">
-                <Button className="w-full sm:w-auto bg-[#FFD100] text-[#0a0612] hover:bg-[#FFD100]/90 text-sm h-10 px-4 font-bold shadow-[0_0_10px_rgba(255,210,0,0.5),0_0_15px_rgba(255,210,0,0.3)]">
-                  EMPIEZA AHORA
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-                {/* Social Proof Component */}
-                <div className="self-center sm:self-auto">
-                  <SocialProof />
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </section>
+            </section>
 
-        {/* Geometric Pattern - Lazy loaded (pauses when off-screen) */}
-        <LazyGeometricPattern />
+            {/* Geometric Pattern - Lazy loaded (pauses when off-screen) */}
+            <LazyGeometricPattern />
+          </>
+        )}
 
         {/* FAQ Section - Con espaciado responsive */}
         <section className="w-full py-16 sm:py-24">
