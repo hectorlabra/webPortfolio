@@ -232,68 +232,10 @@ export default function QuienSoyPage() {
           </div>
         </section>
 
-        {/* Valores y filosofía */}
-        <section className="w-full py-16 sm:py-24 bg-gradient-to-b from-[#0a0612] to-[#0a0612]/90">
-          <div className="container flex-1 flex flex-col px-4 md:px-6">
-            <div className="max-w-[800px] mx-auto space-y-8">
-              <Heading
-                level={2}
-                className="text-2xl sm:text-3xl tracking-tighter text-center"
-              >
-                Valores y filosofía
-              </Heading>
+        {/* Valores y filosofía — removed per user request */}
 
-              <div className="grid gap-3 sm:grid-cols-2">
-                <Card className="bg-[#FFD100] text-[#0a0612] border-none p-6 shadow-[0_0_15px_rgba(255,209,0,0.3)] transition-all hover:translate-y-[-4px]">
-                  <h3 className="text-xl font-bold mb-3 font-mono">
-                    Simplicidad
-                  </h3>
-                  <p className="text-[#0a0612]/80">
-                    Creo en reducir la complejidad y enfocarme en soluciones
-                    elegantes que resuelvan problemas reales.
-                  </p>
-                </Card>
-
-                <Card className="bg-[#4CD964] text-[#0a0612] border-none p-6 shadow-[0_0_15px_rgba(76,217,100,0.3)] transition-all hover:translate-y-[-4px]">
-                  <h3 className="text-xl font-bold mb-3 font-mono">
-                    Aprendizaje continuo
-                  </h3>
-                  <p className="text-[#0a0612]/80">
-                    La tecnología evoluciona constantemente, y mantenerse al día
-                    es tanto un desafío como una oportunidad.
-                  </p>
-                </Card>
-
-                <Card className="bg-[#007AFF] text-white border-none p-6 shadow-[0_0_15px_rgba(0,122,255,0.3)] transition-all hover:translate-y-[-4px]">
-                  <h3 className="text-xl font-bold mb-3 font-mono">
-                    Innovación pragmática
-                  </h3>
-                  <p className="text-white/90">
-                    Uso nuevas herramientas y metodologías cuando aportan valor
-                    real, no por seguir tendencias.
-                  </p>
-                </Card>
-
-                <Card className="bg-[#FF3B30] text-white border-none p-6 shadow-[0_0_15px_rgba(255,59,48,0.3)] transition-all hover:translate-y-[-4px]">
-                  <h3 className="text-xl font-bold mb-3 font-mono">
-                    Comunidad
-                  </h3>
-                  <p className="text-white/90">
-                    Creo en construir y aportar a comunidades de desarrolladores
-                    que crecen juntos.
-                  </p>
-                </Card>
-              </div>
-
-              <p className="text-base sm:text-lg text-white/80 mt-8 text-center bg-white/5 p-6 rounded-lg border border-white/10">
-                En la era de la IA, mi enfoque es combinar las nuevas
-                tecnologías con una sólida comprensión de los fundamentos. La IA
-                es una herramienta poderosa, pero el criterio y la experiencia
-                humana siguen siendo insustituibles.
-              </p>
-            </div>
-          </div>
-        </section>
+        {/* Lego separator (same used across the site) */}
+        <LazyGeometricPattern />
 
         {/* Experiencia y habilidades */}
         <section className="w-full py-16 sm:py-24">
@@ -364,52 +306,7 @@ export default function QuienSoyPage() {
                 </div>
               </div>
 
-              <div className="mt-12">
-                <h3 className="text-xl font-bold mb-4">Proyectos destacados</h3>
-                <div className="grid gap-6 md:grid-cols-2">
-                  <Card className="overflow-hidden bg-white/5 border-white/15">
-                    <div className="aspect-video w-full overflow-hidden">
-                      <Image
-                        src="/placeholder.jpg"
-                        alt="Proyecto 1"
-                        width={400}
-                        height={225}
-                        sizes="(min-width: 768px) 50vw, 100vw"
-                        className="object-cover w-full h-full"
-                      />
-                    </div>
-                    <div className="p-4">
-                      <h4 className="font-bold text-lg">
-                        Plataforma E-learning
-                      </h4>
-                      <p className="text-sm text-white/70 mt-2">
-                        Desarrollo de una plataforma completa de cursos online
-                        con sistema de suscripción.
-                      </p>
-                    </div>
-                  </Card>
-
-                  <Card className="overflow-hidden bg-white/5 border-white/15">
-                    <div className="aspect-video w-full overflow-hidden">
-                      <Image
-                        src="/placeholder.jpg"
-                        alt="Proyecto 2"
-                        width={400}
-                        height={225}
-                        sizes="(min-width: 768px) 50vw, 100vw"
-                        className="object-cover w-full h-full"
-                      />
-                    </div>
-                    <div className="p-4">
-                      <h4 className="font-bold text-lg">Dashboard Analítico</h4>
-                      <p className="text-sm text-white/70 mt-2">
-                        Visualización de datos en tiempo real para una startup
-                        de marketing digital.
-                      </p>
-                    </div>
-                  </Card>
-                </div>
-              </div>
+              {/* Proyectos destacados removed per request */}
             </div>
           </div>
         </section>
