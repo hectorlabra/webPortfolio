@@ -47,10 +47,11 @@ export default function QuienSoyPage() {
                 >
                   Hola, soy <TypewriterText text="Héctor Labra" />
                 </Heading>
-                <p className="text-sm sm:text-lg text-white/70 max-w-[550px] mx-auto">
-                  Software developer y polímata digital.
-                  <br />
-                  Podemos conectar en las siguientes plataformas:
+                <p className="text-lg sm:text-2xl text-white/70 max-w-[550px] mx-auto">
+                  <span>Full Stack Developer (Next.js) | SEO Técnico |</span>
+                  <span className="block">
+                    IA aplicada al desarrollo & creación digital
+                  </span>
                 </p>
               </div>
 
@@ -60,6 +61,10 @@ export default function QuienSoyPage() {
                   <GitHubContributionGraph />
                 </div>
               </div>
+
+              <p className="text-sm sm:text-lg text-white/70 max-w-[550px] mx-auto text-center mt-2">
+                Podemos conectar en las siguientes plataformas:
+              </p>
 
               {/* Social icons - tamaño reducido */}
               <div className="flex space-x-4 mt-2">
