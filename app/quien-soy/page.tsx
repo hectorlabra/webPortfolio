@@ -1,11 +1,21 @@
 // Server Component - Quien Soy page
 import Image from "next/image";
-import { ArrowRight, Github, Twitter, Linkedin } from "lucide-react";
+import type { ReactNode } from "react";
+import type { LucideIcon } from "lucide-react";
+import {
+  ArrowRight,
+  Github,
+  Twitter,
+  Linkedin,
+  GitBranch,
+  Workflow,
+  Bot,
+  Search,
+} from "lucide-react";
 import type { Metadata } from "next";
 
 // Server Components - Static markup
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { SocialProof } from "@/components/sections/home/social-proof";
 
 // Client Islands - Interactive components only
@@ -20,6 +30,197 @@ export const metadata: Metadata = {
   description:
     "Full Stack Developer (Next.js) y especialista en SEO técnico e IA aplicada. Aquí cuento mi trayectoria, proyectos destacados y cómo contactarme.",
 };
+
+type LogoName =
+  | "react"
+  | "nextjs"
+  | "typescript"
+  | "nodejs"
+  | "tailwind"
+  | "vercel";
+
+const logoMap: Record<LogoName, ReactNode> = {
+  react: (
+    <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none">
+      <ellipse
+        cx="12"
+        cy="12"
+        rx="10"
+        ry="4.6"
+        stroke="#61DAFB"
+        strokeWidth="1.2"
+        transform="rotate(60 12 12)"
+      />
+      <ellipse
+        cx="12"
+        cy="12"
+        rx="10"
+        ry="4.6"
+        stroke="#61DAFB"
+        strokeWidth="1.2"
+        transform="rotate(-60 12 12)"
+      />
+      <ellipse
+        cx="12"
+        cy="12"
+        rx="10"
+        ry="4.6"
+        stroke="#61DAFB"
+        strokeWidth="1.2"
+      />
+      <circle cx="12" cy="12" r="1.8" fill="#61DAFB" />
+    </svg>
+  ),
+  nextjs: (
+    <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none">
+      <rect width="24" height="24" rx="5" fill="#050505" />
+      <path
+        d="M7.2 16.8V7.4h1.5l7 8.8V7.4h1.7v9.4H16l-6.2-7.7v7.7H7.2z"
+        fill="#F4F4F4"
+      />
+    </svg>
+  ),
+  typescript: (
+    <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none">
+      <rect width="24" height="24" rx="5" fill="#3178C6" />
+      <path d="M6 9h12v2.3h-4v7.7h-2.8v-7.7H6V9z" fill="#F4F4F4" />
+      <path
+        d="M15.4 13.6c.5-.4 1.2-.7 2.1-.7 1.7 0 2.9 1 2.9 2.7v.1c0 1.7-1.2 2.7-3 2.7-.8 0-1.5-.2-2-.5l.4-1.8c.4.3 1 .5 1.5.5.7 0 1-.3 1-.8 0-.4-.3-.7-1-.7-.4 0-.7.1-1 .3l-.9-1.8"
+        fill="#F4F4F4"
+      />
+    </svg>
+  ),
+  nodejs: (
+    <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none">
+      <path d="M12 2.8l8.7 5v8.4L12 21.2 3.3 16.2V7.8z" fill="#3C873A" />
+      <path d="M12 5.1l-6 3.4v6.1l6 3.4 6-3.4V8.5z" fill="#111" opacity=".15" />
+      <path
+        d="M11 9.2h2.9c1.6 0 2.7.9 2.7 2.3 0 1.5-1 2.4-2.7 2.4h-1v1.6h-2V9.2zm2 1.6v1.6h.8c.7 0 1.1-.3 1.1-.8 0-.4-.3-.8-1.1-.8H13z"
+        fill="#F4F4F4"
+      />
+    </svg>
+  ),
+  tailwind: (
+    <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none">
+      <path
+        d="M6 13.5C6.3 11.3 7.4 10 9.4 9.4c3-.8 4.3 1.1 5.8 2.8 1.1 1.3 2.1 2 3.6 1.4 1-.4 1.6-1.1 1.9-2.1-.3 2.2-1.4 3.5-3.4 4.1-3 .8-4.3-1.2-5.8-2.8-1.1-1.3-2.1-2-3.6-1.4-.9.4-1.5 1.1-1.9 2.1z"
+        fill="#38BDF8"
+      />
+      <path
+        d="M3.3 9.1C3.6 6.9 4.7 5.6 6.7 5c3-.8 4.3 1.1 5.8 2.8 1.1 1.3 2.1 2 3.6 1.4 1-.4 1.6-1.1 1.9-2.1-.3 2.2-1.4 3.5-3.4 4.1-3 .8-4.3-1.2-5.8-2.8-1.1-1.3-2.1-2-3.6-1.4-.9.4-1.5 1.1-1.9 2.1z"
+        fill="#38BDF8"
+        opacity=".55"
+      />
+    </svg>
+  ),
+  vercel: (
+    <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none">
+      <rect width="24" height="24" rx="5" fill="#050505" />
+      <path d="M12 6l6.5 11.2H5.5z" fill="#FFFFFF" />
+    </svg>
+  ),
+};
+
+type TechStackItem = {
+  name: string;
+  description: string;
+  icon: LogoName;
+  highlight: string;
+};
+
+const techStack: TechStackItem[] = [
+  {
+    name: "Next.js",
+    description: "App Router, Server Actions y edge-ready con Vercel.",
+    highlight: "Frontend + backend en un mismo flujo",
+    icon: "nextjs",
+  },
+  {
+    name: "React",
+    description: "Interfaces performantes con Server Components y hooks.",
+    highlight: "UX modular",
+    icon: "react",
+  },
+  {
+    name: "TypeScript",
+    description: "Tipado estricto en todo el stack para evitar sorpresas.",
+    highlight: "Confianza en producción",
+    icon: "typescript",
+  },
+  {
+    name: "Node.js",
+    description: "APIs, automatizaciones y tooling para equipos remotos.",
+    highlight: "Backend ligero",
+    icon: "nodejs",
+  },
+  {
+    name: "Tailwind CSS",
+    description: "Diseños responsivos, consistentes y rápidos de iterar.",
+    highlight: "Diseño atómico",
+    icon: "tailwind",
+  },
+  {
+    name: "Vercel",
+    description: "Deploys automáticos, previews y observabilidad en minutos.",
+    highlight: "Performance obsesiva",
+    icon: "vercel",
+  },
+];
+
+type PracticeCluster = {
+  title: string;
+  subtitle: string;
+  points: string[];
+  icon: LucideIcon;
+  accentClass: string;
+};
+
+const practiceClusters: PracticeCluster[] = [
+  {
+    title: "Product Operations",
+    subtitle: "Procesos claros, documentación viva y entregas continuas.",
+    points: [
+      "GitFlow, PRs guiadas y CI/CD en Vercel/GitHub Actions",
+      "Discovery + delivery en ciclos Lean",
+      "Sistemas de diseño que escalan",
+    ],
+    icon: Workflow,
+    accentClass: "bg-[#64E365]/15 text-[#64E365]",
+  },
+  {
+    title: "IA y Automatización",
+    subtitle: "Copilots reales para desarrollo, QA y contenido.",
+    points: [
+      "Prompts custom + herramientas como Cursor y Copilot",
+      "Bots para documentación y soporte interno",
+      "Automatización de hojas de ruta y handoffs",
+    ],
+    icon: Bot,
+    accentClass: "bg-white/10 text-white",
+  },
+  {
+    title: "SEO Técnico & Growth",
+    subtitle: "Lo que más me representa: código + contenido + negocio.",
+    points: [
+      "Auditorías técnicas con métricas accionables",
+      "Keyword research, clustering y Ski-Slope content",
+      "Stack + SEO + producto alineados desde el sprint 0",
+    ],
+    icon: Search,
+    accentClass: "bg-[#7C3AED]/15 text-[#C4B5FD]",
+  },
+  {
+    title: "Colaboración Técnica",
+    subtitle: "Equipos remotos con feedback rápido y foco en calidad.",
+    points: [
+      "Mentoría a devs mid/jr",
+      "Pairing, code reviews y design critiques",
+      "Roadmaps compartidos con PMs y marketing",
+    ],
+    icon: GitBranch,
+    accentClass: "bg-[#FFD100]/15 text-[#FFD100]",
+  },
+];
 
 export default function QuienSoyPage() {
   return (
@@ -248,65 +449,110 @@ export default function QuienSoyPage() {
                 Experiencia y habilidades
               </Heading>
 
-              <div className="space-y-6">
-                <div className="flex flex-col gap-1">
-                  <h3 className="text-xl font-bold">Desarrollo Web</h3>
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {[
-                      "React",
-                      "Next.js",
-                      "TypeScript",
-                      "Tailwind CSS",
-                      "Node.js",
-                    ].map((skill) => (
-                      <span
-                        key={skill}
-                        className="px-3 py-1 bg-[#64E365]/20 text-[#64E365] rounded-full text-sm"
+              <div className="space-y-10">
+                <p className="text-base sm:text-lg text-white/70">
+                  Lo que me obsesiona es construir productos digitales que
+                  escalen, rankeen y tengan sentido para el negocio. Mezclo
+                  código, procesos claros e inteligencia artificial para llevar
+                  ideas a producción rápido, sin perder calidad técnica ni foco
+                  en growth.
+                </p>
+
+                <div className="space-y-4">
+                  <div className="flex flex-col gap-1">
+                    <p className="text-xs uppercase tracking-[0.2em] text-white/50">
+                      Stack principal
+                    </p>
+                    <h3 className="text-xl font-semibold">
+                      Tecnologías que uso todos los días
+                    </h3>
+                    <p className="text-white/60 text-sm">
+                      UI, backend, estilo y deploy se construyen con el mismo
+                      mindset.
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {techStack.map(({ name, description, highlight, icon }) => (
+                      <div
+                        key={name}
+                        className="rounded-2xl border border-white/10 bg-white/5 p-4 flex gap-4 items-start"
                       >
-                        {skill}
-                      </span>
+                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-black/40">
+                          {logoMap[icon]}
+                        </div>
+                        <div className="space-y-1">
+                          <div className="flex flex-wrap items-center gap-2">
+                            <p className="font-semibold text-white/90">
+                              {name}
+                            </p>
+                            <span className="text-[11px] uppercase tracking-wide rounded-full bg-white/10 px-2 py-0.5 text-white/60">
+                              {highlight}
+                            </span>
+                          </div>
+                          <p className="text-sm text-white/70 leading-relaxed">
+                            {description}
+                          </p>
+                        </div>
+                      </div>
                     ))}
                   </div>
                 </div>
 
-                <div className="flex flex-col gap-1">
-                  <h3 className="text-xl font-bold">Herramientas y Métodos</h3>
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {["Git", "GitHub", "CI/CD", "Agile", "Design Thinking"].map(
-                      (skill) => (
-                        <span
-                          key={skill}
-                          className="px-3 py-1 bg-[#FFD100]/20 text-[#FFD100] rounded-full text-sm"
+                <div className="space-y-4">
+                  <div className="flex flex-col gap-1">
+                    <p className="text-xs uppercase tracking-[0.2em] text-white/50">
+                      Prácticas clave
+                    </p>
+                    <h3 className="text-xl font-semibold">
+                      Cómo combino código, SEO e IA en cada entrega
+                    </h3>
+                    <p className="text-white/60 text-sm">
+                      No es solo escribir código: es diseñar sistemas que se
+                      pueden operar y mejorar semana a semana.
+                    </p>
+                  </div>
+
+                  <div className="space-y-5">
+                    {practiceClusters.map(
+                      ({
+                        title,
+                        subtitle,
+                        points,
+                        icon: Icon,
+                        accentClass,
+                      }) => (
+                        <div
+                          key={title}
+                          className="rounded-2xl border border-white/10 bg-white/5 p-5 space-y-4"
                         >
-                          {skill}
-                        </span>
+                          <div className="flex items-start gap-3">
+                            <div
+                              className={`flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 ${accentClass}`}
+                            >
+                              <Icon className="h-5 w-5" />
+                            </div>
+                            <div>
+                              <h4 className="text-lg font-semibold">{title}</h4>
+                              <p className="text-sm text-white/70 mt-1">
+                                {subtitle}
+                              </p>
+                            </div>
+                          </div>
+                          <ul className="space-y-2 text-sm text-white/70">
+                            {points.map((point) => (
+                              <li key={point} className="flex gap-2">
+                                <span className="text-white/40">•</span>
+                                <span className="flex-1">{point}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
                       )
                     )}
                   </div>
                 </div>
-
-                <div className="flex flex-col gap-1">
-                  <h3 className="text-xl font-bold">IA y Automatización</h3>
-                  <div className="flex flex-wrap gap-2 mt-2">
-                    {[
-                      "Prompt Engineering",
-                      "LLMs",
-                      "ChatGPT",
-                      "GitHub Copilot",
-                      "Automatización",
-                    ].map((skill) => (
-                      <span
-                        key={skill}
-                        className="px-3 py-1 bg-white/10 text-white/80 rounded-full text-sm"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
               </div>
-
-              {/* Proyectos destacados removed per request */}
             </div>
           </div>
         </section>
