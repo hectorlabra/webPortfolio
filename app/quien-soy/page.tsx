@@ -1,6 +1,5 @@
 // Server Component - Quien Soy page
 import Image from "next/image";
-import type { ReactNode } from "react";
 import type { LucideIcon } from "lucide-react";
 import {
   ArrowRight,
@@ -31,139 +30,56 @@ export const metadata: Metadata = {
     "Full Stack Developer (Next.js) y especialista en SEO técnico e IA aplicada. Aquí cuento mi trayectoria, proyectos destacados y cómo contactarme.",
 };
 
-type LogoName =
-  | "react"
-  | "nextjs"
-  | "typescript"
-  | "nodejs"
-  | "tailwind"
-  | "vercel";
-
-const logoMap: Record<LogoName, ReactNode> = {
-  react: (
-    <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none">
-      <ellipse
-        cx="12"
-        cy="12"
-        rx="10"
-        ry="4.6"
-        stroke="#61DAFB"
-        strokeWidth="1.2"
-        transform="rotate(60 12 12)"
-      />
-      <ellipse
-        cx="12"
-        cy="12"
-        rx="10"
-        ry="4.6"
-        stroke="#61DAFB"
-        strokeWidth="1.2"
-        transform="rotate(-60 12 12)"
-      />
-      <ellipse
-        cx="12"
-        cy="12"
-        rx="10"
-        ry="4.6"
-        stroke="#61DAFB"
-        strokeWidth="1.2"
-      />
-      <circle cx="12" cy="12" r="1.8" fill="#61DAFB" />
-    </svg>
-  ),
-  nextjs: (
-    <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none">
-      <rect width="24" height="24" rx="5" fill="#050505" />
-      <path
-        d="M7.2 16.8V7.4h1.5l7 8.8V7.4h1.7v9.4H16l-6.2-7.7v7.7H7.2z"
-        fill="#F4F4F4"
-      />
-    </svg>
-  ),
-  typescript: (
-    <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none">
-      <rect width="24" height="24" rx="5" fill="#3178C6" />
-      <path d="M6 9h12v2.3h-4v7.7h-2.8v-7.7H6V9z" fill="#F4F4F4" />
-      <path
-        d="M15.4 13.6c.5-.4 1.2-.7 2.1-.7 1.7 0 2.9 1 2.9 2.7v.1c0 1.7-1.2 2.7-3 2.7-.8 0-1.5-.2-2-.5l.4-1.8c.4.3 1 .5 1.5.5.7 0 1-.3 1-.8 0-.4-.3-.7-1-.7-.4 0-.7.1-1 .3l-.9-1.8"
-        fill="#F4F4F4"
-      />
-    </svg>
-  ),
-  nodejs: (
-    <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none">
-      <path d="M12 2.8l8.7 5v8.4L12 21.2 3.3 16.2V7.8z" fill="#3C873A" />
-      <path d="M12 5.1l-6 3.4v6.1l6 3.4 6-3.4V8.5z" fill="#111" opacity=".15" />
-      <path
-        d="M11 9.2h2.9c1.6 0 2.7.9 2.7 2.3 0 1.5-1 2.4-2.7 2.4h-1v1.6h-2V9.2zm2 1.6v1.6h.8c.7 0 1.1-.3 1.1-.8 0-.4-.3-.8-1.1-.8H13z"
-        fill="#F4F4F4"
-      />
-    </svg>
-  ),
-  tailwind: (
-    <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none">
-      <path
-        d="M6 13.5C6.3 11.3 7.4 10 9.4 9.4c3-.8 4.3 1.1 5.8 2.8 1.1 1.3 2.1 2 3.6 1.4 1-.4 1.6-1.1 1.9-2.1-.3 2.2-1.4 3.5-3.4 4.1-3 .8-4.3-1.2-5.8-2.8-1.1-1.3-2.1-2-3.6-1.4-.9.4-1.5 1.1-1.9 2.1z"
-        fill="#38BDF8"
-      />
-      <path
-        d="M3.3 9.1C3.6 6.9 4.7 5.6 6.7 5c3-.8 4.3 1.1 5.8 2.8 1.1 1.3 2.1 2 3.6 1.4 1-.4 1.6-1.1 1.9-2.1-.3 2.2-1.4 3.5-3.4 4.1-3 .8-4.3-1.2-5.8-2.8-1.1-1.3-2.1-2-3.6-1.4-.9.4-1.5 1.1-1.9 2.1z"
-        fill="#38BDF8"
-        opacity=".55"
-      />
-    </svg>
-  ),
-  vercel: (
-    <svg viewBox="0 0 24 24" className="h-6 w-6" fill="none">
-      <rect width="24" height="24" rx="5" fill="#050505" />
-      <path d="M12 6l6.5 11.2H5.5z" fill="#FFFFFF" />
-    </svg>
-  ),
-};
-
 type TechStackItem = {
   name: string;
   description: string;
-  icon: LogoName;
   highlight: string;
+  logoSrc: string;
+  tag: string;
 };
 
 const techStack: TechStackItem[] = [
   {
     name: "Next.js",
     description: "App Router, Server Actions y edge-ready con Vercel.",
-    highlight: "Frontend + backend en un mismo flujo",
-    icon: "nextjs",
+    highlight: "FRONTEND + BACKEND",
+    logoSrc: "/logos/nextjs.svg",
+    tag: "Full-stack",
   },
   {
     name: "React",
     description: "Interfaces performantes con Server Components y hooks.",
-    highlight: "UX modular",
-    icon: "react",
+    highlight: "UX MODULAR",
+    logoSrc: "/logos/react.svg",
+    tag: "UI Library",
   },
   {
     name: "TypeScript",
     description: "Tipado estricto en todo el stack para evitar sorpresas.",
-    highlight: "Confianza en producción",
-    icon: "typescript",
+    highlight: "TIPADO SEGURO",
+    logoSrc: "/logos/typescript.svg",
+    tag: "Type safety",
   },
   {
     name: "Node.js",
     description: "APIs, automatizaciones y tooling para equipos remotos.",
-    highlight: "Backend ligero",
-    icon: "nodejs",
+    highlight: "BACKEND LIGERO",
+    logoSrc: "/logos/nodejs.svg",
+    tag: "Runtime",
   },
   {
     name: "Tailwind CSS",
     description: "Diseños responsivos, consistentes y rápidos de iterar.",
-    highlight: "Diseño atómico",
-    icon: "tailwind",
+    highlight: "DISEÑO RÁPIDO",
+    logoSrc: "/logos/tailwind.svg",
+    tag: "Styling",
   },
   {
     name: "Vercel",
     description: "Deploys automáticos, previews y observabilidad en minutos.",
-    highlight: "Performance obsesiva",
-    icon: "vercel",
+    highlight: "PERFORMANCE OBSESIVA",
+    logoSrc: "/logos/vercel.svg",
+    tag: "Deployment",
   },
 ];
 
@@ -472,30 +388,49 @@ export default function QuienSoyPage() {
                     </p>
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {techStack.map(({ name, description, highlight, icon }) => (
-                      <div
-                        key={name}
-                        className="rounded-2xl border border-white/10 bg-white/5 p-4 flex gap-4 items-start"
-                      >
-                        <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-black/40">
-                          {logoMap[icon]}
-                        </div>
-                        <div className="space-y-1">
-                          <div className="flex flex-wrap items-center gap-2">
-                            <p className="font-semibold text-white/90">
-                              {name}
-                            </p>
-                            <span className="text-[11px] uppercase tracking-wide rounded-full bg-white/10 px-2 py-0.5 text-white/60">
-                              {highlight}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    {techStack.map(
+                      ({ name, description, highlight, tag, logoSrc }) => (
+                        <div
+                          key={name}
+                          className="group relative rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.03] to-transparent p-5 transition-all duration-300 hover:border-[#64E365]/40 hover:bg-gradient-to-br hover:from-white/[0.06] hover:to-transparent"
+                        >
+                          <div className="flex gap-4">
+                            <div className="flex-shrink-0">
+                              <div className="flex h-14 w-14 items-center justify-center rounded-lg border border-white/15 bg-white/[0.02]">
+                                <Image
+                                  src={logoSrc}
+                                  alt={`${name} logo`}
+                                  width={40}
+                                  height={40}
+                                  sizes="40px"
+                                  className="h-8 w-8 object-contain"
+                                />
+                              </div>
+                            </div>
+                            <div className="flex-1">
+                              <div className="mb-1">
+                                <h3 className="text-base font-bold text-white">
+                                  {name}
+                                </h3>
+                                <p className="text-[10px] uppercase tracking-[0.15em] text-white/50">
+                                  {highlight}
+                                </p>
+                              </div>
+                              <p className="text-sm text-white/70 leading-relaxed">
+                                {description}
+                              </p>
+                            </div>
+                          </div>
+                          <div className="mt-4 flex items-center gap-2 border-t border-white/5 pt-3">
+                            <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#64E365]" />
+                            <span className="text-xs uppercase tracking-widest text-white/60">
+                              {tag}
                             </span>
                           </div>
-                          <p className="text-sm text-white/70 leading-relaxed">
-                            {description}
-                          </p>
                         </div>
-                      </div>
-                    ))}
+                      )
+                    )}
                   </div>
                 </div>
 
@@ -528,9 +463,9 @@ export default function QuienSoyPage() {
                         >
                           <div className="flex items-start gap-3">
                             <div
-                              className={`flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 ${accentClass}`}
+                              className={`flex h-14 w-14 items-center justify-center rounded-full border border-white/10 ${accentClass}`}
                             >
-                              <Icon className="h-5 w-5" />
+                              <Icon className="h-6 w-6" />
                             </div>
                             <div>
                               <h4 className="text-lg font-semibold">{title}</h4>
