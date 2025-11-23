@@ -18,7 +18,7 @@ import { Heading } from "@/components/shared/Heading";
 export const metadata: Metadata = {
   title: "Quien Soy | Héctor Labra",
   description:
-    "Software developer y polímata digital. Conoce mi historia, valores y experiencia en desarrollo web moderno.",
+    "Full Stack Developer (Next.js) y especialista en SEO técnico e IA aplicada. Aquí cuento mi trayectoria, proyectos destacados y cómo contactarme.",
 };
 
 export default function QuienSoyPage() {
