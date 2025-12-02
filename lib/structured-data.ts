@@ -1,119 +1,122 @@
-import { BlogPost } from './types/blog';
+import { BlogPost } from "./types/blog";
 
 export function generateArticleStructuredData(post: BlogPost) {
   return {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
+    "@context": "https://schema.org",
+    "@type": "Article",
     headline: post.title,
     description: post.description,
     image: `https://hectorlabra.dev/og-image-blog.jpg`, // Imagen por defecto
     datePublished: post.date,
     dateModified: post.date,
     author: {
-      '@type': 'Person',
+      "@type": "Person",
       name: post.author,
-      url: 'https://hectorlabra.dev/quien-soy',
+      url: "https://hectorlabra.dev/hoja-de-ruta",
     },
     publisher: {
-      '@type': 'Organization',
-      name: 'Héctor Labra',
+      "@type": "Organization",
+      name: "Héctor Labra",
       logo: {
-        '@type': 'ImageObject',
-        url: 'https://hectorlabra.dev/logo.png',
+        "@type": "ImageObject",
+        url: "https://hectorlabra.dev/logo.png",
       },
     },
     mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': `https://hectorlabra.dev/blog/${post.slug}`,
+      "@type": "WebPage",
+      "@id": `https://hectorlabra.dev/blog/${post.slug}`,
     },
     articleSection: post.category,
     keywords: post.tags,
-    wordCount: post.content.split(' ').length,
+    wordCount: post.content.split(" ").length,
     timeRequired: `PT${post.readingTime}M`,
-    inLanguage: 'es-ES',
+    inLanguage: "es-ES",
   };
 }
 
 export function generateBlogStructuredData() {
   return {
-    '@context': 'https://schema.org',
-    '@type': 'Blog',
-    name: 'Blog de Héctor Labra',
-    description: 'Artículos sobre desarrollo, tecnología y experiencias en el mundo del software.',
-    url: 'https://hectorlabra.dev/blog',
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    name: "Blog de Héctor Labra",
+    description:
+      "Artículos sobre desarrollo, tecnología y experiencias en el mundo del software.",
+    url: "https://hectorlabra.dev/blog",
     author: {
-      '@type': 'Person',
-      name: 'Héctor Labra',
-      url: 'https://hectorlabra.dev/quien-soy',
+      "@type": "Person",
+      name: "Héctor Labra",
+      url: "https://hectorlabra.dev/hoja-de-ruta",
     },
     publisher: {
-      '@type': 'Organization',
-      name: 'Héctor Labra',
+      "@type": "Organization",
+      name: "Héctor Labra",
       logo: {
-        '@type': 'ImageObject',
-        url: 'https://hectorlabra.dev/logo.png',
+        "@type": "ImageObject",
+        url: "https://hectorlabra.dev/logo.png",
       },
     },
-    inLanguage: 'es-ES',
+    inLanguage: "es-ES",
   };
 }
 
 export function generatePersonStructuredData() {
   return {
-    '@context': 'https://schema.org',
-    '@type': 'Person',
-    name: 'Héctor Labra',
-    url: 'https://hectorlabra.dev',
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Héctor Labra",
+    url: "https://hectorlabra.dev",
     sameAs: [
-      'https://github.com/hectorlabra',
-      'https://linkedin.com/in/hectorlabra',
-      'https://twitter.com/hectorlabra',
+      "https://github.com/hectorlabra",
+      "https://linkedin.com/in/hectorlabra",
+      "https://twitter.com/hectorlabra",
     ],
-    jobTitle: 'Desarrollador Full Stack',
+    jobTitle: "Desarrollador Full Stack",
     worksFor: {
-      '@type': 'Organization',
-      name: 'Freelance',
+      "@type": "Organization",
+      name: "Freelance",
     },
-    description: 'Desarrollador Full Stack especializado en React, Next.js, TypeScript y tecnologías web modernas.',
+    description:
+      "Desarrollador Full Stack especializado en React, Next.js, TypeScript y tecnologías web modernas.",
     knowsAbout: [
-      'JavaScript',
-      'TypeScript',
-      'React',
-      'Next.js',
-      'Node.js',
-      'Full Stack Development',
-      'Web Development',
+      "JavaScript",
+      "TypeScript",
+      "React",
+      "Next.js",
+      "Node.js",
+      "Full Stack Development",
+      "Web Development",
     ],
     alumniOf: {
-      '@type': 'Organization',
-      name: 'Universidad',
+      "@type": "Organization",
+      name: "Universidad",
     },
     address: {
-      '@type': 'PostalAddress',
-      addressCountry: 'Chile',
+      "@type": "PostalAddress",
+      addressCountry: "Chile",
     },
   };
 }
 
 export function generateWebsiteStructuredData() {
   return {
-    '@context': 'https://schema.org',
-    '@type': 'WebSite',
-    name: 'Héctor Labra - Desarrollador Full Stack',
-    description: 'Portfolio y blog personal de Héctor Labra, desarrollador Full Stack especializado en React y Next.js.',
-    url: 'https://hectorlabra.dev',
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: "Héctor Labra - Desarrollador Full Stack",
+    description:
+      "Portfolio y blog personal de Héctor Labra, desarrollador Full Stack especializado en React y Next.js.",
+    url: "https://hectorlabra.dev",
     author: {
-      '@type': 'Person',
-      name: 'Héctor Labra',
+      "@type": "Person",
+      name: "Héctor Labra",
     },
-    inLanguage: 'es-ES',
+    inLanguage: "es-ES",
     potentialAction: {
-      '@type': 'SearchAction',
+      "@type": "SearchAction",
       target: {
-        '@type': 'EntryPoint',
-        urlTemplate: 'https://hectorlabra.dev/blog?search={search_term_string}',
+        "@type": "EntryPoint",
+        urlTemplate: "https://hectorlabra.dev/blog?search={search_term_string}",
       },
-      'query-input': 'required name=search_term_string',
+      "query-input": "required name=search_term_string",
     },
   };
 }

@@ -29,24 +29,25 @@ export function Navbar() {
                 Inicio
               </Link>
               <Link
-                href="/quien-soy"
-                className="text-sm font-medium transition-colors hover:text-white/70"
-              >
-                Quien Soy
-              </Link>
-              <Link
                 href="/blog"
                 className="text-sm font-medium transition-colors hover:text-white/70"
               >
                 Blog
+              </Link>
+              <Link
+                href="/hoja-de-ruta"
+                className="text-sm font-medium transition-colors hover:text-white/70"
+              >
+                Hoja de Ruta
               </Link>
             </nav>
             {/* Contact Button */}
             <Button
               size="sm"
               className="hidden md:flex bg-[#64E365] text-[#0a0612] hover:bg-[#64E365]/90 text-sm h-10 px-4"
+              asChild
             >
-              Ver Hoja de Ruta
+              <Link href="/hoja-de-ruta">Ver Hoja de Ruta</Link>
             </Button>
             {/* Mobile Menu Button - Simplificado shadow */}
             <Button
@@ -89,24 +90,26 @@ export function Navbar() {
               Inicio
             </Link>
             <Link
-              href="/quien-soy"
-              className="text-lg font-medium"
-              onClick={() => setMenuOpen(false)}
-            >
-              Quien Soy
-            </Link>
-            <Link
               href="/blog"
               className="text-lg font-medium"
               onClick={() => setMenuOpen(false)}
             >
               Blog
             </Link>
-            <Button
-              className="bg-[#64E365] text-[#0a0612] hover:bg-[#64E365]/90 w-full mt-4"
+            <Link
+              href="/hoja-de-ruta"
+              className="text-lg font-medium"
               onClick={() => setMenuOpen(false)}
             >
-              Trabaja Conmigo
+              Hoja de Ruta
+            </Link>
+            <Button
+              className="bg-[#64E365] text-[#0a0612] hover:bg-[#64E365]/90 w-full mt-4"
+              asChild
+            >
+              <Link href="/hoja-de-ruta" onClick={() => setMenuOpen(false)}>
+                Ver Hoja de Ruta
+              </Link>
             </Button>
           </div>
         </SheetContent>

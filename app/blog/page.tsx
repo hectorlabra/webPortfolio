@@ -236,8 +236,8 @@ export default async function BlogPage() {
                       className="p-0 h-auto text-sm text-[#64E365] hover:text-[#64E365]/80 font-medium"
                       asChild
                     >
-                      <Link href="/quien-soy">
-                        Sobre mí <ArrowRight className="ml-1 h-3 w-3" />
+                      <Link href="/hoja-de-ruta">
+                        Hoja de Ruta <ArrowRight className="ml-1 h-3 w-3" />
                       </Link>
                     </Button>
                   </div>
