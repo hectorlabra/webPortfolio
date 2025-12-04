@@ -1,6 +1,7 @@
-import fs from "node:fs/promises";
+import fs from "node:fs";
 import path from "node:path";
 import type { Metadata } from "next";
+import matter from "gray-matter";
 
 import { Button } from "@/components/ui/button";
 import { LazyGeometricPattern } from "@/components/shared/LazyGeometricPattern";
@@ -8,7 +9,13 @@ import { TypewriterText } from "@/components/shared/typewriter-text-client";
 import { Heading } from "@/components/shared/Heading";
 import { NewsletterInPost } from "@/components/blog/NewsletterInPost";
 import { SocialProof } from "@/components/sections/home/social-proof";
-import { extractTableOfContents, markdownToHtml } from "@/lib/markdown";
+import { ReadingProgressBar } from "@/components/blog/ReadingProgressBar";
+import { PostSidebarsClient } from "@/components/blog/PostSidebarsClient";
+import { MobileTOCButton } from "@/components/blog/MobileTOCButton";
+import { markdownToHtml } from "@/lib/markdown";
+import { buildTableOfContents, splitHtmlAfterSecondH2 } from "@/lib/blog-utils";
+
+const PAGE_PATH = path.join(process.cwd(), "content/pages/hoja-de-ruta.md");
 
 export const metadata: Metadata = {
   title: "Hoja de Ruta | Héctor Labra",
@@ -22,65 +29,43 @@ export const metadata: Metadata = {
   },
 };
 
-type TocHeading = {
-  id: string;
-  text: string;
-  level: number;
-};
-
-const indentationClasses = ["pl-0", "pl-3", "pl-5", "pl-7", "pl-9"];
-
-function TableOfContents({ headings }: { headings: TocHeading[] }) {
-  if (!headings.length) return null;
-
-  return (
-    <div className="rounded-2xl border border-white/15 bg-white/5 p-6 text-sm text-white/70">
-      <Heading level={3} className="text-base text-white">
-        Contenido
-      </Heading>
-      <ul className="mt-4 space-y-2">
-        {headings.map((heading) => {
-          const indent =
-            indentationClasses[
-              Math.min(
-                Math.max(heading.level - 1, 0),
-                indentationClasses.length - 1
-              )
-            ];
-          return (
-            <li key={heading.id} className={`${indent}`}>
-              <a
-                href={`#${heading.id}`}
-                className="transition-colors hover:text-white"
-              >
-                {heading.text}
-              </a>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
-  );
-}
-
 export default async function HojaDeRutaPage() {
-  const markdownPath = path.join(
-    process.cwd(),
-    "content",
-    "pages",
-    "hoja-de-ruta.md"
-  );
-  const markdown = await fs.readFile(markdownPath, "utf8");
-  const html = await markdownToHtml(markdown, {
-    title: "Cómo Construir Tu Primer SaaS Rentable en 4-8 Semanas",
+  if (!fs.existsSync(PAGE_PATH)) {
+    return <div className="text-white p-10">Contenido no encontrado</div>;
+  }
+
+  const fileContents = fs.readFileSync(PAGE_PATH, "utf8");
+  const { data, content } = matter(fileContents);
+
+  const htmlContent = await markdownToHtml(content, {
+    title: data.title,
     slug: "hoja-de-ruta",
   });
-  const toc = extractTableOfContents(markdown);
+
+  const tableOfContents = buildTableOfContents(content, data.title);
+  const { beforeHtml, afterHtml } = splitHtmlAfterSecondH2(htmlContent);
 
   return (
-    <div className="mx-auto w-full max-w-[1100px] px-4 pb-16 pt-10">
-      <main className="flex flex-col gap-10">
-        <section className="rounded-[2.5rem] border border-white/10 bg-gradient-to-br from-[#0c0816] to-[#080510]/80 p-8 sm:p-10 shadow-[0_25px_80px_rgba(2,1,6,0.8)]">
+    <div className="min-h-screen bg-[#0a0612] text-white">
+      {/* Reading Progress Bar */}
+      <ReadingProgressBar />
+
+      {/* Sidebars - TOC only, no newsletter */}
+      <PostSidebarsClient
+        tableOfContents={tableOfContents}
+        showNewsletter={false}
+      />
+
+      {/* Mobile TOC Access */}
+      <MobileTOCButton items={tableOfContents} />
+
+      {/* Hero Section */}
+      <section
+        id="post-hero"
+        className="relative w-full overflow-hidden py-16 sm:py-20"
+      >
+        <LazyGeometricPattern priority opacity={0.25} />
+        <div className="relative z-10 mx-auto max-w-[700px] px-4 sm:px-6">
           <div className="flex flex-col gap-6">
             <div className="space-y-4">
               <p className="text-xs font-mono uppercase tracking-[0.4em] text-white/40">
@@ -88,20 +73,17 @@ export default async function HojaDeRutaPage() {
               </p>
               <Heading
                 level={1}
-                className="text-[2.3rem] sm:text-[2.75rem] lg:text-[3.3rem]"
+                className="text-[2rem] sm:text-[2.5rem] lg:text-[3rem] leading-tight"
               >
-                Construye tu micro-SaaS rentable en 4-8 semanas
+                {data.title ||
+                  "Construye tu micro-SaaS rentable en 4-8 semanas"}
               </Heading>
               <p className="text-lg text-white/70">
-                <TypewriterText
-                  text={
-                    "Combina IA, SEO y producto para dejar de depender solo de tu salario"
-                  }
-                />
+                <TypewriterText text="Combina IA, SEO y producto para dejar de depender solo de tu salario" />
               </p>
             </div>
 
-            <p className="text-base text-white/70 max-w-3xl">
+            <p className="text-base text-white/70">
               Esta guía te acompaña desde la mentalidad emprendedora hasta la
               ejecución práctica (stack, métricas y monetización). Si tienes un
               empleo estable y quieres crear un segundo ingreso real, este es tu
@@ -125,49 +107,60 @@ export default async function HojaDeRutaPage() {
               </Button>
             </div>
           </div>
-        </section>
+        </div>
+        {/* Sentinel for sidebar visibility */}
+        <div id="post-hero-sentinel" className="absolute bottom-0 h-1 w-full" />
+      </section>
 
-        <LazyGeometricPattern priority opacity={0.25} />
+      {/* Main Content */}
+      <main className="relative z-10 mx-auto max-w-[700px] px-4 sm:px-6 pb-16">
+        <article id="post-article" className="blog-richtext">
+          {/* First part of content */}
+          <div dangerouslySetInnerHTML={{ __html: beforeHtml }} />
 
-        <div className="grid gap-6 lg:grid-cols-[300px_1fr]">
-          <TableOfContents headings={toc} />
-          <div className="space-y-6">
-            <article
-              className="prose prose-invert max-w-none space-y-6"
-              dangerouslySetInnerHTML={{ __html: html }}
-            />
-
+          {/* Inline Newsletter */}
+          <div className="my-10">
             <NewsletterInPost variant="prominent" />
+          </div>
 
-            <div className="rounded-2xl border border-white/10 bg-white/5 p-6 text-white">
-              <Heading level={2} className="text-2xl text-white">
-                ¿Listo para convertir tu tracción en ingresos recurrentes?
-              </Heading>
-              <p className="mt-3 text-sm text-white/70">
-                Apalanca este roadmap y trabaja con alguien que ha monetizado
-                con tráfico orgánico, micro-SaaS y automatizaciones sin depender
-                de una sola fuente de ingresos.
-              </p>
-              <div className="mt-6 flex flex-wrap gap-3">
-                <Button
-                  size="sm"
-                  className="bg-[#64E365] text-[#0a0612]"
-                  asChild
-                >
-                  <a href="mailto:hello@hectorlabra.dev">Escríbeme</a>
-                </Button>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className="border-white/30 text-white/80"
-                >
-                  Ver casos de estudio
-                </Button>
-              </div>
-              <div className="mt-6">
-                <SocialProof />
-              </div>
-            </div>
+          {/* Rest of content */}
+          <div dangerouslySetInnerHTML={{ __html: afterHtml }} />
+        </article>
+
+        {/* End sentinel for sidebar hide */}
+        <div id="post-end-sentinel" className="h-1 w-full" />
+
+        {/* CTA Section */}
+        <div
+          id="post-cta-newsletter"
+          className="mt-16 rounded-2xl border border-white/10 bg-white/5 p-6 sm:p-8 text-white"
+        >
+          <Heading level={2} className="text-2xl text-white">
+            ¿Listo para convertir tu tracción en ingresos recurrentes?
+          </Heading>
+          <p className="mt-3 text-base text-white/70">
+            Apalanca este roadmap y trabaja con alguien que ha monetizado con
+            tráfico orgánico, micro-SaaS y automatizaciones sin depender de una
+            sola fuente de ingresos.
+          </p>
+          <div className="mt-6 flex flex-wrap gap-3">
+            <Button
+              size="sm"
+              className="bg-[#64E365] text-[#0a0612] hover:bg-[#64E365]/90"
+              asChild
+            >
+              <a href="mailto:hello@hectorlabra.dev">Escríbeme</a>
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="border border-white/30 text-white/80 hover:bg-white/10"
+            >
+              Ver casos de estudio
+            </Button>
+          </div>
+          <div className="mt-6">
+            <SocialProof />
           </div>
         </div>
       </main>

@@ -8,11 +8,14 @@ interface PostSidebarsClientProps {
   tableOfContents: TableOfContentsItem[];
   /** Optional offset extra added below hero height */
   offset?: number;
+  /** Whether to show the newsletter sidebar on the right (default: true) */
+  showNewsletter?: boolean;
 }
 
 export function PostSidebarsClient({
   tableOfContents,
   offset = 16,
+  showNewsletter = true,
 }: PostSidebarsClientProps) {
   const [heroHeight, setHeroHeight] = useState<number>(0);
   const [headerHeight, setHeaderHeight] = useState<number>(64); // default matches h-16
@@ -187,30 +190,32 @@ export function PostSidebarsClient({
       )}
 
       {/* Right Newsletter */}
-      <div
-        className={
-          "pointer-events-none xl:pointer-events-auto hidden xl:block transition-opacity duration-300 " +
-          (show ? "opacity-100" : "opacity-0")
-        }
-        aria-hidden={!show}
-        style={{
-          position: "fixed",
-          top: computedTop,
-          left: "calc(50% + 350px + 32px)", // 350 = 700/2, 32px gap
-          width: 260,
-        }}
-      >
+      {showNewsletter && (
         <div
-          className="w-full"
+          className={
+            "pointer-events-none xl:pointer-events-auto hidden xl:block transition-opacity duration-300 " +
+            (show ? "opacity-100" : "opacity-0")
+          }
+          aria-hidden={!show}
           style={{
-            pointerEvents: show ? "auto" : "none",
-            maxHeight: maxHeight || undefined,
-            overflowY: "auto",
+            position: "fixed",
+            top: computedTop,
+            left: "calc(50% + 350px + 32px)", // 350 = 700/2, 32px gap
+            width: 260,
           }}
         >
-          <NewsletterInPost variant="compact" />
+          <div
+            className="w-full"
+            style={{
+              pointerEvents: show ? "auto" : "none",
+              maxHeight: maxHeight || undefined,
+              overflowY: "auto",
+            }}
+          >
+            <NewsletterInPost variant="compact" />
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 }

@@ -138,6 +138,33 @@ const practiceClusters: PracticeCluster[] = [
   },
 ];
 
+type HistoryMilestone = {
+  title: string;
+  timeframe: string;
+  description: string;
+};
+
+const historyMilestones: HistoryMilestone[] = [
+  {
+    title: "Primera etapa freelance",
+    timeframe: "2016–2020",
+    description:
+      "Diseñé y publiqué proyectos WordPress mientras equilibraba marketing digital y SEO técnico para clientes locales.",
+  },
+  {
+    title: "Transición a producto técnico",
+    timeframe: "2021–2022",
+    description:
+      "Me enfoqué en Next.js, Server Actions, IA aplicada y procesos remotos que permitieran escalar equipos pequeños con claridad.",
+  },
+  {
+    title: "Hoy",
+    timeframe: "2023–presente",
+    description:
+      "Lidero experiencias full-stack, automatizo flujos y comparto frameworks que combinan código, contenido y crecimiento.",
+  },
+];
+
 export default function QuienSoyPage() {
   return (
     <div className="mx-auto w-full max-w-[700px]">
@@ -225,124 +252,29 @@ export default function QuienSoyPage() {
                 Mi historia
               </Heading>
 
-              <div className="prose prose-invert max-w-none space-y-6">
-                <p className="text-base sm:text-lg text-white-80 mb-4">
-                  Soy Full Stack Developer, especialista en SEO técnico y
-                  emprendedor digital desde Santiago, Chile.
+              <div className="space-y-6">
+                <p className="text-base sm:text-lg text-white/70">
+                  Mi historia resume etapas clave en las que combiné código, SEO
+                  y contenido para escalar equipos y productos.
                 </p>
 
-                <p className="text-base sm:text-lg text-white-80 mb-4">
-                  Hace siete años empecé vendiendo webs en WordPress a negocios
-                  locales.
-                </p>
-
-                <p className="text-base sm:text-lg text-white-80 mb-6">
-                  Cobrábamos menos de 300 USD y todo se hacía con plantillas —
-                  todavía no sabía programar.
-                </p>
-
-                <div className="my-10">
-                  <Image
-                    src="/placeholder.jpg"
-                    alt="Trabajando en mi oficina"
-                    width={700}
-                    height={400}
-                    sizes="100vw"
-                    className="rounded-lg object-cover w-full shadow-lg shadow-green-20"
-                  />
-                  <p className="text-sm text-white-50 text-center mt-2">
-                    Trabajando en mi oficina en casa, donde nacen las ideas.
-                  </p>
-                </div>
-
-                <p className="text-base sm:text-lg text-white-80 mb-4">
-                  Pronto los clientes pidieron más que diseño: querían
-                  resultados.
-                </p>
-
-                <p className="text-base sm:text-lg text-white-80 mb-6">
-                  Aprendí Google Ads, Meta Ads, SEO, analítica y copywriting.
-                  Funcionaba, pero las soluciones listas me dejaron siempre
-                  limitado.
-                </p>
-
-                <p className="text-base sm:text-lg text-white-80 mb-4">
-                  En 2020 lancé <strong>hectorlabra.com</strong> para compartir
-                  lo que iba aprendiendo.
-                </p>
-
-                <p className="text-base sm:text-lg text-white-80 mb-6">
-                  Monetizaba con afiliación y coaching; funcionó bien y construí
-                  una comunidad online a la que aún le tengo mucho cariño.
-                </p>
-
-                <div className="my-10">
-                  <Image
-                    src="/placeholder.jpg"
-                    alt="Trabajando en mi oficina"
-                    width={700}
-                    height={400}
-                    sizes="100vw"
-                    className="rounded-lg object-cover w-full shadow-lg shadow-green-20"
-                  />
-                  <p className="text-sm text-white-50 text-center mt-2">
-                    Lugar de trabajo y fases de los proyectos.
-                  </p>
-                </div>
-
-                <p className="text-base sm:text-lg text-white-80 mb-4">
-                  También llegaron los problemas técnicos: pagar por themes,
-                  plugins y constructores se volvió caro.
-                </p>
-
-                <p className="text-base sm:text-lg text-white-80 mb-4">
-                  Integrar servicios externos para que todo funcionara era un
-                  verdadero caos.
-                </p>
-
-                <p className="text-base sm:text-lg text-white-80 mb-6">
-                  El resultado: un sitio tipo “espagueti”, lento, caro y difícil
-                  de mantener. Ese fue mi punto de inflexión.
-                </p>
-
-                <p className="text-base sm:text-lg text-white-80 mb-6">
-                  Hace tres años decidí aprender a programar de verdad.
-                </p>
-
-                <p className="text-base sm:text-lg text-white-80 mb-6">
-                  Me sumergí en desarrollo web moderno y empecé a crear
-                  aplicaciones escalables donde el código y el SEO van juntos.
-                </p>
-
-                <p className="text-base sm:text-lg text-white-80 mb-6">
-                  Ese cambio fue decisivo: por primera vez sentí la “magia” de
-                  crear online sin depender de soluciones genéricas.
-                </p>
-
-                <p className="text-base sm:text-lg text-white-80 mb-6">
-                  Más rápido, más barato y —sobre todo— mucho más libre.
-                </p>
-
-                <p className="text-base sm:text-lg text-white-80 mb-4">
-                  Desde entonces he cambiado la forma en que trabajo y enseño.
-                </p>
-
-                <div className="space-y-3">
-                  <p className="text-base sm:text-lg text-white-80 mb-2">
-                    Lideré <strong>Innovare Academia</strong> como Director
-                    Académico de Tecnología, formando a +100 alumnos.
-                  </p>
-
-                  <p className="text-base sm:text-lg text-white-80 mb-2">
-                    Trabajé como líder técnico en{" "}
-                    <strong>Innovare Software & Apps</strong>.
-                  </p>
-
-                  <p className="text-base sm:text-lg text-white-80 mb-2">
-                    Hoy mantengo <strong>HectorLabra.dev</strong>, donde enseño
-                    el sistema que usé para transformarme de un dev anónimo a un
-                    dev moderno.
-                  </p>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  {historyMilestones.map(
+                    ({ title, timeframe, description }) => (
+                      <div
+                        key={title}
+                        className="rounded-2xl border border-white/10 bg-white/5 p-4 space-y-2"
+                      >
+                        <p className="text-xs uppercase tracking-[0.2em] text-white/50">
+                          {timeframe}
+                        </p>
+                        <h3 className="text-lg font-semibold">{title}</h3>
+                        <p className="text-sm text-white/70 leading-relaxed">
+                          {description}
+                        </p>
+                      </div>
+                    )
+                  )}
                 </div>
               </div>
             </div>
