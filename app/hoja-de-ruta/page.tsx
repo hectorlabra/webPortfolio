@@ -22,11 +22,12 @@ export async function generateMetadata(): Promise<Metadata> {
   const fileContents = fs.readFileSync(PAGE_PATH, "utf8");
   const { data, content } = matter(fileContents);
   const tocHeadings = buildTableOfContents(content);
-  const firstHeading = tocHeadings && tocHeadings.length > 0 ? tocHeadings[0] : null;
+  const firstHeading =
+    tocHeadings && tocHeadings.length > 0 ? tocHeadings[0] : null;
   const canonicalTitle = firstHeading
-    ? (firstHeading.level === 0 || firstHeading.level === 1
-        ? firstHeading.text
-        : data.title)
+    ? firstHeading.level === 0 || firstHeading.level === 1
+      ? firstHeading.text
+      : data.title
     : data.title || "Hoja de ruta";
 
   return {
@@ -54,11 +55,12 @@ export default async function HojaDeRutaPage() {
 
   // Prefer markdown H1 as canonical title if present
   const tocHeadings = buildTableOfContents(content);
-  const firstHeading = tocHeadings && tocHeadings.length > 0 ? tocHeadings[0] : null;
+  const firstHeading =
+    tocHeadings && tocHeadings.length > 0 ? tocHeadings[0] : null;
   const canonicalTitle = firstHeading
-    ? (firstHeading.level === 0 || firstHeading.level === 1
-        ? firstHeading.text
-        : data.title)
+    ? firstHeading.level === 0 || firstHeading.level === 1
+      ? firstHeading.text
+      : data.title
     : data.title || "Hoja de ruta";
 
   const htmlContent = await markdownToHtml(content, {

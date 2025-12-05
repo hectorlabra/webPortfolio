@@ -485,7 +485,7 @@
 .blog-richtext h1 {
   @apply text-white font-bold;
   font-size: clamp(2rem, 5vw, 3rem); /* max 48px */
-  line-height: 1.0;
+  line-height: 1;
   letter-spacing: -0.4px; /* tight */
   margin-top: 4rem; /* 64px */
   margin-bottom: 1rem; /* 16px - párrafo a título */

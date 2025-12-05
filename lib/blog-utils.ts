@@ -80,9 +80,9 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
     const headings = extractTableOfContents(content);
     const firstHeading = headings && headings.length > 0 ? headings[0] : null;
     const canonicalTitle = firstHeading
-      ? (firstHeading.level === 0 || firstHeading.level === 1
-          ? firstHeading.text
-          : frontmatter.title)
+      ? firstHeading.level === 0 || firstHeading.level === 1
+        ? firstHeading.text
+        : frontmatter.title
       : frontmatter.title || slug;
 
     // Pasamos el título canónico al parser para que elimine un H1 duplicado si coincide
