@@ -46,7 +46,7 @@ export function Heading({
         sizeByLevel[level],
         weightByLevel[level],
         // maintain tight line-height for big titles
-        level <= 2 ? "leading-tight" : undefined,
+        level <= 2 ? "leading-[1] tracking-[-0.025em]" : undefined,
         className
       ),
       ...rest,

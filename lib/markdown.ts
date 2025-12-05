@@ -41,6 +41,17 @@ const remarkPruneFirstH1IfMatches: Plugin<[PruneOptions?], Root> =
     }
   };
 
+// Plugin que transforma cualquier H1 restante en H2 para evitar múltiples H1s
+const remarkTransformRemainingH1ToH2: Plugin<[], Root> = () => (tree: Root) => {
+  const { children } = tree;
+  for (let i = 0; i < children.length; i++) {
+    const node = children[i];
+    if (node.type === "heading" && node.depth === 1) {
+      node.depth = 2; // Convertimos H1 a H2
+    }
+  }
+};
+
 type MarkdownProcessorOptions = {
   title?: string;
   slug?: string;
@@ -54,6 +65,7 @@ function createMarkdownProcessor(options?: MarkdownProcessorOptions) {
     remark()
       .use(remarkParse)
       .use(remarkPruneFirstH1IfMatches, { title })
+      .use(remarkTransformRemainingH1ToH2)
       // Pasamos de MDAST (remark) a HAST (rehype)
       .use(remarkRehype)
       // Plugins rehype sobre el árbol HTML (HAST)

@@ -468,13 +468,14 @@
 
 /* Blog rich text - Sistema tipográfico Marc Lou */
 .blog-richtext {
-  @apply text-white/70; /* Base Content Secondary para párrafos */
+  @apply text-white/85; /* Base Content Secondary para párrafos */
+  font-size: 18px; /* ensure 18px base for consistency */
 }
 
 .blog-richtext p,
 .blog-richtext li {
-  @apply text-base text-white/70;
-  line-height: 1.8; /* Let the content breathe */
+  @apply text-lg text-white/85;
+  line-height: 1.75; /* Let the content breathe */
 }
 
 .blog-richtext p {
@@ -483,27 +484,27 @@
 
 .blog-richtext h1 {
   @apply text-white font-bold;
-  font-size: clamp(2.25rem, 5vw, 3.5rem); /* 36-56px */
-  line-height: 1.1;
-  letter-spacing: -0.02em; /* tight */
+  font-size: clamp(2rem, 5vw, 3rem); /* max 48px */
+  line-height: 1.0;
+  letter-spacing: -0.4px; /* tight */
   margin-top: 4rem; /* 64px */
   margin-bottom: 1rem; /* 16px - párrafo a título */
 }
 
 .blog-richtext h2 {
   @apply text-white font-bold;
-  font-size: clamp(1.875rem, 4vw, 2.75rem); /* 30-44px */
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  font-size: clamp(1.75rem, 4vw, 2.25rem); /* max 36px */
+  line-height: 1.05;
+  letter-spacing: -0.4px;
   margin-top: 4rem; /* 64px - sección a sección */
   margin-bottom: 1rem; /* 16px */
 }
 
 .blog-richtext h3 {
   @apply text-white font-semibold;
-  font-size: clamp(1.5rem, 3vw, 2rem); /* 24-32px */
-  line-height: 1.2;
-  letter-spacing: -0.01em;
+  font-size: clamp(1.375rem, 3vw, 1.75rem); /* max ~28px */
+  line-height: 1.15;
+  letter-spacing: -0.4px;
   margin-top: 3rem; /* 48px */
   margin-bottom: 0.75rem; /* 12px */
 }

@@ -17,17 +17,32 @@ import { buildTableOfContents, splitHtmlAfterSecondH2 } from "@/lib/blog-utils";
 
 const PAGE_PATH = path.join(process.cwd(), "content/pages/hoja-de-ruta.md");
 
-export const metadata: Metadata = {
-  title: "Hoja de Ruta | Héctor Labra",
-  description:
-    "Hoja de ruta práctica para construir un micro-SaaS rentable desde tu empleo estable usando IA, SEO y producto ágil.",
-  openGraph: {
-    title: "Hoja de Ruta | Héctor Labra",
+export async function generateMetadata(): Promise<Metadata> {
+  // Read the markdown and derive the canonical title if present
+  const fileContents = fs.readFileSync(PAGE_PATH, "utf8");
+  const { data, content } = matter(fileContents);
+  const tocHeadings = buildTableOfContents(content);
+  const firstHeading = tocHeadings && tocHeadings.length > 0 ? tocHeadings[0] : null;
+  const canonicalTitle = firstHeading
+    ? (firstHeading.level === 0 || firstHeading.level === 1
+        ? firstHeading.text
+        : data.title)
+    : data.title || "Hoja de ruta";
+
+  return {
+    title: `${canonicalTitle} | Héctor Labra`,
     description:
-      "Descubre el sistema completo para construir tu primer micro-SaaS rentable en 4-8 semanas con IA y SEO.",
-    url: "https://hectorlabra.dev/hoja-de-ruta",
-  },
-};
+      data.description ||
+      "Hoja de ruta práctica para construir un micro-SaaS rentable desde tu empleo estable usando IA, SEO y producto ágil.",
+    openGraph: {
+      title: `${canonicalTitle} | Héctor Labra`,
+      description:
+        data.description ||
+        "Descubre el sistema completo para construir tu primer micro-SaaS rentable en 4-8 semanas con IA y SEO.",
+      url: "https://hectorlabra.dev/hoja-de-ruta",
+    },
+  };
+}
 
 export default async function HojaDeRutaPage() {
   if (!fs.existsSync(PAGE_PATH)) {
@@ -37,12 +52,21 @@ export default async function HojaDeRutaPage() {
   const fileContents = fs.readFileSync(PAGE_PATH, "utf8");
   const { data, content } = matter(fileContents);
 
+  // Prefer markdown H1 as canonical title if present
+  const tocHeadings = buildTableOfContents(content);
+  const firstHeading = tocHeadings && tocHeadings.length > 0 ? tocHeadings[0] : null;
+  const canonicalTitle = firstHeading
+    ? (firstHeading.level === 0 || firstHeading.level === 1
+        ? firstHeading.text
+        : data.title)
+    : data.title || "Hoja de ruta";
+
   const htmlContent = await markdownToHtml(content, {
-    title: data.title,
+    title: canonicalTitle,
     slug: "hoja-de-ruta",
   });
 
-  const tableOfContents = buildTableOfContents(content, data.title);
+  const tableOfContents = buildTableOfContents(content, canonicalTitle);
   const { beforeHtml, afterHtml } = splitHtmlAfterSecondH2(htmlContent);
 
   return (

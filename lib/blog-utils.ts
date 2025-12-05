@@ -74,9 +74,20 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
     const { data, content } = matter(fileContents);
 
     const frontmatter = data as BlogFrontmatter;
-    // Pasamos el título al parser para que elimine un H1 duplicado si coincide
+
+    // Detect the first heading (H1) in the markdown and prefer it as canonical title.
+    // If the MD does not have any H1, fallback to frontmatter.title.
+    const headings = extractTableOfContents(content);
+    const firstHeading = headings && headings.length > 0 ? headings[0] : null;
+    const canonicalTitle = firstHeading
+      ? (firstHeading.level === 0 || firstHeading.level === 1
+          ? firstHeading.text
+          : frontmatter.title)
+      : frontmatter.title || slug;
+
+    // Pasamos el título canónico al parser para que elimine un H1 duplicado si coincide
     const htmlContent = await markdownToHtml(content, {
-      title: frontmatter.title,
+      title: canonicalTitle,
       slug,
     });
 
@@ -89,7 +100,7 @@ export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
 
     return {
       slug,
-      title: frontmatter.title,
+      title: canonicalTitle,
       description: frontmatter.description,
       date: frontmatter.date,
       author: frontmatter.author,
