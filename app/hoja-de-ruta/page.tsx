@@ -99,7 +99,7 @@ export default async function HojaDeRutaPage() {
               </p>
               <Heading
                 level={1}
-                className="text-[2rem] sm:text-[2.5rem] lg:text-[3rem] leading-tight"
+                className="text-[2rem] sm:text-[2.5rem] lg:text-[3rem] leading-[1] tracking-[-0.025em]"
               >
                 {data.title ||
                   "Construye tu micro-SaaS rentable en 4-8 semanas"}

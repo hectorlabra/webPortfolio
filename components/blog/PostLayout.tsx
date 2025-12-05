@@ -12,6 +12,7 @@ import { LazyGeometricPattern } from "@/components/shared/LazyGeometricPattern";
 import { PostSidebarsClient } from "./PostSidebarsClient";
 import { MobileTOCButton } from "./MobileTOCButton";
 import Image from "next/image";
+import { Heading } from "@/components/shared/Heading";
 
 interface PostLayoutProps {
   post: BlogPost;
@@ -58,9 +59,14 @@ export function PostLayout(props: PostLayoutProps) {
                 </div>
 
                 {/* Title */}
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight font-mono">
+                <Heading
+                  level={1}
+                  className={
+                    "text-3xl sm:text-4xl lg:text-5xl font-bold tracking-[-0.025em] text-white font-mono"
+                  }
+                >
                   {post.title}
-                </h1>
+                </Heading>
 
                 {/* Description */}
                 <p className="text-sm sm:text-lg text-white/70 leading-relaxed">
