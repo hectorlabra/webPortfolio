@@ -144,7 +144,7 @@ export function PostLayout(props: PostLayoutProps) {
             <div className="container flex-1 flex flex-col px-4 md:px-6">
               <div className="max-w-[700px] mx-auto w-full space-y-6">
                 <article id="post-article" className="min-w-0 w-full -mt-8">
-                  <div className="blog-richtext space-y-6">
+                  <div className="blog-richtext space-y-8">
                     <RichTextChunk html={beforeHtml} />
                     <div
                       className="block xl:hidden my-10"

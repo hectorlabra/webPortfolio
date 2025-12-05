@@ -140,7 +140,7 @@ export default async function HojaDeRutaPage() {
 
       {/* Main Content */}
       <main className="relative z-10 mx-auto max-w-[700px] px-4 sm:px-6 pb-16">
-        <article id="post-article" className="blog-richtext">
+        <article id="post-article" className="blog-richtext space-y-8">
           {/* First part of content */}
           <div dangerouslySetInnerHTML={{ __html: beforeHtml }} />
 
