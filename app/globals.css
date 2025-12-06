@@ -510,7 +510,8 @@
 }
 
 .prose blockquote p {
-  @apply text-white/80 italic;
+  @apply text-white/80;
+  font-style: normal;
 }
 
 .prose table {
@@ -553,6 +554,8 @@
 .blog-richtext li {
   @apply text-lg text-white/85;
   line-height: 1.75; /* Let the content breathe */
+  font-family: var(--font-inter), "Inter", system-ui, -apple-system, "Segoe UI",
+    sans-serif;
 }
 
 .blog-richtext p {
@@ -633,7 +636,8 @@
 }
 
 .blog-richtext blockquote p {
-  @apply text-white/80 italic mb-0;
+  @apply text-white/80 mb-0;
+  font-style: normal;
 }
 
 .blog-richtext table {

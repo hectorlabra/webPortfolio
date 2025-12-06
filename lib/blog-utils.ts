@@ -195,10 +195,16 @@ export function buildTableOfContents(
       flatHeadings.shift();
     }
   }
+
+  // Solo incluimos H2 (level === 1) para un TOC más conciso, alineado con el modelo Toggl
+  const filteredHeadings = flatHeadings.filter(
+    (heading) => heading.level === 1
+  );
+
   const toc: TableOfContentsItem[] = [];
   const stack: TableOfContentsItem[] = [];
 
-  flatHeadings.forEach((heading) => {
+  filteredHeadings.forEach((heading) => {
     const item: TableOfContentsItem = {
       id: heading.id,
       text: heading.text,

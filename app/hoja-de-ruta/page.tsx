@@ -77,10 +77,7 @@ export default async function HojaDeRutaPage() {
       <ReadingProgressBar />
 
       {/* Sidebars - TOC only, no newsletter */}
-      <PostSidebarsClient
-        tableOfContents={tableOfContents}
-        showNewsletter={false}
-      />
+      <PostSidebarsClient tableOfContents={tableOfContents} showNewsletter />
 
       {/* Mobile TOC Access */}
       <MobileTOCButton items={tableOfContents} />
@@ -144,9 +141,9 @@ export default async function HojaDeRutaPage() {
           {/* First part of content */}
           <div dangerouslySetInnerHTML={{ __html: beforeHtml }} />
 
-          {/* Inline Newsletter */}
-          <div className="my-10">
-            <NewsletterInPost variant="prominent" />
+          {/* Inline Newsletter solo mobile/tablet (desktop se muestra en sidebar) */}
+          <div className="block xl:hidden my-10">
+            <NewsletterInPost variant="compact" />
           </div>
 
           {/* Rest of content */}
@@ -157,10 +154,12 @@ export default async function HojaDeRutaPage() {
         <div id="post-end-sentinel" className="h-1 w-full" />
 
         {/* CTA Section */}
-        <div
-          id="post-cta-newsletter"
-          className="mt-16 rounded-2xl border border-white/10 bg-white/5 p-6 sm:p-8 text-white"
-        >
+        {/* CTA Newsletter prominente (desktop y mobile) */}
+        <div id="post-cta-newsletter" className="mt-12">
+          <NewsletterInPost variant="prominent" />
+        </div>
+
+        <div className="mt-16 rounded-2xl border border-white/10 bg-white/5 p-6 sm:p-8 text-white">
           <Heading level={2} className="text-2xl text-white">
             ¿Listo para convertir tu tracción en ingresos recurrentes?
           </Heading>

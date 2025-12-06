@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { TableOfContentsItem } from "@/lib/types/blog";
+import { Twitter, Linkedin, Link as LinkIcon } from "lucide-react";
 
 interface TableOfContentsProps {
   items: TableOfContentsItem[];
@@ -11,6 +12,8 @@ interface TableOfContentsProps {
 
 export function TableOfContents({ items, onItemClick }: TableOfContentsProps) {
   const [activeId, setActiveId] = useState<string>("");
+  const [shareUrl, setShareUrl] = useState<string>("");
+  const [shareText, setShareText] = useState<string>("");
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -36,6 +39,13 @@ export function TableOfContents({ items, onItemClick }: TableOfContentsProps) {
 
     return () => observer.disconnect();
   }, [items]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const url = window.location.href;
+    setShareUrl(url);
+    setShareText(document.title || "");
+  }, []);
 
   const handleClick = (id: string) => {
     const element = document.getElementById(id);
@@ -88,6 +98,48 @@ export function TableOfContents({ items, onItemClick }: TableOfContentsProps) {
       <ul className="space-y-0.5 border-l border-white/10 pl-3">
         {renderItems(items)}
       </ul>
+
+      {/* Share actions */}
+      <div className="pt-4 border-t border-white/10 mt-4 space-y-2">
+        <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-white/40">
+          Compartir
+        </p>
+        <div className="flex items-center gap-2">
+          <a
+            href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(
+              shareUrl
+            )}&text=${encodeURIComponent(shareText)}`}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/5 text-white/70 hover:text-white hover:bg-white/10 transition-colors"
+            aria-label="Compartir en X"
+          >
+            <Twitter className="h-4 w-4" />
+          </a>
+          <a
+            href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(
+              shareUrl
+            )}`}
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/5 text-white/70 hover:text-white hover:bg-white/10 transition-colors"
+            aria-label="Compartir en LinkedIn"
+          >
+            <Linkedin className="h-4 w-4" />
+          </a>
+          <button
+            type="button"
+            onClick={() => {
+              if (!shareUrl) return;
+              navigator.clipboard?.writeText(shareUrl).catch(() => {});
+            }}
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/5 text-white/70 hover:text-white hover:bg-white/10 transition-colors"
+            aria-label="Copiar enlace"
+          >
+            <LinkIcon className="h-4 w-4" />
+          </button>
+        </div>
+      </div>
     </nav>
   );
 }
