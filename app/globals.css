@@ -117,20 +117,29 @@
 @media (max-width: 768px) {
   .blog-richtext h1,
   .prose h1 {
-    margin-top: 2rem;
-    margin-bottom: 1rem;
+    margin-top: 2.5rem;
+    margin-bottom: 0.75rem;
+    font-size: clamp(1.75rem, 8vw, 2.5rem); /* 28-40px mobile - Marc Lou */
   }
 
   .blog-richtext h2,
   .prose h2 {
-    margin-top: 2.5rem;
-    margin-bottom: 1.25rem;
+    margin-top: 3rem;
+    margin-bottom: 1rem;
+    font-size: clamp(1.5rem, 6vw, 2rem); /* 24-32px mobile */
   }
 
   .blog-richtext h3,
   .prose h3 {
     margin-top: 2rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
+    font-size: clamp(1.25rem, 5vw, 1.5rem); /* 20-24px mobile */
+  }
+
+  .blog-richtext p,
+  .blog-richtext li {
+    font-size: 1rem; /* 16px on mobile for better readability */
+    line-height: 1.65;
   }
 
   .blog-richtext h4,
@@ -434,7 +443,7 @@
 } /* Mejoras para la prose */
 
 .prose {
-  @apply text-white/90;
+  @apply text-white/70; /* Secondary color for body text */
 }
 
 .prose h1,
@@ -444,27 +453,40 @@
 .prose h5,
 .prose h6 {
   @apply text-white;
+  letter-spacing: -0.025em; /* Tight like Marc Lou */
 }
 
 /* Márgenes coherentes en headings dentro de prose (markdown pages como hoja-de-ruta) */
 .prose h1 {
+  @apply font-extrabold;
+  font-size: clamp(2.25rem, 6vw, 3.75rem); /* 36-60px */
+  line-height: 1;
   margin-top: 4rem;
-  margin-bottom: 1.25rem;
+  margin-bottom: 1rem;
 }
 
 .prose h2 {
+  @apply font-bold;
+  font-size: clamp(1.75rem, 5vw, 3rem); /* 28-48px */
+  line-height: 1.05;
   margin-top: 4rem;
-  margin-bottom: 3rem; /* 48px */
+  margin-bottom: 1.5rem;
 }
 
 .prose h3 {
-  margin-top: 3.5rem;
-  margin-bottom: 2rem; /* 32px */
+  @apply font-bold;
+  font-size: clamp(1.375rem, 3.5vw, 1.875rem); /* 22-30px */
+  line-height: 1.15;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
 }
 
 .prose h4 {
-  margin-top: 3rem;
-  margin-bottom: 1.5rem; /* 24px */
+  @apply font-semibold;
+  font-size: clamp(1.125rem, 2.5vw, 1.375rem); /* 18-22px */
+  line-height: 1.25;
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
 }
 
 /* Evitar doble margen cuando un bloque sigue inmediatamente a un heading */
@@ -496,11 +518,13 @@
 }
 
 .prose a {
-  @apply text-white underline decoration-white/30 hover:decoration-white transition-colors;
+  @apply text-white underline decoration-white/40 hover:decoration-white transition-colors;
+  text-underline-offset: 3px;
 }
 
 .prose strong {
-  @apply text-white font-semibold;
+  @apply text-white;
+  font-weight: 600; /* Semibold emphasis */
 }
 
 .prose blockquote {
@@ -510,8 +534,9 @@
 }
 
 .prose blockquote p {
-  @apply text-white/80;
+  @apply text-white/70;
   font-style: normal;
+  font-size: 1.0625rem; /* 17px */
 }
 
 .prose table {
@@ -552,48 +577,56 @@
 
 .blog-richtext p,
 .blog-richtext li {
-  @apply text-lg text-white/85;
-  line-height: 1.75; /* Let the content breathe */
+  @apply text-white/70; /* Secondary color - less contrast than headlines */
+  font-size: 1.125rem; /* 18px - readable */
+  line-height: 1.7; /* Let the content breathe - Marc Lou */
+  font-weight: 400; /* Normal weight for body */
   font-family: var(--font-inter), "Inter", system-ui, -apple-system, "Segoe UI",
     sans-serif;
 }
 
 .blog-richtext p {
-  @apply mb-4; /* 16px - grid de 4 */
+  @apply mb-5; /* 20px - slightly more breathing room */
 }
 
 .blog-richtext h1 {
-  @apply text-white font-bold;
-  font-size: clamp(2rem, 5vw, 3rem); /* max 48px */
-  line-height: 1;
-  letter-spacing: -0.4px; /* tight */
-  margin-top: 4rem; /* 64px */
-  margin-bottom: 1.5rem; /* 24px - párrafo a título */
+  @apply text-white;
+  font-weight: 800; /* Extra bold for max impact */
+  font-size: clamp(2.25rem, 6vw, 3.75rem); /* 36-60px - Marc Lou range */
+  line-height: 1; /* Tight, compact */
+  letter-spacing: -0.025em; /* -0.4px equivalent */
+  margin-top: 4rem;
+  margin-bottom: 1.5rem;
 }
 
 .blog-richtext h2 {
-  @apply text-white font-bold;
-  font-size: clamp(1.75rem, 4vw, 2.25rem); /* max 36px */
+  @apply text-white;
+  font-weight: 700; /* Bold - Marc Lou recommends 700-900 */
+  font-size: clamp(1.75rem, 5vw, 3rem); /* 28-48px - Marc Lou sweet spot */
   line-height: 1.05;
-  letter-spacing: -0.4px;
-  margin-top: 5rem; /* 80px - sección a sección */
-  margin-bottom: 3rem; /* 48px: controlando el espaciado post heading */
+  letter-spacing: -0.025em; /* tight */
+  margin-top: 5rem;
+  margin-bottom: 1.5rem; /* Reduced for better flow */
 }
 
 .blog-richtext h3 {
-  @apply text-white font-semibold;
-  font-size: clamp(1.375rem, 3vw, 1.75rem); /* max ~28px */
+  @apply text-white;
+  font-weight: 700; /* Bold for hierarchy */
+  font-size: clamp(1.375rem, 3.5vw, 1.875rem); /* 22-30px */
   line-height: 1.15;
-  letter-spacing: -0.4px;
-  margin-top: 3.75rem; /* 60px */
-  margin-bottom: 2rem; /* 32px */
+  letter-spacing: -0.02em; /* slightly tight */
+  margin-top: 3rem;
+  margin-bottom: 1rem;
 }
 
 .blog-richtext h4 {
-  @apply text-white font-semibold text-xl;
-  line-height: 1.3;
-  margin-top: 3rem; /* 48px */
-  margin-bottom: 1.5rem; /* 24px */
+  @apply text-white;
+  font-weight: 600; /* Semibold */
+  font-size: clamp(1.125rem, 2.5vw, 1.375rem); /* 18-22px */
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
 }
 
 .blog-richtext h5 {
@@ -605,11 +638,13 @@
 }
 
 .blog-richtext a {
-  @apply text-white underline decoration-white/30 hover:decoration-white transition-colors;
+  @apply text-white underline decoration-white/40 hover:decoration-white transition-colors;
+  text-underline-offset: 3px; /* Better readability */
 }
 
 .blog-richtext strong {
-  @apply text-white/90 font-semibold; /* Base Content para énfasis */
+  @apply text-white; /* Full contrast for emphasis */
+  font-weight: 600; /* Semibold - Marc Lou recommends 500/600 */
 }
 
 .blog-richtext em {
@@ -636,8 +671,9 @@
 }
 
 .blog-richtext blockquote p {
-  @apply text-white/80 mb-0;
+  @apply text-white/70 mb-0; /* Match body text color */
   font-style: normal;
+  font-size: 1.0625rem; /* Slightly smaller - 17px */
 }
 
 .blog-richtext table {
@@ -787,7 +823,7 @@
 /* Aumentar espacio entre items de lista para mejor legibilidad */
 .blog-richtext ul > li,
 .blog-richtext ol > li {
-  @apply py-0.5;
+  @apply py-1; /* 8px - more breathing room */
 }
 
 /* Blockquotes: asegurar separación consistente */

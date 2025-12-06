@@ -73,7 +73,7 @@ export function TableOfContents({ items, onItemClick }: TableOfContentsProps) {
           <button
             onClick={() => handleClick(item.id)}
             className={cn(
-              "block w-full text-left py-1 text-xs transition-colors text-white/60",
+              "block w-full text-left py-1.5 text-[13px] leading-snug transition-colors text-white/50",
               "hover:text-white",
               isActive && "text-white font-medium"
             )}
@@ -91,11 +91,11 @@ export function TableOfContents({ items, onItemClick }: TableOfContentsProps) {
   };
 
   return (
-    <nav className="space-y-2">
-      <h3 className="text-xs font-semibold text-white/40 uppercase tracking-wide mb-3">
+    <nav className="space-y-3">
+      <h3 className="text-[11px] font-semibold text-white/40 uppercase tracking-[0.15em] mb-4">
         En este artículo
       </h3>
-      <ul className="space-y-0.5 border-l border-white/10 pl-3">
+      <ul className="space-y-1 border-l border-white/10 pl-4">
         {renderItems(items)}
       </ul>
 

@@ -10,20 +10,20 @@ interface HeadingProps extends HTMLAttributes<HTMLHeadingElement> {
 }
 
 const sizeByLevel: Record<HeadingLevel, string> = {
-  1: "text-3xl sm:text-4xl lg:text-5xl",
-  2: "text-2xl sm:text-3xl",
-  3: "text-xl sm:text-2xl",
-  4: "text-lg",
+  1: "text-4xl sm:text-5xl lg:text-6xl" /* 36-48-60px Marc Lou range */,
+  2: "text-3xl sm:text-4xl" /* 30-36px */,
+  3: "text-2xl sm:text-[1.75rem]" /* 24-28px */,
+  4: "text-xl" /* 20px */,
   5: "text-base",
   6: "text-sm uppercase tracking-wide",
 };
 
 const weightByLevel: Record<HeadingLevel, string> = {
-  1: "font-bold tracking-tight",
-  2: "font-bold tracking-tight",
-  3: "font-bold tracking-tight",
-  4: "font-semibold tracking-tight",
-  5: "font-semibold tracking-tight",
+  1: "font-extrabold" /* 800 weight for H1 */,
+  2: "font-bold" /* 700 weight */,
+  3: "font-bold" /* 700 weight */,
+  4: "font-semibold" /* 600 weight */,
+  5: "font-semibold",
   6: "font-semibold",
 };
 
@@ -45,8 +45,10 @@ export function Heading({
         "font-mono text-white",
         sizeByLevel[level],
         weightByLevel[level],
-        // maintain tight line-height for big titles
-        level <= 2 ? "leading-[1] tracking-[-0.025em]" : undefined,
+        // maintain tight line-height and letter-spacing for headlines - Marc Lou
+        level <= 2
+          ? "leading-none tracking-[-0.025em]"
+          : "leading-tight tracking-[-0.01em]",
         className
       ),
       ...rest,
