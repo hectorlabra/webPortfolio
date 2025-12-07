@@ -9,8 +9,6 @@ featured: true
 published: true
 ---
 
-# Mi Primer Post del Blog
-
 ¡Bienvenidos al nuevo blog! Este es un post de ejemplo que demuestra todas las funcionalidades implementadas en nuestro sistema de blog.
 
 ## ¿Qué incluye este sistema?
@@ -46,7 +44,7 @@ async function processMarkdown(content) {
 
 // Uso con async/await
 const htmlContent = await processMarkdown(markdownContent);
-console.log('Contenido procesado:', htmlContent);
+console.log("Contenido procesado:", htmlContent);
 ```
 
 ### TypeScript
@@ -70,10 +68,8 @@ interface BlogPost {
 // Función tipada para obtener posts
 export async function getAllPosts(): Promise<BlogPost[]> {
   const slugs = getAllPostSlugs();
-  const posts = await Promise.all(
-    slugs.map(slug => getPostBySlug(slug))
-  );
-  
+  const posts = await Promise.all(slugs.map((slug) => getPostBySlug(slug)));
+
   return posts
     .filter((post): post is BlogPost => post !== null && post.published)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
@@ -88,7 +84,9 @@ export async function getAllPosts(): Promise<BlogPost[]> {
   @apply text-foreground;
 }
 
-.prose h1, .prose h2, .prose h3 {
+.prose h1,
+.prose h2,
+.prose h3 {
   @apply text-accent-green;
 }
 
@@ -113,19 +111,19 @@ El sistema incluye:
 ## Citas y Blockquotes
 
 > "El mejor momento para plantar un árbol fue hace 20 años. El segundo mejor momento es ahora."
-> 
+>
 > — Proverbio chino
 
 > **Nota importante:** Este blog utiliza generación estática con Next.js para optimizar el rendimiento y SEO.
 
 ## Tablas
 
-| Característica | Estado | Prioridad |
-|---|---|---|
-| Markdown processing | ✅ Completado | Alta |
-| Syntax highlighting | ✅ Completado | Alta |
-| SEO optimization | ✅ Completado | Media |
-| Comments system | ⏳ Pendiente | Baja |
+| Característica      | Estado        | Prioridad |
+| ------------------- | ------------- | --------- |
+| Markdown processing | ✅ Completado | Alta      |
+| Syntax highlighting | ✅ Completado | Alta      |
+| SEO optimization    | ✅ Completado | Media     |
+| Comments system     | ⏳ Pendiente  | Baja      |
 
 ## Conclusión
 

@@ -9,19 +9,19 @@ featured: true
 published: true
 ---
 
-# Guía Completa: Crear un Blog con Next.js y Remark
-
 En esta guía te enseñaré cómo construir un blog completo usando las tecnologías más modernas del ecosistema React.
 
 ## ¿Por qué estas tecnologías?
 
 ### Next.js 15
+
 - **App Router** para mejor organización
 - **Server Components** por defecto
 - **Generación estática** para máximo rendimiento
 - **SEO optimizado** out-of-the-box
 
 ### Remark Ecosystem
+
 - **Remark** para procesamiento de markdown
 - **Rehype** para transformaciones HTML
 - **Plugins** extensibles para cualquier funcionalidad
@@ -78,21 +78,21 @@ export interface BlogFrontmatter {
 
 ```typescript
 // lib/markdown.ts
-import { remark } from 'remark';
-import remarkHtml from 'remark-html';
-import remarkParse from 'remark-parse';
-import rehypeSlug from 'rehype-slug';
-import rehypeAutolinkHeadings from 'rehype-autolink-headings';
-import rehypePrismPlus from 'rehype-prism-plus';
+import { remark } from "remark";
+import remarkHtml from "remark-html";
+import remarkParse from "remark-parse";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
+import rehypePrismPlus from "rehype-prism-plus";
 
 export const markdownProcessor = remark()
   .use(remarkParse)
   .use(remarkHtml, { sanitize: false })
   .use(rehypeSlug)
   .use(rehypeAutolinkHeadings, {
-    behavior: 'wrap',
+    behavior: "wrap",
     properties: {
-      className: ['anchor-link'],
+      className: ["anchor-link"],
     },
   })
   .use(rehypePrismPlus, {
@@ -110,21 +110,21 @@ export const markdownProcessor = remark()
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
   try {
     const fullPath = path.join(POSTS_DIRECTORY, `${slug}.md`);
-    
+
     if (!fs.existsSync(fullPath)) {
       return null;
     }
-    
+
     const fileContents = fs.readFileSync(fullPath, 'utf8');
     const { data, content } = matter(fileContents);
-    
+
     const frontmatter = data as BlogFrontmatter;
     const htmlContent = await markdownToHtml(content);
-    
+
     // Calcular tiempo de lectura
     const wordCount = content.split(/\s+/).length;
     const readingTime = Math.ceil(wordCount / 200);
-    
+
     return {
       slug,
       title: frontmatter.title,
@@ -158,7 +158,11 @@ interface PostLayoutProps {
   children: ReactNode;
 }
 
-export function PostLayout({ post, tableOfContents, children }: PostLayoutProps) {
+export function PostLayout({
+  post,
+  tableOfContents,
+  children,
+}: PostLayoutProps) {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b bg-background/80 backdrop-blur-sm sticky top-0 z-50">
@@ -189,7 +193,7 @@ export function PostLayout({ post, tableOfContents, children }: PostLayoutProps)
 ```tsx
 // components/blog/TableOfContents.tsx
 export function TableOfContents({ items }: TableOfContentsProps) {
-  const [activeId, setActiveId] = useState<string>('');
+  const [activeId, setActiveId] = useState<string>("");
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -200,7 +204,7 @@ export function TableOfContents({ items }: TableOfContentsProps) {
           }
         });
       },
-      { rootMargin: '-20% 0% -35% 0%' }
+      { rootMargin: "-20% 0% -35% 0%" }
     );
 
     items.forEach((item) => {
@@ -239,9 +243,7 @@ export default async function BlogPage() {
 
       {/* Todos los posts */}
       <section>
-        <div className="space-y-6">
-          {/* Lista de posts */}
-        </div>
+        <div className="space-y-6">{/* Lista de posts */}</div>
       </section>
     </div>
   );
@@ -259,21 +261,21 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }: PostPageProps) {
   const post = await getPostBySlug(params.slug);
-  
+
   return {
     title: post?.title,
     description: post?.description,
     openGraph: {
       title: post?.title,
       description: post?.description,
-      type: 'article',
+      type: "article",
     },
   };
 }
 
 export default async function PostPage({ params }: PostPageProps) {
   const post = await getPostBySlug(params.slug);
-  
+
   if (!post) notFound();
 
   return (
@@ -330,6 +332,7 @@ Este stack te proporciona:
 ---
 
 **Recursos útiles:**
+
 - [Next.js Documentation](https://nextjs.org/docs)
 - [Remark Ecosystem](https://remark.js.org/)
 - [Tailwind CSS](https://tailwindcss.com/)

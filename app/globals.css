@@ -571,16 +571,16 @@
 
 /* Blog rich text - Sistema tipográfico Marc Lou */
 .blog-richtext {
-  @apply text-white/85; /* Base Content Secondary para párrafos */
+  @apply text-white/90; /* High contrast for readability */
   font-size: 18px; /* ensure 18px base for consistency */
 }
 
 .blog-richtext p,
 .blog-richtext li {
-  @apply text-white/70; /* Secondary color - less contrast than headlines */
+  @apply text-white/80; /* Slightly softer than pure white for long reading */
   font-size: 1.125rem; /* 18px - readable */
-  line-height: 1.7; /* Let the content breathe - Marc Lou */
-  font-weight: 400; /* Normal weight for body */
+  line-height: 1.8; /* Improve reading flow - closer to Toggl's airy feel */
+  font-weight: 400;
   font-family: var(--font-inter), "Inter", system-ui, -apple-system, "Segoe UI",
     sans-serif;
 }
@@ -591,42 +591,61 @@
 
 .blog-richtext h1 {
   @apply text-white;
-  font-weight: 800; /* Extra bold for max impact */
-  font-size: clamp(2.25rem, 6vw, 3.75rem); /* 36-60px - Marc Lou range */
-  line-height: 1; /* Tight, compact */
-  letter-spacing: -0.025em; /* -0.4px equivalent */
+  /* Keep H1 as Inconsolata for the "Tech/Dev" branding punch at the start */
+  font-family: var(--font-inconsolata), monospace;
+  font-weight: 800;
+  font-size: clamp(2.25rem, 6vw, 3.75rem);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  margin-top: 4rem;
+  margin-bottom: 2rem;
+}
+
+.blog-richtext h2 {
+  color: #ffffff !important;
+  /* Switch internal headers to Inter for smoother reading flow (like Toggl) */
+  font-family: var(--font-inter), sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
   margin-top: 4rem;
   margin-bottom: 1.5rem;
 }
 
-.blog-richtext h2 {
-  @apply text-white;
-  font-weight: 700; /* Bold - Marc Lou recommends 700-900 */
-  font-size: clamp(1.75rem, 5vw, 3rem); /* 28-48px - Marc Lou sweet spot */
-  line-height: 1.05;
-  letter-spacing: -0.025em; /* tight */
-  margin-top: 5rem;
-  margin-bottom: 1.5rem; /* Reduced for better flow */
-}
-
 .blog-richtext h3 {
-  @apply text-white;
-  font-weight: 700; /* Bold for hierarchy */
-  font-size: clamp(1.375rem, 3.5vw, 1.875rem); /* 22-30px */
-  line-height: 1.15;
-  letter-spacing: -0.02em; /* slightly tight */
+  color: #ffffff !important;
+  font-family: var(--font-inter), sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.375rem, 3.5vw, 1.75rem);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
   margin-top: 3rem;
   margin-bottom: 1rem;
 }
 
 .blog-richtext h4 {
-  @apply text-white;
-  font-weight: 600; /* Semibold */
-  font-size: clamp(1.125rem, 2.5vw, 1.375rem); /* 18-22px */
-  line-height: 1.25;
+  color: #ffffff !important;
+  font-family: var(--font-inter), sans-serif;
+  font-weight: 600;
+  font-size: clamp(1.125rem, 2.5vw, 1.375rem);
+  line-height: 1.4;
   letter-spacing: -0.01em;
   margin-top: 2.5rem;
   margin-bottom: 0.75rem;
+}
+
+/* Anchor links inside headings should inherit the heading color */
+.blog-richtext h1 a.anchor-link,
+.blog-richtext h2 a.anchor-link,
+.blog-richtext h3 a.anchor-link,
+.blog-richtext h4 a.anchor-link,
+.blog-richtext h5 a.anchor-link,
+.blog-richtext h6 a.anchor-link {
+  color: inherit !important;
+  border: none !important;
+  text-decoration: none !important;
+  font-weight: inherit !important;
 }
 
 .blog-richtext h5 {
@@ -637,9 +656,14 @@
   @apply text-sm font-semibold tracking-tight text-white mt-4 mb-3 uppercase font-mono;
 }
 
-.blog-richtext a {
-  @apply text-white underline decoration-white/40 hover:decoration-white transition-colors;
-  text-underline-offset: 3px; /* Better readability */
+/* Enlaces generales del contenido (excluyendo anchors de títulos y otros elementos de UI si fuera necesario) */
+.blog-richtext
+  a:not(.anchor-link):not(h1 a):not(h2 a):not(h3 a):not(h4 a):not(h5 a):not(
+    h6 a
+  ) {
+  @apply text-white border-b border-accent-green/50 hover:border-accent-green hover:text-accent-green transition-all duration-200;
+  text-decoration: none;
+  font-weight: 500;
 }
 
 .blog-richtext strong {
@@ -677,16 +701,21 @@
 }
 
 .blog-richtext table {
-  @apply w-full border border-white/10 rounded-lg overflow-hidden text-white/80;
+  @apply w-full border border-white/10 rounded-lg overflow-hidden text-white/80 my-8;
   border-collapse: collapse;
 }
 
 .blog-richtext table th {
-  @apply bg-white/5 text-white font-semibold px-4 py-3 text-left;
+  @apply bg-white/5 text-white font-semibold px-4 py-3 text-left border-b border-white/10;
 }
 
 .blog-richtext table td {
-  @apply border-t border-white/10 px-4 py-3;
+  @apply border-b border-white/10 px-4 py-3 align-top; /* align-top for better reading if cell has multiline content */
+}
+
+/* Remove bottom border from last row */
+.blog-richtext table tr:last-child td {
+  @apply border-b-0;
 }
 
 .blog-richtext code:not(pre code) {
