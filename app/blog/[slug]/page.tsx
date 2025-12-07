@@ -1,23 +1,77 @@
 import { notFound } from "next/navigation";
 import {
-  getPostBySlug,
-  getAllPostSlugs,
-  buildTableOfContents,
-  splitHtmlAfterSecondH2,
-} from "@/lib/blog-utils";
+  getAllArticleMetadata,
+  getArticleMetadataBySlug,
+  type ArticleMetadata,
+} from "@/content/articles";
 import { PostLayout } from "@/components/blog/PostLayout";
 import { generateArticleStructuredData } from "@/lib/structured-data";
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
+
+// Dynamic imports for article content
+import dynamic from "next/dynamic";
+
+// Article content components map
+const articleComponents: Record<string, React.ComponentType> = {
+  "guia-next-js-blog": dynamic(
+    () =>
+      import("@/content/articles/guia-next-js-blog").then((mod) => mod.default),
+    { ssr: true }
+  ),
+  "mi-primer-post": dynamic(
+    () =>
+      import("@/content/articles/mi-primer-post").then((mod) => mod.default),
+    { ssr: true }
+  ),
+};
+
+// Table of contents for each article (extracted from headings)
+const articleTableOfContents: Record<
+  string,
+  { id: string; text: string; level: number }[]
+> = {
+  "guia-next-js-blog": [
+    {
+      id: "por-que-estas-tecnologias",
+      text: "¿Por qué estas tecnologías?",
+      level: 1,
+    },
+    { id: "configuracion-inicial", text: "Configuración Inicial", level: 1 },
+    {
+      id: "pipeline-procesamiento",
+      text: "Pipeline de Procesamiento",
+      level: 1,
+    },
+    { id: "utilidades-blog", text: "Utilidades del Blog", level: 1 },
+    { id: "componentes-blog", text: "Componentes del Blog", level: 1 },
+    { id: "paginas-dinamicas", text: "Páginas Dinámicas", level: 1 },
+    { id: "optimizaciones", text: "Optimizaciones", level: 1 },
+    { id: "proximos-pasos", text: "Próximos Pasos", level: 1 },
+    { id: "conclusion", text: "Conclusión", level: 1 },
+  ],
+  "mi-primer-post": [
+    {
+      id: "que-incluye-este-sistema",
+      text: "¿Qué incluye este sistema?",
+      level: 1,
+    },
+    { id: "ejemplo-de-codigo", text: "Ejemplo de Código", level: 1 },
+    { id: "lista-caracteristicas", text: "Lista de Características", level: 1 },
+    { id: "citas-blockquotes", text: "Citas y Blockquotes", level: 1 },
+    { id: "tablas", text: "Tablas", level: 1 },
+    { id: "conclusion", text: "Conclusión", level: 1 },
+  ],
+};
 
 type SlugParams = { slug: string };
 
 export async function generateStaticParams() {
-  const slugs = getAllPostSlugs();
-  return slugs.map((slug) => ({
-    slug,
-  }));
+  const articles = getAllArticleMetadata();
+  // Filter only blog posts (exclude hoja-de-ruta which is a page)
+  return articles
+    .filter((a) => a.slug !== "hoja-de-ruta")
+    .map((article) => ({
+      slug: article.slug,
+    }));
 }
 
 export async function generateMetadata({
@@ -26,27 +80,27 @@ export async function generateMetadata({
   params: Promise<SlugParams>;
 }) {
   const { slug } = await params;
-  const post = await getPostBySlug(slug);
+  const article = getArticleMetadataBySlug(slug);
 
-  if (!post) {
+  if (!article) {
     return {
       title: "Post no encontrado",
     };
   }
 
   return {
-    title: `${post.title} | Blog de Héctor Labra`,
-    description: post.description,
-    authors: [{ name: post.author }],
-    keywords: post.tags,
+    title: `${article.title} | Blog de Héctor Labra`,
+    description: article.description,
+    authors: article.author ? [{ name: article.author }] : [],
+    keywords: article.tags,
     openGraph: {
-      title: post.title,
-      description: post.description,
+      title: article.title,
+      description: article.description,
       type: "article",
-      publishedTime: post.date,
-      authors: [post.author],
-      tags: post.tags,
-      url: `https://hectorlabra.dev/blog/${post.slug}`,
+      publishedTime: article.date,
+      authors: article.author ? [article.author] : [],
+      tags: article.tags,
+      url: `https://hectorlabra.dev/blog/${article.slug}`,
       siteName: "Héctor Labra - Desarrollador Full Stack",
       locale: "es_ES",
       images: [
@@ -54,20 +108,20 @@ export async function generateMetadata({
           url: "https://hectorlabra.dev/og-image-blog.jpg",
           width: 1200,
           height: 630,
-          alt: post.title,
+          alt: article.title,
         },
       ],
     },
     twitter: {
       card: "summary_large_image",
-      title: post.title,
-      description: post.description,
+      title: article.title,
+      description: article.description,
       images: ["https://hectorlabra.dev/og-image-blog.jpg"],
       creator: "@hectorlabra",
       site: "@hectorlabra",
     },
     alternates: {
-      canonical: `https://hectorlabra.dev/blog/${post.slug}`,
+      canonical: `https://hectorlabra.dev/blog/${article.slug}`,
     },
     robots: {
       index: true,
@@ -89,20 +143,32 @@ export default async function PostPage({
   params: Promise<SlugParams>;
 }) {
   const { slug } = await params;
-  const post = await getPostBySlug(slug);
+  const article = getArticleMetadataBySlug(slug);
+  const ArticleContent = articleComponents[slug];
 
-  if (!post) {
+  if (!article || !ArticleContent) {
     notFound();
   }
 
-  // Obtener el contenido markdown original para la tabla de contenidos
-  const fullPath = path.join(process.cwd(), "content/posts", `${slug}.md`);
-  const fileContents = fs.readFileSync(fullPath, "utf8");
-  const { content } = matter(fileContents);
-  const tableOfContents = buildTableOfContents(content, post.title);
-  const inlineSegments = splitHtmlAfterSecondH2(post.content);
+  const tableOfContents = articleTableOfContents[slug] || [];
 
-  // Generar structured data
+  // Build post object for PostLayout compatibility
+  const post = {
+    slug: article.slug,
+    title: article.title,
+    description: article.description,
+    date: article.date,
+    author: article.author || "Héctor Labra",
+    tags: article.tags || [],
+    category: article.category || "General",
+    featured: article.featured || false,
+    published: article.published !== false,
+    content: "", // Not used in TSX mode
+    excerpt: article.description.slice(0, 150) + "...",
+    readingTime: 5, // Estimate
+  };
+
+  // Generate structured data
   const structuredData = generateArticleStructuredData(post);
 
   return (
@@ -118,8 +184,11 @@ export default async function PostPage({
       <PostLayout
         post={post}
         tableOfContents={tableOfContents}
-        inlineSegments={inlineSegments}
-      />
+        inlineSegments={{ beforeHtml: "", afterHtml: "", mode: "start" }}
+      >
+        {/* Render TSX content directly - no dangerouslySetInnerHTML */}
+        <ArticleContent />
+      </PostLayout>
     </>
   );
 }
