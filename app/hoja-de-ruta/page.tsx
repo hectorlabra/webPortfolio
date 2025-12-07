@@ -1,7 +1,4 @@
-import fs from "node:fs";
-import path from "node:path";
 import type { Metadata } from "next";
-import matter from "gray-matter";
 
 import { Button } from "@/components/ui/button";
 import { LazyGeometricPattern } from "@/components/shared/LazyGeometricPattern";
@@ -12,65 +9,39 @@ import { SocialProof } from "@/components/sections/home/social-proof";
 import { ReadingProgressBar } from "@/components/blog/ReadingProgressBar";
 import { PostSidebarsClient } from "@/components/blog/PostSidebarsClient";
 import { MobileTOCButton } from "@/components/blog/MobileTOCButton";
-import { markdownToHtml } from "@/lib/markdown";
-import { buildTableOfContents, splitHtmlAfterSecondH2 } from "@/lib/blog-utils";
 
-const PAGE_PATH = path.join(process.cwd(), "content/pages/hoja-de-ruta.md");
+// Importar el contenido TSX directamente
+import HojaDeRutaContent, {
+  metadata as articleMetadata,
+} from "@/content/articles/hoja-de-ruta";
+
+// Table of Contents generado manualmente (ya que no hay MD parser)
+const tableOfContents = [
+  { id: "el-roadmap-completo", text: "El Roadmap Completo", level: 1 },
+  {
+    id: "como-construir-software",
+    text: "Cómo Construir Software Que Genera Ingresos",
+    level: 1,
+  },
+  { id: "la-problematica-real", text: "La Problemática Real", level: 1 },
+  { id: "mi-historia", text: "Mi Historia", level: 1 },
+  { id: "el-camino-y-la-estrella", text: "El Camino y La Estrella", level: 1 },
+  { id: "tu-primer-paso", text: "Tu Primer Paso", level: 1 },
+];
 
 export async function generateMetadata(): Promise<Metadata> {
-  // Read the markdown and derive the canonical title if present
-  const fileContents = fs.readFileSync(PAGE_PATH, "utf8");
-  const { data, content } = matter(fileContents);
-  const tocHeadings = buildTableOfContents(content);
-  const firstHeading =
-    tocHeadings && tocHeadings.length > 0 ? tocHeadings[0] : null;
-  const canonicalTitle = firstHeading
-    ? firstHeading.level === 0 || firstHeading.level === 1
-      ? firstHeading.text
-      : data.title
-    : data.title || "Hoja de ruta";
-
   return {
-    title: `${canonicalTitle} | Héctor Labra`,
-    description:
-      data.description ||
-      "Hoja de ruta práctica para construir un micro-SaaS rentable desde tu empleo estable usando IA, SEO y producto ágil.",
+    title: `${articleMetadata.title} | Héctor Labra`,
+    description: articleMetadata.description,
     openGraph: {
-      title: `${canonicalTitle} | Héctor Labra`,
-      description:
-        data.description ||
-        "Descubre el sistema completo para construir tu primer micro-SaaS rentable en 4-8 semanas con IA y SEO.",
+      title: `${articleMetadata.title} | Héctor Labra`,
+      description: articleMetadata.description,
       url: "https://hectorlabra.dev/hoja-de-ruta",
     },
   };
 }
 
-export default async function HojaDeRutaPage() {
-  if (!fs.existsSync(PAGE_PATH)) {
-    return <div className="text-white p-10">Contenido no encontrado</div>;
-  }
-
-  const fileContents = fs.readFileSync(PAGE_PATH, "utf8");
-  const { data, content } = matter(fileContents);
-
-  // Prefer markdown H1 as canonical title if present
-  const tocHeadings = buildTableOfContents(content);
-  const firstHeading =
-    tocHeadings && tocHeadings.length > 0 ? tocHeadings[0] : null;
-  const canonicalTitle = firstHeading
-    ? firstHeading.level === 0 || firstHeading.level === 1
-      ? firstHeading.text
-      : data.title
-    : data.title || "Hoja de ruta";
-
-  const htmlContent = await markdownToHtml(content, {
-    title: canonicalTitle,
-    slug: "hoja-de-ruta",
-  });
-
-  const tableOfContents = buildTableOfContents(content, canonicalTitle);
-  const { beforeHtml, afterHtml } = splitHtmlAfterSecondH2(htmlContent);
-
+export default function HojaDeRutaPage() {
   return (
     <div className="min-h-screen bg-[#0a0612] text-white">
       {/* Reading Progress Bar */}
@@ -98,8 +69,7 @@ export default async function HojaDeRutaPage() {
                 level={1}
                 className="text-[2rem] sm:text-[2.5rem] lg:text-[3rem] leading-[1] tracking-[-0.025em]"
               >
-                {data.title ||
-                  "Construye tu micro-SaaS rentable en 4-8 semanas"}
+                {articleMetadata.title}
               </Heading>
               <p className="text-lg text-white/70">
                 <TypewriterText text="Combina IA, SEO y producto para dejar de depender solo de tu salario" />
@@ -137,17 +107,14 @@ export default async function HojaDeRutaPage() {
 
       {/* Main Content */}
       <main className="relative z-10 mx-auto max-w-[700px] px-4 sm:px-6 pb-16 pt-0">
-        <article id="post-article" className="blog-richtext">
-          {/* First part of content */}
-          <div dangerouslySetInnerHTML={{ __html: beforeHtml }} />
+        <article id="post-article">
+          {/* Contenido TSX directo - sin dangerouslySetInnerHTML */}
+          <HojaDeRutaContent />
 
           {/* Inline Newsletter solo mobile/tablet (desktop se muestra en sidebar) */}
           <div className="block xl:hidden my-10">
             <NewsletterInPost variant="compact" />
           </div>
-
-          {/* Rest of content */}
-          <div dangerouslySetInnerHTML={{ __html: afterHtml }} />
         </article>
 
         {/* End sentinel for sidebar hide */}
