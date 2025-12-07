@@ -548,48 +548,66 @@
   margin-bottom: 0 !important;
 }
 
-.blog-richtext p,
-.blog-richtext li {
-  color: #cfcfcf; /* Soft gray for body text (~80% luminance) */
-  font-size: 1.125rem; /* 18px - Exact match to Toggl */
-  line-height: 1.7; /* Optimized for 18px */
+/* Base text styles */
+.blog-richtext p {
+  color: #e2e2e2; /* Brighter for crisp dark mode reading */
+  font-size: 1.125rem; /* 18px */
+  line-height: 1.75; /* Slightly increased for "perfect" air */
   font-weight: 400;
-  font-family: var(--font-inter), "Inter", system-ui, -apple-system, "Segoe UI",
-    sans-serif;
-  margin-bottom: 1.5em !important;
+  font-family: var(--font-inter), "Inter", sans-serif;
+  margin-bottom: 2rem !important; /* More breathing room between paragraphs */
 }
 
-/* Headings: Reduced scale & Soft White */
-.blog-richtext h1 {
-  color: #ededed !important;
-  font-family: var(--font-inconsolata), monospace;
-  font-weight: 800;
-  font-size: clamp(2rem, 5vw, 3rem);
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-  margin-top: 3rem;
-  margin-bottom: 2rem;
+.blog-richtext ul,
+.blog-richtext ol {
+  margin-bottom: 2rem !important;
+  color: #e2e2e2;
+  font-family: var(--font-inter), "Inter", sans-serif;
+  font-size: 1.125rem;
+  line-height: 1.75;
 }
 
+.blog-richtext li {
+  margin-bottom: 0.75rem !important; /* Tighter list items */
+  padding-left: 0.5rem;
+}
+
+.blog-richtext strong {
+  color: #ffffff;
+  font-weight: 600;
+}
+
+/* Headings: Toggl-like visual rhythm */
 .blog-richtext h2 {
-  color: #ededed !important;
+  color: #ffffff !important; /* Pure white for hierarchy */
   font-family: var(--font-inter), sans-serif;
   font-weight: 700;
-  font-size: 1.5rem; /* 24px - Exact match to Toggl */
+  font-size: 1.75rem; /* 28px - Slightly larger visual weight */
   line-height: 1.3;
-  letter-spacing: -0.01em;
-  margin-top: 4.5rem !important; /* ~72px - The Toggl "Air" */
+  letter-spacing: -0.015em;
+  margin-top: 5rem !important; /* 80px - Distinct section breaks */
   margin-bottom: 1.5rem !important;
 }
 
+@media (max-width: 768px) {
+  .blog-richtext h2 {
+    margin-top: 3.5rem !important;
+    font-size: 1.5rem;
+  }
+
+  .blog-richtext p {
+    margin-bottom: 1.5rem !important;
+  }
+}
+
 .blog-richtext h3 {
-  color: #ededed !important;
+  color: #ffffff !important;
   font-family: var(--font-inter), sans-serif;
   font-weight: 600;
-  font-size: 1.25rem; /* 20px - Exact match to Toggl */
+  font-size: 1.35rem; /* 22px */
   line-height: 1.4;
   letter-spacing: -0.01em;
-  margin-top: 3rem !important; /* 48px */
+  margin-top: 3.5rem !important; /* ~56px */
   margin-bottom: 1rem !important;
 }
 

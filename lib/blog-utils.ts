@@ -1,136 +1,76 @@
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
+/**
+ * Blog utilities - TSX-based version
+ * Refactored to work with TSX article content instead of markdown
+ */
+
 import {
-  BlogPost,
-  BlogFrontmatter,
-  BlogMetadata,
-  TableOfContentsItem,
-} from "./types/blog";
-import { markdownToHtml, extractTableOfContents } from "./markdown";
+  getAllArticleMetadata,
+  getArticleMetadataBySlug,
+  type ArticleMetadata,
+} from "@/content/articles";
+import { BlogPost, BlogMetadata, TableOfContentsItem } from "./types/blog";
 
-const POSTS_DIRECTORY = path.join(process.cwd(), "content/posts");
-
+// Re-export types for compatibility
 export type InlineNewsletterSplit = {
   beforeHtml: string;
   afterHtml: string;
   mode: "second-h2" | "first-h2" | "start";
 };
 
-const H2_CLOSE_TAG = "</h2>";
-
+// This function is kept for backward compatibility but returns empty split
+// since TSX rendering doesn't use HTML splitting
 export function splitHtmlAfterSecondH2(html: string): InlineNewsletterSplit {
-  const matches = [...html.matchAll(/<\/h2>/gi)];
-
-  if (matches.length === 0) {
-    return {
-      beforeHtml: "",
-      afterHtml: html,
-      mode: "start",
-    };
-  }
-
-  const targetMatch = matches[1] ?? matches[0];
-  const index = targetMatch.index ?? -1;
-
-  if (index === -1) {
-    return {
-      beforeHtml: "",
-      afterHtml: html,
-      mode: "start",
-    };
-  }
-
-  const splitPoint = index + H2_CLOSE_TAG.length;
   return {
-    beforeHtml: html.slice(0, splitPoint),
-    afterHtml: html.slice(splitPoint),
-    mode: matches.length >= 2 ? "second-h2" : "first-h2",
+    beforeHtml: "",
+    afterHtml: html,
+    mode: "start",
   };
 }
 
-// Función para leer todos los archivos de posts
-export function getAllPostSlugs(): string[] {
-  if (!fs.existsSync(POSTS_DIRECTORY)) {
-    return [];
-  }
-
-  const fileNames = fs.readdirSync(POSTS_DIRECTORY);
-  return fileNames
-    .filter((fileName) => fileName.endsWith(".md"))
-    .map((fileName) => fileName.replace(/\.md$/, ""));
+// Convert ArticleMetadata to BlogPost format
+function articleToBlogPost(article: ArticleMetadata): BlogPost {
+  return {
+    slug: article.slug,
+    title: article.title,
+    description: article.description,
+    date: article.date,
+    author: article.author || "Héctor Labra",
+    tags: article.tags || [],
+    category: article.category || "General",
+    featured: article.featured || false,
+    published: article.published !== false,
+    content: "", // TSX content is rendered via components
+    excerpt: article.description.slice(0, 150) + "...",
+    readingTime: 5, // Default estimate
+  };
 }
 
-// Función para obtener datos de un post específico
+// Get all blog post slugs (excluding pages like hoja-de-ruta)
+export function getAllPostSlugs(): string[] {
+  return getAllArticleMetadata()
+    .filter((article) => article.slug !== "hoja-de-ruta")
+    .map((article) => article.slug);
+}
+
+// Get a post by slug
 export async function getPostBySlug(slug: string): Promise<BlogPost | null> {
-  try {
-    const fullPath = path.join(POSTS_DIRECTORY, `${slug}.md`);
-
-    if (!fs.existsSync(fullPath)) {
-      return null;
-    }
-
-    const fileContents = fs.readFileSync(fullPath, "utf8");
-    const { data, content } = matter(fileContents);
-
-    const frontmatter = data as BlogFrontmatter;
-
-    // Detect the first heading (H1) in the markdown and prefer it as canonical title.
-    // If the MD does not have any H1, fallback to frontmatter.title.
-    const headings = extractTableOfContents(content);
-    const firstHeading = headings && headings.length > 0 ? headings[0] : null;
-    const canonicalTitle = firstHeading
-      ? firstHeading.level === 0 || firstHeading.level === 1
-        ? firstHeading.text
-        : frontmatter.title
-      : frontmatter.title || slug;
-
-    // Pasamos el título canónico al parser para que elimine un H1 duplicado si coincide
-    const htmlContent = await markdownToHtml(content, {
-      title: canonicalTitle,
-      slug,
-    });
-
-    // Calcular tiempo de lectura (aproximadamente 200 palabras por minuto)
-    const wordCount = content.split(/\s+/).length;
-    const readingTime = Math.ceil(wordCount / 200);
-
-    // Generar excerpt (primeros 150 caracteres del contenido)
-    const excerpt = content.slice(0, 150).trim() + "...";
-
-    return {
-      slug,
-      title: canonicalTitle,
-      description: frontmatter.description,
-      date: frontmatter.date,
-      author: frontmatter.author,
-      tags: frontmatter.tags || [],
-      category: frontmatter.category,
-      featured: frontmatter.featured || false,
-      published: frontmatter.published !== false, // Por defecto true
-      content: htmlContent,
-      excerpt,
-      readingTime,
-      coverImage: frontmatter.cover,
-      coverAlt: frontmatter.coverAlt,
-    };
-  } catch (error) {
-    console.error(`Error loading post ${slug}:`, error);
+  const article = getArticleMetadataBySlug(slug);
+  if (!article || article.slug === "hoja-de-ruta") {
     return null;
   }
+  return articleToBlogPost(article);
 }
 
-// Función para obtener todos los posts
+// Get all published posts
 export async function getAllPosts(): Promise<BlogPost[]> {
-  const slugs = getAllPostSlugs();
-  const posts = await Promise.all(slugs.map((slug) => getPostBySlug(slug)));
-
-  return posts
-    .filter((post): post is BlogPost => post !== null && post.published)
+  return getAllArticleMetadata()
+    .filter((article) => article.slug !== "hoja-de-ruta")
+    .filter((article) => article.published !== false)
+    .map(articleToBlogPost)
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 }
 
-// Función para obtener posts por categoría
+// Get posts by category
 export async function getPostsByCategory(
   category: string
 ): Promise<BlogPost[]> {
@@ -138,26 +78,19 @@ export async function getPostsByCategory(
   return allPosts.filter((post) => post.category === category);
 }
 
-// Función para obtener posts por tag
+// Get posts by tag
 export async function getPostsByTag(tag: string): Promise<BlogPost[]> {
   const allPosts = await getAllPosts();
   return allPosts.filter((post) => post.tags.includes(tag));
 }
 
-// Función para obtener metadatos del blog
+// Get blog metadata
 export async function getBlogMetadata(): Promise<BlogMetadata> {
   const allPosts = await getAllPosts();
 
-  // Extraer categorías únicas
   const categories = [...new Set(allPosts.map((post) => post.category))];
-
-  // Extraer tags únicos
   const tags = [...new Set(allPosts.flatMap((post) => post.tags))];
-
-  // Posts recientes (últimos 5)
   const recentPosts = allPosts.slice(0, 5);
-
-  // Posts destacados
   const featuredPosts = allPosts.filter((post) => post.featured);
 
   return {
@@ -169,70 +102,17 @@ export async function getBlogMetadata(): Promise<BlogMetadata> {
   };
 }
 
-// Función para generar tabla de contenido jerarquizada
-function normalizeTextTOC(s: string) {
-  return s
-    .toLowerCase()
-    .replace(/[^\w\s-]/g, "")
-    .replace(/\s+/g, " ")
-    .trim();
-}
-
+// Table of contents generation is now handled per-article in TSX files
+// This function is kept for backward compatibility
 export function buildTableOfContents(
-  markdown: string,
-  titleToPrune?: string
+  _markdown: string,
+  _titleToPrune?: string
 ): TableOfContentsItem[] {
-  const flatHeadings = extractTableOfContents(markdown);
-
-  // Eliminar el primer H1 si coincide con el título canónico (para evitar TOC roto)
-  if (titleToPrune && flatHeadings.length > 0) {
-    const first = flatHeadings[0];
-    // En extractTableOfContents el H1 queda con level = 0 (por la lógica existente)
-    if (
-      (first.level === 0 || first.level === 1) &&
-      normalizeTextTOC(first.text) === normalizeTextTOC(titleToPrune)
-    ) {
-      flatHeadings.shift();
-    }
-  }
-
-  // Solo incluimos H2 (level === 1) para un TOC más conciso, alineado con el modelo Toggl
-  const filteredHeadings = flatHeadings.filter(
-    (heading) => heading.level === 1
-  );
-
-  const toc: TableOfContentsItem[] = [];
-  const stack: TableOfContentsItem[] = [];
-
-  filteredHeadings.forEach((heading) => {
-    const item: TableOfContentsItem = {
-      id: heading.id,
-      text: heading.text,
-      level: heading.level,
-      children: [],
-    };
-
-    // Encontrar el lugar correcto en la jerarquía
-    while (stack.length > 0 && stack[stack.length - 1].level >= heading.level) {
-      stack.pop();
-    }
-
-    if (stack.length === 0) {
-      toc.push(item);
-    } else {
-      if (!stack[stack.length - 1].children) {
-        stack[stack.length - 1].children = [];
-      }
-      stack[stack.length - 1].children!.push(item);
-    }
-
-    stack.push(item);
-  });
-
-  return toc;
+  // Return empty - TOC is now defined per-article in the page component
+  return [];
 }
 
-// Función para obtener posts relacionados por tags
+// Get related posts
 export async function getRelatedPosts(
   currentSlug: string,
   limit: number = 3
@@ -241,33 +121,27 @@ export async function getRelatedPosts(
   if (!currentPost) return [];
 
   const allPosts = await getAllPosts();
-
-  // Filtrar el post actual
   const otherPosts = allPosts.filter((post) => post.slug !== currentSlug);
 
-  // Calcular relevancia basada en tags compartidos
   const postsWithScore = otherPosts.map((post) => {
     const sharedTags = post.tags.filter((tag) =>
       currentPost.tags.includes(tag)
     );
     const sameCategory = post.category === currentPost.category ? 1 : 0;
     const score = sharedTags.length * 2 + sameCategory;
-
     return { post, score };
   });
 
-  // Ordenar por relevancia y luego por fecha
-  const sortedPosts = postsWithScore
+  return postsWithScore
     .sort((a, b) => {
       if (b.score !== a.score) return b.score - a.score;
       return new Date(b.post.date).getTime() - new Date(a.post.date).getTime();
     })
-    .map((item) => item.post);
-
-  return sortedPosts.slice(0, limit);
+    .map((item) => item.post)
+    .slice(0, limit);
 }
 
-// Función para obtener el post anterior
+// Get previous post
 export async function getPreviousPost(
   currentSlug: string
 ): Promise<BlogPost | null> {
@@ -281,7 +155,7 @@ export async function getPreviousPost(
   return allPosts[currentIndex + 1];
 }
 
-// Función para obtener el siguiente post
+// Get next post
 export async function getNextPost(
   currentSlug: string
 ): Promise<BlogPost | null> {
