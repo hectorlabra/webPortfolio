@@ -85,7 +85,7 @@ export default async function HojaDeRutaPage() {
       {/* Hero Section */}
       <section
         id="post-hero"
-        className="relative w-full overflow-hidden py-16 sm:py-20"
+        className="relative w-full overflow-hidden pt-12 pb-6"
       >
         <LazyGeometricPattern priority opacity={0.25} />
         <div className="relative z-10 mx-auto max-w-[700px] px-4 sm:px-6">
@@ -136,8 +136,8 @@ export default async function HojaDeRutaPage() {
       </section>
 
       {/* Main Content */}
-      <main className="relative z-10 mx-auto max-w-[700px] px-4 sm:px-6 pb-16">
-        <article id="post-article" className="blog-richtext space-y-8">
+      <main className="relative z-10 mx-auto max-w-[700px] px-4 sm:px-6 pb-16 pt-0">
+        <article id="post-article" className="blog-richtext">
           {/* First part of content */}
           <div dangerouslySetInnerHTML={{ __html: beforeHtml }} />
 

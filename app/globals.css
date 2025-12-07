@@ -52,10 +52,7 @@
     @apply bg-[#130c24] text-white;
   }
 
-  /* Aplicando leading-relaxed globalmente a todos los párrafos */
-  p {
-    @apply leading-relaxed;
-  }
+  /* Global paragraph styles removed - handled per-context for better control */
 }
 
 /* Estilos para el efecto typewriter */
@@ -113,41 +110,7 @@
   }
 }
 
-/* Reduce excessive heading spacing on smaller screens for better layout */
-@media (max-width: 768px) {
-  .blog-richtext h1,
-  .prose h1 {
-    margin-top: 2.5rem;
-    margin-bottom: 0.75rem;
-    font-size: clamp(1.75rem, 8vw, 2.5rem); /* 28-40px mobile - Marc Lou */
-  }
-
-  .blog-richtext h2,
-  .prose h2 {
-    margin-top: 3rem;
-    margin-bottom: 1rem;
-    font-size: clamp(1.5rem, 6vw, 2rem); /* 24-32px mobile */
-  }
-
-  .blog-richtext h3,
-  .prose h3 {
-    margin-top: 2rem;
-    margin-bottom: 0.75rem;
-    font-size: clamp(1.25rem, 5vw, 1.5rem); /* 20-24px mobile */
-  }
-
-  .blog-richtext p,
-  .blog-richtext li {
-    font-size: 1rem; /* 16px on mobile for better readability */
-    line-height: 1.65;
-  }
-
-  .blog-richtext h4,
-  .prose h4 {
-    margin-top: 1.5rem;
-    margin-bottom: 0.75rem;
-  }
-}
+/* Mobile typography adjustments for blog-richtext handled inline in the main rules */
 
 /* Clases de utilidad responsive */
 .py-auto-responsive {
@@ -569,91 +532,94 @@
   text-decoration: none !important;
 }
 
-/* Blog rich text - Sistema tipográfico Marc Lou */
+/* Blog rich text - Sistema tipográfico Toggl-inspired (Dark Mode Refined) */
 .blog-richtext {
-  @apply text-white/90; /* High contrast for readability */
-  font-size: 18px; /* ensure 18px base for consistency */
+  width: 100%;
+}
+
+/* Reset margins for first and last children to avoid excessive spacing */
+.blog-richtext > *:first-child,
+.blog-richtext > div:first-child > *:first-child {
+  margin-top: 0 !important;
+}
+
+.blog-richtext > *:last-child,
+.blog-richtext > div:last-child > *:last-child {
+  margin-bottom: 0 !important;
 }
 
 .blog-richtext p,
 .blog-richtext li {
-  @apply text-white/80; /* Slightly softer than pure white for long reading */
-  font-size: 1.125rem; /* 18px - readable */
-  line-height: 1.8; /* Improve reading flow - closer to Toggl's airy feel */
+  color: #cfcfcf; /* Soft gray for body text (~80% luminance) */
+  font-size: 1.125rem; /* 18px - Exact match to Toggl */
+  line-height: 1.7; /* Optimized for 18px */
   font-weight: 400;
   font-family: var(--font-inter), "Inter", system-ui, -apple-system, "Segoe UI",
     sans-serif;
+  margin-bottom: 1.5em !important;
 }
 
-.blog-richtext p {
-  @apply mb-5; /* 20px - slightly more breathing room */
-}
-
+/* Headings: Reduced scale & Soft White */
 .blog-richtext h1 {
-  @apply text-white;
-  /* Keep H1 as Inconsolata for the "Tech/Dev" branding punch at the start */
+  color: #ededed !important;
   font-family: var(--font-inconsolata), monospace;
   font-weight: 800;
-  font-size: clamp(2.25rem, 6vw, 3.75rem);
-  line-height: 1;
-  letter-spacing: -0.025em;
-  margin-top: 4rem;
+  font-size: clamp(2rem, 5vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-top: 3rem;
   margin-bottom: 2rem;
 }
 
 .blog-richtext h2 {
-  color: #ffffff !important;
-  /* Switch internal headers to Inter for smoother reading flow (like Toggl) */
+  color: #ededed !important;
   font-family: var(--font-inter), sans-serif;
   font-weight: 700;
-  font-size: clamp(1.75rem, 5vw, 2.5rem);
-  line-height: 1.2;
-  letter-spacing: -0.02em;
-  margin-top: 4rem;
-  margin-bottom: 1.5rem;
+  font-size: 1.5rem; /* 24px - Exact match to Toggl */
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  margin-top: 4.5rem !important; /* ~72px - The Toggl "Air" */
+  margin-bottom: 1.5rem !important;
 }
 
 .blog-richtext h3 {
-  color: #ffffff !important;
+  color: #ededed !important;
   font-family: var(--font-inter), sans-serif;
   font-weight: 600;
-  font-size: clamp(1.375rem, 3.5vw, 1.75rem);
-  line-height: 1.3;
+  font-size: 1.25rem; /* 20px - Exact match to Toggl */
+  line-height: 1.4;
   letter-spacing: -0.01em;
-  margin-top: 3rem;
-  margin-bottom: 1rem;
+  margin-top: 3rem !important; /* 48px */
+  margin-bottom: 1rem !important;
 }
 
 .blog-richtext h4 {
-  color: #ffffff !important;
+  color: #ededed !important;
   font-family: var(--font-inter), sans-serif;
   font-weight: 600;
-  font-size: clamp(1.125rem, 2.5vw, 1.375rem);
+  font-size: 1.125rem; /* 18px */
   line-height: 1.4;
-  letter-spacing: -0.01em;
-  margin-top: 2.5rem;
+  letter-spacing: 0;
+  margin-top: 2rem;
   margin-bottom: 0.75rem;
 }
 
-/* Anchor links inside headings should inherit the heading color */
-.blog-richtext h1 a.anchor-link,
-.blog-richtext h2 a.anchor-link,
-.blog-richtext h3 a.anchor-link,
-.blog-richtext h4 a.anchor-link,
-.blog-richtext h5 a.anchor-link,
-.blog-richtext h6 a.anchor-link {
-  color: inherit !important;
-  border: none !important;
-  text-decoration: none !important;
-  font-weight: inherit !important;
-}
-
 .blog-richtext h5 {
-  @apply text-base font-semibold tracking-tight text-white mt-6 mb-3 font-mono;
+  color: #ededed !important;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
 }
 
 .blog-richtext h6 {
-  @apply text-sm font-semibold tracking-tight text-white mt-4 mb-3 uppercase font-mono;
+  color: #ededed !important;
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-top: 2rem;
+  margin-bottom: 0.5rem;
 }
 
 /* Enlaces generales del contenido (excluyendo anchors de títulos y otros elementos de UI si fuera necesario) */
