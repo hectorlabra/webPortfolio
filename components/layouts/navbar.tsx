@@ -1,20 +1,40 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { Logo } from "@/components/shared/logo";
+import { useScrollDirection } from "@/hooks/use-scroll-direction";
+import { cn } from "@/lib/utils";
 
 export function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { scrollDirection, isAtTop } = useScrollDirection();
+
+  // Hide on scroll down, show on scroll up (or at top)
+  // Default to visible on initial load or if at top
+  const isVisible = isAtTop || scrollDirection === "up";
 
   return (
     <>
       {/* Header Section - Optimizado backdrop-blur */}
+      {/* 
+        Changing from sticky to fixed to allow hide/show behavior.
+        z-40 ensures it's above most content but below modals/progress bar (if z-50+).
+      */}
       <header
         id="site-header"
-        className="sticky top-0 z-40 w-full border-b border-white/10 bg-[#0a0612]/95 backdrop-blur-sm supports-[backdrop-filter]:bg-[#0a0612]/60"
+        className={cn(
+          "fixed top-0 left-0 right-0 z-40 w-full border-b transition-all duration-300 ease-in-out",
+          // Base styles
+          "bg-[#0a0612]/95 backdrop-blur-sm supports-[backdrop-filter]:bg-[#0a0612]/60",
+          // Visibility toggle
+          isVisible ? "translate-y-0" : "-translate-y-full",
+          // Border visibility - nicer if border fades or is always there?
+          // Keeping consistent with existing design
+          "border-white/10"
+        )}
       >
         <div className="mx-auto w-full max-w-[1000px]">
           <div className="container flex h-16 items-center justify-between">
@@ -77,6 +97,17 @@ export function Navbar() {
           </div>
         </div>
       </header>
+
+      {/* 
+        Spacer to prevent content from jumping when switching to fixed.
+        Since existing layout expected 'sticky', content was in flow. 
+        'Fixed' removes it from flow, so we need a placeholder if we want to preserve initial offset.
+        However, usually smart menus overlay content.
+        Let's add a placeholder div if we want to keep the "sticky" feel for initial layout
+        OR rely on padding-top from calling pages. 
+        Looking at layouts, usually it's nice to have content start after header.
+      */}
+      <div className="h-16 w-full" aria-hidden="true" />
 
       {/* Mobile Menu Sheet */}
       <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
