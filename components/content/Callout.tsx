@@ -32,7 +32,7 @@ export function Callout({
       <div
         className={cn(
           // User feedback: #e2e2e2, font-light (300)
-          "text-[#e2e2e2] text-lg leading-[1.8] font-light tracking-normal",
+          "text-[#e2e2e2] text-lg leading-[1.9] font-light tracking-normal",
           "[&_strong]:text-[#e0e0e0] [&_strong]:font-medium",
           "[&_b]:text-[#e0e0e0] [&_b]:font-medium"
         )}

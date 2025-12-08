@@ -8,7 +8,7 @@ import {
 
 // Metadata exportada para uso en el layout
 export const metadata = {
-  title: "Cómo Construir Tu Primer SaaS Rentable en 4-8 Semanas",
+  title: "Cómo construir tu primer SaaS rentable en 4-8 semanas",
   description:
     "Hoja de ruta práctica para construir un micro-SaaS desde tu empleo estable usando IA, SEO y enfoque ágil.",
   date: "2025-12-02",
@@ -52,13 +52,13 @@ export default function HojaDeRutaContent() {
 
       {/* SECCIÓN: El Roadmap Completo */}
       <Heading level={2} id="el-roadmap-completo">
-        El Roadmap Completo
+        El roadmap completo
       </Heading>
 
       <PlaceholderImage text="Roadmap Técnico Visual" />
 
       <Heading level={3} id="habilidades-tecnicas">
-        1. Habilidades Técnicas (en orden de aprendizaje)
+        1. Habilidades técnicas (en orden de aprendizaje)
       </Heading>
 
       <Paragraph>
@@ -86,7 +86,7 @@ export default function HojaDeRutaContent() {
       </Paragraph>
 
       <Heading level={3} id="construccion-marca">
-        2. Construcción de Marca y Activos
+        2. Construcción de marca y activos
       </Heading>
 
       <Paragraph>
@@ -111,7 +111,7 @@ export default function HojaDeRutaContent() {
       </Paragraph>
 
       <Heading level={3} id="modelos-monetizacion">
-        3. Modelos de Monetización
+        3. Modelos de monetización
       </Heading>
 
       <List
@@ -127,8 +127,8 @@ export default function HojaDeRutaContent() {
 
       {/* SECCIÓN: Cómo Construir Software */}
       <Heading level={2} id="como-construir-software">
-        Cómo Construir Software Que Genera Ingresos (Sin Pasar 10 Años
-        Estudiando)
+        Cómo construir software que genera ingresos (sin pasar 10 años
+        estudiando)
       </Heading>
 
       <Callout variant="note">
@@ -197,13 +197,13 @@ export default function HojaDeRutaContent() {
 
       {/* SECCIÓN: La Problemática Real */}
       <Heading level={2} id="la-problematica-real">
-        La Problemática Real
+        La problemática real
       </Heading>
 
       <PlaceholderImage text="El Mundo Actual" />
 
       <Heading level={3} id="el-mundo-actual">
-        El Mundo Actual
+        El mundo actual
       </Heading>
 
       <Paragraph>Ahora sí, déjame ponerte en contexto.</Paragraph>
@@ -235,7 +235,7 @@ export default function HojaDeRutaContent() {
       </Paragraph>
 
       <Heading level={3} id="los-desafios">
-        Los Desafíos
+        Los desafíos
       </Heading>
 
       <Paragraph>
@@ -277,7 +277,7 @@ export default function HojaDeRutaContent() {
       </Callout>
 
       <Heading level={3} id="la-distorsion-del-mercado">
-        La Distorsión del Mercado (Y Tu Oportunidad)
+        La distorsión del mercado (y tu oportunidad)
       </Heading>
 
       <Paragraph>
@@ -338,7 +338,6 @@ export default function HojaDeRutaContent() {
         tienen el perfil correcto y conocen el potencial del software tienen dos
         obstáculos reales:
       </Paragraph>
-
       <List
         ordered
         items={[
@@ -370,7 +369,7 @@ export default function HojaDeRutaContent() {
       </Paragraph>
 
       <Heading level={3} id="aclaracion-critica">
-        Una aclaración crítica: Aprender a Programar ≠ Generadores de Software
+        Una aclaración crítica: Aprender a programar ≠ generadores de software
         con IA
       </Heading>
 
@@ -451,11 +450,11 @@ export default function HojaDeRutaContent() {
       <Divider />
 
       <Heading level={2} id="mi-historia">
-        Mi Historia (Y La Oportunidad Que Casi Pierdo)
+        Mi historia (y la oportunidad que casi pierdo)
       </Heading>
 
       <Heading level={3} id="los-inicios">
-        Los Inicios
+        Los inicios
       </Heading>
 
       <Paragraph>
@@ -514,7 +513,7 @@ export default function HojaDeRutaContent() {
       <PlaceholderImage text="Agencia Ecommerce Marte" />
 
       <Heading level={3} id="el-cambio">
-        El Cambio (La Epifanía de los 5K USD)
+        El cambio (la epifanía de los 5K USD)
       </Heading>
 
       <Paragraph>
@@ -547,7 +546,7 @@ export default function HojaDeRutaContent() {
       </Paragraph>
 
       <Heading level={3} id="la-pregunta-del-millon">
-        La Pregunta del Millón
+        La pregunta del millón
       </Heading>
 
       <Callout variant="tip">
@@ -618,7 +617,7 @@ export default function HojaDeRutaContent() {
 
       {/* SECCIÓN: Tu Primer Paso */}
       <Heading level={2} id="tu-primer-paso">
-        Tu Primer Paso
+        Tu primer paso
       </Heading>
 
       <PlaceholderImage text="Tu Primer Paso" />
@@ -725,11 +724,11 @@ export default function HojaDeRutaContent() {
 
       {/* SECCIÓN: El Camino y La Estrella */}
       <Heading level={2} id="el-camino-y-la-estrella">
-        El Camino y La Estrella (La Solución)
+        El camino y la estrella (la solución)
       </Heading>
 
       <Heading level={3} id="construccion-agil">
-        Construcción Ágil + Crecimiento Orgánico
+        Construcción ágil + crecimiento orgánico
       </Heading>
 
       <Paragraph>
@@ -760,8 +759,8 @@ export default function HojaDeRutaContent() {
       </Paragraph>
 
       <Heading level={4} id="curva-aprendizaje">
-        1. La Curva de Aprendizaje Se Redujo Dramáticamente (Para El Perfil
-        Correcto)
+        1. La curva de aprendizaje se redujo dramáticamente (para el perfil
+        correcto)
       </Heading>
 
       <Paragraph>
@@ -800,7 +799,7 @@ export default function HojaDeRutaContent() {
       <PlaceholderImage text="Software con IA como Herramienta" />
 
       <Heading level={4} id="metodo-agil">
-        2. El Método Ágil Funciona (Pero Requiere Disciplina)
+        2. El método ágil funciona (pero requiere disciplina)
       </Heading>
 
       <Paragraph>
@@ -829,7 +828,7 @@ export default function HojaDeRutaContent() {
       </Paragraph>
 
       <Heading level={4} id="ventaja-seo">
-        3. La Ventaja del SEO (Que Casi Nadie Aprovecha)
+        3. La ventaja del SEO (que casi nadie aprovecha)
       </Heading>
 
       <Paragraph>Aquí es donde se pone realmente interesante.</Paragraph>
@@ -868,14 +867,14 @@ export default function HojaDeRutaContent() {
       </Paragraph>
 
       <Heading level={3} id="el-sistema-completo">
-        El Sistema Completo
+        El sistema completo
       </Heading>
 
       <Paragraph>Déjame mostrarte cómo funciona el sistema:</Paragraph>
 
       <Paragraph>
         <strong className="text-white">
-          FASE 1: Construcción Ágil (2-4 semanas de trabajo enfocado)
+          FASE 1: Construcción ágil (2-4 semanas de trabajo enfocado)
         </strong>
       </Paragraph>
 
@@ -889,7 +888,7 @@ export default function HojaDeRutaContent() {
 
       <Paragraph>
         <strong className="text-white">
-          FASE 2: Posicionamiento Orgánico (en paralelo)
+          FASE 2: Posicionamiento orgánico (en paralelo)
         </strong>
       </Paragraph>
 
@@ -930,7 +929,7 @@ export default function HojaDeRutaContent() {
       <PlaceholderImage text="El Sistema Completo" />
 
       <Heading level={3} id="por-que-ahora">
-        Por Qué Esto Funciona Ahora (Y No Hace 5 Años)
+        Por qué esto funciona ahora (y no hace 5 años)
       </Heading>
 
       <Paragraph>Hay tres razones por las que este es EL momento:</Paragraph>
@@ -966,7 +965,7 @@ export default function HojaDeRutaContent() {
       />
 
       <Heading level={3} id="el-perfil-que-funciona">
-        El Perfil Que Funciona
+        El perfil que funciona
       </Heading>
 
       <Paragraph>Aquí está la realidad sin filtros:</Paragraph>
