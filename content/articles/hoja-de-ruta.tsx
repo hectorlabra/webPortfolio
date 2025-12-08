@@ -1,4 +1,10 @@
-import { Paragraph, Heading, List, Blockquote } from "@/components/content";
+import {
+  Paragraph,
+  Heading,
+  List,
+  Blockquote,
+  Callout,
+} from "@/components/content";
 
 // Metadata exportada para uso en el layout
 export const metadata = {
@@ -34,14 +40,13 @@ function Divider() {
 export default function HojaDeRutaContent() {
   return (
     <>
-      {/* Advertencia inicial */}
-      <Blockquote>
-        <strong className="text-white">Advertencia:</strong> Este no es un atajo
-        mágico ni un "haz click y gana dinero". Construir software rentable
-        requiere trabajo enfocado, pensamiento crítico y constancia durante al
-        menos 4 semanas. Si buscas resultados sin esfuerzo, este artículo no es
-        para ti.
-      </Blockquote>
+      {/* Advertencia inicial - Ahora es un Callout */}
+      <Callout variant="warning">
+        <strong>Advertencia:</strong> Este no es un atajo mágico ni un "haz
+        click y gana dinero". Construir software rentable requiere trabajo
+        enfocado, pensamiento crítico y constancia durante al menos 4 semanas.
+        Si buscas resultados sin esfuerzo, este artículo no es para ti.
+      </Callout>
 
       <Divider />
 
@@ -57,75 +62,53 @@ export default function HojaDeRutaContent() {
       </Heading>
 
       <Paragraph>
-        <strong className="text-white">
-          Front-End (Lo que ve el usuario):
-        </strong>
+        El stack técnico que necesitas dominar se divide en tres áreas
+        principales. Primero está el <strong>Front-End</strong>, que incluye
+        JavaScript, React, TailwindCSS y Next.js. Estas tecnologías te permiten
+        crear interfaces visuales atractivas y funcionales que los usuarios
+        verán y usarán directamente.
       </Paragraph>
-
-      <List items={["JavaScript", "React", "TailwindCSS", "Next.js"]} />
 
       <Paragraph>
-        <strong className="text-white">
-          Back-End (La lógica del negocio):
-        </strong>
+        Luego está el <strong>Back-End</strong>, donde trabajarás con Mongoose
+        (MongoDB) y API Routes para manejar la lógica del negocio, la
+        persistencia de datos y las operaciones que suceden "detrás de escena"
+        de tu aplicación.
       </Paragraph>
-
-      <List items={["Mongoose (MongoDB)", "API Routes"]} />
 
       <Paragraph>
-        <strong className="text-white">
-          Herramientas Complementarias (necesarias):
-        </strong>
+        Finalmente, necesitarás dominar algunas{" "}
+        <strong>Herramientas Complementarias</strong> que son esenciales para el
+        desarrollo moderno: IA para desarrollo (Cursor, Copilot, Claude), inglés
+        técnico (nivel B2 mínimo para acceder al mercado global), SEO técnico
+        para optimizar tu tráfico orgánico, y herramientas como Supabase y
+        TypeScript para cuando necesites escalar.
       </Paragraph>
-
-      <List
-        items={[
-          "IA para desarrollo (Cursor, Copilot, Claude, etc.)",
-          "Inglés técnico (>B2 para abrirte a más oportunidades y mercado global)",
-          "SEO Técnico (Para optimizar la velocidad y UX, aumentando tu tráfico orgánico)",
-          "Supabase (Postgres & Backend as a Service, para cuando necesites escalar tu SaaS)",
-          "TypeScript (Para código con menos bugs)",
-        ]}
-      />
 
       <Heading level={3} id="construccion-marca">
         2. Construcción de Marca y Activos
       </Heading>
 
       <Paragraph>
-        <strong className="text-white">Mentalidad:</strong>
+        La mentalidad correcta es fundamental: debes pensar como dueño de
+        producto, no como empleado. Esto significa enfocarte en soluciones
+        escalables y en construir activos que trabajen para ti incluso cuando no
+        estés trabajando activamente en ellos.
       </Paragraph>
-
-      <List
-        items={[
-          "Pensar como dueño de producto, no como empleado",
-          "Enfoque en soluciones escalables",
-        ]}
-      />
 
       <Paragraph>
-        <strong className="text-white">Proyectos que necesitas:</strong>
+        Los proyectos que necesitas construir son principalmente dos: un Blog
+        con Newsletter (para establecer autoridad y capturar leads), y tu
+        Micro-SaaS junto con Freetools que serán tus activos principales
+        generadores de ingresos.
       </Paragraph>
-
-      <List
-        items={[
-          "Blog + Newsletter (para autoridad y captura)",
-          "Micro-SaaS & Freetools (tus activos principales)",
-        ]}
-      />
 
       <Paragraph>
-        <strong className="text-white">Canales de distribución:</strong>
+        Tus canales de distribución incluyen LinkedIn y X para visibilidad, tu
+        Newsletter para conversión, Google para tráfico orgánico constante, y
+        opcionalmente Ads (Meta y/o Google) cuando ya tengas suficiente tracción
+        e ingresos para justificar la inversión.
       </Paragraph>
-
-      <List
-        items={[
-          "LinkedIn / X (para visibilidad)",
-          "Newsletter (para conversión)",
-          "Google (para tráfico orgánico constante)",
-          "Ads OPCIONAL (Meta y/o Google) (Solo cuando ya tienes suficiente tracción e ingresos)",
-        ]}
-      />
 
       <Heading level={3} id="modelos-monetizacion">
         3. Modelos de Monetización
@@ -148,136 +131,61 @@ export default function HojaDeRutaContent() {
         Estudiando)
       </Heading>
 
-      <Paragraph>
+      <Callout variant="note">
         Esta es la hoja de ruta que me hubiese gustado tener cuando inicié.
-      </Paragraph>
-
-      <Blockquote>
         Gracias a este mapa, podrás pasar de tener solo un ingreso (tu salario)
         a construir un segundo ingreso con activos digitales que trabajen para
         ti, sin depender exclusivamente de tu empleador.
-      </Blockquote>
-
-      <Paragraph>Déjame adivinar tu situación:</Paragraph>
+      </Callout>
 
       <Paragraph>
-        <strong className="text-white">Tienes un trabajo estable.</strong> Pagas
-        tus cuentas. No te va mal.
+        Déjame adivinar tu situación:{" "}
+        <strong>Tienes un trabajo estable.</strong> Pagas tus cuentas. No te va
+        mal. Pero cada mes que pasa, te das cuenta de que tu salario se lo come
+        la inflación, no hay crecimiento real en tu puesto, tu tiempo nunca será
+        tuyo (vacaciones limitadas, horarios fijos) y un despido te dejaría sin
+        ingresos inmediatamente.
       </Paragraph>
-
-      <Paragraph>Pero cada mes que pasa, te das cuenta de algo:</Paragraph>
-
-      <List
-        items={[
-          <>
-            <strong className="text-white">
-              Tu salario se lo come la inflación
-            </strong>{" "}
-            (cada año compras menos con lo mismo)
-          </>,
-          <>
-            <strong className="text-white">No hay crecimiento real</strong> (los
-            ascensos están congelados o son muy lentos)
-          </>,
-          <>
-            <strong className="text-white">Tu tiempo nunca será tuyo</strong>{" "}
-            (vacaciones limitadas, horarios fijos)
-          </>,
-          <>
-            <strong className="text-white">
-              Un despido te dejaría sin ingresos
-            </strong>{" "}
-            (no tienes plan B ni colchón real)
-          </>,
-        ]}
-      />
 
       <Paragraph>
         No se trata de que estés "aburrido" o quieras "escapar de la oficina".
-      </Paragraph>
-
-      <Paragraph>
         Se trata de algo mucho más serio:{" "}
-        <strong className="text-white">
-          necesitas un segundo ingreso que te dé opciones reales.
-        </strong>
+        <strong>necesitas un segundo ingreso que te dé opciones reales.</strong>{" "}
+        Has estado investigando y has visto que los micro-SaaS pueden generar
+        ingresos recurrentes mensuales (MRR) que escalan, activos digitales que
+        puedes vender por múltiplos e independencia económica real.
       </Paragraph>
-
-      <Paragraph>
-        Has estado investigando. Has visto que los micro-SaaS pueden generar:
-      </Paragraph>
-
-      <List
-        items={[
-          "Ingresos recurrentes mensuales (MRR) que escalan",
-          "Activos digitales que puedes vender por múltiplos",
-          "Independencia económica real",
-        ]}
-      />
 
       <PlaceholderImage text="Ingresos Lineales vs Exponenciales" />
 
       <Paragraph>
-        <strong className="text-white">Pero algo te detiene.</strong>
-      </Paragraph>
-
-      <Paragraph>Dos cosas, específicamente:</Paragraph>
-
-      <List
-        ordered
-        items={[
-          <>
-            <strong className="text-white">
-              "¿Tengo la capacidad técnica para construir un SaaS?"
-            </strong>{" "}
-            — No eres ingeniero. Quizá apenas tocaste código en la universidad
-            (o nunca).
-          </>,
-          <>
-            <strong className="text-white">
-              "¿Tengo el tiempo para aprenderlo sin descuidar mi trabajo
-              actual?"
-            </strong>{" "}
-            — Tu trabajo es demandante. No tienes 6-12 meses para encerrarte a
-            estudiar teoría.
-          </>,
-        ]}
-      />
-
-      <Paragraph>Quizá has considerado comprar algún curso.</Paragraph>
-
-      <Paragraph>Quizá empezaste uno y lo dejaste a la mitad.</Paragraph>
-
-      <Paragraph>
-        Quizá simplemente tienes esa idea guardada, esperando "el momento
-        perfecto".
+        Pero algo te detiene. Dos cosas, específicamente:{" "}
+        <strong>"¿Tengo la capacidad técnica para construir un SaaS?"</strong>{" "}
+        (no eres ingeniero, quizá apenas tocaste código) y{" "}
+        <strong>
+          "¿Tengo el tiempo para aprenderlo sin descuidar mi trabajo actual?"
+        </strong>{" "}
+        (tu trabajo es demandante, no tienes 6-12 meses libres).
       </Paragraph>
 
       <Paragraph>
-        Déjame decirte algo:{" "}
-        <strong className="text-white">
-          esos dos obstáculos son reales, pero tienen solución.
-        </strong>
-      </Paragraph>
-
-      <Paragraph>
-        Y este mapa te va a mostrar exactamente cómo superarlos.
+        Quizá has considerado comprar algún curso, quizá empezaste uno y lo
+        dejaste a la mitad, o quizá simplemente tienes esa idea guardada,
+        esperando "el momento perfecto". Déjame decirte algo:{" "}
+        <strong>esos dos obstáculos son reales, pero tienen solución.</strong> Y
+        este mapa te va a mostrar exactamente cómo superarlos.
       </Paragraph>
 
       <Paragraph>
         Miles de profesionales con capacidad técnica y visión comercial siguen
         dependiendo exclusivamente de su salario mensual porque creen que
         construir software requiere ser un genio matemático o renunciar a todo
-        durante años.
+        durante años. La realidad es que la educación tradicional te prepara
+        para ser empleado, no para construir productos propios.
       </Paragraph>
 
       <Paragraph>
-        La realidad es que la educación tradicional te prepara para ser
-        empleado, no para construir productos propios.
-      </Paragraph>
-
-      <Paragraph>
-        <strong className="text-white">
+        <strong>
           Quédate hasta el final, porque voy a mostrarte el sistema exacto que
           me permitió generar más de 5K USD al mes de forma semi-pasiva con
           tráfico orgánico... y lo que debí haber hecho diferente para convertir
@@ -300,35 +208,19 @@ export default function HojaDeRutaContent() {
 
       <Paragraph>Ahora sí, déjame ponerte en contexto.</Paragraph>
 
-      <Blockquote>
+      <Callout variant="note">
         ¿Por qué parece estar todo tan complejo? ¿Por qué construir un segundo
         ingreso parece ser 10x más difícil que hace 5 años?
-      </Blockquote>
+      </Callout>
 
       <Paragraph>
-        Déjame decirte que eso solo va a seguir acelerando...
-      </Paragraph>
-
-      <Paragraph>
-        Pero precisamente{" "}
-        <strong className="text-white">
-          "esa crisis" es tu nueva oportunidad
-        </strong>{" "}
-        (y en la historia siempre ha sido así).
-      </Paragraph>
-
-      <Paragraph>
-        <strong className="text-white">Te voy a poner un ejemplo:</strong>
-      </Paragraph>
-
-      <Paragraph>
-        Seguramente en la escuela te enseñaron que la edad media eran las "eras
-        oscuras", que había mucho "retroceso" y el mundo estuvo "estancado" por
-        casi 1000 años.
-      </Paragraph>
-
-      <Paragraph>
-        Bueno... Solo luego de una crisis, fue que surgió "el renacimiento".
+        Déjame decirte que eso solo va a seguir acelerando... Pero precisamente{" "}
+        <strong>"esa crisis" es tu nueva oportunidad</strong> (y en la historia
+        siempre ha sido así). Te voy a poner un ejemplo: Seguramente en la
+        escuela te enseñaron que la edad media eran las "eras oscuras", que
+        había mucho "retroceso" y el mundo estuvo "estancado" por casi 1000
+        años. Bueno... Solo luego de una crisis, fue que surgió "el
+        renacimiento".
       </Paragraph>
 
       <PlaceholderImage text="Crisis igual Oportunidad" />
@@ -337,18 +229,9 @@ export default function HojaDeRutaContent() {
         Si te pones a analizar a las grandes figuras del renacimiento, como
         Leonardo da Vinci, te das cuenta de que todos fueron "polímatas" o
         personas que mezclan muchos campos aparentemente distantes y los
-        fusionaban, creando algo completamente innovador.
-      </Paragraph>
-
-      <Paragraph>
-        <strong className="text-white">¿Curioso no?</strong>
-      </Paragraph>
-
-      <Paragraph>
-        <strong className="text-white">
-          Más adelante vas a entender por qué esa mezcla de habilidades
-          (Polimatía) es tan crítica en el mundo de hoy.
-        </strong>
+        fusionaban, creando algo completamente innovador.{" "}
+        <strong>¿Curioso no?</strong> Más adelante vas a entender por qué esa
+        mezcla de habilidades (Polimatía) es tan crítica en el mundo de hoy.
       </Paragraph>
 
       <Heading level={3} id="los-desafios">
@@ -372,10 +255,7 @@ export default function HojaDeRutaContent() {
       <Paragraph>
         Pero son una tremenda oportunidad, tal cual sucedió con el
         renacimiento...
-      </Paragraph>
-
-      <Paragraph>
-        <strong className="text-white">
+        <strong>
           Todos los desafíos que actualmente sientes que tienes, en realidad NO
           SON TU CULPA.
         </strong>
@@ -384,31 +264,25 @@ export default function HojaDeRutaContent() {
       <Paragraph>
         De cada crisis surge una oportunidad (MUY GRANDE) y estas,
         principalmente, son causadas por innovaciones tecnológicas rupturistas.{" "}
-        <strong className="text-white">
-          Actualmente, es el avance de la IA.
-        </strong>
+        <strong>Actualmente, es el avance de la IA.</strong> Son el resultado de
+        un cambio de era. De la era industrial (especialización) a la era
+        digital y de la IA (generalistas creadores).
       </Paragraph>
 
-      <Paragraph>
-        Son el resultado de un cambio de era. De la era industrial
-        (especialización) a la era digital y de la IA (generalistas creadores).
-      </Paragraph>
-
-      <Blockquote>
+      <Callout variant="note">
         No es mi intención hacer un análisis completo histórico y sociológico
         del asunto, pero si te das cuenta, esta crisis también se refleja en
         cómo las personas están repensando el trabajo, el propósito y los
         ingresos...
-      </Blockquote>
+      </Callout>
 
       <Heading level={3} id="la-distorsion-del-mercado">
         La Distorsión del Mercado (Y Tu Oportunidad)
       </Heading>
 
-      <Paragraph>Entonces, aquí está pasando algo interesante.</Paragraph>
-
       <Paragraph>
-        Por un lado, el mercado laboral tradicional está cada vez más roto:
+        Entonces, aquí está pasando algo interesante. Por un lado, el mercado
+        laboral tradicional está cada vez más roto:
       </Paragraph>
 
       <List
@@ -422,7 +296,7 @@ export default function HojaDeRutaContent() {
 
       <Paragraph>
         Por otro lado,{" "}
-        <strong className="text-white">
+        <strong>
           nunca ha sido más accesible construir software para quienes tienen el
           perfil correcto.
         </strong>
@@ -430,16 +304,11 @@ export default function HojaDeRutaContent() {
 
       <PlaceholderImage text="Acceso a Software vs Barrera Entrada" />
 
-      <Paragraph>Aquí está el matiz importante que nadie te dice:</Paragraph>
-
       <Paragraph>
-        <strong className="text-white">
-          No es que "cualquiera" pueda hacerlo.
-        </strong>{" "}
-        Eso es mentira.
+        Aquí está el matiz importante que nadie te dice:{" "}
+        <strong>No es que "cualquiera" pueda hacerlo.</strong> Eso es mentira.
+        Necesitas un perfil específico:
       </Paragraph>
-
-      <Paragraph>Necesitas un perfil específico:</Paragraph>
 
       <List
         items={[
@@ -451,68 +320,46 @@ export default function HojaDeRutaContent() {
       />
 
       <Paragraph>
-        <strong className="text-white">Si tienes ese perfil</strong>, entonces
-        sí: herramientas como Cursor, Claude y ChatGPT pueden reducir
-        dramáticamente tu curva de aprendizaje.
-      </Paragraph>
-
-      <Paragraph>
-        No eliminan la dificultad.{" "}
-        <strong className="text-white">La hacen manejable.</strong>
+        <strong>Si tienes ese perfil</strong>, entonces sí: herramientas como
+        Cursor, Claude y ChatGPT pueden reducir dramáticamente tu curva de
+        aprendizaje. No eliminan la dificultad.{" "}
+        <strong>La hacen manejable.</strong>
       </Paragraph>
 
       <Paragraph>
         Lo que antes requería un equipo de 10 ingenieros y 6 meses, hoy lo puede
         construir una persona con visión técnica-comercial en 2-4 semanas{" "}
-        <strong className="text-white">de trabajo intenso y enfocado</strong> si
-        tiene el sistema de aprendizaje correcto.
+        <strong>de trabajo intenso y enfocado</strong> si tiene el sistema de
+        aprendizaje correcto.
       </Paragraph>
 
       <Paragraph>
-        <strong className="text-white">Pero hay un problema:</strong>
-      </Paragraph>
-
-      <Paragraph>
-        La mayoría de las personas que tienen el perfil correcto y conocen el
-        potencial del software tienen dos obstáculos reales:
+        <strong>Pero hay un problema:</strong> La mayoría de las personas que
+        tienen el perfil correcto y conocen el potencial del software tienen dos
+        obstáculos reales:
       </Paragraph>
 
       <List
         ordered
         items={[
           <>
-            <strong className="text-white">
-              Creen que necesitan años de estudio formal
-            </strong>{" "}
+            <strong>Creen que necesitan años de estudio formal</strong>{" "}
             (universidad, bootcamps largos)
           </>,
           <>
-            <strong className="text-white">
-              No tienen 6-12 meses libres para aprender
-            </strong>{" "}
-            (tienen trabajos demandantes)
+            <strong>No tienen 6-12 meses libres para aprender</strong> (tienen
+            trabajos demandantes)
           </>,
         ]}
       />
 
-      <Paragraph>Aquí está la realidad:</Paragraph>
-
       <Paragraph>
-        La IA no hizo que programar sea "fácil". Lo que hizo fue{" "}
-        <strong className="text-white">
-          cambiar el método de aprendizaje óptimo.
-        </strong>
-      </Paragraph>
-
-      <Paragraph>
-        Ya no necesitas memorizar sintaxis ni pasar años con algoritmos
-        complejos.
-      </Paragraph>
-
-      <Paragraph>
-        Necesitas aprender a{" "}
-        <strong className="text-white">pensar como constructor</strong> y usar
-        la IA como tu copiloto senior.
+        Aquí está la realidad: La IA no hizo que programar sea "fácil". Lo que
+        hizo fue
+        <strong>cambiar el método de aprendizaje óptimo.</strong> Ya no
+        necesitas memorizar sintaxis ni pasar años con algoritmos complejos.
+        Necesitas aprender a<strong>pensar como constructor</strong> y usar la
+        IA como tu copiloto senior.
       </Paragraph>
 
       <Paragraph>
@@ -522,28 +369,16 @@ export default function HojaDeRutaContent() {
         reales).
       </Paragraph>
 
-      <Paragraph>
-        <strong className="text-white">
-          Una aclaración crítica: Aprender a Programar ≠ Generadores de Software
-          con IA
-        </strong>
-      </Paragraph>
+      <Heading level={3} id="aclaracion-critica">
+        Una aclaración crítica: Aprender a Programar ≠ Generadores de Software
+        con IA
+      </Heading>
 
       <Paragraph>
         Antes de continuar, déjame aclarar algo fundamental que filtra a mucha
-        gente:
-      </Paragraph>
-
-      <Paragraph>
-        Existen herramientas como Lovable, Bolt, v0 y otros "generadores de
-        software con IA" que prometen crear aplicaciones completas con solo un
-        prompt.
-      </Paragraph>
-
-      <Paragraph>
-        <strong className="text-white">
-          Esto NO es lo que te estoy enseñando.
-        </strong>
+        gente: Existen herramientas como Lovable, Bolt, v0 y otros "generadores
+        de software con IA" que prometen crear aplicaciones completas con solo
+        un prompt. <strong>Esto NO es lo que te estoy enseñando.</strong>
       </Paragraph>
 
       <Paragraph>
@@ -554,7 +389,7 @@ export default function HojaDeRutaContent() {
         ordered
         items={[
           <>
-            <strong className="text-white">
+            <strong>
               Construir software funcional y escalable es imposible con un par
               de prompts.
             </strong>{" "}
@@ -562,59 +397,51 @@ export default function HojaDeRutaContent() {
             integraciones, o lógica de negocio personalizada.
           </>,
           <>
-            <strong className="text-white">
-              A lo más generan landing pages
-            </strong>{" "}
-            (generalmente con diseños predecibles y ese famoso degradado morado
-            que todo dev reconoce al instante).
+            <strong>A lo más generan landing pages</strong> (generalmente con
+            diseños predecibles y ese famoso degradado morado que todo dev
+            reconoce al instante).
           </>,
           <>
-            <strong className="text-white">No te enseñan nada.</strong> Es una
-            caja negra. Cuando algo falla o necesitas modificar algo, estás
-            perdido. Es el equivalente a "aprieta un botón y hazte rico".
+            <strong>No te enseñan nada.</strong> Es una caja negra. Cuando algo
+            falla o necesitas modificar algo, estás perdido. Es el equivalente a
+            "aprieta un botón y hazte rico".
           </>,
           <>
-            <strong className="text-white">Atraen al perfil incorrecto:</strong>{" "}
-            personas que creen que ya no vale la pena aprender programación y
-            que piensan que la IA hará todo mágicamente.
+            <strong>Atraen al perfil incorrecto:</strong> personas que creen que
+            ya no vale la pena aprender programación y que piensan que la IA
+            hará todo mágicamente.
           </>,
         ]}
       />
 
       <Paragraph>
-        <strong className="text-white">
+        <strong>
           La realidad es que aprender a programar vale MÁS que nunca.
-        </strong>
-      </Paragraph>
-
-      <Paragraph>
+        </strong>{" "}
         Lo que cambió no es la necesidad de saber programar, sino el{" "}
-        <strong className="text-white">método de aprendizaje</strong> y las{" "}
-        <strong className="text-white">herramientas de asistencia</strong>.
+        <strong>método de aprendizaje</strong> y las{" "}
+        <strong>herramientas de asistencia</strong>.
       </Paragraph>
 
       <Paragraph>
-        Herramientas como Cursor, GitHub Copilot o Claude como copiloto te{" "}
-        <strong className="text-white">ayudan mientras programas</strong>, te
-        explican, te sugieren código, te ayudan a debuggear. Pero{" "}
-        <strong className="text-white">
+        Herramientas como Cursor, GitHub Copilot o Claude como copiloto te
+        <strong>ayudan mientras programas</strong>, te explican, te sugieren
+        código, te ayudan a debuggear. Pero{" "}
+        <strong>
           tú sigues siendo quien construye, quien entiende la lógica, quien toma
           decisiones.
-        </strong>
-      </Paragraph>
-
-      <Paragraph>
+        </strong>{" "}
         Es como tener un mentor senior al lado vs. pedirle a alguien que te haga
         todo el trabajo (y luego no saber qué hacer cuando algo falla).
       </Paragraph>
 
-      <Blockquote>
-        La oportunidad no está en aprender a programar para que te contraten.{" "}
-        <strong className="text-white">
+      <Callout variant="tip">
+        La oportunidad no está en aprender a programar para que te contraten.
+        <strong>
           La oportunidad está en aprender a construir software para generar tus
           propios ingresos.
         </strong>
-      </Blockquote>
+      </Callout>
 
       <Paragraph>
         Pero antes de mostrarte la solución completa, déjame contarte mi
@@ -623,7 +450,6 @@ export default function HojaDeRutaContent() {
 
       <Divider />
 
-      {/* SECCIÓN: Mi Historia */}
       <Heading level={2} id="mi-historia">
         Mi Historia (Y La Oportunidad Que Casi Pierdo)
       </Heading>
@@ -633,12 +459,9 @@ export default function HojaDeRutaContent() {
       </Heading>
 
       <Paragraph>
-        Hace 7 años, inicié mi camino emprendedor, por necesidad...
-      </Paragraph>
-
-      <Paragraph>
-        La verdad necesitaba dinero y ningún trabajo a medio tiempo pagaba lo
-        suficiente como para compatibilizar mis estudios en la universidad.
+        Hace 7 años, inicié mi camino emprendedor, por necesidad... La verdad
+        necesitaba dinero y ningún trabajo a medio tiempo pagaba lo suficiente
+        como para compatibilizar mis estudios en la universidad.
       </Paragraph>
 
       <Paragraph>
@@ -646,78 +469,46 @@ export default function HojaDeRutaContent() {
         hicimos la web del curso; los computadores y el internet siempre me
         fascinaron) y tenía nociones básicas de la web; HTML y CSS, me pareció
         entonces una buena idea aprender WordPress y ofrecer un pequeño servicio
-        de "diseño web".
-      </Paragraph>
-
-      <Paragraph>
-        Empecé ofreciendo webs sencillas de 150 USD a Pymes, hechas con
-        WordPress no-código, apalancándome de constructores visuales y
-        plantillas.
+        de "diseño web". Empecé ofreciendo webs sencillas de 150 USD a Pymes,
+        hechas con WordPress no-código, apalancándome de constructores visuales
+        y plantillas.
       </Paragraph>
 
       <PlaceholderImage text="Mi Primera Empresa LanzaTuWeb" />
 
       <Paragraph>
         Parece que había demanda, me empezaban a llegar más clientes, pero a
-        todos les sucedía lo mismo luego de que les entregaba la web...
+        todos les sucedía lo mismo luego de que les entregaba la web...{" "}
+        <em>"Héctor, ¿Cómo puedo tener más clientes?"</em>
       </Paragraph>
 
-      <Paragraph>
-        <em className="text-[#e2e2e2]">
-          "Héctor, ¿Cómo puedo tener más clientes?"
-        </em>
-      </Paragraph>
-
-      <Blockquote>
+      <Callout variant="warning">
         El error típico de emprendedores novatos y empresas pequeñas, es pensar
         que por tener algo, por ejemplo una web (o hasta una tarjeta de
         presentación...) mágicamente vas a tener clientes.
-      </Blockquote>
+      </Callout>
 
       <Paragraph>
-        Como yo tenía nociones básicas de marketing digital, porque después de
-        todo, los clientes que empecé a tener, los conseguí con campañas de
-        leads de Meta-Ads (Facebook Ads Leads Form se llamaban), entonces les
-        decía a mis clientes más o menos lo siguiente:
+        Como yo tenía nociones básicas de marketing digital (los clientes que
+        empecé a tener, los conseguí con campañas de leads de Meta-Ads), les
+        explicaba que había dos formas: orgánica (lenta pero sostenible, como
+        SEO y redes) y pagada (rápida pero requiere inversión constante, como
+        Google/Meta Ads).
       </Paragraph>
 
-      <Paragraph>
-        — Mira hay 2 maneras de tener clientes; una orgánica y otra pagada.
-      </Paragraph>
-      <Paragraph>
-        — La manera orgánica demora más y la pagada es rápida, pero necesita
-        inversión constante.
-      </Paragraph>
-      <Paragraph>
-        — La manera orgánica es a través de posicionamiento en Google cuando
-        alguien busca palabras claves relacionadas con tus servicios, así como
-        también contenido en redes sociales.
-      </Paragraph>
-      <Paragraph>
-        — Y la manera pagada es acelerar ese proceso, tanto en Google Ads,
-        pagando por esas palabras claves o en Meta-Ads, pagando para que tu
-        contenido les aparezca a personas.
-      </Paragraph>
-
-      <Blockquote>
+      <Callout variant="note">
         Por alguna razón, la mayoría de mis clientes, digamos el 80%, terminaba
         optando por un servicio de SEO, y el otro 20% por servicios de Google
-        Ads. Lo más probable porque es lo que ellos veían que otras empresas de
-        la competencia hacían, y además, quizá en ese tiempo, todavía era más
-        intuitivo para personas sin mucho conocimiento de marketing, pensar que
-        Google "es mejor".
-      </Blockquote>
+        Ads. Probablemente porque es lo que ellos veían de la competencia y
+        porque Google les parecía "mejor" intuitivamente.
+      </Callout>
 
       <Paragraph>
         Fue así como terminé siendo una especie de "Consultor SEO" para negocios
         Pymes locales, mezclando diseño/desarrollo web con SEO y algo de Google
-        Ads.
-      </Paragraph>
-
-      <Paragraph>
-        Seguí trabajando con clientes, incluso con algunos de e-commerce, donde
+        Ads. Seguí trabajando con claventes, incluso con ecommerce, donde
         aprendí una lección fundamental:{" "}
-        <strong className="text-white">Código + Marketing = Dinero.</strong>
+        <strong>Código + Marketing = Dinero.</strong>
       </Paragraph>
 
       <PlaceholderImage text="Agencia Ecommerce Marte" />
@@ -726,67 +517,50 @@ export default function HojaDeRutaContent() {
         El Cambio (La Epifanía de los 5K USD)
       </Heading>
 
-      <Paragraph>Pero aquí viene lo más importante...</Paragraph>
-
       <Paragraph>
-        Como el SEO siempre fue mi amor, me armé en paralelo{" "}
-        <strong className="text-white">un blog de marca personal</strong>{" "}
-        enseñando todo sobre ello y al mismo tiempo lo documentaba aplicándolo a
+        Pero aquí viene lo más importante... Como el SEO siempre fue mi amor, me
+        armé en paralelo <strong>un blog de marca personal</strong> enseñando
+        todo sobre ello y al mismo tiempo lo documentaba aplicándolo a
         monetización con afiliación.
       </Paragraph>
 
-      <Paragraph>Y ahí fue cuando descubrí algo poderoso:</Paragraph>
-
       <Paragraph>
-        <strong className="text-white">
+        Y ahí fue cuando descubrí algo poderoso:{" "}
+        <strong>
           Un activo digital que crece orgánicamente puede generar ingresos
           mientras duermes.
-        </strong>
+        </strong>{" "}
+        Logré formar una comunidad internacional hermosa y llegué a peaks de
+        facturación "semi-pasivos" de{" "}
+        <strong>más de 5K USD al mes solo con afiliación.</strong>
       </Paragraph>
-
-      <Paragraph>Logré formar una comunidad internacional hermosa.</Paragraph>
 
       <PlaceholderImage text="Comunidad EliteDigital" />
-
-      <Paragraph>
-        Llegué a peaks de facturación "semi-pasivos" de{" "}
-        <strong className="text-white">
-          más de 5K USD al mes solo con afiliación.
-        </strong>
-      </Paragraph>
-
       <PlaceholderImage text="Testimoniales y Prueba Social" />
 
       <Paragraph>
         Y tuve un montón de gente que aplicaba lo mismo con excelentes
-        resultados.
-      </Paragraph>
-
-      <Paragraph>
-        Sin clientes exigentes. Sin jefes. Solo yo, mi blog (básicamente código
-        y contenido) y mi conocimiento de SEO generando ingresos de forma
-        recurrente.
-      </Paragraph>
-
-      <Paragraph>
-        Pero un día me di cuenta de algo que lo cambió todo...
+        resultados. Sin clientes exigentes. Sin jefes. Solo yo, mi blog
+        (básicamente código y contenido) y mi conocimiento de SEO generando
+        ingresos de forma recurrente. Pero un día me di cuenta de algo que lo
+        cambió todo...
       </Paragraph>
 
       <Heading level={3} id="la-pregunta-del-millon">
         La Pregunta del Millón
       </Heading>
 
-      <Blockquote>
-        <strong className="text-white">
+      <Callout variant="tip">
+        <strong>
           "¿Qué hubiera pasado si en vez de enviar ese tráfico a productos de
           afiliación de terceros, lo hubiera enviado a mi propio Micro-SaaS?"
         </strong>
-      </Blockquote>
+      </Callout>
 
       <Paragraph>Piénsalo conmigo:</Paragraph>
 
       <Paragraph>
-        <strong className="text-white">Con afiliación (lo que hice):</strong>
+        <strong>Con afiliación (lo que hice):</strong>
       </Paragraph>
 
       <List
@@ -799,9 +573,7 @@ export default function HojaDeRutaContent() {
       />
 
       <Paragraph>
-        <strong className="text-white">
-          Con un micro-SaaS propio (lo que debí hacer):
-        </strong>
+        <strong>Con un micro-SaaS propio (lo que debí hacer):</strong>
       </Paragraph>
 
       <List
@@ -814,45 +586,142 @@ export default function HojaDeRutaContent() {
       />
 
       <Paragraph>
-        <strong className="text-white">
-          Ahí fue cuando entendí la verdadera oportunidad:
-        </strong>
-      </Paragraph>
-
-      <Paragraph>
-        Si combinas dos habilidades aparentemente distantes (como los polímatas
-        del Renacimiento…):
+        <strong>Ahí fue cuando entendí la verdadera oportunidad:</strong> Si
+        combinas dos habilidades aparentemente distantes (como los polímatas del
+        Renacimiento…):
       </Paragraph>
 
       <List
         ordered
         items={[
           <>
-            <strong className="text-white">
-              Construcción ágil de software
-            </strong>{" "}
-            (usando IA como herramienta, con visión técnica-comercial)
+            <strong>Construcción ágil de software</strong> (usando IA como
+            herramienta, con visión técnica-comercial)
           </>,
           <>
-            <strong className="text-white">Posicionamiento orgánico</strong>{" "}
-            (SEO, contenido, freetools)
+            <strong>Posicionamiento orgánico</strong> (SEO, contenido,
+            freetools)
           </>,
         ]}
       />
 
       <Paragraph>
         Creas algo extremadamente valioso:{" "}
-        <strong className="text-white">
+        <strong>
           activos digitales que generan ingresos semi-pasivos reales y que
           puedes vender por múltiplos.
-        </strong>
-      </Paragraph>
-
-      <Paragraph>
+        </strong>{" "}
         Eso es exactamente lo que te voy a mostrar a continuación...
       </Paragraph>
 
       <Divider />
+
+      {/* SECCIÓN: Tu Primer Paso */}
+      <Heading level={2} id="tu-primer-paso">
+        Tu Primer Paso
+      </Heading>
+
+      <PlaceholderImage text="Tu Primer Paso" />
+
+      <Paragraph>
+        Si llegaste hasta aquí, probablemente estás pensando:
+      </Paragraph>
+
+      <Paragraph>
+        "Ok Héctor, tiene sentido. Pero ¿por dónde empiezo?"
+      </Paragraph>
+
+      <Paragraph>La respuesta es clara:</Paragraph>
+
+      <Paragraph>
+        <strong className="text-white">
+          Necesitas eliminar tus dos obstáculos (capacidad técnica y tiempo) con
+          un sistema probado y realista.
+        </strong>
+      </Paragraph>
+
+      <Paragraph>Tu primer paso no es renunciar a tu empleo mañana.</Paragraph>
+
+      <Paragraph>
+        Es adquirir la capacidad de construir tu primera herramienta funcional
+        en las próximas semanas, de forma enfocada, y plantar la semilla de tu
+        segundo ingreso.
+      </Paragraph>
+
+      <Paragraph>
+        He estado donde estás tú. He construido ingresos semi-pasivos de más de
+        5K USD al mes con tráfico orgánico.
+      </Paragraph>
+
+      <Paragraph>
+        Y ahora estoy construyendo un sistema completo que combina:
+      </Paragraph>
+
+      <List
+        items={[
+          "Aprendizaje ágil de construcción de software con IA (2-4 semanas de trabajo enfocado, sin dejar tu empleo)",
+          "SEO moderno aplicado a producto (tráfico orgánico, cero inversión en ads)",
+          "Estrategias de monetización probadas (mi caso: >5K USD mensuales semi-pasivos)",
+          "Comunidad de apoyo para navegar los obstáculos reales",
+        ]}
+      />
+
+      <Paragraph>
+        <strong className="text-white">
+          Si quieres ser de los primeros en acceder cuando lance el sistema
+          completo
+        </strong>
+        , únete a mi newsletter donde comparto:
+      </Paragraph>
+
+      <List
+        items={[
+          "Casos de estudio reales de construcción ágil (sin hype, con código real)",
+          "Estrategias de SEO que funcionan hoy (probadas con tráfico y conversiones reales)",
+          "Tácticas de monetización que he aplicado personalmente",
+          "El camino realista hacia un segundo ingreso con activos digitales",
+        ]}
+      />
+
+      <Paragraph>
+        No te voy a mentir: construir un segundo ingreso real requiere trabajo
+        enfocado y constancia.
+      </Paragraph>
+
+      <Paragraph>
+        Pero la diferencia entre depender solo de tu salario mensual y tener un
+        segundo ingreso con activos digitales no está en tus capacidades ni en
+        tu tiempo disponible.
+      </Paragraph>
+
+      <Paragraph>
+        <strong className="text-white">
+          Está en tener el sistema correcto y el enfoque realista.
+        </strong>
+      </Paragraph>
+
+      <Paragraph>Y ese sistema existe ahora.</Paragraph>
+
+      <Paragraph>
+        La pregunta es:{" "}
+        <strong className="text-white">
+          ¿vas a seguir dependiendo únicamente de tu empleador o vas a construir
+          tu plan B económico?
+        </strong>
+      </Paragraph>
+
+      <Divider />
+
+      <Paragraph>
+        <em>
+          PD: En la próxima newsletter te voy a mostrar exactamente cómo alguien
+          con conocimientos técnicos básicos puede construir su primer freetool
+          funcional en una semana usando IA como herramienta (no como magia).
+          Verás el código real, los obstáculos reales y las soluciones reales.
+          Además, te mostraré el método exacto que uso para encontrar nichos de
+          micro-SaaS sin explotar y cómo validarlos antes de construir.
+        </em>
+      </Paragraph>
 
       {/* SECCIÓN: El Camino y La Estrella */}
       <Heading level={2} id="el-camino-y-la-estrella">
@@ -1144,105 +1013,6 @@ export default function HojaDeRutaContent() {
       />
 
       <Paragraph>Eso es exactamente lo que he construido.</Paragraph>
-
-      <Divider />
-
-      {/* SECCIÓN: Tu Primer Paso */}
-      <Heading level={2} id="tu-primer-paso">
-        Tu Primer Paso
-      </Heading>
-
-      <PlaceholderImage text="Tu Primer Paso" />
-
-      <Paragraph>
-        Si llegaste hasta aquí, probablemente estás pensando:
-      </Paragraph>
-
-      <Paragraph>
-        "Ok Héctor, tiene sentido. Pero ¿por dónde empiezo?"
-      </Paragraph>
-
-      <Paragraph>La respuesta es clara:</Paragraph>
-
-      <Paragraph>
-        <strong className="text-white">
-          Necesitas eliminar tus dos obstáculos (capacidad técnica y tiempo) con
-          un sistema probado y realista.
-        </strong>
-      </Paragraph>
-
-      <Paragraph>Tu primer paso no es renunciar a tu empleo mañana.</Paragraph>
-
-      <Paragraph>
-        Es adquirir la capacidad de construir tu primera herramienta funcional
-        en las próximas semanas, de forma enfocada, y plantar la semilla de tu
-        segundo ingreso.
-      </Paragraph>
-
-      <Paragraph>
-        He estado donde estás tú. He construido ingresos semi-pasivos de más de
-        5K USD al mes con tráfico orgánico.
-      </Paragraph>
-
-      <Paragraph>
-        Y ahora estoy construyendo un sistema completo que combina:
-      </Paragraph>
-
-      <List
-        items={[
-          "Aprendizaje ágil de construcción de software con IA (2-4 semanas de trabajo enfocado, sin dejar tu empleo)",
-          "SEO moderno aplicado a producto (tráfico orgánico, cero inversión en ads)",
-          "Estrategias de monetización probadas (mi caso: >5K USD mensuales semi-pasivos)",
-          "Comunidad de apoyo para navegar los obstáculos reales",
-        ]}
-      />
-
-      <Paragraph>
-        <strong className="text-white">
-          Si quieres ser de los primeros en acceder cuando lance el sistema
-          completo
-        </strong>
-        , únete a mi newsletter donde comparto:
-      </Paragraph>
-
-      <List
-        items={[
-          "Casos de estudio reales de construcción ágil (sin hype, con código real)",
-          "Estrategias de SEO que funcionan hoy (probadas con tráfico y conversiones reales)",
-          "Tácticas de monetización que he aplicado personalmente",
-          "El camino realista hacia un segundo ingreso con activos digitales",
-        ]}
-      />
-
-      <Paragraph>
-        No te voy a mentir: construir un segundo ingreso real requiere trabajo
-        enfocado y constancia.
-      </Paragraph>
-
-      <Paragraph>
-        Pero la diferencia entre depender solo de tu salario mensual y tener un
-        segundo ingreso con activos digitales no está en tus capacidades ni en
-        tu tiempo disponible.
-      </Paragraph>
-
-      <Paragraph>
-        <strong className="text-white">
-          Está en tener el sistema correcto y el enfoque realista.
-        </strong>
-      </Paragraph>
-
-      <Paragraph>Y ese sistema existe ahora.</Paragraph>
-
-      <Paragraph>
-        La pregunta es:{" "}
-        <strong className="text-white">
-          ¿vas a seguir dependiendo únicamente de tu empleador o vas a construir
-          tu plan B económico?
-        </strong>
-      </Paragraph>
-
-      <Divider />
-
       <Paragraph>
         <em>
           PD: En la próxima newsletter te voy a mostrar exactamente cómo alguien

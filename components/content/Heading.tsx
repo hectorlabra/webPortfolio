@@ -11,9 +11,10 @@ interface HeadingProps {
 }
 
 const headingStyles: Record<HeadingLevel, string> = {
-  2: "text-[1.75rem] font-bold mt-20 mb-6 text-white leading-tight tracking-tight",
-  3: "text-[1.35rem] font-semibold mt-14 mb-4 text-white leading-snug",
-  4: "text-lg font-semibold mt-10 mb-3 text-white",
+  // Headings: off-white, normal tracking
+  2: "text-[1.75rem] font-bold mt-16 mb-4 text-[#e8e8e8] leading-tight tracking-normal",
+  3: "text-[1.35rem] font-semibold mt-12 mb-3 text-[#e8e8e8] leading-snug tracking-normal",
+  4: "text-lg font-semibold mt-8 mb-2 text-[#e8e8e8] tracking-normal",
 };
 
 export function Heading({ level, children, id, className }: HeadingProps) {
