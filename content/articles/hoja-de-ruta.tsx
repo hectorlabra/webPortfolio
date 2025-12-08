@@ -711,17 +711,6 @@ export default function HojaDeRutaContent() {
 
       <Divider />
 
-      <Paragraph>
-        <em>
-          PD: En la próxima newsletter te voy a mostrar exactamente cómo alguien
-          con conocimientos técnicos básicos puede construir su primer freetool
-          funcional en una semana usando IA como herramienta (no como magia).
-          Verás el código real, los obstáculos reales y las soluciones reales.
-          Además, te mostraré el método exacto que uso para encontrar nichos de
-          micro-SaaS sin explotar y cómo validarlos antes de construir.
-        </em>
-      </Paragraph>
-
       {/* SECCIÓN: El Camino y La Estrella */}
       <Heading level={2} id="el-camino-y-la-estrella">
         El camino y la estrella (la solución)
