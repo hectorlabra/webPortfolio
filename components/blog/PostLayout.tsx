@@ -18,11 +18,12 @@ interface PostLayoutProps {
   post: BlogPost;
   tableOfContents: TableOfContentsItem[];
   inlineSegments: InlineNewsletterSplit;
+  children?: React.ReactNode;
 }
 
 export function PostLayout(props: PostLayoutProps) {
-  const { post, tableOfContents, inlineSegments } = props;
-  const { beforeHtml, afterHtml, mode } = inlineSegments;
+  const { post, tableOfContents, inlineSegments, children } = props;
+  const { mode } = inlineSegments;
   return (
     <div className="min-h-screen bg-[#0a0612] text-white">
       {/* Reading Progress Bar */}
@@ -143,19 +144,26 @@ export function PostLayout(props: PostLayoutProps) {
           <section className="w-full pt-4 pb-12">
             <div className="container flex-1 flex flex-col px-4 md:px-6">
               <div className="max-w-[700px] mx-auto w-full space-y-6">
-                <article id="post-article" className="min-w-0 w-full">
+                <article
+                  id="post-article"
+                  className="min-w-0 w-full font-reading"
+                >
                   <div className="blog-richtext">
-                    <RichTextChunk html={beforeHtml} />
-                    <div
-                      className="block xl:hidden my-10"
-                      data-inline-newsletter-mode={mode}
-                    >
-                      <NewsletterInPost variant="compact" />
-                    </div>
-                    <RichTextChunk html={afterHtml} />
+                    {/* Render TSX Children mainly */}
+                    {children}
+
+                    {/* Legacy/Fallback for newsletter injection if needed */}
+                    {mode !== "start" && (
+                      <div
+                        className="block xl:hidden my-10"
+                        data-inline-newsletter-mode={mode}
+                      >
+                        <NewsletterInPost variant="compact" />
+                      </div>
+                    )}
                   </div>
 
-                  <div id="post-cta-newsletter" className="mt-12">
+                  <div id="post-cta-newsletter" className="mt-12 font-sans">
                     <NewsletterInPost variant="prominent" />
                   </div>
                 </article>

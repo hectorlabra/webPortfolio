@@ -107,7 +107,7 @@ export default function HojaDeRutaPage() {
 
       {/* Main Content */}
       <main className="relative z-10 mx-auto max-w-[700px] px-4 sm:px-6 pb-16 pt-0">
-        <article id="post-article">
+        <article id="post-article" className="font-reading">
           {/* Contenido TSX directo - sin dangerouslySetInnerHTML */}
           <HojaDeRutaContent />
 

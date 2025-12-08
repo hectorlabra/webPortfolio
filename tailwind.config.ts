@@ -86,6 +86,7 @@ const config = {
       fontFamily: {
         sans: ["var(--font-inconsolata)", "monospace"],
         mono: ["var(--font-inconsolata)", "monospace"],
+        reading: ["var(--font-inter)", "sans-serif"],
       },
       borderRadius: {
         lg: "var(--radius)",
