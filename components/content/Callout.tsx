@@ -1,7 +1,7 @@
 import { cn } from "@/lib/utils";
 import { ReactNode } from "react";
 
-type CalloutVariant = "tip" | "warning" | "note";
+type CalloutVariant = "tip" | "warning" | "note" | "danger";
 
 interface CalloutProps {
   children: ReactNode;
@@ -40,6 +40,13 @@ const variantConfig: Record<
     colorClass: "text-[#007AFF]",
     borderColorClass: "border-[#007AFF]",
     bgClass: "bg-[#007AFF]/10",
+  },
+  danger: {
+    label: "PELIGRO",
+    emoji: "🚨",
+    colorClass: "text-[#FF453A]",
+    borderColorClass: "border-[#FF453A]",
+    bgClass: "bg-[#FF453A]/10",
   },
 };
 

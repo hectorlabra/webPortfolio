@@ -13,20 +13,20 @@ import { MobileTOCButton } from "@/components/blog/MobileTOCButton";
 // Importar el contenido TSX directamente
 import HojaDeRutaContent, {
   metadata as articleMetadata,
-} from "@/content/articles/hoja-de-ruta";
+} from "../../content/articles/hoja-de-ruta";
 
-// Table of Contents generado manualmente (ya que no hay MD parser)
+// Table of Contents actualizado con los nuevos IDs del artículo
 const tableOfContents = [
-  { id: "el-roadmap-completo", text: "El Roadmap Completo", level: 1 },
+  { id: "la-verdad-incomoda", text: "La Verdad Incómoda", level: 1 },
+  { id: "la-realidad", text: "Parte 1: La Realidad", level: 1 },
+  { id: "el-enemigo-moderno", text: "Parte 2: La Trampa AI", level: 1 },
+  { id: "mi-historia", text: "Parte 3: Mi Historia", level: 1 },
+  { id: "el-stack", text: "Parte 4: El Stack del Builder", level: 1 },
   {
-    id: "como-construir-software",
-    text: "Cómo Construir Software Que Genera Ingresos",
+    id: "conclusion-encrucijada",
+    text: "Conclusión: Tu Encrucijada",
     level: 1,
   },
-  { id: "la-problematica-real", text: "La Problemática Real", level: 1 },
-  { id: "mi-historia", text: "Mi Historia", level: 1 },
-  { id: "el-camino-y-la-estrella", text: "El Camino y La Estrella", level: 1 },
-  { id: "tu-primer-paso", text: "Tu Primer Paso", level: 1 },
 ];
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -63,7 +63,7 @@ export default function HojaDeRutaPage() {
           <div className="flex flex-col gap-6">
             <div className="space-y-4">
               <p className="text-xs font-mono uppercase tracking-[0.4em] text-white/40">
-                Hoja de ruta
+                Roadmap Anti-Hype
               </p>
               <Heading
                 level={1}
@@ -72,15 +72,14 @@ export default function HojaDeRutaPage() {
                 {articleMetadata.title}
               </Heading>
               <p className="text-lg text-white/70">
-                <TypewriterText text="Combina IA, SEO y producto para dejar de depender solo de tu salario" />
+                <TypewriterText text="Deja de estudiar tutoriales. Empieza a shippear activos." />
               </p>
             </div>
 
             <p className="text-base text-white/70">
-              Esta guía te acompaña desde la mentalidad emprendedora hasta la
-              ejecución práctica (stack, métricas y monetización). Si tienes un
-              empleo estable y quieres crear un segundo ingreso real, este es tu
-              plan paso a paso.
+              Esta no es otra guía de "Hello World". Es el mapa sucio y real
+              para pasar de escribir código para otros a construir tu propia
+              libertad. Sin atajos mágicos, solo ingeniería y pragmatismo.
             </p>
 
             <div className="flex flex-wrap gap-3">
@@ -89,14 +88,15 @@ export default function HojaDeRutaPage() {
                 className="bg-[#64E365] text-[#0a0612] hover:bg-[#64E365]/90"
                 asChild
               >
-                <a href="mailto:hello@hectorlabra.dev">Agendar una llamada</a>
+                <a href="#la-verdad-incomoda">Empezar a leer</a>
               </Button>
               <Button
                 size="sm"
                 variant="outline"
                 className="border-white/30 text-white/80 hover:border-white hover:text-white"
+                asChild
               >
-                Descargar resumen
+                <a href="#post-cta-newsletter">Suscribirse al Círculo</a>
               </Button>
             </div>
           </div>
