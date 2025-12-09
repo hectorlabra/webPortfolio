@@ -139,7 +139,7 @@ export function NewsletterForm({
             <div className="flex w-full flex-col gap-3">
               <Input
                 type="email"
-                placeholder="tu@email.com — envíame las guías"
+                placeholder="tu@email.com — quiero unirme"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -171,7 +171,7 @@ export function NewsletterForm({
                       transition={{ duration: 0.15 }}
                       className="flex items-center"
                     >
-                      Recibir guías
+                      Entrar al círculo
                       <ArrowRight className="ml-2 h-5 w-5" />
                     </motion.span>
                   )}
@@ -192,8 +192,8 @@ export function NewsletterForm({
               )}
             </AnimatePresence>
             <div className="pt-2 sm:pt-0">
-              <p className="text-[0.55rem] sm:text-sm text-white/70 text-center">
-                Recibe tutoriales, plantillas y guías prácticas cada semana.
+              <p className="text-[0.4rem] sm:text-xs text-white/70 text-center">
+                Lives, insights y SEO práctico cada semana.
               </p>
             </div>
           </motion.form>

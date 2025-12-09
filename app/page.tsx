@@ -39,17 +39,15 @@ export default function HomePage() {
               {/* Hero Content */}
               <div className="flex flex-col justify-center space-y-4 sm:space-y-6">
                 <div className="space-y-3 sm:space-y-4">
-                  <h1 className="font-mono text-[1.2rem] sm:text-lg md:text-xl lg:text-3xl font-bold tracking-tighter whitespace-nowrap">
-                    De dev anónimo
-                    <TypewriterText
-                      prefix=" a "
-                      text={["dev moderno.", "builder.", "dev creador."]}
-                    />
+                  <h1 className="font-mono text-[1.2rem] sm:text-lg md:text-xl lg:text-3xl font-bold tracking-tighter">
+                    Código para libertad,
+                    <TypewriterText prefix=" " text={["no para empleo."]} />
                   </h1>
                   <p className="text-base sm:text-lg text-white/70">
-                    Actualiza tu stack, construye proyectos reales, publica tu
-                    proceso y usa SEO práctico para atraer oportunidades
-                    mientras avanzas.
+                    El sistema te hace engranaje.{" "}
+                    <span className="font-medium text-white/90">
+                      Aquí construyes tu motor.
+                    </span>
                   </p>
                 </div>
                 {/* Highlight Banner */}
@@ -61,19 +59,19 @@ export default function HomePage() {
                   <div className="flex items-center gap-3 sm:gap-3">
                     <Check className="h-8 w-6 sm:h-6 sm:w-6 text-[#64E365]" />
                     <span className="text-sm sm:text-base">
-                      Construye con stack moderno (Next.js).
+                      Stack: Next.js (Velocidad sobre teoría).
                     </span>
                   </div>
                   <div className="flex items-center gap-3 sm:gap-3">
                     <Check className="h-8 w-6 sm:h-6 sm:w-6 text-[#64E365]" />
                     <span className="text-sm sm:text-base">
-                      Comparte lo que aprendes (LinkedIn).
+                      Mentalidad: Propiedad sobre salario.
                     </span>
                   </div>
                   <div className="flex items-center gap-3 sm:gap-3">
                     <Check className="h-8 w-6 sm:h-6 sm:w-6 text-[#64E365]" />
                     <span className="text-sm sm:text-base">
-                      Atrae oportunidades con SEO (blog & free-tools).
+                      Método: Construir → Publicar → Atraer.
                     </span>
                   </div>
                 </div>
@@ -83,8 +81,23 @@ export default function HomePage() {
                 <div className="rounded-lg border-2 border-white/20 bg-white/5 p-5 sm:p-6 md:p-8 backdrop-blur w-full animate-circular-glow shadow-sm shadow-white/5">
                   <div className="space-y-3 sm:space-y-4">
                     <h2 className="font-mono text-lg sm:text-xl lg:text-[1.2rem] font-bold text-center">
-                      Aprende a construir → publicar → atraer
+                      Únete al Círculo de Builders
                     </h2>
+
+                    <ul className="mx-auto w-full max-w-[200px] text-left text-xs text-white/60 space-y-1.5">
+                      <li className="grid grid-cols-[8px_1fr] items-start gap-2">
+                        <span className="w-[4px] h-[4px] rounded-full bg-[#FFD24C] mt-1.5" />
+                        <span>Lives: código + estrategia.</span>
+                      </li>
+                      <li className="grid grid-cols-[8px_1fr] items-start gap-2">
+                        <span className="w-[4px] h-[4px] rounded-full bg-[#FFD24C] mt-1.5" />
+                        <span>Insights de construcción.</span>
+                      </li>
+                      <li className="grid grid-cols-[8px_1fr] items-start gap-2">
+                        <span className="w-[4px] h-[4px] rounded-full bg-[#FFD24C] mt-1.5" />
+                        <span>SEO para atraer usuarios.</span>
+                      </li>
+                    </ul>
                   </div>
                   <div className="mt-4 sm:mt-6">
                     {/* Newsletter Form Component */}
@@ -108,8 +121,8 @@ export default function HomePage() {
                   La hoja de ruta del dev moderno.
                 </h2>
                 <p className="text-lg text-white/70">
-                  Un framework probado que conecta tu stack, tus proyectos y tu
-                  contenido para atraer oportunidades reales. ✨
+                  Sistema probado: Stack → Proyectos → Contenido →
+                  Oportunidades. ✨
                 </p>
               </div>
             </div>

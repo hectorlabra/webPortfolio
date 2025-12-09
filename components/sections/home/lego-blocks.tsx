@@ -6,16 +6,16 @@ interface LegoBlocksProps {
 export function LegoBlocks({ fullWidth = false }: LegoBlocksProps) {
   // Texts to display
   const texts = [
-    "STACK",
     "IA",
-    "PROYECTOS",
-    "PLANTILLAS",
-    "BLOG",
     "SEO",
-    "LINKEDIN",
-    "NEWSLETTER",
+    "PROYECTOS",
+    "BLOG",
+    "STACK",
+    "SISTEMAS",
     "MONETIZAR",
-    "AUTORIDAD",
+    "VALOR",
+    "NEWSLETTER",
+    "LINKEDIN",
   ];
 
   // Define the slots in the original DOM order, keeping all classNames/styles intact.

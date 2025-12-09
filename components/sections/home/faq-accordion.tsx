@@ -11,19 +11,19 @@ interface FaqItem {
 
 const faqs: FaqItem[] = [
   {
-    question: "¿QUÉ ES HECTORLABRA.DEV?",
+    question: "¿SIRVE ESTO SI SOY JUNIOR O VENGO DE OTRO STACK?",
     answer:
-      "Un sistema para developers que quieren actualizar su stack, construir proyectos reales y usar contenido estratégico para atraer oportunidades. No es una escuela: es un enfoque práctico con resultados concretos.",
+      "Sí. No buscamos purismo académico. Buscamos pragmatismo. Si sabes lógica básica, puedes construir.",
   },
   {
-    question: "¿POR QUÉ DESARROLLO WEB EN LA ERA DE LA IA?",
+    question: "¿POR QUÉ USAR NEXT.JS Y NO SOLUCIONES NO-CODE MÁS FÁCILES?",
     answer:
-      "Porque la IA acelera, pero no reemplaza: alguien debe diseñar, integrar, validar, optimizar y publicar. El dev que entiende sistemas, producto y contenido sigue siendo clave y la IA multiplica ese valor.",
+      "Por el Control y la Propiedad. El No-Code tiene techo. El Código es un activo sin límites que te pertenece al 100%.",
   },
   {
-    question: "¿CÓMO ME PUEDES AYUDAR?",
+    question: "¿POR QUÉ COMPARTES TU 'COCINA' Y MÉTRICAS GRATIS?",
     answer:
-      "Con un marco claro: Construir proyectos con stack moderno → Publicar tu proceso con intención → Atraer oportunidades usando SEO, contenido y autoridad técnica.",
+      "Por reputación. En un mar de contenido generado por IA, lo único valioso es la experiencia real humana. Comparto para conectar con otros builders serios.",
   },
 ];
 
