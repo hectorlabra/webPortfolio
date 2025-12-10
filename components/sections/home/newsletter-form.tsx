@@ -12,11 +12,15 @@ import { Input } from "@/components/ui/input";
 interface NewsletterFormProps {
   minimal?: boolean;
   compact?: boolean;
+  tagline?: React.ReactNode;
+  taglineClassName?: string;
 }
 
 export function NewsletterForm({
   minimal = false,
   compact = false,
+  tagline,
+  taglineClassName,
 }: NewsletterFormProps) {
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -192,8 +196,13 @@ export function NewsletterForm({
               )}
             </AnimatePresence>
             <div className="pt-2 sm:pt-0">
-              <p className="text-[0.4rem] sm:text-xs text-white/70 text-center">
-                Lives, insights y SEO práctico cada semana.
+              <p
+                className={
+                  taglineClassName ??
+                  "text-white/70 text-[0.65rem] sm:text-sm tracking-[0.1em] whitespace-nowrap text-center"
+                }
+              >
+                {tagline ?? "Lives · insights · SEO práctico"}
               </p>
             </div>
           </motion.form>

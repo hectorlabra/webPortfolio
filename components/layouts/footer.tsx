@@ -92,7 +92,7 @@ export function Footer() {
               </Link>
             </div>
             <div className="mt-4 sm:mt-6">
-              <p className="text-sm font-medium">Suscríbete al newsletter</p>
+              <p className="text-sm font-medium">Únete al Círculo de Builders</p>
               <div className="mt-3 w-full max-w-full sm:max-w-xs">
                 <NewsletterForm minimal={true} compact={false} />
               </div>

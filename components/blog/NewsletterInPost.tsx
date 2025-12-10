@@ -20,9 +20,9 @@ export function NewsletterInPost({
         ${
           isProminent
             ? "border-2 border-accent-green bg-gradient-to-br from-accent-green/10 to-accent-yellow/5 p-8 shadow-[0_0_30px_rgba(100,227,101,0.2)]"
-            : isCompact
-            ? "border border-white/10 bg-white/5 p-5"
-            : "border border-white/15 bg-white/5 p-6"
+              : isCompact
+              ? "border-2 border-white/20 bg-white/5 p-6 shadow-[0_10px_30px_rgba(0,0,0,0.45)] backdrop-blur"
+              : "border border-white/15 bg-white/5 p-6"
         }
       `}
     >
@@ -52,10 +52,10 @@ export function NewsletterInPost({
               <h3 className="font-bold font-mono text-white text-xl md:text-2xl mb-2">
                 {isProminent ? "¿Te gustó este artículo?" : "Mantente al día"}
               </h3>
-              <p className="text-white/70 text-sm md:text-base">
+              <p className="text-white/70 text-[0.55rem] sm:text-[0.75rem] tracking-[0.1em] whitespace-nowrap">
                 {isProminent
-                  ? "Recibe contenido similar directamente en tu inbox. Sin spam, solo calidad."
-                  : "Únete al newsletter y recibe los mejores artículos cada semana."}
+                  ? "Lives · insights · SEO"
+                  : "Únete al Círculo de Builders y recibe los mejores artículos cada semana."}
               </p>
             </div>
           </div>
@@ -63,12 +63,16 @@ export function NewsletterInPost({
 
         {isCompact && (
           <h3 className="font-mono font-semibold text-xs text-white/60 uppercase tracking-wider mb-3">
-            Newsletter
+            Únete al Círculo de Builders
           </h3>
         )}
 
         {/* Newsletter Form */}
-        <NewsletterForm compact={true} />
+        <NewsletterForm
+          compact={true}
+          tagline="Lives · insights · SEO"
+          taglineClassName="text-white/70 text-[0.6rem] sm:text-[0.85rem] tracking-[0.1em] whitespace-nowrap text-center"
+        />
 
         {/* Footer text */}
         {!isCompact && (
