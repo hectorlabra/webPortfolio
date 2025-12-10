@@ -28,7 +28,7 @@ export function NewsletterSection({
         </div>
       )}
       <div className={compact ? "" : "mt-4 sm:mt-6"}>
-      <NewsletterFormHome />
+        <NewsletterFormHome />
       </div>
     </div>
   );

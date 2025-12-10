@@ -2,7 +2,9 @@
 
 import { NewsletterForm } from "./newsletter-form";
 
-export function NewsletterFormFooter(props: Parameters<typeof NewsletterForm>[0]) {
+export function NewsletterFormFooter(
+  props: Parameters<typeof NewsletterForm>[0]
+) {
   return (
     <NewsletterForm
       {...props}

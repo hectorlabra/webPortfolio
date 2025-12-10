@@ -2,7 +2,9 @@
 
 import { NewsletterForm } from "./newsletter-form";
 
-export function NewsletterFormSidebar(props: Parameters<typeof NewsletterForm>[0]) {
+export function NewsletterFormSidebar(
+  props: Parameters<typeof NewsletterForm>[0]
+) {
   return (
     <NewsletterForm
       {...props}

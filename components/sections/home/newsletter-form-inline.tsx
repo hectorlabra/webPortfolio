@@ -2,7 +2,9 @@
 
 import { NewsletterForm } from "./newsletter-form";
 
-export function NewsletterFormInline(props: Parameters<typeof NewsletterForm>[0]) {
+export function NewsletterFormInline(
+  props: Parameters<typeof NewsletterForm>[0]
+) {
   return (
     <NewsletterForm
       {...props}
