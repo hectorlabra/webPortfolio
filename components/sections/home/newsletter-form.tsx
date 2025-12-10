@@ -199,7 +199,7 @@ export function NewsletterForm({
               <p
                 className={
                   taglineClassName ??
-                  "text-white/70 text-[0.65rem] sm:text-sm tracking-[0.1em] whitespace-nowrap text-center"
+                  "text-white/70 text-[0.65rem] sm:text-sm tracking-[0.04em] whitespace-nowrap text-center"
                 }
               >
                 {tagline ?? "Lives · insights · SEO práctico"}
