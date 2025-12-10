@@ -1,7 +1,7 @@
 // Minimal Client Component - Only for interactive newsletter forms
 "use client";
 
-import { NewsletterForm } from "@/components/sections/home/newsletter-form";
+import { NewsletterFormHome } from "@/components/sections/home/newsletter-form-home";
 
 interface NewsletterSectionProps {
   title: string;
@@ -28,7 +28,7 @@ export function NewsletterSection({
         </div>
       )}
       <div className={compact ? "" : "mt-4 sm:mt-6"}>
-        <NewsletterForm />
+      <NewsletterFormHome />
       </div>
     </div>
   );

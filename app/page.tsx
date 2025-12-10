@@ -10,7 +10,7 @@ import { LegoBlocks } from "@/components/sections/home/lego-blocks";
 import { SocialProof } from "@/components/sections/home/social-proof";
 
 // Client Islands - Interactive components only
-import { NewsletterForm } from "@/components/sections/home/newsletter-form-client";
+import { NewsletterFormHome } from "@/components/sections/home/newsletter-form-home";
 import { LazyGeometricPattern } from "@/components/shared/geometric-pattern-client";
 import { TypewriterText } from "@/components/shared/typewriter-text-client";
 
@@ -101,7 +101,7 @@ export default function HomePage() {
                   </div>
                   <div className="mt-4 sm:mt-6">
                     {/* Newsletter Form Component */}
-                    <NewsletterForm />
+                    <NewsletterFormHome />
                   </div>
                 </div>
               </div>

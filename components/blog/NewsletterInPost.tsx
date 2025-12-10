@@ -1,6 +1,7 @@
 "use client";
 
-import { NewsletterForm } from "@/components/sections/home/newsletter-form-client";
+import { NewsletterFormSidebar } from "@/components/sections/home/newsletter-form-sidebar";
+import { NewsletterFormInline } from "@/components/sections/home/newsletter-form-inline";
 import { Mail, Sparkles } from "lucide-react";
 
 interface NewsletterInPostProps {
@@ -56,22 +57,14 @@ export function NewsletterInPost({
                 </li>
               </ul>
             </div>
-            <NewsletterForm
-              compact={true}
-              tagline="Lives · insights · SEO práctico"
-              taglineClassName="text-white/70 text-[0.65rem] sm:text-sm tracking-[0.1em] whitespace-nowrap"
-            />
+            <NewsletterFormSidebar />
           </div>
         ) : isCompact ? (
           <>
             <h3 className="font-mono font-semibold text-xs text-white/60 uppercase tracking-wider mb-3">
               Únete al Círculo de Builders
             </h3>
-            <NewsletterForm
-              compact={true}
-              tagline="Lives · insights · SEO"
-              taglineClassName="text-white/70 text-[0.8rem] sm:text-[0.9rem] tracking-[0.03em] whitespace-nowrap text-center"
-            />
+            <NewsletterFormInline />
           </>
         ) : (
           <p className="text-xs text-white/50 mt-4 text-center">

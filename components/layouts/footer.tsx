@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Github, Twitter, Linkedin } from "lucide-react";
-import { NewsletterForm } from "@/components/sections/home/newsletter-form";
+import { NewsletterFormFooter } from "@/components/sections/home/newsletter-form-footer";
 import { Logo } from "@/components/shared/logo";
 
 export function Footer() {
@@ -96,7 +96,7 @@ export function Footer() {
                 Únete al Círculo de Builders
               </p>
               <div className="mt-3 w-full max-w-full sm:max-w-xs">
-                <NewsletterForm minimal={true} compact={false} />
+                <NewsletterFormFooter />
               </div>
             </div>
           </div>
