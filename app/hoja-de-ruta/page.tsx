@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { LazyGeometricPattern } from "@/components/shared/LazyGeometricPattern";
 import { TypewriterText } from "@/components/shared/typewriter-text-client";
 import { Heading } from "@/components/shared/Heading";
+import { User, Calendar, Clock } from "lucide-react";
 import { NewsletterInPost } from "@/components/blog/NewsletterInPost";
 import { ReadingProgressBar } from "@/components/blog/ReadingProgressBar";
 import { PostSidebarsClient } from "@/components/blog/PostSidebarsClient";
@@ -61,78 +62,122 @@ export default function HojaDeRutaPage() {
       {/* Mobile TOC Access */}
       <MobileTOCButton items={tableOfContents} />
 
-      {/* Hero Section */}
-      <section
-        id="post-hero"
-        className="relative w-full overflow-hidden pt-20 pb-6"
-      >
-        <LazyGeometricPattern priority opacity={0.25} />
-        <div className="relative z-10 mx-auto max-w-[700px] px-4 sm:px-6">
-          <div className="flex flex-col gap-6">
-            <div className="space-y-4">
-              <p className="text-xs font-mono uppercase tracking-[0.4em] text-white/40">
-                Roadmap Anti-Hype
-              </p>
-              <Heading
-                level={1}
-                className="text-[2rem] sm:text-[2.5rem] lg:text-[3rem] leading-[1] tracking-[-0.025em]"
-              >
-                {articleMetadata.title}
-              </Heading>
-              <p className="text-lg text-white/70">
-                <TypewriterText text="Deja de estudiar tutoriales. Empieza a shippear activos." />
-              </p>
+      {/* Wrapper consistente con PostLayout */}
+      <div className="mx-auto w-full max-w-[700px]">
+        <main className="flex-1">
+          {/* Hero Section */}
+          <section id="post-hero" className="relative pt-20 pb-6">
+            {/* Geometric Pattern Background - Full width como en PostLayout */}
+            <div className="absolute inset-0 left-1/2 w-screen -translate-x-1/2 overflow-hidden">
+              <LazyGeometricPattern priority opacity={0.25} />
             </div>
 
-            <p className="text-base text-white/70">
-              Esta no es otra guía de "Hello World". Es el mapa sucio y real
-              para pasar de escribir código para otros a construir tu propia
-              libertad. Sin atajos mágicos, solo ingeniería y pragmatismo.
-            </p>
+            <div className="container flex-1 flex flex-col px-4 md:px-6 relative z-10">
+              <div className="max-w-[700px] mx-auto w-full space-y-6">
+                {/* Roadmap label */}
+                <p className="text-xs font-mono uppercase tracking-[0.4em] text-white/40">
+                  Roadmap Anti-Hype
+                </p>
 
-            <div className="flex flex-wrap gap-3">
-              <Button
-                size="sm"
-                className="bg-[#64E365] text-[#0a0612] hover:bg-[#64E365]/90"
-                asChild
-              >
-                <a href="#la-verdad-incomoda">Empezar a leer</a>
-              </Button>
-              <Button
-                size="sm"
-                className="bg-accent-yellow text-[#0a0612] hover:bg-accent-yellow/90"
-                asChild
-              >
-                <a href="#post-cta-newsletter">Suscribirse al Círculo</a>
-              </Button>
+                {/* Title */}
+                <Heading
+                  level={1}
+                  className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-[-0.025em] text-white font-mono"
+                >
+                  {articleMetadata.title}
+                </Heading>
+
+                {/* Typewriter description */}
+                <p className="text-sm sm:text-lg text-white/70 leading-relaxed">
+                  <TypewriterText text="Deja de estudiar tutoriales. Empieza a shippear activos." />
+                </p>
+
+                {/* Extended description */}
+                <p className="text-sm sm:text-base text-white/70 leading-relaxed">
+                  Esta no es otra guía de "Hello World". Es el mapa sucio y real
+                  para pasar de escribir código para otros a construir tu propia
+                  libertad. Sin atajos mágicos, solo ingeniería y pragmatismo.
+                </p>
+
+                {/* Meta info - igual que blog */}
+                <div className="flex flex-wrap items-center gap-6 text-sm text-white/70">
+                  <div className="flex items-center gap-2">
+                    <User className="h-4 w-4" />
+                    <span>Héctor Labra</span>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <Calendar className="h-4 w-4" />
+                    <time dateTime={new Date().toISOString().split("T")[0]}>
+                      {new Date().toLocaleDateString("es-ES", {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                      })}
+                    </time>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <Clock className="h-4 w-4" />
+                    <span>15 min de lectura</span>
+                  </div>
+                </div>
+
+                {/* Buttons */}
+                <div className="flex flex-wrap gap-3">
+                  <Button
+                    size="sm"
+                    className="bg-[#64E365] text-[#0a0612] hover:bg-[#64E365]/90"
+                    asChild
+                  >
+                    <a href="#la-verdad-incomoda">Empezar a leer</a>
+                  </Button>
+                  <Button
+                    size="sm"
+                    className="bg-accent-yellow text-[#0a0612] hover:bg-accent-yellow/90"
+                    asChild
+                  >
+                    <a href="#post-cta-newsletter">Suscribirse al Círculo</a>
+                  </Button>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        {/* Sentinel for sidebar visibility */}
-        <div id="post-hero-sentinel" className="absolute bottom-0 h-1 w-full" />
-      </section>
+          </section>
 
-      {/* Main Content */}
-      <main className="relative z-10 mx-auto max-w-[700px] px-4 sm:px-6 pb-16 pt-0 lg:pt-32">
-        <article id="post-article" className="font-reading">
-          {/* Contenido TSX directo - sin dangerouslySetInnerHTML */}
-          <HojaDeRutaContent />
+          {/* Sentinel para control de sidebars - FUERA del hero, igual que PostLayout */}
+          <div id="post-hero-sentinel" className="h-px w-full" />
 
-          {/* Inline Newsletter solo mobile/tablet (desktop se muestra en sidebar) */}
-          <div className="block xl:hidden my-10">
-            <NewsletterInPost variant="compact" />
-          </div>
-        </article>
+          {/* Contenido principal - más espacio arriba para separar del hero */}
+          <section className="w-full pt-16 pb-12">
+            <div className="container flex-1 flex flex-col px-4 md:px-6">
+              <div className="max-w-[700px] mx-auto w-full space-y-6">
+                <article
+                  id="post-article"
+                  className="min-w-0 w-full font-reading"
+                >
+                  <div className="blog-richtext">
+                    {/* Contenido TSX directo */}
+                    <HojaDeRutaContent />
 
-        {/* End sentinel for sidebar hide */}
-        <div id="post-end-sentinel" className="h-1 w-full" />
+                    {/* Inline Newsletter solo mobile/tablet */}
+                    <div className="block xl:hidden my-10">
+                      <NewsletterInPost variant="compact" />
+                    </div>
+                  </div>
 
-        {/* CTA Section */}
-        {/* CTA Newsletter prominente (desktop y mobile) */}
-        <div id="post-cta-newsletter" className="mt-12">
-          <NewsletterInPost variant="prominent" />
-        </div>
-      </main>
+                  {/* CTA Newsletter prominente */}
+                  <div id="post-cta-newsletter" className="mt-12 font-sans">
+                    <NewsletterInPost variant="prominent" />
+                  </div>
+                </article>
+
+                {/* End sentinel */}
+                <div id="post-end-sentinel" className="h-px w-full" />
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
     </div>
   );
 }
