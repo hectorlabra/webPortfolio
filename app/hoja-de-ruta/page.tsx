@@ -5,7 +5,6 @@ import { LazyGeometricPattern } from "@/components/shared/LazyGeometricPattern";
 import { TypewriterText } from "@/components/shared/typewriter-text-client";
 import { Heading } from "@/components/shared/Heading";
 import { NewsletterInPost } from "@/components/blog/NewsletterInPost";
-import { SocialProof } from "@/components/sections/home/social-proof";
 import { ReadingProgressBar } from "@/components/blog/ReadingProgressBar";
 import { PostSidebarsClient } from "@/components/blog/PostSidebarsClient";
 import { MobileTOCButton } from "@/components/blog/MobileTOCButton";
@@ -43,7 +42,13 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function HojaDeRutaPage() {
   return (
-    <div className="min-h-screen bg-[#0a0612] text-white">
+    <div className="min-h-screen bg-[#0a0612] text-white" style={{ scrollBehavior: 'smooth' }}>
+      <style>{`
+        html {
+          scroll-behavior: smooth !important;
+          scroll-padding-top: 80px;
+        }
+      `}</style>
       {/* Reading Progress Bar */}
       <ReadingProgressBar />
 
@@ -56,7 +61,7 @@ export default function HojaDeRutaPage() {
       {/* Hero Section */}
       <section
         id="post-hero"
-        className="relative w-full overflow-hidden pt-12 pb-6"
+        className="relative w-full overflow-hidden pt-20 pb-6"
       >
         <LazyGeometricPattern priority opacity={0.25} />
         <div className="relative z-10 mx-auto max-w-[700px] px-4 sm:px-6">
@@ -92,8 +97,8 @@ export default function HojaDeRutaPage() {
               </Button>
               <Button
                 size="sm"
-                variant="outline"
-                className="border-white/30 text-white/80 hover:border-white hover:text-white"
+
+                className="bg-accent-yellow text-[#0a0612] hover:bg-accent-yellow/90"
                 asChild
               >
                 <a href="#post-cta-newsletter">Suscribirse al Círculo</a>
@@ -126,35 +131,7 @@ export default function HojaDeRutaPage() {
           <NewsletterInPost variant="prominent" />
         </div>
 
-        <div className="mt-16 rounded-2xl border border-white/10 bg-white/5 p-6 sm:p-8 text-white">
-          <Heading level={2} className="text-2xl text-white">
-            ¿Listo para convertir tu tracción en ingresos recurrentes?
-          </Heading>
-          <p className="mt-3 text-base text-white/70">
-            Apalanca este roadmap y trabaja con alguien que ha monetizado con
-            tráfico orgánico, micro-SaaS y automatizaciones sin depender de una
-            sola fuente de ingresos.
-          </p>
-          <div className="mt-6 flex flex-wrap gap-3">
-            <Button
-              size="sm"
-              className="bg-[#64E365] text-[#0a0612] hover:bg-[#64E365]/90"
-              asChild
-            >
-              <a href="mailto:hello@hectorlabra.dev">Escríbeme</a>
-            </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="border border-white/30 text-white/80 hover:bg-white/10"
-            >
-              Ver casos de estudio
-            </Button>
-          </div>
-          <div className="mt-6">
-            <SocialProof />
-          </div>
-        </div>
+
       </main>
     </div>
   );
