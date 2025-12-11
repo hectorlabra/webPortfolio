@@ -1,7 +1,7 @@
 "use client";
 
 import { NewsletterFormPostSidebar } from "@/components/sections/home/newsletter-form-post-sidebar";
-import { NewsletterFormPostCTA } from "@/components/sections/home/newsletter-form-post-cta";
+import { NewsletterFormHome } from "@/components/sections/home/newsletter-form-home";
 import { Mail, Sparkles } from "lucide-react";
 
 interface NewsletterInPostProps {
@@ -57,8 +57,8 @@ export function NewsletterInPost({
                 </li>
               </ul>
             </div>
-            {/* CTA final del artículo */}
-            <NewsletterFormPostCTA />
+            {/* CTA final del artículo - usa el mismo componente del home */}
+            <NewsletterFormHome />
           </div>
         ) : isCompact ? (
           <>
