@@ -94,9 +94,10 @@ export default function HojaDeRutaPage() {
 
                 {/* Extended description */}
                 <p className="text-sm sm:text-base text-white/70 leading-relaxed">
-                  Esta no es otra guía de "Hello World". Es el mapa sucio y real
-                  para pasar de escribir código para otros a construir tu propia
-                  libertad. Sin atajos mágicos, solo ingeniería y pragmatismo.
+                  Esta no es otra guía de &quot;Hello World&quot;. Es el mapa
+                  sucio y real para pasar de escribir código para otros a
+                  construir tu propia libertad. Sin atajos mágicos, solo
+                  ingeniería y pragmatismo.
                 </p>
 
                 {/* Meta info - igual que blog */}
