@@ -42,7 +42,10 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default function HojaDeRutaPage() {
   return (
-    <div className="min-h-screen bg-[#0a0612] text-white" style={{ scrollBehavior: 'smooth' }}>
+    <div
+      className="min-h-screen bg-[#0a0612] text-white"
+      style={{ scrollBehavior: "smooth" }}
+    >
       <style>{`
         html {
           scroll-behavior: smooth !important;
@@ -97,7 +100,6 @@ export default function HojaDeRutaPage() {
               </Button>
               <Button
                 size="sm"
-
                 className="bg-accent-yellow text-[#0a0612] hover:bg-accent-yellow/90"
                 asChild
               >
@@ -111,7 +113,7 @@ export default function HojaDeRutaPage() {
       </section>
 
       {/* Main Content */}
-      <main className="relative z-10 mx-auto max-w-[700px] px-4 sm:px-6 pb-16 pt-0">
+      <main className="relative z-10 mx-auto max-w-[700px] px-4 sm:px-6 pb-16 pt-0 lg:pt-32">
         <article id="post-article" className="font-reading">
           {/* Contenido TSX directo - sin dangerouslySetInnerHTML */}
           <HojaDeRutaContent />
@@ -130,8 +132,6 @@ export default function HojaDeRutaPage() {
         <div id="post-cta-newsletter" className="mt-12">
           <NewsletterInPost variant="prominent" />
         </div>
-
-
       </main>
     </div>
   );
