@@ -152,7 +152,7 @@ export function NewsletterForm({
               <Button
                 type="submit"
                 disabled={isSubmitting}
-                className="bg-[#FFD24C] text-[#0a0612] hover:bg-[#FFD24C]/90 h-11 sm:h-12 text-base w-full rounded-md font-medium transition-all shadow-[0_0_8px_rgba(255,210,76,0.3)] hover:shadow-[0_0_12px_rgba(255,210,76,0.5)]"
+                className="bg-[#FFD24C] text-[#0a0612] hover:bg-[#FFD24C]/90 h-11 sm:h-12 text-base w-full rounded-md font-bold transition-all shadow-[0_0_8px_rgba(255,210,76,0.3)] hover:shadow-[0_0_12px_rgba(255,210,76,0.5)]"
                 style={{ willChange: isSubmitting ? "auto" : "box-shadow" }}
               >
                 <AnimatePresence mode="wait">
