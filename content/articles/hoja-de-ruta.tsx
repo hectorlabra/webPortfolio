@@ -99,10 +99,10 @@ export default function HojaDeRutaContent() {
 
       <Divider />
 
-      <Paragraph>
+      <Callout variant="tip">
         Ahora que sabes quién soy y qué he construido, déjame mostrarte por qué
         decidí dar este salto. Y por qué tú también deberías considerarlo.
-      </Paragraph>
+      </Callout>
 
       <Heading level={2} id="la-verdad-incomoda">
         La verdad incómoda sobre tu carrera

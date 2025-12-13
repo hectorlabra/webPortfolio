@@ -20,16 +20,16 @@ const tableOfContents = [
   { id: "mi-realidad", text: "Mi realidad", level: 1 },
   {
     id: "la-verdad-incomoda",
-    text: "Verdad incómoda",
+    text: "La verdad incómoda",
     level: 1,
   },
-  { id: "stack-minimalista", text: "Stack (2 cosas)", level: 1 },
-  { id: "filtro-de-turistas", text: "Filtro turistas", level: 1 },
-  { id: "enemigo-moderno", text: "Trampa AI", level: 1 },
+  { id: "stack-minimalista", text: "2 herramientas", level: 1 },
+  { id: "filtro-de-turistas", text: "El filtro", level: 1 },
+  { id: "enemigo-moderno", text: "Trampa IA", level: 1 },
   { id: "mi-historia", text: "Mi historia", level: 1 },
-  { id: "proceso-real", text: "Proceso (6 meses)", level: 1 },
-  { id: "la-encrucijada", text: "Encrucijada", level: 1 },
-  { id: "unete-al-circulo", text: "Círculo", level: 1 },
+  { id: "proceso-real", text: "6 meses", level: 1 },
+  { id: "la-encrucijada", text: "Tu encrucijada", level: 1 },
+  { id: "unete-al-circulo", text: "Al círculo", level: 1 },
 ];
 
 export async function generateMetadata(): Promise<Metadata> {
