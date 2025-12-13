@@ -15,18 +15,21 @@ import HojaDeRutaContent, {
   metadata as articleMetadata,
 } from "../../content/articles/hoja-de-ruta";
 
-// Table of Contents actualizado con los nuevos IDs del artículo
+// Table of Contents (IDs deben coincidir con los <Heading id="..."> del artículo)
 const tableOfContents = [
-  { id: "la-verdad-incomoda", text: "La Verdad Incómoda", level: 1 },
-  { id: "la-realidad", text: "Parte 1: La Realidad", level: 1 },
-  { id: "el-enemigo-moderno", text: "Parte 2: La Trampa AI", level: 1 },
-  { id: "mi-historia", text: "Parte 3: Mi Historia", level: 1 },
-  { id: "el-stack", text: "Parte 4: El Stack del Builder", level: 1 },
+  { id: "mi-realidad", text: "Mi realidad", level: 1 },
   {
-    id: "conclusion-encrucijada",
-    text: "Conclusión: Tu Encrucijada",
+    id: "la-verdad-incomoda",
+    text: "Verdad incómoda",
     level: 1,
   },
+  { id: "stack-minimalista", text: "Stack (2 cosas)", level: 1 },
+  { id: "filtro-de-turistas", text: "Filtro turistas", level: 1 },
+  { id: "enemigo-moderno", text: "Trampa AI", level: 1 },
+  { id: "mi-historia", text: "Mi historia", level: 1 },
+  { id: "proceso-real", text: "Proceso (6 meses)", level: 1 },
+  { id: "la-encrucijada", text: "Encrucijada", level: 1 },
+  { id: "unete-al-circulo", text: "Círculo", level: 1 },
 ];
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -120,7 +123,11 @@ export default function HojaDeRutaPage() {
 
                   <div className="flex items-center gap-2">
                     <Clock className="h-4 w-4" />
-                    <span>15 min de lectura</span>
+                    <span>
+                      {articleMetadata.readingTimeMinutes
+                        ? `${articleMetadata.readingTimeMinutes} min de lectura`
+                        : "15 min de lectura"}
+                    </span>
                   </div>
                 </div>
 
@@ -131,7 +138,7 @@ export default function HojaDeRutaPage() {
                     className="bg-[#64E365] text-[#0a0612] hover:bg-[#64E365]/90"
                     asChild
                   >
-                    <a href="#la-verdad-incomoda">Empezar a leer</a>
+                    <a href="#mi-realidad">Empezar a leer</a>
                   </Button>
                   <Button
                     size="sm"
